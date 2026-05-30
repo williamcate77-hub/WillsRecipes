@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>My Kitchen</title>
+<style>
+:root {
+  --bg:#f2ede8; --surface:#faf8f5; --surface2:#ede8e2; --surface3:#e4ddd5; --border:#d9d2ca;
+  --clay:#b87c6a; --clay-dk:#9e6656; --sage:#7a9e89; --stone:#8c8279; --sky:#7a96b2;
+  --text:#1c1814; --text2:#5a504a; --text3:#9a8e87;
+  --easy:#7a9e89; --medium:#c4a26a; --hard:#b87a7a;
+  --tab-h:72px; --radius:16px; --font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.5;overflow:hidden;height:100dvh;display:flex;flex-direction:column}
+
+/* HEADER */
+header{background:var(--surface);padding:16px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.header-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.app-title{font-size:28px;font-weight:800;letter-spacing:-0.5px;color:var(--text);flex:1}
+.header-btn{height:38px;padding:0 14px;border-radius:19px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s,border-color .15s,color .15s;white-space:nowrap}
+.header-btn svg{width:14px;height:14px;flex-shrink:0}
+.header-btn.active{background:var(--clay);border-color:var(--clay);color:#fff}
+.search-wrap{position:relative}
+.search-input{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:12px 40px 12px 44px;font-size:16px;font-weight:500;color:var(--text);outline:none;transition:border-color .2s,background .2s;-webkit-appearance:none}
+.search-input::placeholder{color:var(--text3);font-weight:400}
+.search-input:focus{border-color:var(--clay);background:var(--surface)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+.search-icon svg{width:18px;height:18px;display:block}
+.search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--surface3);border:none;color:var(--text3);width:22px;height:22px;border-radius:11px;font-size:12px;cursor:pointer;display:none;align-items:center;justify-content:center;font-weight:700}
+
+/* MAIN */
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--tab-h) + 12px)}
+main::-webkit-scrollbar{display:none}
+.view{display:none}
+.view.active{display:block}
+
+/* CHIPS */
+.chip-row{padding:14px 20px 10px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chip-row::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .15s;white-space:nowrap}
+.chip.active{background:var(--clay);border-color:var(--clay);color:#fff}
+
+/* SECTION */
+.section-label{padding:20px 20px 10px;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px}
+
+/* RECIPE CARDS */
+.recipe-list{padding:0 20px;display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.recipe-card{background:var(--surface);border-radius:var(--radius);border:1.5px solid var(--border);cursor:pointer;display:flex;align-items:center;padding:16px;gap:16px;transition:transform .12s,border-color .12s}
+.recipe-card:active{transform:scale(.985)}
+.recipe-card.pinned{border-color:var(--clay)}
+.card-swatch{width:56px;height:56px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.card-info{flex:1;min-width:0}
+.card-name{font-size:16px;font-weight:700;line-height:1.25;margin-bottom:6px;letter-spacing:-0.2px}
+.card-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:.3px;text-transform:uppercase}
+.tag-easy{background:#e8f2ec;color:var(--easy)}
+.tag-medium{background:#f5eddb;color:var(--medium)}
+.tag-hard{background:#f5e8e8;color:var(--hard)}
+.tag-muted{background:var(--surface2);color:var(--text3);font-weight:600;text-transform:none;font-size:12px}
+.card-pin{width:32px;height:32px;border-radius:16px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,border-color .15s}
+.card-pin svg{width:14px;height:14px}
+.card-pin.pinned{background:var(--clay);border-color:var(--clay)}
+.card-pin.pinned svg{stroke:#fff}
+
+/* Swatch colours */
+.sw-entrees{background:#dde8e2;color:#4d7a64}
+.sw-salads{background:#dfe8de;color:#527a50}
+.sw-soups{background:#e4dcea;color:#7060a0}
+.sw-sky{background:#dce4ee;color:#3e6890}
+.sw-mains{background:#f0e4da;color:#9e6656}
+.sw-veggie{background:#e0ead8;color:#4e7840}
+.sw-pasta{background:#eae4d8;color:#7a6840}
+.sw-sides{background:#e8e4d8;color:#7a7048}
+.sw-snacks{background:#e4eaf0;color:#4a7094}
+.sw-sauces{background:#ecdee8;color:#8a4870}
+.sw-desserts{background:#f0e4ec;color:#a06080}
+
+/* EMPTY */
+.empty{text-align:center;padding:70px 24px;color:var(--text3)}
+.empty-icon{width:56px;height:56px;border-radius:28px;background:var(--surface3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.empty-icon svg{width:24px;height:24px;stroke:var(--text3)}
+.empty p{font-size:16px;font-weight:500}
+
+/* DETAIL */
+.detail-hero{height:180px;display:flex;align-items:flex-end;padding:20px;position:relative;flex-shrink:0}
+.hero-back{position:absolute;top:16px;left:16px;width:38px;height:38px;background:rgba(255,255,255,.75);backdrop-filter:blur(6px);border:1px solid rgba(0,0,0,.08);border-radius:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text)}
+.hero-back svg{width:18px;height:18px}
+.hero-actions{position:absolute;top:16px;right:16px;display:flex;gap:8px}
+.hero-btn{width:38px;height:38px;background:rgba(255,255,255,.75);backdrop-filter:blur(6px);border:1px solid rgba(0,0,0,.08);border-radius:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:background .15s}
+.hero-btn svg{width:16px;height:16px}
+.hero-btn.pinned{background:var(--clay);border-color:var(--clay);color:#fff}
+.detail-body{padding:24px 20px}
+.detail-title{font-size:30px;font-weight:800;line-height:1.15;letter-spacing:-0.5px;margin-bottom:12px}
+.detail-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.detail-tag{font-size:13px;font-weight:600;padding:5px 12px;border-radius:8px}
+
+/* Portion */
+.card-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:20px}
+.card-block-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:14px}
+.portion-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.portion-label{font-size:17px;font-weight:600;color:var(--text)}
+.portion-value{font-size:28px;font-weight:800;color:var(--clay);letter-spacing:-0.5px;line-height:1}
+.portion-suffix{font-size:14px;font-weight:500;color:var(--text3);margin-left:4px}
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;background:var(--surface3);border-radius:3px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:13px;background:var(--clay);cursor:pointer;border:3px solid var(--surface);box-shadow:0 2px 8px rgba(184,124,106,.35)}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:13px;background:var(--clay);cursor:pointer;border:3px solid var(--surface)}
+
+/* Block label */
+.block-label{font-size:20px;font-weight:800;letter-spacing:-0.3px;margin-bottom:14px;margin-top:8px}
+
+/* Ingredients */
+.ing-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px}
+.ing-row{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border);gap:12px}
+.ing-row:last-child{border-bottom:none}
+.ing-dot{width:6px;height:6px;border-radius:3px;background:var(--clay);flex-shrink:0}
+.ing-name{flex:1;font-size:16px;font-weight:500}
+.ing-amount{font-size:15px;font-weight:700;color:var(--clay);white-space:nowrap}
+
+/* Steps */
+.steps-list{margin-bottom:24px;display:flex;flex-direction:column;gap:10px}
+.step-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;gap:14px;cursor:pointer;transition:opacity .2s,border-color .2s}
+.step-item.done{opacity:.45;border-color:var(--easy)}
+.step-num-wrap{width:30px;height:30px;border-radius:15px;background:var(--clay);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-item.done .step-num-wrap{background:var(--easy)}
+.step-num{font-size:13px;font-weight:800;color:#fff}
+.step-text{font-size:15px;line-height:1.6;color:var(--text2);padding-top:3px}
+
+/* Shopping */
+.shop-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
+.shop-row{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border);gap:14px;cursor:pointer}
+.shop-row:last-child{border-bottom:none}
+.shop-check{width:24px;height:24px;border-radius:12px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s}
+.shop-row.checked .shop-check{background:var(--easy);border-color:var(--easy)}
+.shop-row.checked .shop-check svg{display:block}
+.shop-check svg{display:none;width:12px;height:12px;stroke:#fff;stroke-width:3}
+.shop-name{flex:1;font-size:16px;font-weight:500}
+.shop-row.checked .shop-name{text-decoration:line-through;color:var(--text3)}
+.shop-amt{font-size:14px;font-weight:700;color:var(--clay);white-space:nowrap}
+.export-row{display:flex;gap:10px;margin-bottom:28px}
+.export-btn{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:15px 12px;font-size:14px;font-weight:700;color:var(--text2);cursor:pointer;text-align:center;transition:background .15s,border-color .15s}
+.export-btn.primary{background:var(--clay);border-color:var(--clay);color:#fff}
+
+/* TABS */
+.tab-bar{height:var(--tab-h);background:var(--surface);border-top:1px solid var(--border);display:flex;flex-shrink:0}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;color:var(--text3);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;transition:color .15s;padding-bottom:6px}
+.tab-icon{width:22px;height:22px}
+.tab-icon svg{width:22px;height:22px;stroke-width:1.8}
+.tab.active{color:var(--clay)}
+.tab.active .tab-icon svg{stroke-width:2.4}
+
+/* TOAST */
+.toast{position:fixed;bottom:calc(var(--tab-h) + 20px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--text);color:var(--surface);padding:11px 22px;border-radius:28px;font-size:14px;font-weight:600;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <span class="app-title">My Kitchen</span>
+    <button class="header-btn" id="wakeBtn" onclick="toggleWakeLock()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      Screen on
+    </button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+    <input class="search-input" id="searchInput" type="search" placeholder="Search ingredient or dish..." oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">x</button>
+  </div>
+</header>
+
+<main id="main">
+  <div class="view active" id="view-home">
+    <div class="chip-row" id="ingredientChips"></div>
+    <div id="homeContent"></div>
+  </div>
+  <div class="view" id="view-favourites">
+    <div class="section-label">Pinned Recipes</div>
+    <div class="recipe-list" id="favList"></div>
+    <div class="empty" id="favEmpty" style="display:none">
+      <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <p>Pin recipes from the home screen<br>to find them here.</p>
+    </div>
+  </div>
+  <div class="view" id="view-detail">
+    <div class="detail-hero" id="detailHero">
+      <button class="hero-back" onclick="closeDetail()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="hero-actions">
+        <button class="hero-btn" id="detailPin" onclick="togglePinDetail()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </button>
+        <button class="hero-btn" onclick="shareRecipe()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-title" id="detailTitle"></div>
+      <div class="detail-tags" id="detailTags"></div>
+      <div class="card-block">
+        <div class="card-block-title">Serving Size</div>
+        <div class="portion-row">
+          <span class="portion-label">Serves</span>
+          <div><span class="portion-value" id="portionVal">2</span><span class="portion-suffix">people</span></div>
+        </div>
+        <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()">
+      </div>
+      <div class="block-label">Ingredients</div>
+      <div class="ing-list" id="ingList"></div>
+      <div class="block-label">Method</div>
+      <div class="steps-list" id="stepsList"></div>
+      <div class="block-label">Shopping List</div>
+      <p style="font-size:14px;color:var(--text3);margin-bottom:14px;font-weight:500;">Tick what you already have — see what to buy.</p>
+      <div class="shop-list" id="shopList"></div>
+      <div class="export-row">
+        <button class="export-btn" onclick="copyShopList()">Copy list</button>
+        <button class="export-btn primary" onclick="sendToNotes()">Save to Notes</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<nav class="tab-bar">
+  <button class="tab active" id="tab-home" onclick="switchTab('home')">
+    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+    All
+  </button>
+  <button class="tab" id="tab-favourites" onclick="switchTab('favourites')">
+    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+    Pinned
+  </button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script src="recipes.js"></script>
+<script src="recipes2.js"></script>
+<script src="recipes3.js"></script>
+<script>
+// Merge all recipe arrays
+const ALL_RECIPES = [...RECIPES, ...RECIPES2, ...RECIPES3];
+
+// ── HAPTIC
+function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
+
+// ── STATE
+let currentTab='home', currentRecipe=null, prevTab='home';
+let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
+let activeIngredient=null, shopChecked={}, stepsDone={}, portionScale=1;
+let wakeLock=null;
+
+// ── TABS
+function switchTab(tab){
+  haptic(8);
+  if(currentRecipe&&tab!=='detail')closeDetail(false);
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('view-'+tab).classList.add('active');
+  currentTab=tab;
+  document.querySelector('header').style.display=tab==='detail'?'none':'';
+  if(tab==='home')renderHome();
+  if(tab==='favourites')renderFavourites();
+}
+
+// ── HOME
+function renderHome(){renderChips();renderGrid()}
+
+function renderChips(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  const filtered=q?ALL_RECIPES:ALL_RECIPES;
+  const ingredients=['All',...new Set(ALL_RECIPES.map(r=>r.mainIngredient))].sort((a,b)=>a==='All'?-1:b==='All'?1:a.localeCompare(b));
+  document.getElementById('ingredientChips').innerHTML=ingredients.map(i=>
+    `<div class="chip ${(!activeIngredient&&i==='All')||activeIngredient===i?'active':''}" onclick="filterIngredient('${i}')">${i}</div>`
+  ).join('');
+}
+
+function filterIngredient(ing){
+  haptic(8);
+  activeIngredient=ing==='All'?null:ing;
+  renderChips();renderGrid();
+}
+
+function getFiltered(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  let list=ALL_RECIPES;
+  if(activeIngredient)list=list.filter(r=>r.mainIngredient===activeIngredient);
+  if(q)list=list.filter(r=>
+    r.name.toLowerCase().includes(q)||
+    r.mainIngredient.toLowerCase().includes(q)||
+    r.category.toLowerCase().includes(q)||
+    r.ingredients.some(i=>i.name.toLowerCase().includes(q))
+  );
+  return list;
+}
+
+function renderGrid(){
+  const recipes=getFiltered();
+  const el=document.getElementById('homeContent');
+  if(!recipes.length){
+    el.innerHTML=`<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><p>No recipes found.<br>Try a different search.</p></div>`;
+    return;
+  }
+  let html='';
+  CATEGORIES.forEach(cat=>{
+    const list=recipes.filter(r=>r.category===cat);
+    if(!list.length)return;
+    html+=`<div class="section-label">${cat}</div><div class="recipe-list">`;
+    html+=list.map(r=>recipeCardHTML(r)).join('');
+    html+=`</div>`;
+  });
+  el.innerHTML=html;
+}
+
+function recipeCardHTML(r){
+  const isPinned=pinned.includes(r.id);
+  const initials=r.category.substring(0,2).toUpperCase();
+  return `<div class="recipe-card ${isPinned?'pinned':''}" onclick="openRecipe(${r.id})">
+    <div class="card-swatch ${SW[r.category]||'sw-mains'}">${initials}</div>
+    <div class="card-info">
+      <div class="card-name">${r.name}</div>
+      <div class="card-meta">
+        <span class="tag tag-${r.difficulty}">${cap(r.difficulty)}</span>
+        <span class="tag tag-muted">${r.calories} kcal</span>
+        <span class="tag tag-muted">${r.time}</span>
+      </div>
+    </div>
+    <button class="card-pin ${isPinned?'pinned':''}" onclick="event.stopPropagation();togglePin(${r.id})">
+      <svg viewBox="0 0 24 24" fill="${isPinned?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </button>
+  </div>`;
+}
+
+// ── FAVOURITES
+function renderFavourites(){
+  const list=document.getElementById('favList');
+  const empty=document.getElementById('favEmpty');
+  const pr=ALL_RECIPES.filter(r=>pinned.includes(r.id));
+  if(!pr.length){list.innerHTML='';empty.style.display='';return}
+  empty.style.display='none';
+  list.innerHTML=pr.map(r=>recipeCardHTML(r)).join('');
+}
+
+function togglePin(id){
+  haptic(12);
+  if(pinned.includes(id))pinned=pinned.filter(p=>p!==id);
+  else pinned.push(id);
+  localStorage.setItem('pinned',JSON.stringify(pinned));
+  renderHome();
+  if(currentTab==='favourites')renderFavourites();
+  toast(pinned.includes(id)?'Recipe pinned':'Unpinned');
+}
+
+function togglePinDetail(){
+  if(!currentRecipe)return;
+  haptic(12);togglePin(currentRecipe.id);updateDetailPin();
+}
+
+function updateDetailPin(){
+  const btn=document.getElementById('detailPin');
+  if(pinned.includes(currentRecipe.id))btn.classList.add('pinned');
+  else btn.classList.remove('pinned');
+}
+
+// ── DETAIL
+function openRecipe(id){
+  haptic(8);
+  currentRecipe=ALL_RECIPES.find(r=>r.id===id);
+  prevTab=currentTab;
+  if(!shopChecked[id])shopChecked[id]=new Set();
+  if(!stepsDone[id])stepsDone[id]=new Set();
+  portionScale=1;
+  const slider=document.getElementById('portionSlider');
+  slider.value=currentRecipe.serves;
+  slider.max=Math.max(20,currentRecipe.serves*4);
+  document.getElementById('portionVal').textContent=currentRecipe.serves;
+  renderDetailContent();
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-detail').classList.add('active');
+  document.querySelector('header').style.display='none';
+  currentTab='detail';
+  document.getElementById('main').scrollTop=0;
+}
+
+function renderDetailContent(){
+  const r=currentRecipe;
+  document.getElementById('detailHero').style.background=heroGrad(r.category);
+  document.getElementById('detailTitle').textContent=r.name;
+  updateDetailPin();
+  document.getElementById('detailTags').innerHTML=`
+    <span class="detail-tag tag-${r.difficulty}">${cap(r.difficulty)}</span>
+    <span class="detail-tag tag-muted">${r.calories} kcal / serve</span>
+    <span class="detail-tag tag-muted">${r.time}</span>
+    <span class="detail-tag tag-muted">Serves ${r.serves}</span>`;
+  renderIngredients();renderSteps();renderShopList();
+}
+
+function heroGrad(cat){
+  const m={
+    'Dips & Starters':'linear-gradient(145deg,#dde8e2,#ccddd4)',
+    'Salads':'linear-gradient(145deg,#dfe8de,#cfdece)',
+    'Soups':'linear-gradient(145deg,#e4dcea,#d4ccda)',
+    'Seafood':'linear-gradient(145deg,#dce4ee,#ccd4de)',
+    'Meat & Poultry':'linear-gradient(145deg,#f0e4da,#e4d0c4)',
+    'Vegetarian':'linear-gradient(145deg,#e0ead8,#d0dac8)',
+    'Pasta & Rice':'linear-gradient(145deg,#eae4d8,#dad4c8)',
+    'Sides':'linear-gradient(145deg,#e8e4d8,#d8d4c4)',
+    'Bread & Bakes':'linear-gradient(145deg,#e4eaf0,#d4dae0)',
+    'Sauces':'linear-gradient(145deg,#ecdee8,#dccedd)',
+    'Desserts':'linear-gradient(145deg,#f0e4ec,#e0d4dc)',
+  };
+  return m[cat]||m['Meat & Poultry'];
+}
+
+function renderIngredients(){
+  const r=currentRecipe;
+  document.getElementById('ingList').innerHTML=r.ingredients.map(ing=>{
+    const scaled=ing.amount*portionScale;
+    const amt=fmtAmt(scaled,ing.unit);
+    const unitDisplay=ing.unit==='to taste'||ing.unit==='to serve'?'':ing.unit;
+    return `<div class="ing-row"><div class="ing-dot"></div><span class="ing-name">${ing.name}</span><span class="ing-amount">${amt}${unitDisplay?' '+unitDisplay:''}</span></div>`;
+  }).join('');
+}
+
+function renderSteps(){
+  const r=currentRecipe;
+  const done=stepsDone[r.id];
+  document.getElementById('stepsList').innerHTML=r.steps.map((s,i)=>`
+    <div class="step-item ${done.has(i)?'done':''}" onclick="toggleStep(${i})">
+      <div class="step-num-wrap"><span class="step-num">${done.has(i)?'✓':(i+1)}</span></div>
+      <div class="step-text">${s}</div>
+    </div>`).join('');
+}
+
+function toggleStep(i){
+  haptic(8);
+  const done=stepsDone[currentRecipe.id];
+  if(done.has(i))done.delete(i);else done.add(i);
+  renderSteps();
+}
+
+function renderShopList(){
+  const r=currentRecipe;
+  const checked=shopChecked[r.id];
+  document.getElementById('shopList').innerHTML=r.ingredients.map((ing,i)=>{
+    const scaled=ing.amount*portionScale;
+    const amt=fmtAmt(scaled,ing.unit);
+    const unitDisplay=ing.unit==='to taste'||ing.unit==='to serve'?'':ing.unit;
+    return `<div class="shop-row ${checked.has(i)?'checked':''}" onclick="toggleShop(${i})">
+      <div class="shop-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="shop-name">${ing.name}</span>
+      <span class="shop-amt">${amt}${unitDisplay?' '+unitDisplay:''}</span>
+    </div>`;
+  }).join('');
+}
+
+function toggleShop(i){
+  haptic(8);
+  const c=shopChecked[currentRecipe.id];
+  if(c.has(i))c.delete(i);else c.add(i);
+  renderShopList();
+}
+
+function getShopText(){
+  const r=currentRecipe;
+  const c=shopChecked[r.id];
+  const serves=Math.round(r.serves*portionScale);
+  const items=r.ingredients.filter((_,i)=>!c.has(i))
+    .map(ing=>{const u=ing.unit==='to taste'||ing.unit==='to serve'?'':ing.unit;return `• ${ing.name}: ${fmtAmt(ing.amount*portionScale,ing.unit)}${u?' '+u:''}`});
+  return `Shopping list for "${r.name}" (serves ${serves}):\n\n${items.length?items.join('\n'):'You already have everything!'}`;
+}
+
+function copyShopList(){haptic(12);navigator.clipboard.writeText(getShopText()).then(()=>toast('Copied to clipboard'))}
+function sendToNotes(){
+  haptic(12);
+  const text=encodeURIComponent(getShopText());
+  window.location.href=`mobilenotes://create?body=${text}`;
+  setTimeout(()=>{navigator.clipboard.writeText(getShopText());toast('Copied — paste into Notes')},600);
+}
+
+function closeDetail(doHaptic=true){
+  if(doHaptic)haptic(8);
+  currentRecipe=null;
+  switchTab(prevTab==='detail'?'home':prevTab);
+}
+
+// ── PORTION
+function onPortion(){
+  haptic(6);
+  const n=parseInt(document.getElementById('portionSlider').value);
+  portionScale=n/currentRecipe.serves;
+  document.getElementById('portionVal').textContent=n;
+  renderIngredients();renderShopList();
+}
+
+// ── SEARCH
+function onSearch(){
+  const q=document.getElementById('searchInput').value;
+  document.getElementById('searchClear').style.display=q?'flex':'none';
+  if(currentTab!=='home')switchTab('home');
+  renderGrid();
+}
+function clearSearch(){haptic(8);document.getElementById('searchInput').value='';document.getElementById('searchClear').style.display='none';renderGrid()}
+
+// ── SHARE
+function shareRecipe(){
+  haptic(8);
+  const r=currentRecipe;
+  const text=`${r.name}\n\nServes: ${r.serves} | ${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal/serve\n\nIngredients:\n${r.ingredients.map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
+  if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
+  else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied'));
+}
+
+// ── WAKE LOCK
+async function toggleWakeLock(){
+  haptic(8);
+  const btn=document.getElementById('wakeBtn');
+  if(wakeLock){
+    await wakeLock.release();wakeLock=null;
+    btn.classList.remove('active');toast('Screen sleep restored');
+  }else{
+    try{
+      wakeLock=await navigator.wakeLock.request('screen');
+      btn.classList.add('active');toast('Screen will stay on while cooking');
+      wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('active')});
+    }catch(e){toast('Wake lock not supported on this device')}
+  }
+}
+document.addEventListener('visibilitychange',async()=>{
+  if(document.getElementById('wakeBtn').classList.contains('active')&&document.visibilityState==='visible'){
+    try{wakeLock=await navigator.wakeLock.request('screen')}catch(e){}
+  }
+});
+
+// ── HELPERS
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+function fmtAmt(n,unit){
+  if(!n||isNaN(n))return '';
+  const descriptive=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs','to serve'];
+  if(descriptive.some(d=>unit.toLowerCase().includes(d)))return '';
+  const countable=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets','stalk','stalks','piece','pieces','slice','slices','leaf','leaves','lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
+  if(countable.some(c=>unit.toLowerCase().includes(c))){
+    if(n%1===0)return n.toString();
+    return fracStr(n);
+  }
+  if(n>=100)return Math.round(n).toString();
+  if(n>=10)return Math.round(n).toString();
+  return parseFloat(n.toFixed(1)).toString();
+}
+
+function fracStr(n){
+  const w=Math.floor(n);
+  const f=n-w;
+  const fracs=[[0.25,'¼'],[0.33,'⅓'],[0.5,'½'],[0.67,'⅔'],[0.75,'¾']];
+  const m=fracs.find(([v])=>Math.abs(f-v)<0.08);
+  if(!m)return parseFloat(n.toFixed(1)).toString();
+  return w?`${w}${m[1]}`:m[1];
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// ── INIT
+renderHome();
+</script>
+</body>
+</html>
