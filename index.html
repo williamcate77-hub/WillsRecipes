@@ -27,7 +27,7 @@ tailwind.config = {
         "surface-container-highest": "#e4e2e2",
         "surface-dim":               "#dbdad9",
         "surface-container":         "#efeded",
-        "primary":                   "#000000",
+        "primary":                   "#1a1a1a",
         "on-surface-variant":        "#444748",
         "surface-container-high":    "#e9e8e7",
         "on-primary-container":      "#858383",
@@ -49,10 +49,10 @@ tailwind.config = {
         "on-error-container":        "#93000a",
       },
       borderRadius: {
-        "DEFAULT": "0.25rem",
-        "lg":      "0.5rem",
-        "xl":      "0.75rem",
-        "2xl":     "1rem",
+        "DEFAULT": "0.5rem",
+        "lg":      "0.75rem",
+        "xl":      "1rem",
+        "2xl":     "1.5rem",
         "full":    "9999px",
       },
       spacing: {
@@ -104,6 +104,9 @@ tailwind.config = {
   input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:6px; background:#47663c; cursor:pointer; border:2px solid #fff; box-shadow:0 2px 6px rgba(71,102,60,.2); }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
   .animate-blink { animation: blink .6s infinite; }
+  /* View fade transitions */
+  .view { animation: fadeIn 200ms ease-in-out; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
   body { -webkit-font-smoothing: antialiased; min-height: 100dvh; }
 </style>
 </head>
@@ -181,8 +184,15 @@ tailwind.config = {
 
   <!-- HOME -->
   <div id="view-home" class="view active">
-    <div class="px-margin-mobile pt-stack-md pb-stack-sm">
-      <p class="font-label-md text-caption text-outline uppercase tracking-[0.1em] mb-stack-sm">Filter by main ingredient</p>
+    <div class="px-margin-mobile pt-stack-md pb-stack-sm space-y-2">
+      <!-- Search bar -->
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none transition-colors" id="searchIcon" style="font-size:20px">search</span>
+        <input id="searchInput" oninput="onSearch()" type="text" placeholder="Search recipes…"
+          class="w-full bg-surface-container-low border-none rounded-xl pl-10 pr-4 py-3 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-secondary outline-none transition-all placeholder:text-outline">
+      </div>
+      <!-- Ingredient filter -->
+      <p class="font-label-md text-caption text-outline uppercase tracking-[0.1em]">Filter by main ingredient</p>
       <div class="flex gap-2">
         <div class="relative flex-1">
           <select id="ingSelect" onchange="onIngSelect()"
@@ -331,8 +341,31 @@ function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
 
 let currentTab='home',currentRecipe=null,prevTab='home';
 let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
-let activeIngredient=null,shopChecked={},stepsDone={},portionScale=1;
+let activeIngredient=null,activeSearch='',shopChecked={},stepsDone={},portionScale=1;
 let wakeLock=null,openCategories=new Set();
+
+// ── DEBOUNCED SEARCH
+let _searchTimer=null;
+function onSearch(){
+  clearTimeout(_searchTimer);
+  _searchTimer=setTimeout(()=>{
+    activeSearch=document.getElementById('searchInput').value.trim().toLowerCase();
+    const icon=document.getElementById('searchIcon');
+    if(icon)icon.textContent=activeSearch?'close':'search';
+    renderAccordion();
+  },300);
+}
+
+// ── NOTIFICATIONS
+function requestNotificationPermission(){
+  if('Notification' in window&&Notification.permission==='default')
+    Notification.requestPermission();
+}
+function fireNotification(title,body){
+  if('Notification' in window&&Notification.permission==='granted'){
+    new Notification(title,{body,icon:'/public/icon-192.png',badge:'/public/icon-192.png'});
+  }
+}
 
 // ── DARK MODE
 let isDark=false;
@@ -413,9 +446,11 @@ function onIngSelect(){haptic(8);activeIngredient=document.getElementById('ingSe
 function clearIngredient(){haptic(8);activeIngredient=null;populateIngSelect();renderAccordion()}
 
 function getFiltered(){
-  if(!activeIngredient)return ALL_RECIPES;
-  if(activeIngredient==='__SEAFOOD__')return ALL_RECIPES.filter(r=>SEAFOOD_INGREDIENTS.has(r.mainIngredient));
-  return ALL_RECIPES.filter(r=>r.mainIngredient===activeIngredient);
+  let list=ALL_RECIPES;
+  if(activeIngredient==='__SEAFOOD__') list=list.filter(r=>SEAFOOD_INGREDIENTS.has(r.mainIngredient));
+  else if(activeIngredient) list=list.filter(r=>r.mainIngredient===activeIngredient);
+  if(activeSearch) list=list.filter(r=>r.name.toLowerCase().includes(activeSearch)||r.category.toLowerCase().includes(activeSearch));
+  return list;
 }
 
 function diffBadge(d){
@@ -758,7 +793,9 @@ function adjustPick(field,delta){
 }
 function startTimerFromModal(){
   const total=pickMin*60+pickSec;if(total<=0){toast('Set a time first');return}
-  haptic(12);closeTimerModal();startTimer(total,'Step '+(timerStepIdx+1));
+  haptic(12);closeTimerModal();
+  requestNotificationPermission();
+  startTimer(total,'Step '+(timerStepIdx+1));
 }
 function startTimer(seconds,label){
   stopTimer();timerSeconds=seconds;timerRunning=true;
@@ -771,7 +808,9 @@ function startTimer(seconds,label){
     if(timerSeconds<=0){
       clearInterval(timerInterval);timerRunning=false;
       document.getElementById('timerDisplay').classList.add('animate-blink','!text-error');
-      beepTimer();toast('⏰ Timer done!');renderSteps();
+      beepTimer();toast('⏰ Timer done!');
+      fireNotification('⏰ Timer done!', timerStepIdx>=0?`Step ${timerStepIdx+1} complete`:'Your cooking timer has finished.');
+      renderSteps();
       setTimeout(()=>stopTimer(),5000);
     }
   },1000);renderSteps();
