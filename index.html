@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -9,415 +9,306 @@
 <link rel="apple-touch-icon" href="/public/apple-touch-icon.png">
 <link rel="icon" type="image/png" href="/public/icon-192.png">
 <link rel="manifest" href="/public/manifest.json">
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Material Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface":                "#fbf9f8",
+        "surface-dim":            "#dbdad9",
+        "surface-container-lowest":"#ffffff",
+        "surface-container-low":  "#f5f3f3",
+        "surface-container":      "#efeded",
+        "surface-container-high": "#e9e8e7",
+        "surface-container-highest":"#e4e2e2",
+        "on-surface":             "#1b1c1c",
+        "on-surface-variant":     "#444748",
+        "outline":                "#747878",
+        "outline-variant":        "#c4c7c7",
+        "background":             "#fbf9f8",
+        "on-background":          "#1b1c1c",
+        "primary":                "#000000",
+        "on-primary":             "#ffffff",
+        "primary-container":      "#1c1b1b",
+        "secondary":              "#47663c",
+        "on-secondary":           "#ffffff",
+        "secondary-container":    "#c5eab4",
+        "on-secondary-container": "#4b6b40",
+        "secondary-fixed":        "#c8edb7",
+        "secondary-fixed-dim":    "#acd19d",
+        "error":                  "#ba1a1a",
+        "error-container":        "#ffdad6",
+      },
+      borderRadius: {
+        "sm":      "0.25rem",
+        "DEFAULT": "0.5rem",
+        "md":      "0.75rem",
+        "lg":      "1rem",
+        "xl":      "1.5rem",
+        "full":    "9999px",
+      },
+      spacing: {
+        "stack-sm":       "8px",
+        "stack-md":       "16px",
+        "stack-lg":       "32px",
+        "section-gap":    "80px",
+        "margin-mobile":  "20px",
+        "margin-desktop": "64px",
+        "gutter":         "24px",
+        "container-max":  "1200px",
+      },
+      fontFamily: {
+        "serif": ["Playfair Display", "Georgia", "serif"],
+        "sans":  ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+      },
+      fontSize: {
+        "display-lg":        ["48px", {lineHeight:"56px", letterSpacing:"-0.02em", fontWeight:"700"}],
+        "headline-lg":       ["32px", {lineHeight:"40px", fontWeight:"700"}],
+        "headline-lg-mobile":["28px", {lineHeight:"36px", fontWeight:"700"}],
+        "headline-md":       ["24px", {lineHeight:"32px", fontWeight:"600"}],
+        "body-lg":           ["18px", {lineHeight:"28px", fontWeight:"400"}],
+        "body-md":           ["16px", {lineHeight:"24px", fontWeight:"400"}],
+        "label-md":          ["14px", {lineHeight:"20px", letterSpacing:"0.05em", fontWeight:"600"}],
+        "caption":           ["12px", {lineHeight:"16px", fontWeight:"400"}],
+      },
+      boxShadow: {
+        "long-soft": "0px 10px 30px rgba(26,26,26,0.04)",
+        "lift":      "0px 16px 40px rgba(26,26,26,0.08)",
+        "sm":        "0px 4px 12px rgba(26,26,26,0.04)",
+      }
+    }
+  }
+}
+</script>
 <style>
-/* ── EPICUREAN COLOUR TOKENS ── */
-:root {
-  /* Light (default) — warm cream editorial */
-  --bg:#fbf9f8; --surface:#ffffff; --surface2:#f5f3f3; --surface3:#efeded; --border:#c4c7c7;
-  --accent:#47663c; --accent2:#acd19d; --accent-glow:rgba(71,102,60,.15);
-  --accent-container:#c5eab4; --on-accent-container:#4b6b40;
-  --text:#1b1c1c; --text2:#444748; --text3:#747878;
-  --easy:#47663c; --medium:#8a5a1e; --hard:#ba1a1a;
-  --tab-h:68px; --radius:8px;
-  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --font-serif:'Playfair Display',Georgia,serif;
-  --shadow:0px 10px 30px rgba(26,26,26,0.06);
-  --shadow-sm:0px 4px 12px rgba(26,26,26,0.05);
-}
-body.dark {
-  --bg:#1a1a18; --surface:#242422; --surface2:#2e2e2c; --surface3:#383836; --border:#48484a;
-  --accent:#7dab6e; --accent2:#acd19d; --accent-glow:rgba(125,171,110,.18);
-  --accent-container:#2a3d26; --on-accent-container:#acd19d;
-  --text:#f0ece8; --text2:#a8a4a0; --text3:#706c68;
-  --easy:#7dab6e; --medium:#c89a5a; --hard:#ff8080;
-  --shadow:0px 10px 30px rgba(0,0,0,.25);
-  --shadow-sm:0px 4px 12px rgba(0,0,0,.2);
-}
-
-/* ── RESET ── */
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.5;overflow:hidden;height:100dvh;display:flex;flex-direction:column;transition:background .3s,color .3s}
-.ms{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;font-size:22px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;direction:ltr;-webkit-font-smoothing:antialiased}
-.ms.fill{font-variation-settings:'FILL' 1}
-.serif{font-family:var(--font-serif)}
-
-/* ── HEADER ── */
-header{background:var(--surface);padding:14px 20px 10px;border-bottom:1px solid var(--border);flex-shrink:0;transition:background .3s,border-color .3s}
-.header-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.app-title{font-family:var(--font-serif);font-size:24px;font-weight:700;letter-spacing:-0.3px;color:var(--text);flex:1;line-height:1.15}
-.app-title span{display:block;font-size:11px;font-family:var(--font);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:1px}
-.header-controls{display:flex;align-items:center;gap:8px}
-.icon-btn{width:38px;height:38px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
-.icon-btn:active,.icon-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.icon-btn .ms{font-size:18px}
-.wake-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
-.wake-sub{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.04em;text-transform:uppercase}
-
-/* ── HEADER ICON ── */
-.header-icon{width:44px;height:44px;border-radius:var(--radius);object-fit:cover;flex-shrink:0;border:1.5px solid var(--border)}
-
-/* ── HINT BAR ── */
-.app-hint-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:7px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.hint-text{font-size:11px;color:var(--text3);font-weight:500}
-.hint-btns{display:flex;gap:8px;flex-shrink:0;align-items:center}
-.hint-btn{height:26px;padding:0 10px;border-radius:6px;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);font-size:11px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .15s}
-.hint-btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
-.hint-close{background:none;border:none;color:var(--text3);font-size:16px;cursor:pointer;padding:2px 4px;line-height:1}
-
-/* ── MAIN ── */
-main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--tab-h) + 8px)}
-main::-webkit-scrollbar{display:none}
-.view{display:none}
-.view.active{display:block}
-
-/* ── INGREDIENT SELECTOR ── */
-.ing-selector-wrap{padding:14px 16px 6px}
-.ing-selector-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);margin-bottom:7px}
-.ing-select-row{display:flex;gap:8px;align-items:center}
-.ing-select{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 34px 10px 12px;font-size:14px;font-weight:500;font-family:var(--font);color:var(--text);-webkit-appearance:none;appearance:none;outline:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23747878' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:border-color .2s,box-shadow .2s}
-.ing-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-.ing-select.has-value{border-color:var(--accent);color:var(--accent)}
-.ing-clear{width:36px;height:36px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;display:none;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:18px}
-.ing-clear.visible{display:flex}
-.ing-clear:active{background:var(--hard);border-color:var(--hard);color:#fff}
-
-/* ── ACCORDION ── */
-.cat-section{margin:5px 14px 0}
-.cat-header{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:13px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .2s,background .2s,border-radius .15s;box-shadow:var(--shadow-sm)}
-.cat-header:active{background:var(--surface2)}
-.cat-header.open{border-color:var(--accent);border-bottom-left-radius:0;border-bottom-right-radius:0}
-.cat-header-left{display:flex;align-items:center;gap:10px}
-.cat-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
-.cat-name{font-family:var(--font-serif);font-size:16px;font-weight:700;letter-spacing:-0.1px}
-.cat-count{font-size:11px;font-weight:600;color:var(--text3);background:var(--surface2);padding:1px 7px;border-radius:20px;border:1px solid var(--border)}
-.cat-chevron{color:var(--text3);transition:transform .22s;display:flex;align-items:center}
-.cat-chevron .ms{font-size:20px}
-.cat-header.open .cat-chevron{transform:rotate(180deg);color:var(--accent)}
-.cat-body{display:none;background:var(--surface);border:1.5px solid var(--accent);border-top:none;border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
-.cat-body.open{display:block}
-.cat-recipe-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer;transition:background .1s}
-.cat-recipe-row:last-child{border-bottom:none}
-.cat-recipe-row:active{background:var(--surface2)}
-.cat-recipe-name{font-size:14px;font-weight:600;margin-bottom:3px;line-height:1.3;color:var(--text)}
-.cat-recipe-meta{display:flex;gap:5px;flex-wrap:wrap}
-.cat-swatch{width:40px;height:40px;border-radius:var(--radius);flex-shrink:0;background:var(--accent-container);display:flex;align-items:center;justify-content:center}
-.cat-swatch .ms{font-size:18px;color:var(--on-accent-container)}
-
-/* ── TAGS ── */
-.tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;font-family:var(--font)}
-.tag-easy{background:rgba(71,102,60,.12);color:var(--easy)}
-.tag-medium{background:rgba(138,90,30,.12);color:var(--medium)}
-.tag-hard{background:rgba(186,26,26,.12);color:var(--hard)}
-.tag-muted{background:var(--surface2);color:var(--text3);font-weight:600;text-transform:none;font-size:11px}
-
-/* ── PIN BUTTON ── */
-.card-pin{width:30px;height:30px;border-radius:6px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
-.card-pin .ms{font-size:15px;color:var(--text3)}
-.card-pin.pinned{background:var(--accent);border-color:var(--accent)}
-.card-pin.pinned .ms{color:#fff}
-
-/* ── EMPTY ── */
-.empty{text-align:center;padding:60px 24px;color:var(--text3)}
-.empty-icon{width:52px;height:52px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;border:1.5px solid var(--border)}
-.empty-icon .ms{font-size:24px;color:var(--text3)}
-.empty p{font-size:15px;font-weight:500;color:var(--text2)}
-
-/* ── PINNED VIEW ── */
-.section-label{padding:18px 16px 8px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.09em}
-.recipe-list{padding:0 14px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
-.recipe-card{background:var(--surface);border-radius:var(--radius);border:1.5px solid var(--border);cursor:pointer;display:flex;align-items:center;padding:13px;gap:13px;transition:transform .12s,border-color .15s;box-shadow:var(--shadow-sm)}
-.recipe-card:active{transform:scale(.985)}
-.recipe-card.pinned{border-color:var(--accent)}
-.card-swatch{width:48px;height:48px;border-radius:var(--radius);flex-shrink:0;background:var(--accent-container);display:flex;align-items:center;justify-content:center}
-.card-swatch .ms{font-size:20px;color:var(--on-accent-container)}
-.card-info{flex:1;min-width:0}
-.card-name{font-family:var(--font-serif);font-size:15px;font-weight:700;line-height:1.25;margin-bottom:4px;color:var(--text)}
-.card-meta{display:flex;gap:5px;flex-wrap:wrap}
-
-/* ── DETAIL ── */
-.detail-hero{min-height:140px;display:flex;align-items:flex-end;padding:16px;position:relative;flex-shrink:0}
-.hero-back{position:absolute;top:14px;left:14px;width:36px;height:36px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);box-shadow:var(--shadow-sm)}
-.hero-back .ms{font-size:20px}
-.hero-actions{position:absolute;top:14px;right:14px;display:flex;gap:7px}
-.hero-btn{width:36px;height:36px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .15s;box-shadow:var(--shadow-sm)}
-.hero-btn .ms{font-size:18px}
-.hero-btn.pinned{background:var(--accent);border-color:var(--accent);color:#fff}
-.detail-body{padding:20px 18px}
-.detail-title{font-family:var(--font-serif);font-size:26px;font-weight:700;line-height:1.2;letter-spacing:-0.3px;margin-bottom:10px;color:var(--text)}
-.detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
-.detail-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;font-family:var(--font);text-transform:uppercase;letter-spacing:.05em}
-
-/* Portion */
-.card-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:18px;box-shadow:var(--shadow-sm)}
-.card-block-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);margin-bottom:12px;font-family:var(--font)}
-.portion-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.portion-label{font-size:15px;font-weight:600;color:var(--text)}
-.portion-value{font-family:var(--font-serif);font-size:28px;font-weight:700;color:var(--accent);letter-spacing:-0.5px;line-height:1}
-.portion-suffix{font-size:12px;font-weight:500;color:var(--text3);margin-left:3px}
-input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--surface3);border-radius:2px;outline:none;border:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:6px;background:var(--accent);cursor:pointer;border:2px solid var(--surface);box-shadow:0 2px 8px var(--accent-glow)}
-input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:6px;background:var(--accent);cursor:pointer;border:2px solid var(--surface)}
-
-.block-label{font-family:var(--font-serif);font-size:20px;font-weight:700;letter-spacing:-0.2px;margin-bottom:12px;margin-top:4px;color:var(--text)}
-
-/* Ingredients */
-.ing-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow-sm)}
-.ing-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);gap:10px}
-.ing-row:last-child{border-bottom:none}
-.ing-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
-.ing-name{flex:1;font-size:14px;font-weight:500;color:var(--text)}
-.ing-amount{font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap}
-
-/* Steps */
-.steps-list{margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
-.step-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;gap:12px;cursor:pointer;transition:opacity .2s,border-color .2s;box-shadow:var(--shadow-sm)}
-.step-item.done{opacity:.45;border-color:var(--accent)}
-.step-num-wrap{width:30px;height:30px;border-radius:var(--radius);background:var(--accent-container);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.step-item.done .step-num-wrap{background:var(--accent)}
-.step-num{font-family:var(--font-serif);font-size:14px;font-weight:700;color:var(--on-accent-container)}
-.step-item.done .step-num{color:#fff}
-.step-text{font-size:14px;line-height:1.65;color:var(--text2);padding-top:2px}
-
-/* Shopping */
-.shop-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow-sm)}
-.shop-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer}
-.shop-row:last-child{border-bottom:none}
-.shop-check{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.shop-row.checked .shop-check{background:var(--accent);border-color:var(--accent)}
-.shop-row.checked .shop-check svg{display:block}
-.shop-check svg{display:none;width:10px;height:10px;stroke:#fff;stroke-width:3}
-.shop-name{flex:1;font-size:14px;font-weight:500;color:var(--text)}
-.shop-row.checked .shop-name{text-decoration:line-through;color:var(--text3)}
-.shop-amt{font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap}
-.export-row{margin-bottom:24px}
-.export-btn{width:100%;background:var(--accent);border:none;border-radius:var(--radius);padding:15px;font-size:14px;font-weight:700;font-family:var(--font);color:#fff;cursor:pointer;text-align:center;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 4px 16px var(--accent-glow);transition:opacity .15s}
-.export-btn:active{opacity:.8}
-
-/* ── TAB BAR ── */
-.tab-bar{height:var(--tab-h);background:var(--surface);border-top:1px solid var(--border);display:flex;flex-shrink:0}
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--text3);font-size:10px;font-weight:700;font-family:var(--font);text-transform:uppercase;letter-spacing:.06em;transition:color .15s;padding-bottom:6px}
-.tab .ms{font-size:22px;transition:all .15s}
-.tab.active{color:var(--accent)}
-.tab.active .ms{font-variation-settings:'FILL' 1}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(14px);background:var(--surface);border:1px solid var(--accent);color:var(--text);padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;font-family:var(--font);opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:var(--shadow)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ── FLOATING TIMER ── */
-.timer-float{position:fixed;bottom:calc(var(--tab-h) + 12px);left:50%;transform:translateX(-50%);background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;z-index:1000;box-shadow:var(--shadow);min-width:220px;display:none}
-.timer-float.visible{display:flex}
-.timer-display{font-family:var(--font-serif);font-size:28px;font-weight:700;color:var(--accent);min-width:72px;letter-spacing:-.5px}
-.timer-display.urgent{color:var(--hard);animation:pulse .5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.timer-btns{display:flex;gap:6px}
-.timer-btn{width:32px;height:32px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:var(--font);transition:all .15s}
-.timer-btn:active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.timer-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;flex:1;font-family:var(--font)}
-
-/* ── TIMER IN STEPS ── */
-.step-timer-btn{width:26px;height:26px;border-radius:6px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;margin-top:2px}
-.step-timer-btn .ms{font-size:14px}
-.step-timer-btn:active,.step-timer-btn.running{background:var(--accent);border-color:var(--accent);color:#fff}
-
-/* ── TIMER PICKER MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1100;display:none;align-items:flex-end;justify-content:center}
-.modal-overlay.visible{display:flex}
-.modal-sheet{background:var(--surface);border-radius:16px 16px 0 0;padding:20px 20px 36px;width:100%;max-width:480px}
-.modal-title{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center}
-.timer-picker-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px}
-.timer-pick-val{font-family:var(--font-serif);font-size:48px;font-weight:700;color:var(--text);min-width:68px;text-align:center;font-variant-numeric:tabular-nums}
-.timer-pick-label{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-family:var(--font)}
-.timer-pick-btns{display:flex;flex-direction:column;gap:4px}
-.timer-pick-btn{width:32px;height:32px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:var(--font)}
-.timer-pick-btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
-.modal-start-btn{width:100%;background:var(--accent);border:none;border-radius:var(--radius);padding:15px;font-size:14px;font-weight:700;font-family:var(--font);color:#fff;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 16px var(--accent-glow)}
-.modal-cancel{width:100%;background:none;border:none;padding:12px;font-size:14px;font-weight:600;color:var(--text3);cursor:pointer;margin-top:4px;font-family:var(--font)}
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block; line-height: 1;
+    text-transform: none; letter-spacing: normal; white-space: nowrap;
+    direction: ltr; -webkit-font-smoothing: antialiased;
+    user-select: none;
+  }
+  .icon-fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  input[type=range] {
+    -webkit-appearance: none; width: 100%; height: 3px;
+    background: #efeded; border-radius: 2px; outline: none; border: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 22px; height: 22px; border-radius: 6px;
+    background: #47663c; cursor: pointer; border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(71,102,60,.18);
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .animate-blink { animation: blink .6s infinite; }
+  body { -webkit-font-smoothing: antialiased; }
 </style>
 </head>
-<body>
 
-<header>
-  <div class="header-row">
-    <img class="header-icon" src="/public/apple-touch-icon.png" alt="Cooking With Will">
-    <div class="app-title">
-      <span>A recipe collection by</span>
-      Cooking With Will
+<body class="bg-background text-on-background font-sans overflow-hidden h-dvh flex flex-col">
+
+<!-- ── HEADER ── -->
+<header id="appHeader" class="bg-surface-container-lowest shadow-long-soft flex-shrink-0 z-40">
+  <!-- Title row -->
+  <div class="flex items-center gap-3 px-5 pt-5 pb-4">
+    <img src="/public/apple-touch-icon.png" alt="" class="w-12 h-12 rounded-xl object-cover flex-shrink-0">
+    <div class="flex-1 min-w-0">
+      <p class="font-sans text-[10px] font-semibold text-secondary uppercase tracking-[0.12em] leading-none mb-1.5">A recipe collection by</p>
+      <h1 class="font-serif text-[26px] font-bold text-primary leading-none tracking-tight">Cooking With Will</h1>
     </div>
-    <div class="header-controls">
-      <div class="wake-wrap">
-        <button class="icon-btn" id="wakeBtn" onclick="toggleWakeLock()" title="Keep screen on">
-          <span class="ms" id="wakeIcon">light_mode</span>
-        </button>
-        <span class="wake-sub">Screen on</span>
-      </div>
-      <button class="icon-btn" id="modeBtn" onclick="toggleMode()" title="Toggle dark/light">
-        <span class="ms" id="modeIcon">dark_mode</span>
+    <div class="flex items-center gap-2.5">
+      <button id="wakeBtn" onclick="toggleWakeLock()"
+        class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-DEFAULT border border-outline-variant bg-surface-container text-on-surface-variant transition-all active:scale-95 active:bg-secondary active:border-secondary active:text-white">
+        <span class="material-symbols-outlined text-[20px]">light_mode</span>
+        <span class="font-sans text-[9px] font-semibold uppercase tracking-wide leading-none">Screen</span>
+      </button>
+      <button id="modeBtn" onclick="toggleMode()"
+        class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-DEFAULT border border-outline-variant bg-surface-container text-on-surface-variant transition-all active:scale-95">
+        <span class="material-symbols-outlined text-[20px]" id="modeIcon">dark_mode</span>
+        <span class="font-sans text-[9px] font-semibold uppercase tracking-wide leading-none">Theme</span>
       </button>
     </div>
   </div>
-  <div class="app-hint-bar" id="hintBar">
-    <span class="hint-text">📱 Press Home or swipe up to close &nbsp;·&nbsp; Tap refresh for latest recipes</span>
-    <div class="hint-btns">
-      <button class="hint-btn" onclick="hardRefresh()">Refresh</button>
-      <button class="hint-close" onclick="document.getElementById('hintBar').style.display='none'">✕</button>
+  <!-- Hint bar -->
+  <div id="hintBar" class="flex items-center justify-between gap-2 px-5 py-2 border-t border-outline-variant/50 bg-surface-container-low">
+    <span class="font-sans text-caption text-outline">📱 Press Home or swipe up to close · Tap Refresh for latest</span>
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <button onclick="hardRefresh()" class="font-sans text-caption font-semibold text-on-surface-variant bg-surface-container-lowest border border-outline-variant rounded-sm px-2.5 py-1 active:scale-95 transition-transform">Refresh</button>
+      <button onclick="document.getElementById('hintBar').style.display='none'" class="text-outline text-[16px] leading-none px-1 py-0.5">✕</button>
     </div>
   </div>
 </header>
 
-<!-- FLOATING TIMER -->
-<div class="timer-float" id="timerFloat">
-  <div style="flex:1">
-    <div class="timer-label" id="timerLabel">Timer</div>
-    <div class="timer-display" id="timerDisplay">0:00</div>
+<!-- ── FLOATING TIMER ── -->
+<div id="timerFloat" class="hidden fixed bottom-[88px] left-1/2 -translate-x-1/2 z-50 bg-surface-container-lowest border border-secondary/30 rounded-lg px-4 py-3 flex items-center gap-3 shadow-lift min-w-[220px]">
+  <div class="flex-1">
+    <div id="timerLabel" class="font-sans text-[9px] font-semibold text-outline uppercase tracking-wider">Timer</div>
+    <div id="timerDisplay" class="font-serif text-3xl font-bold text-secondary leading-none">0:00</div>
   </div>
-  <div class="timer-btns">
-    <button class="timer-btn" onclick="pauseResumeTimer()" id="timerPauseBtn" title="Pause/Resume">⏸</button>
-    <button class="timer-btn" onclick="stopTimer()" title="Stop">✕</button>
+  <div class="flex gap-1.5">
+    <button onclick="pauseResumeTimer()" id="timerPauseBtn"
+      class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center text-on-surface-variant text-sm font-bold active:bg-secondary active:text-white active:border-secondary transition-all">⏸</button>
+    <button onclick="stopTimer()"
+      class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center text-on-surface-variant text-sm font-bold active:bg-error active:text-white active:border-error transition-all">✕</button>
   </div>
 </div>
 
-<!-- TIMER PICKER MODAL -->
-<div class="modal-overlay" id="timerModal" onclick="if(event.target===this)closeTimerModal()">
-  <div class="modal-sheet">
-    <div class="modal-title">Set Timer</div>
-    <div class="timer-picker-row">
-      <div>
-        <div class="timer-pick-btns">
-          <button class="timer-pick-btn" onclick="adjustPick('min',1)">▲</button>
-          <button class="timer-pick-btn" onclick="adjustPick('min',-1)">▼</button>
-        </div>
+<!-- ── TIMER MODAL ── -->
+<div id="timerModal" onclick="if(event.target===this)closeTimerModal()" class="hidden fixed inset-0 bg-black/40 z-[60] items-end justify-center">
+  <div class="bg-surface-container-lowest rounded-t-xl px-6 pt-6 pb-10 w-full max-w-md shadow-lift">
+    <h3 class="font-serif text-headline-md text-primary text-center mb-6">Set Timer</h3>
+    <div class="flex items-center justify-center gap-3 mb-6">
+      <div class="flex flex-col gap-1.5">
+        <button onclick="adjustPick('min',1)"  class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-white active:border-secondary transition-all">▲</button>
+        <button onclick="adjustPick('min',-1)" class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-white active:border-secondary transition-all">▼</button>
       </div>
-      <div class="timer-pick-val" id="pickMin">0</div>
-      <div class="timer-pick-label">min</div>
-      <div style="font-family:var(--font-serif);font-size:36px;font-weight:700;color:var(--text3);margin:0 4px">:</div>
-      <div class="timer-pick-val" id="pickSec">00</div>
-      <div class="timer-pick-label">sec</div>
-      <div>
-        <div class="timer-pick-btns">
-          <button class="timer-pick-btn" onclick="adjustPick('sec',15)">▲</button>
-          <button class="timer-pick-btn" onclick="adjustPick('sec',-15)">▼</button>
-        </div>
+      <div id="pickMin" class="font-serif text-display-lg text-primary w-16 text-center tabular-nums">0</div>
+      <div class="font-sans text-caption text-outline uppercase tracking-wider font-semibold">min</div>
+      <div class="font-serif text-[40px] font-bold text-outline-variant">:</div>
+      <div id="pickSec" class="font-serif text-display-lg text-primary w-16 text-center tabular-nums">00</div>
+      <div class="font-sans text-caption text-outline uppercase tracking-wider font-semibold">sec</div>
+      <div class="flex flex-col gap-1.5">
+        <button onclick="adjustPick('sec',15)"  class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-white active:border-secondary transition-all">▲</button>
+        <button onclick="adjustPick('sec',-15)" class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-white active:border-secondary transition-all">▼</button>
       </div>
     </div>
-    <button class="modal-start-btn" onclick="startTimerFromModal()">Start Timer</button>
-    <button class="modal-cancel" onclick="closeTimerModal()">Cancel</button>
+    <button onclick="startTimerFromModal()" class="w-full bg-secondary text-white font-sans text-label-md uppercase tracking-widest font-semibold py-4 rounded-DEFAULT shadow-long-soft active:opacity-80 transition-opacity">Start Timer</button>
+    <button onclick="closeTimerModal()" class="w-full font-sans text-caption text-outline font-semibold py-3 mt-1">Cancel</button>
   </div>
 </div>
 
-<main id="main">
+<!-- ── MAIN ── -->
+<main id="main" class="flex-1 overflow-y-auto overscroll-contain pb-[72px]">
 
   <!-- HOME -->
-  <div class="view active" id="view-home">
-    <div class="ing-selector-wrap">
-      <div class="ing-selector-label">Filter by main ingredient</div>
-      <div class="ing-select-row">
-        <select class="ing-select" id="ingSelect" onchange="onIngSelect()">
-          <option value="">All recipes...</option>
-        </select>
-        <button class="ing-clear" id="ingClear" onclick="clearIngredient()">&#x2715;</button>
+  <div id="view-home" class="view active">
+    <div class="px-margin-mobile pt-stack-md pb-stack-sm">
+      <p class="font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold mb-stack-sm">Filter by main ingredient</p>
+      <div class="flex gap-2">
+        <!-- Input: cream bg, no border unless focused -->
+        <div class="relative flex-1">
+          <select id="ingSelect" onchange="onIngSelect()"
+            class="w-full appearance-none bg-surface-container-low border-0 rounded-DEFAULT pl-4 pr-9 py-3 font-sans text-body-md text-on-surface focus:ring-[1.5px] focus:ring-secondary outline-none cursor-pointer transition-all">
+            <option value="">All recipes...</option>
+          </select>
+          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">expand_more</span>
+        </div>
+        <button id="ingClear" onclick="clearIngredient()"
+          class="hidden w-11 h-11 rounded-DEFAULT border border-outline-variant bg-surface-container items-center justify-center text-outline text-xl active:bg-error active:text-white active:border-error transition-all flex-shrink-0">✕</button>
       </div>
     </div>
-    <div id="homeContent"></div>
+    <div id="homeContent" class="pb-4"></div>
   </div>
 
   <!-- PINNED -->
-  <div class="view" id="view-favourites">
-    <div class="section-label">Pinned Recipes</div>
-    <div class="recipe-list" id="favList"></div>
-    <div class="empty" id="favEmpty" style="display:none">
-      <div class="empty-icon"><span class="ms">bookmark</span></div>
-      <p>Pin recipes to find them here.</p>
+  <div id="view-favourites" class="view hidden">
+    <p class="px-margin-mobile pt-5 pb-3 font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold">Pinned Recipes</p>
+    <div id="favList" class="px-margin-mobile flex flex-col gap-2"></div>
+    <div id="favEmpty" class="hidden flex-col items-center justify-center py-16">
+      <span class="material-symbols-outlined text-[48px] text-surface-container-highest mb-3">bookmark</span>
+      <p class="font-sans text-body-md text-on-surface-variant">Pin recipes to find them here.</p>
     </div>
   </div>
 
   <!-- NEW -->
-  <div class="view" id="view-new">
-    <div class="section-label">Recently Added</div>
-    <div class="recipe-list" id="newList"></div>
+  <div id="view-new" class="view hidden">
+    <p class="px-margin-mobile pt-5 pb-3 font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold">Recently Added</p>
+    <div id="newList" class="px-margin-mobile flex flex-col gap-2"></div>
   </div>
 
-  <!-- SHOPPING LIST -->
-  <div class="view" id="view-shoplist">
-    <div class="section-label">Shopping List</div>
-    <div style="padding:0 14px 12px;display:flex;gap:8px">
-      <button onclick="copyShoppingTab()" style="flex:1;background:var(--accent);border:none;border-radius:var(--radius);padding:11px;font-size:13px;font-weight:700;font-family:var(--font);color:#fff;cursor:pointer;letter-spacing:.04em;text-transform:uppercase">Copy List</button>
-      <button onclick="clearShoppingTab()" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:11px 16px;font-size:13px;font-weight:700;font-family:var(--font);color:var(--text3);cursor:pointer">Clear</button>
+  <!-- SHOPPING -->
+  <div id="view-shoplist" class="view hidden">
+    <p class="px-margin-mobile pt-5 pb-3 font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold">Shopping List</p>
+    <div class="px-margin-mobile flex gap-2 pb-stack-sm">
+      <button onclick="copyShoppingTab()" class="flex-1 bg-secondary text-white font-sans text-label-md uppercase tracking-widest font-semibold py-3 rounded-DEFAULT active:opacity-80 transition-opacity">Copy List</button>
+      <button onclick="clearShoppingTab()" class="bg-surface-container border border-outline-variant text-on-surface-variant font-sans text-label-md font-semibold px-5 py-3 rounded-DEFAULT active:opacity-80 transition-opacity">Clear</button>
     </div>
-    <div class="recipe-list" id="shopTabContent"></div>
-    <div class="empty" id="shopTabEmpty" style="display:none">
-      <div class="empty-icon"><span class="ms">shopping_bag</span></div>
-      <p>Add ingredients from a recipe's shopping list.</p>
+    <div id="shopTabContent" class="px-margin-mobile flex flex-col gap-2"></div>
+    <div id="shopTabEmpty" class="hidden flex-col items-center justify-center py-16">
+      <span class="material-symbols-outlined text-[48px] text-surface-container-highest mb-3">shopping_bag</span>
+      <p class="font-sans text-body-md text-on-surface-variant">Add ingredients from a recipe's shopping list.</p>
     </div>
   </div>
 
   <!-- DETAIL -->
-  <div class="view" id="view-detail">
-    <div class="detail-hero" id="detailHero">
-      <button class="hero-back" onclick="closeDetail()">
-        <span class="ms">arrow_back</span>
+  <div id="view-detail" class="view hidden">
+    <div id="detailHero" class="min-h-[140px] relative flex items-end px-5 pb-4 pt-16">
+      <button onclick="closeDetail()"
+        class="absolute top-5 left-5 w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-DEFAULT flex items-center justify-center shadow-sm active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-[22px] text-on-surface">arrow_back</span>
       </button>
-      <div class="hero-actions">
-        <button class="hero-btn" id="detailPin" onclick="togglePinDetail()">
-          <span class="ms" id="detailPinIcon">bookmark</span>
+      <div class="absolute top-5 right-5 flex gap-2">
+        <button id="detailPin" onclick="togglePinDetail()"
+          class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-DEFAULT flex items-center justify-center shadow-sm active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[20px] text-on-surface" id="detailPinIcon">bookmark</span>
         </button>
-        <button class="hero-btn" onclick="shareRecipe()">
-          <span class="ms">ios_share</span>
+        <button onclick="shareRecipe()"
+          class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-DEFAULT flex items-center justify-center shadow-sm active:scale-95 transition-transform">
+          <span class="material-symbols-outlined text-[20px] text-on-surface">ios_share</span>
         </button>
       </div>
     </div>
-    <div class="detail-body">
-      <div class="detail-title" id="detailTitle"></div>
-      <div class="detail-tags" id="detailTags"></div>
-      <div class="card-block">
-        <div class="card-block-title">Serving Size</div>
-        <div class="portion-row">
-          <span class="portion-label">Serves</span>
-          <div><span class="portion-value" id="portionVal">2</span><span class="portion-suffix">people</span></div>
+    <div class="px-margin-mobile pt-stack-md pb-8">
+      <h2 id="detailTitle" class="font-serif text-headline-lg-mobile font-bold text-primary leading-snug mb-3"></h2>
+      <div id="detailTags" class="flex flex-wrap gap-2 mb-stack-lg"></div>
+      <!-- Serving size -->
+      <div class="bg-surface-container-lowest rounded-lg p-4 mb-stack-lg shadow-long-soft">
+        <p class="font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold mb-3">Serving Size</p>
+        <div class="flex justify-between items-baseline mb-3">
+          <span class="font-sans text-body-md text-on-surface-variant">Serves</span>
+          <div class="flex items-baseline gap-1.5">
+            <span id="portionVal" class="font-serif text-[36px] font-bold text-secondary leading-none">2</span>
+            <span class="font-sans text-caption text-outline">people</span>
+          </div>
         </div>
         <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()">
       </div>
-      <div class="block-label">Ingredients</div>
-      <div class="ing-list" id="ingList"></div>
-      <div class="block-label">Method</div>
-      <div class="steps-list" id="stepsList"></div>
-      <div class="block-label">Shopping List</div>
-      <p style="font-size:13px;color:var(--text3);margin-bottom:12px;font-weight:500;">Tick what you already have — see what to buy.</p>
-      <div class="shop-list" id="shopList"></div>
-      <div class="export-row">
-        <button class="export-btn" onclick="copyShopList()">Copy Shopping List</button>
-      </div>
+      <!-- Ingredients -->
+      <h3 class="font-serif text-headline-md text-primary mb-stack-sm">Ingredients</h3>
+      <div id="ingList" class="bg-surface-container-lowest rounded-lg overflow-hidden mb-stack-lg shadow-long-soft"></div>
+      <!-- Method -->
+      <h3 class="font-serif text-headline-md text-primary mb-stack-sm">Method</h3>
+      <div id="stepsList" class="flex flex-col gap-3 mb-stack-lg"></div>
+      <!-- Shopping list -->
+      <h3 class="font-serif text-headline-md text-primary mb-1">Shopping List</h3>
+      <p class="font-sans text-caption text-outline mb-3">Tick what you already have — see what to buy.</p>
+      <div id="shopList" class="bg-surface-container-lowest rounded-lg overflow-hidden mb-stack-md shadow-long-soft"></div>
+      <button onclick="copyShopList()" class="w-full bg-secondary text-white font-sans text-label-md uppercase tracking-widest font-semibold py-4 rounded-DEFAULT shadow-long-soft active:opacity-80 transition-opacity mb-6">Copy Shopping List</button>
     </div>
   </div>
 
 </main>
 
-<nav class="tab-bar">
-  <button class="tab active" id="tab-home" onclick="switchTab('home')">
-    <span class="ms">home</span>
-    Recipes
+<!-- ── TAB BAR ── -->
+<nav class="flex-shrink-0 h-[68px] bg-surface-container-lowest border-t border-outline-variant/50 flex shadow-[0px_-4px_20px_rgba(26,26,26,0.04)]">
+  <button id="tab-home" onclick="switchTab('home')" class="tab flex-1 flex flex-col items-center justify-center gap-1 text-secondary transition-colors pb-1">
+    <span class="material-symbols-outlined icon-fill text-[24px]">home</span>
+    <span class="font-sans text-label-md">Recipes</span>
   </button>
-  <button class="tab" id="tab-favourites" onclick="switchTab('favourites')">
-    <span class="ms">bookmark</span>
-    Pinned
+  <button id="tab-favourites" onclick="switchTab('favourites')" class="tab flex-1 flex flex-col items-center justify-center gap-1 text-outline transition-colors pb-1">
+    <span class="material-symbols-outlined text-[24px]">bookmark</span>
+    <span class="font-sans text-label-md">Pinned</span>
   </button>
-  <button class="tab" id="tab-new" onclick="switchTab('new')">
-    <span class="ms">add_circle</span>
-    New
+  <button id="tab-new" onclick="switchTab('new')" class="tab flex-1 flex flex-col items-center justify-center gap-1 text-outline transition-colors pb-1">
+    <span class="material-symbols-outlined text-[24px]">add_circle</span>
+    <span class="font-sans text-label-md">New</span>
   </button>
-  <button class="tab" id="tab-shoplist" onclick="switchTab('shoplist')">
-    <span class="ms">shopping_bag</span>
-    Shopping
+  <button id="tab-shoplist" onclick="switchTab('shoplist')" class="tab flex-1 flex flex-col items-center justify-center gap-1 text-outline transition-colors pb-1">
+    <span class="material-symbols-outlined text-[24px]">shopping_bag</span>
+    <span class="font-sans text-label-md">Shopping</span>
   </button>
 </nav>
 
-<div class="toast" id="toast"></div>
+<div id="toast"
+  class="fixed bottom-[88px] left-1/2 -translate-x-1/2 translate-y-3 opacity-0 pointer-events-none z-50 bg-surface-container-lowest border border-secondary/30 text-on-surface font-sans text-[13px] font-semibold px-4 py-2.5 rounded-DEFAULT shadow-lift whitespace-nowrap transition-all duration-200">
+</div>
 
 <script src="recipes.js"></script>
 <script src="recipes2.js"></script>
@@ -425,6 +316,22 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:6px;bac
 <script src="recipes4.js"></script>
 <script>
 const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3,...RECIPES4];
+
+// ── SEAFOOD GROUP
+const SEAFOOD_INGREDIENTS=new Set(['Clams','Dover Sole','Fish','Mackerel','Mussels','Oysters','Prawns','Salmon','Sardines','Scallops','Seafood','Smoked Trout','Snapper','Tuna']);
+
+function getIngredientOptions(){
+  const raw=[...new Set(ALL_RECIPES.map(r=>r.mainIngredient))].sort();
+  const grouped=[]; let seafoodAdded=false;
+  raw.forEach(ing=>{
+    if(SEAFOOD_INGREDIENTS.has(ing)){
+      if(!seafoodAdded){grouped.push({label:'Seafood',value:'__SEAFOOD__'});seafoodAdded=true;}
+    } else {
+      grouped.push({label:ing,value:ing});
+    }
+  });
+  return grouped;
+}
 
 // ── HAPTIC
 function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
@@ -436,37 +343,48 @@ let activeIngredient=null,shopChecked={},stepsDone={},portionScale=1;
 let wakeLock=null;
 let openCategories=new Set();
 
-// ── DARK / LIGHT MODE
+// ── DARK MODE
 let isDark=false;
 function toggleMode(){
-  haptic(8);
-  isDark=!isDark;
-  document.body.classList.toggle('dark',isDark);
+  haptic(8); isDark=!isDark;
+  document.documentElement.classList.toggle('dark',isDark);
   document.getElementById('modeIcon').textContent=isDark?'light_mode':'dark_mode';
   localStorage.setItem('darkMode',isDark?'1':'0');
 }
 (function(){
-  const saved=localStorage.getItem('darkMode');
-  if(saved==='1'){
+  if(localStorage.getItem('darkMode')==='1'){
     isDark=true;
-    document.body.classList.add('dark');
+    document.documentElement.classList.add('dark');
     document.getElementById('modeIcon').textContent='light_mode';
-  } else {
-    isDark=false;
-    document.getElementById('modeIcon').textContent='dark_mode';
   }
 })();
+
+// ── VIEWS
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>{v.classList.add('hidden');v.classList.remove('active')});
+  const el=document.getElementById('view-'+name);
+  el.classList.remove('hidden');el.classList.add('active');
+}
 
 // ── TABS
 function switchTab(tab){
   haptic(8);
   if(currentRecipe&&tab!=='detail')closeDetail(false);
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  document.getElementById('view-'+tab).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.classList.remove('text-secondary');t.classList.add('text-outline');
+    const ic=t.querySelector('.material-symbols-outlined');
+    if(ic)ic.classList.remove('icon-fill');
+  });
+  const at=document.getElementById('tab-'+tab);
+  if(at){
+    at.classList.add('text-secondary');at.classList.remove('text-outline');
+    const ic=at.querySelector('.material-symbols-outlined');
+    if(ic)ic.classList.add('icon-fill');
+  }
+  showView(tab);
   currentTab=tab;
-  document.querySelector('header').style.display=tab==='detail'?'none':'';
+  const hdr=document.getElementById('appHeader');
+  if(hdr)hdr.style.display=(tab==='detail')?'none':'';
   if(tab==='home')renderHome();
   if(tab==='favourites')renderFavourites();
   if(tab==='new')renderNew();
@@ -475,17 +393,10 @@ function switchTab(tab){
 
 // ── CATEGORY ICONS
 const CAT_ICONS={
-  'Dips & Starters':'tapas',
-  'Salads':'eco',
-  'Soups':'soup_kitchen',
-  'Seafood':'set_meal',
-  'Meat & Poultry':'restaurant',
-  'Vegetarian':'grass',
-  'Pasta & Rice':'ramen_dining',
-  'Sides':'brunch_dining',
-  'Bread & Bakes':'bakery_dining',
-  'Sauces':'water_drop',
-  'Desserts':'cake'
+  'Dips & Starters':'tapas','Salads':'eco','Soups':'soup_kitchen',
+  'Seafood':'set_meal','Meat & Poultry':'restaurant','Vegetarian':'grass',
+  'Pasta & Rice':'ramen_dining','Sides':'brunch_dining',
+  'Bread & Bakes':'bakery_dining','Sauces':'water_drop','Desserts':'cake'
 };
 
 // ── HOME
@@ -493,33 +404,38 @@ function renderHome(){populateIngSelect();renderAccordion()}
 
 function populateIngSelect(){
   const sel=document.getElementById('ingSelect');
-  const ingredients=[...new Set(ALL_RECIPES.map(r=>r.mainIngredient))].sort();
-  sel.innerHTML=`<option value="">All recipes...</option>`+ingredients.map(i=>`<option value="${i}"${activeIngredient===i?' selected':''}>${i}</option>`).join('');
-  sel.classList.toggle('has-value',!!activeIngredient);
-  document.getElementById('ingClear').classList.toggle('visible',!!activeIngredient);
+  const options=getIngredientOptions();
+  sel.innerHTML=`<option value="">All recipes...</option>`+
+    options.map(o=>`<option value="${o.value}"${activeIngredient===o.value?' selected':''}>${o.label}</option>`).join('');
+  const has=!!activeIngredient;
+  sel.classList.toggle('ring-[1.5px]',has);
+  sel.classList.toggle('ring-secondary',has);
+  sel.classList.toggle('text-secondary',has);
+  const clr=document.getElementById('ingClear');
+  clr.classList.toggle('hidden',!has);
+  clr.classList.toggle('flex',has);
 }
 
 function onIngSelect(){
-  haptic(8);
-  activeIngredient=document.getElementById('ingSelect').value||null;
-  document.getElementById('ingSelect').classList.toggle('has-value',!!activeIngredient);
-  document.getElementById('ingClear').classList.toggle('visible',!!activeIngredient);
-  renderAccordion();
+  haptic(8);activeIngredient=document.getElementById('ingSelect').value||null;
+  populateIngSelect();renderAccordion();
 }
-
 function clearIngredient(){
-  haptic(8);
-  activeIngredient=null;
-  document.getElementById('ingSelect').value='';
-  document.getElementById('ingSelect').classList.remove('has-value');
-  document.getElementById('ingClear').classList.remove('visible');
-  renderAccordion();
+  haptic(8);activeIngredient=null;populateIngSelect();renderAccordion();
 }
 
 function getFiltered(){
-  let list=ALL_RECIPES;
-  if(activeIngredient)list=list.filter(r=>r.mainIngredient===activeIngredient);
-  return list;
+  if(!activeIngredient)return ALL_RECIPES;
+  if(activeIngredient==='__SEAFOOD__')return ALL_RECIPES.filter(r=>SEAFOOD_INGREDIENTS.has(r.mainIngredient));
+  return ALL_RECIPES.filter(r=>r.mainIngredient===activeIngredient);
+}
+
+function diffClass(d){
+  return d==='easy'
+    ?'bg-secondary-container/50 text-on-secondary-container'
+    :d==='medium'
+    ?'bg-amber-100 text-amber-800'
+    :'bg-red-100 text-red-700';
 }
 
 function renderAccordion(){
@@ -527,80 +443,97 @@ function renderAccordion(){
   if(activeIngredient)recipes.forEach(r=>openCategories.add(r.category));
   const el=document.getElementById('homeContent');
   if(!recipes.length){
-    el.innerHTML=`<div class="empty"><div class="empty-icon"><span class="ms">search_off</span></div><p>No recipes found.</p></div>`;
-    return;
+    el.innerHTML=`<div class="flex flex-col items-center py-16">
+      <span class="material-symbols-outlined text-[48px] text-surface-container-highest mb-3">search_off</span>
+      <p class="font-sans text-body-md text-on-surface-variant">No recipes found.</p>
+    </div>`;return;
   }
-  let html='<div style="padding:10px 0 6px">';
+  let html='<div class="flex flex-col gap-2 px-margin-mobile pt-stack-sm pb-stack-lg">';
   CATEGORIES.forEach(cat=>{
     const list=recipes.filter(r=>r.category===cat);
     if(!list.length)return;
     const isOpen=openCategories.has(cat);
     const icon=CAT_ICONS[cat]||'restaurant';
-    html+=`<div class="cat-section">
-      <div class="cat-header${isOpen?' open':''}" onclick="toggleCat('${cat.replace(/&/g,'and')}','${cat}')">
-        <div class="cat-header-left">
-          <div class="cat-dot"></div>
-          <span class="cat-name">${cat}</span>
-          <span class="cat-count">${list.length}</span>
+    const safeCat=cat.replace(/['"&<>]/g,'_');
+    html+=`
+    <div class="bg-surface-container-lowest rounded-lg shadow-long-soft overflow-hidden">
+      <button onclick="toggleCat('${safeCat}','${cat}')"
+        class="w-full flex items-center justify-between px-4 py-3.5 transition-colors active:bg-surface-container ${isOpen?'border-b border-outline-variant/50':''}">
+        <div class="flex items-center gap-3">
+          <div class="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></div>
+          <span class="font-serif text-[17px] font-bold text-primary">${cat}</span>
+          <span class="font-sans text-caption text-outline bg-surface-container px-2 py-0.5 rounded-full">${list.length}</span>
         </div>
-        <span class="cat-chevron"><span class="ms">expand_more</span></span>
-      </div>
-      <div class="cat-body${isOpen?' open':''}">
-        ${list.map(r=>{const ip=pinned.includes(r.id);return`<div class="cat-recipe-row" onclick="openRecipe(${r.id})">
-          <div class="cat-swatch"><span class="ms">${icon}</span></div>
-          <div style="flex:1;min-width:0">
-            <div class="cat-recipe-name">${r.name}</div>
-            <div class="cat-recipe-meta">
-              <span class="tag tag-${r.difficulty}">${cap(r.difficulty)}</span>
-              <span class="tag tag-muted">${r.calories} kcal</span>
-              <span class="tag tag-muted">${r.time}</span>
+        <span class="material-symbols-outlined text-[20px] text-outline transition-transform duration-200 ${isOpen?'rotate-180 !text-secondary':''}">expand_more</span>
+      </button>
+      ${isOpen?`<div>
+        ${list.map((r,idx)=>{const ip=pinned.includes(r.id);return`
+        <button onclick="openRecipe(${r.id})" class="w-full flex items-center gap-3 px-4 py-3 text-left active:bg-surface-container transition-colors ${idx<list.length-1?'border-b border-outline-variant/40':''}">
+          <div class="w-10 h-10 rounded-DEFAULT bg-secondary-container/40 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[18px] text-secondary">${icon}</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="font-serif text-[15px] font-bold text-primary leading-snug mb-1">${r.name}</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <span class="font-sans text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-sm ${diffClass(r.difficulty)}">${cap(r.difficulty)}</span>
+              <span class="font-sans text-[10px] font-medium px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.calories} kcal</span>
+              <span class="font-sans text-[10px] font-medium px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.time}</span>
             </div>
           </div>
-          <button class="card-pin${ip?' pinned':''}" onclick="event.stopPropagation();togglePin(${r.id})">
-            <span class="ms${ip?' fill':''}">${ip?'bookmark':'bookmark'}</span>
+          <button onclick="event.stopPropagation();togglePin(${r.id})"
+            class="w-8 h-8 rounded-DEFAULT flex items-center justify-center flex-shrink-0 transition-all ${ip?'text-secondary':'text-outline hover:text-secondary'}">
+            <span class="material-symbols-outlined text-[20px] ${ip?'icon-fill':''}">bookmark</span>
           </button>
-        </div>`}).join('')}
-      </div>
+        </button>`}).join('')}
+      </div>`:''}
     </div>`;
   });
   html+='</div>';
   el.innerHTML=html;
 }
 
-function toggleCat(safeKey,cat){
+function toggleCat(s,cat){
   haptic(8);
   if(openCategories.has(cat))openCategories.delete(cat);
   else openCategories.add(cat);
   renderAccordion();
 }
 
-// ── FAVOURITES
+// ── RECIPE LIST CARD (pinned/new)
 function recipeCardHTML(r){
   const ip=pinned.includes(r.id);
   const icon=CAT_ICONS[r.category]||'restaurant';
-  return`<div class="recipe-card${ip?' pinned':''}" onclick="openRecipe(${r.id})">
-    <div class="card-swatch"><span class="ms">${icon}</span></div>
-    <div class="card-info">
-      <div class="card-name">${r.name}</div>
-      <div class="card-meta">
-        <span class="tag tag-${r.difficulty}">${cap(r.difficulty)}</span>
-        <span class="tag tag-muted">${r.calories} kcal</span>
-        <span class="tag tag-muted">${r.time}</span>
+  return`<button onclick="openRecipe(${r.id})"
+    class="w-full flex items-center gap-3 px-4 py-3 bg-surface-container-lowest rounded-lg shadow-long-soft text-left active:scale-[.99] transition-all">
+    <div class="w-11 h-11 rounded-DEFAULT bg-secondary-container/40 flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-[20px] text-secondary">${icon}</span>
+    </div>
+    <div class="flex-1 min-w-0">
+      <p class="font-serif text-[15px] font-bold text-primary leading-snug mb-1">${r.name}</p>
+      <div class="flex gap-1.5 flex-wrap">
+        <span class="font-sans text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-sm ${diffClass(r.difficulty)}">${cap(r.difficulty)}</span>
+        <span class="font-sans text-[10px] font-medium px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.calories} kcal</span>
+        <span class="font-sans text-[10px] font-medium px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.time}</span>
       </div>
     </div>
-    <button class="card-pin${ip?' pinned':''}" onclick="event.stopPropagation();togglePin(${r.id})">
-      <span class="ms${ip?' fill':''}">${ip?'bookmark':'bookmark'}</span>
+    <button onclick="event.stopPropagation();togglePin(${r.id})"
+      class="w-8 h-8 rounded-DEFAULT flex items-center justify-center flex-shrink-0 transition-all ${ip?'text-secondary':'text-outline'}">
+      <span class="material-symbols-outlined text-[20px] ${ip?'icon-fill':''}">bookmark</span>
     </button>
-  </div>`;
+  </button>`;
 }
 
 function renderFavourites(){
   const list=document.getElementById('favList');
   const empty=document.getElementById('favEmpty');
   const pr=ALL_RECIPES.filter(r=>pinned.includes(r.id));
-  if(!pr.length){list.innerHTML='';empty.style.display='';return}
-  empty.style.display='none';
+  if(!pr.length){list.innerHTML='';empty.classList.remove('hidden');empty.classList.add('flex');return}
+  empty.classList.add('hidden');empty.classList.remove('flex');
   list.innerHTML=pr.map(r=>recipeCardHTML(r)).join('');
+}
+function renderNew(){
+  const sorted=[...ALL_RECIPES].sort((a,b)=>b.id-a.id);
+  document.getElementById('newList').innerHTML=sorted.map(r=>recipeCardHTML(r)).join('');
 }
 
 function togglePin(id){
@@ -612,18 +545,15 @@ function togglePin(id){
   if(currentTab==='favourites')renderFavourites();
   toast(pinned.includes(id)?'Recipe pinned':'Unpinned');
 }
-
 function togglePinDetail(){
-  if(!currentRecipe)return;
-  haptic(12);togglePin(currentRecipe.id);updateDetailPin();
+  if(!currentRecipe)return; haptic(12);togglePin(currentRecipe.id);updateDetailPin();
 }
-
 function updateDetailPin(){
-  const btn=document.getElementById('detailPin');
-  const icon=document.getElementById('detailPinIcon');
   const ip=pinned.includes(currentRecipe.id);
-  btn.classList.toggle('pinned',ip);
-  icon.className='ms'+(ip?' fill':'');
+  const btn=document.getElementById('detailPin');
+  btn.className=`w-10 h-10 border rounded-DEFAULT flex items-center justify-center shadow-sm active:scale-95 transition-all ${ip?'bg-secondary border-secondary':'bg-surface-container-lowest border-outline-variant/60'}`;
+  const icon=document.getElementById('detailPinIcon');
+  icon.className=`material-symbols-outlined text-[20px] ${ip?'icon-fill text-white':'text-on-surface'}`;
 }
 
 // ── DETAIL
@@ -639,10 +569,9 @@ function openRecipe(id){
   slider.max=Math.max(20,currentRecipe.serves*4);
   document.getElementById('portionVal').textContent=currentRecipe.serves;
   renderDetailContent();
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('view-detail').classList.add('active');
-  document.querySelector('header').style.display='none';
+  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('text-secondary');t.classList.add('text-outline');});
+  showView('detail');
+  document.getElementById('appHeader').style.display='none';
   currentTab='detail';
   document.getElementById('main').scrollTop=0;
 }
@@ -653,52 +582,57 @@ function renderDetailContent(){
   document.getElementById('detailTitle').textContent=r.name;
   updateDetailPin();
   document.getElementById('detailTags').innerHTML=`
-    <span class="detail-tag tag-${r.difficulty}">${cap(r.difficulty)}</span>
-    <span class="detail-tag tag-muted">${r.calories} kcal/serve</span>
-    <span class="detail-tag tag-muted">${r.time}</span>
-    <span class="detail-tag tag-muted">Serves ${r.serves}</span>`;
+    <span class="font-sans text-[11px] font-bold uppercase tracking-wide px-3 py-1 rounded-full ${diffClass(r.difficulty)}">${cap(r.difficulty)}</span>
+    <span class="font-sans text-[11px] font-medium px-3 py-1 rounded-full bg-surface-container text-outline">${r.calories} kcal/serve</span>
+    <span class="font-sans text-[11px] font-medium px-3 py-1 rounded-full bg-surface-container text-outline">${r.time}</span>
+    <span class="font-sans text-[11px] font-medium px-3 py-1 rounded-full bg-surface-container text-outline">Serves ${r.serves}</span>`;
   renderIngredients();renderSteps();renderShopList();
 }
 
 function heroGrad(cat){
-  const gradients={
-    'Dips & Starters':'linear-gradient(135deg,#d4ede4,#c8e8da)',
-    'Salads':'linear-gradient(135deg,#d4edce,#c4e4bc)',
-    'Soups':'linear-gradient(135deg,#ece8d8,#e0dcc8)',
-    'Seafood':'linear-gradient(135deg,#ccdcf0,#b8cce4)',
-    'Meat & Poultry':'linear-gradient(135deg,#f0e0d0,#e8d0bc)',
-    'Vegetarian':'linear-gradient(135deg,#d0edcc,#bce4b4)',
-    'Pasta & Rice':'linear-gradient(135deg,#f0e8cc,#e8dab4)',
-    'Sides':'linear-gradient(135deg,#e8e4d4,#dcd8c4)',
-    'Bread & Bakes':'linear-gradient(135deg,#f0e4d0,#e8d8bc)',
-    'Sauces':'linear-gradient(135deg,#e8d8ec,#dcc8e0)',
-    'Desserts':'linear-gradient(135deg,#f0d8d8,#e8c8c8)',
+  const g={
+    'Dips & Starters':'linear-gradient(150deg,#ddf0e8,#cce8d8)',
+    'Salads':         'linear-gradient(150deg,#d8f0cc,#c4e4b4)',
+    'Soups':          'linear-gradient(150deg,#f0e8d8,#e4dccc)',
+    'Seafood':        'linear-gradient(150deg,#d0e4f4,#bcd4ec)',
+    'Meat & Poultry': 'linear-gradient(150deg,#f4e4d4,#ecd4bc)',
+    'Vegetarian':     'linear-gradient(150deg,#d4f0cc,#bce4b0)',
+    'Pasta & Rice':   'linear-gradient(150deg,#f4eccC,#ece0b4)',
+    'Sides':          'linear-gradient(150deg,#ece8d8,#e0dccc)',
+    'Bread & Bakes':  'linear-gradient(150deg,#f4e8d4,#ecdcc0)',
+    'Sauces':         'linear-gradient(150deg,#ecdcf0,#e0cce4)',
+    'Desserts':       'linear-gradient(150deg,#f4dce0,#eccccc)',
   };
-  if(isDark){
-    return gradients[cat]
-      ?gradients[cat].replace(/#[a-f0-9]{6}/gi,m=>{const d=parseInt(m.slice(1),16);const r=(d>>16&255)>>1,g=(d>>8&255)>>1,b=(d&255)>>1;return`#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`})
-      :'linear-gradient(135deg,#1e2420,#1a2018)';
-  }
-  return gradients[cat]||'linear-gradient(135deg,#f0ece8,#e8e4e0)';
+  return g[cat]||'linear-gradient(150deg,#f0ece8,#e8e4e0)';
 }
 
 function renderIngredients(){
-  document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map(ing=>{
+  document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
     const display=fmtIng(ing.amount*portionScale,ing.unit);
-    return`<div class="ing-row"><div class="ing-dot"></div><span class="ing-name">${ing.name}</span><span class="ing-amount">${display}</span></div>`;
+    const border=i<arr.length-1?'border-b border-outline-variant/40':'';
+    return`<div class="flex items-center px-4 py-3 gap-3 ${border}">
+      <div class="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></div>
+      <span class="flex-1 font-sans text-body-md text-on-surface">${ing.name}</span>
+      <span class="font-sans text-[14px] font-semibold text-secondary whitespace-nowrap">${display}</span>
+    </div>`;
   }).join('');
 }
 
 function renderSteps(){
   const done=stepsDone[currentRecipe.id];
+  /* Design spec: large serif step numbers to the LEFT of text */
   document.getElementById('stepsList').innerHTML=currentRecipe.steps.map((s,i)=>`
-    <div class="step-item${done.has(i)?' done':''}" onclick="toggleStep(${i})">
-      <div class="step-num-wrap"><span class="step-num">${done.has(i)?'✓':(i+1)}</span></div>
-      <div class="step-text" style="flex:1">${s}</div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding-left:12px;border-left:1.5px solid var(--border);flex-shrink:0">
-        <span style="font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);font-family:var(--font)">Timer</span>
-        <button class="step-timer-btn${timerStepIdx===i&&timerRunning?' running':''}" onclick="event.stopPropagation();openTimerModal(${i},'Step ${i+1}')" title="Set timer">
-          <span class="ms">timer</span>
+    <div onclick="toggleStep(${i})"
+      class="flex gap-4 p-4 bg-surface-container-lowest rounded-lg shadow-long-soft cursor-pointer active:scale-[.99] transition-all ${done.has(i)?'opacity-45':''}">
+      <span class="font-serif text-[32px] font-bold leading-none flex-shrink-0 mt-0.5 w-10 text-center ${done.has(i)?'text-secondary':'text-secondary/20'}">${done.has(i)?'✓':(i+1)}</span>
+      <div class="flex-1 pt-1">
+        <p class="font-sans text-body-md text-on-surface-variant leading-relaxed">${s}</p>
+      </div>
+      <div class="flex flex-col items-center gap-1 pl-3 border-l border-outline-variant/50 flex-shrink-0">
+        <span class="font-sans text-[8px] font-semibold text-outline uppercase tracking-wider">Timer</span>
+        <button onclick="event.stopPropagation();openTimerModal(${i},'Step ${i+1}')"
+          class="w-7 h-7 rounded-sm border border-outline-variant bg-surface-container flex items-center justify-center active:bg-secondary active:border-secondary active:text-white transition-all ${timerStepIdx===i&&timerRunning?'bg-secondary border-secondary':''}">
+          <span class="material-symbols-outlined text-[14px] ${timerStepIdx===i&&timerRunning?'text-white':'text-outline'}">timer</span>
         </button>
       </div>
     </div>`).join('');
@@ -713,12 +647,16 @@ function toggleStep(i){
 
 function renderShopList(){
   const c=shopChecked[currentRecipe.id];
-  document.getElementById('shopList').innerHTML=currentRecipe.ingredients.map((ing,i)=>{
+  document.getElementById('shopList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
     const display=fmtIng(ing.amount*portionScale,ing.unit);
-    return`<div class="shop-row${c.has(i)?' checked':''}" onclick="toggleShop(${i})">
-      <div class="shop-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="shop-name">${ing.name}</span>
-      <span class="shop-amt">${display}</span>
+    const border=i<arr.length-1?'border-b border-outline-variant/40':'';
+    const checked=c.has(i);
+    return`<div onclick="toggleShop(${i})" class="flex items-center gap-3 px-4 py-3 ${border} cursor-pointer active:bg-surface-container transition-colors">
+      <div class="w-5 h-5 rounded-sm border-2 ${checked?'bg-secondary border-secondary':'border-outline'} flex items-center justify-center flex-shrink-0 transition-all">
+        ${checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
+      </div>
+      <span class="flex-1 font-sans text-body-md ${checked?'line-through text-outline':'text-on-surface'}">${ing.name}</span>
+      <span class="font-sans text-[14px] font-semibold ${checked?'text-outline':'text-secondary'} whitespace-nowrap">${display}</span>
     </div>`;
   }).join('');
 }
@@ -732,17 +670,15 @@ function toggleShop(i){
 
 function copyShopList(){
   haptic(12);
-  const r=currentRecipe;
-  const c=shopChecked[r.id];
+  const r=currentRecipe;const c=shopChecked[r.id];
   const serves=Math.round(r.serves*portionScale);
   const toBuy=r.ingredients.filter((_,i)=>!c.has(i));
-  const items=toBuy.map(ing=>`• ${ing.name}: ${fmtIng(ing.amount*portionScale,ing.unit)}`);
-  const text=`Shopping list for "${r.name}" (serves ${serves}):\n\n${items.length?items.join('\n'):'You already have everything!'}`;
+  const text=`Shopping list for "${r.name}" (serves ${serves}):\n\n${toBuy.length?toBuy.map(ing=>`• ${ing.name}: ${fmtIng(ing.amount*portionScale,ing.unit)}`).join('\n'):'You already have everything!'}`;
   navigator.clipboard.writeText(text).then(()=>toast('Copied & added to Shopping List'));
   toBuy.forEach(ing=>{
     const amount=fmtIng(ing.amount*portionScale,ing.unit);
-    const exists=globalShopList.find(x=>x.name===ing.name&&x.recipe===r.name);
-    if(!exists)globalShopList.push({name:ing.name,amount,recipe:r.name,checked:false});
+    if(!globalShopList.find(x=>x.name===ing.name&&x.recipe===r.name))
+      globalShopList.push({name:ing.name,amount,recipe:r.name,checked:false});
   });
   saveGlobalShopList();
 }
@@ -752,8 +688,6 @@ function closeDetail(dh=true){
   currentRecipe=null;
   switchTab(prevTab==='detail'?'home':prevTab);
 }
-
-// ── PORTION
 function onPortion(){
   haptic(6);
   const n=parseInt(document.getElementById('portionSlider').value);
@@ -762,68 +696,46 @@ function onPortion(){
   renderIngredients();renderShopList();
 }
 
-// ── NEW TAB
-function renderNew(){
-  const sorted=[...ALL_RECIPES].sort((a,b)=>b.id-a.id);
-  document.getElementById('newList').innerHTML=sorted.map(r=>recipeCardHTML(r)).join('');
-}
-
-// ── SHOPPING LIST TAB
+// ── SHOPPING TAB
 let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
-
 function saveGlobalShopList(){localStorage.setItem('globalShopList',JSON.stringify(globalShopList))}
-
 function renderShoppingTab(){
   const empty=document.getElementById('shopTabEmpty');
   const content=document.getElementById('shopTabContent');
-  if(!globalShopList.length){empty.style.display='';content.innerHTML='';return}
-  empty.style.display='none';
+  if(!globalShopList.length){empty.classList.remove('hidden');empty.classList.add('flex');content.innerHTML='';return}
+  empty.classList.add('hidden');empty.classList.remove('flex');
   const byRecipe={};
   globalShopList.forEach((item,i)=>{
     if(!byRecipe[item.recipe])byRecipe[item.recipe]=[];
     byRecipe[item.recipe].push({...item,idx:i});
   });
   content.innerHTML=Object.entries(byRecipe).map(([recipe,items])=>`
-    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:8px;box-shadow:var(--shadow-sm)">
-      <div style="padding:9px 14px 7px;font-size:10px;font-weight:700;font-family:var(--font);text-transform:uppercase;letter-spacing:.09em;color:var(--text3);border-bottom:1px solid var(--border)">${recipe}</div>
+    <div class="bg-surface-container-lowest rounded-lg shadow-long-soft overflow-hidden">
+      <div class="px-4 py-2.5 border-b border-outline-variant/40">
+        <p class="font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold">${recipe}</p>
+      </div>
       ${items.map(item=>`
-        <div class="shop-row${item.checked?' checked':''}" onclick="toggleShopTab(${item.idx})" style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer">
-          <div class="shop-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span class="shop-name">${item.name}</span>
-          <span class="shop-amt">${item.amount}</span>
+        <div onclick="toggleShopTab(${item.idx})" class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant/40 last:border-b-0 cursor-pointer active:bg-surface-container transition-colors">
+          <div class="w-5 h-5 rounded-sm border-2 ${item.checked?'bg-secondary border-secondary':'border-outline'} flex items-center justify-center flex-shrink-0 transition-all">
+            ${item.checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
+          </div>
+          <span class="flex-1 font-sans text-body-md ${item.checked?'line-through text-outline':'text-on-surface'}">${item.name}</span>
+          <span class="font-sans text-[14px] font-semibold ${item.checked?'text-outline':'text-secondary'} whitespace-nowrap">${item.amount}</span>
         </div>`).join('')}
     </div>`).join('');
 }
-
-function toggleShopTab(idx){
-  haptic(8);
-  globalShopList[idx].checked=!globalShopList[idx].checked;
-  saveGlobalShopList();
-  renderShoppingTab();
-}
-
-function clearShoppingTab(){
-  haptic(12);
-  globalShopList=[];
-  saveGlobalShopList();
-  renderShoppingTab();
-  toast('Shopping list cleared');
-}
-
+function toggleShopTab(idx){haptic(8);globalShopList[idx].checked=!globalShopList[idx].checked;saveGlobalShopList();renderShoppingTab()}
+function clearShoppingTab(){haptic(12);globalShopList=[];saveGlobalShopList();renderShoppingTab();toast('Shopping list cleared')}
 function copyShoppingTab(){
   haptic(12);
   if(!globalShopList.length){toast('List is empty');return}
   const unchecked=globalShopList.filter(i=>!i.checked);
-  const text=unchecked.length
-    ?unchecked.map(i=>`• ${i.name}: ${i.amount}`).join('\n')
-    :'You already have everything!';
-  navigator.clipboard.writeText(text).then(()=>toast('Shopping list copied'));
+  navigator.clipboard.writeText(unchecked.length?unchecked.map(i=>`• ${i.name}: ${i.amount}`).join('\n'):'You already have everything!').then(()=>toast('Shopping list copied'));
 }
 
 // ── SHARE
 function shareRecipe(){
-  haptic(8);
-  const r=currentRecipe;
+  haptic(8);const r=currentRecipe;
   const text=`${r.name}\n\nServes ${r.serves} | ${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
   if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
   else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied'));
@@ -831,28 +743,28 @@ function shareRecipe(){
 
 // ── WAKE LOCK
 async function toggleWakeLock(){
-  haptic(8);
-  const btn=document.getElementById('wakeBtn');
+  haptic(8);const btn=document.getElementById('wakeBtn');
   if(wakeLock){
     await wakeLock.release();wakeLock=null;
-    btn.classList.remove('active');toast('Screen sleep restored');
-  }else{
+    btn.classList.remove('bg-secondary','border-secondary','text-white');
+    toast('Screen sleep restored');
+  } else {
     try{
       wakeLock=await navigator.wakeLock.request('screen');
-      btn.classList.add('active');toast('Screen will stay on');
-      wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('active')});
+      btn.classList.add('bg-secondary','border-secondary','text-white');
+      toast('Screen will stay on');
+      wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('bg-secondary','border-secondary','text-white');});
     }catch(e){toast('Wake lock not available')}
   }
 }
 document.addEventListener('visibilitychange',async()=>{
-  if(document.getElementById('wakeBtn').classList.contains('active')&&document.visibilityState==='visible'){
+  if(document.getElementById('wakeBtn').classList.contains('bg-secondary')&&document.visibilityState==='visible'){
     try{wakeLock=await navigator.wakeLock.request('screen')}catch(e){}
   }
 });
 
 // ── HELPERS
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
-
 function fracStr(n){
   const w=Math.floor(n),f=n-w;
   const fr=[[0.25,'¼'],[0.33,'⅓'],[0.5,'½'],[0.67,'⅔'],[0.75,'¾']];
@@ -860,11 +772,9 @@ function fracStr(n){
   if(!m)return parseFloat(n.toFixed(1)).toString();
   return w?`${w}${m[1]}`:m[1];
 }
-
 function fmtIng(amount,unit){
   if(!amount||isNaN(amount))return'';
-  const n=amount;
-  const u=unit.toLowerCase().trim();
+  const n=amount;const u=unit.toLowerCase().trim();
   const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs'];
   if(desc.some(d=>u.includes(d)))return unit;
   if(u==='g')return Math.round(n)+'g';
@@ -881,33 +791,32 @@ function fmtIng(amount,unit){
              'stalk','stalks','piece','pieces','slice','slices','leaf','leaves',
              'lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
   if(cnt.some(c=>u.includes(c)))return(n%1===0?n.toString():fracStr(n))+' '+unit;
-  const v=n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString();
-  return v+' '+unit;
+  return(n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString())+' '+unit;
 }
 
 function toast(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);
+  t.textContent=msg;
+  t.classList.remove('opacity-0','translate-y-3');
+  t.classList.add('opacity-100','translate-y-0');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>{t.classList.add('opacity-0','translate-y-3');t.classList.remove('opacity-100','translate-y-0')},2400);
 }
-
-function hardRefresh(){
-  haptic(8);toast('Refreshing...');
-  setTimeout(()=>location.reload(true),400);
-}
+function hardRefresh(){haptic(8);toast('Refreshing...');setTimeout(()=>location.reload(true),400)}
 
 // ── TIMER
 let timerInterval=null,timerSeconds=0,timerRunning=false,timerStepIdx=-1;
 let pickMin=0,pickSec=0;
 
-function openTimerModal(stepIdx,label){
-  haptic(8);
-  timerStepIdx=stepIdx;
-  document.getElementById('timerModal').classList.add('visible');
-  document.getElementById('pickMin').textContent=String(pickMin).padStart(1,'0');
+function openTimerModal(stepIdx){
+  haptic(8);timerStepIdx=stepIdx;
+  const m=document.getElementById('timerModal');m.classList.remove('hidden');m.classList.add('flex');
+  document.getElementById('pickMin').textContent=pickMin;
   document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0');
 }
-function closeTimerModal(){document.getElementById('timerModal').classList.remove('visible')}
+function closeTimerModal(){
+  const m=document.getElementById('timerModal');m.classList.add('hidden');m.classList.remove('flex');
+}
 function adjustPick(field,delta){
   haptic(6);
   if(field==='min'){pickMin=Math.max(0,Math.min(99,pickMin+delta));document.getElementById('pickMin').textContent=pickMin}
@@ -916,36 +825,33 @@ function adjustPick(field,delta){
 function startTimerFromModal(){
   const total=pickMin*60+pickSec;
   if(total<=0){toast('Set a time first');return}
-  haptic(12);closeTimerModal();
-  startTimer(total,'Step '+(timerStepIdx+1));
+  haptic(12);closeTimerModal();startTimer(total,'Step '+(timerStepIdx+1));
 }
 function startTimer(seconds,label){
   stopTimer();timerSeconds=seconds;timerRunning=true;
-  const float=document.getElementById('timerFloat');
-  const display=document.getElementById('timerDisplay');
-  const lbl=document.getElementById('timerLabel');
-  const pauseBtn=document.getElementById('timerPauseBtn');
-  float.classList.add('visible');
-  lbl.textContent=label||'Timer';
-  pauseBtn.textContent='⏸';
+  const f=document.getElementById('timerFloat');f.classList.remove('hidden');f.classList.add('flex');
+  document.getElementById('timerLabel').textContent=label||'Timer';
+  document.getElementById('timerPauseBtn').textContent='⏸';
   updateTimerDisplay();
   timerInterval=setInterval(()=>{
     if(!timerRunning)return;
     timerSeconds--;updateTimerDisplay();
     if(timerSeconds<=0){
       clearInterval(timerInterval);timerRunning=false;
-      display.classList.add('urgent');beepTimer();
-      toast('⏰ Timer done!');renderSteps();
-      setTimeout(()=>{display.classList.remove('urgent');stopTimer()},5000);
+      document.getElementById('timerDisplay').classList.add('animate-blink','!text-error');
+      beepTimer();toast('⏰ Timer done!');renderSteps();
+      setTimeout(()=>stopTimer(),5000);
     }
   },1000);
   renderSteps();
 }
 function updateTimerDisplay(){
-  const m=Math.floor(Math.abs(timerSeconds)/60);
-  const s=Math.abs(timerSeconds)%60;
-  document.getElementById('timerDisplay').textContent=m+':'+(s<10?'0':'')+s;
-  document.getElementById('timerDisplay').classList.toggle('urgent',timerSeconds<=10&&timerSeconds>0);
+  const m=Math.floor(Math.abs(timerSeconds)/60),s=Math.abs(timerSeconds)%60;
+  const d=document.getElementById('timerDisplay');
+  d.textContent=m+':'+(s<10?'0':'')+s;
+  const urgent=timerSeconds<=10&&timerSeconds>0;
+  d.classList.toggle('!text-error',urgent);
+  d.classList.toggle('text-secondary',!urgent);
 }
 function pauseResumeTimer(){
   haptic(8);timerRunning=!timerRunning;
@@ -953,20 +859,20 @@ function pauseResumeTimer(){
 }
 function stopTimer(){
   clearInterval(timerInterval);timerRunning=false;timerStepIdx=-1;
-  document.getElementById('timerFloat').classList.remove('visible');
-  document.getElementById('timerDisplay').classList.remove('urgent');
+  const f=document.getElementById('timerFloat');f.classList.add('hidden');f.classList.remove('flex');
+  const d=document.getElementById('timerDisplay');
+  d.classList.remove('animate-blink','!text-error');d.classList.add('text-secondary');
   if(currentRecipe)renderSteps();
 }
 function beepTimer(){
   try{
     const ctx=new(window.AudioContext||window.webkitAudioContext)();
-    [0,0.35,0.7].forEach(t=>{
-      const osc=ctx.createOscillator();const gain=ctx.createGain();
-      osc.connect(gain);gain.connect(ctx.destination);
-      osc.frequency.value=880;
-      gain.gain.setValueAtTime(0.4,ctx.currentTime+t);
-      gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+0.3);
-      osc.start(ctx.currentTime+t);osc.stop(ctx.currentTime+t+0.3);
+    [0,.35,.7].forEach(t=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);o.frequency.value=880;
+      g.gain.setValueAtTime(.4,ctx.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+t+.3);
+      o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+.3);
     });
   }catch(e){}
 }
