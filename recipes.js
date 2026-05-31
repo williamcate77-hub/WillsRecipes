@@ -133,25 +133,6 @@ steps:[
   'Finish with the cucumber herb salad.',
 ]},
 
-{id:7,name:'Grilled Smoky Oysters with Soy & Coconut Vinaigrette',category:'Dips & Starters',difficulty:'medium',serves:4,time:'15 min',calories:80,mainIngredient:'Oysters',
-ingredients:[
-  {name:'Fresh shucked oysters',amount:12,unit:'whole'},
-  {name:'Olive oil',amount:15,unit:'ml'},
-  {name:'Soy sauce',amount:15,unit:'ml'},
-  {name:'Rice vinegar',amount:15,unit:'ml'},
-  {name:'Coconut cream',amount:30,unit:'ml'},
-  {name:'Sesame oil',amount:5,unit:'ml'},
-  {name:'Red chilli, finely sliced',amount:0.5,unit:'whole'},
-  {name:'Spring onion, finely chopped',amount:1,unit:'whole'},
-],
-steps:[
-  'Heat barbecue or grill pan until very hot.',
-  'Brush oysters lightly with olive oil.',
-  'Place oysters shell-side down on grill for 2–3 minutes until lightly smoky.',
-  'Mix soy sauce, rice vinegar, coconut cream, sesame oil, chilli and spring onion.',
-  'Spoon vinaigrette over oysters and serve immediately.',
-]},
-
 {id:8,name:'Smoky Oysters over Coals with Coconut Vinaigrette',category:'Dips & Starters',difficulty:'medium',serves:4,time:'20 min',calories:90,mainIngredient:'Oysters',
 ingredients:[
   {name:'Oysters in shells',amount:12,unit:'whole'},
