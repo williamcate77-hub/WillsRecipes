@@ -43,14 +43,8 @@ header{background:var(--surface);padding:14px 20px 12px;border-bottom:1px solid 
 .header-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 12px var(--accent-glow)}
 .wake-sub{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.3px;text-transform:uppercase}
 
-/* ── SEARCH ── */
-.search-wrap{position:relative}
-.search-input{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:11px 40px 11px 42px;font-size:15px;font-weight:500;color:var(--text);outline:none;transition:border-color .2s,background .2s,box-shadow .2s;-webkit-appearance:none}
-.search-input::placeholder{color:var(--text3);font-weight:400}
-.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
-.search-icon svg{width:16px;height:16px;display:block}
-.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--surface3);border:none;color:var(--text3);width:20px;height:20px;border-radius:10px;font-size:11px;cursor:pointer;display:none;align-items:center;justify-content:center;font-weight:700}
+/* ── HEADER ICON ── */
+.header-icon{width:42px;height:42px;border-radius:10px;object-fit:cover;flex-shrink:0;border:1.5px solid var(--border)}
 
 /* ── MAIN ── */
 main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--tab-h) + 8px)}
@@ -209,6 +203,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
 <header>
   <div class="header-row">
     <span class="app-title">Cooking<br>With Will</span>
+    <img class="header-icon" src="/public/apple-touch-icon.png" alt="Cooking With Will">
     <div class="header-controls">
       <button class="mode-btn" id="modeBtn" onclick="toggleMode()" title="Toggle dark/light">
         <svg id="modeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -221,11 +216,6 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
         <span class="wake-sub">Leave device on while cooking</span>
       </div>
     </div>
-  </div>
-  <div class="search-wrap">
-    <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-    <input class="search-input" id="searchInput" type="search" placeholder="Search recipe or ingredient..." oninput="onSearch()">
-    <button class="search-clear" id="searchClear" onclick="clearSearch()">&#x2715;</button>
   </div>
 </header>
 
@@ -252,6 +242,26 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
     <div class="empty" id="favEmpty" style="display:none">
       <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
       <p>Pin recipes to find them here.</p>
+    </div>
+  </div>
+
+  <!-- NEW -->
+  <div class="view" id="view-new">
+    <div class="section-label">Recently Added</div>
+    <div class="recipe-list" id="newList"></div>
+  </div>
+
+  <!-- SHOPPING LIST -->
+  <div class="view" id="view-shoplist">
+    <div class="section-label">Shopping List</div>
+    <div style="padding:0 16px 12px;display:flex;gap:8px">
+      <button onclick="copyShoppingTab()" style="flex:1;background:var(--accent);border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;letter-spacing:.2px">Copy List</button>
+      <button onclick="clearShoppingTab()" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;font-weight:700;color:var(--text3);cursor:pointer">Clear</button>
+    </div>
+    <div class="recipe-list" id="shopTabContent"></div>
+    <div class="empty" id="shopTabEmpty" style="display:none">
+      <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+      <p>Add ingredients from a recipe's shopping list.</p>
     </div>
   </div>
 
@@ -304,6 +314,14 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
   <button class="tab" id="tab-favourites" onclick="switchTab('favourites')">
     <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
     Pinned
+  </button>
+  <button class="tab" id="tab-new" onclick="switchTab('new')">
+    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+    New
+  </button>
+  <button class="tab" id="tab-shoplist" onclick="switchTab('shoplist')">
+    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></span>
+    Shopping
   </button>
 </nav>
 
@@ -363,6 +381,8 @@ function switchTab(tab){
   document.querySelector('header').style.display=tab==='detail'?'none':'';
   if(tab==='home')renderHome();
   if(tab==='favourites')renderFavourites();
+  if(tab==='new')renderNew();
+  if(tab==='shoplist')renderShoppingTab();
 }
 
 // ── HOME
@@ -396,15 +416,15 @@ function clearIngredient(){
 }
 
 function getFiltered(){
-  const q=document.getElementById('searchInput').value.trim().toLowerCase();
   let list=ALL_RECIPES;
   if(activeIngredient)list=list.filter(r=>r.mainIngredient===activeIngredient);
-  if(q)list=list.filter(r=>r.name.toLowerCase().includes(q)||r.mainIngredient.toLowerCase().includes(q));
   return list;
 }
 
 function renderAccordion(){
   const recipes=getFiltered();
+  // auto-open all categories that have matching recipes when filtering
+  if(activeIngredient)recipes.forEach(r=>openCategories.add(r.category));
   const el=document.getElementById('homeContent');
   if(!recipes.length){
     el.innerHTML=`<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><p>No recipes found.</p></div>`;
@@ -615,9 +635,18 @@ function copyShopList(){
   const r=currentRecipe;
   const c=shopChecked[r.id];
   const serves=Math.round(r.serves*portionScale);
-  const items=r.ingredients.filter((_,i)=>!c.has(i)).map(ing=>`• ${ing.name}: ${fmtIng(ing.amount*portionScale,ing.unit)}`);
+  const toBuy=r.ingredients.filter((_,i)=>!c.has(i));
+  const items=toBuy.map(ing=>`• ${ing.name}: ${fmtIng(ing.amount*portionScale,ing.unit)}`);
   const text=`Shopping list for "${r.name}" (serves ${serves}):\n\n${items.length?items.join('\n'):'You already have everything!'}`;
-  navigator.clipboard.writeText(text).then(()=>toast('Shopping list copied'));
+  navigator.clipboard.writeText(text).then(()=>toast('Copied & added to Shopping List'));
+  // also add to global shopping list tab
+  toBuy.forEach(ing=>{
+    const amount=fmtIng(ing.amount*portionScale,ing.unit);
+    // avoid duplicates from same recipe
+    const exists=globalShopList.find(x=>x.name===ing.name&&x.recipe===r.name);
+    if(!exists)globalShopList.push({name:ing.name,amount,recipe:r.name,checked:false});
+  });
+  saveGlobalShopList();
 }
 
 function closeDetail(dh=true){
@@ -635,14 +664,65 @@ function onPortion(){
   renderIngredients();renderShopList();
 }
 
-// ── SEARCH
-function onSearch(){
-  const q=document.getElementById('searchInput').value;
-  document.getElementById('searchClear').style.display=q?'flex':'none';
-  if(currentTab!=='home')switchTab('home');
-  renderAccordion();
+// ── NEW TAB
+function renderNew(){
+  const sorted=[...ALL_RECIPES].sort((a,b)=>b.id-a.id);
+  document.getElementById('newList').innerHTML=sorted.map(r=>recipeCardHTML(r)).join('');
 }
-function clearSearch(){haptic(8);document.getElementById('searchInput').value='';document.getElementById('searchClear').style.display='none';renderAccordion()}
+
+// ── SHOPPING LIST TAB
+let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
+// each item: {name, amount, recipe, checked}
+
+function saveGlobalShopList(){localStorage.setItem('globalShopList',JSON.stringify(globalShopList))}
+
+function renderShoppingTab(){
+  const empty=document.getElementById('shopTabEmpty');
+  const content=document.getElementById('shopTabContent');
+  if(!globalShopList.length){empty.style.display='';content.innerHTML='';return}
+  empty.style.display='none';
+  // group by recipe
+  const byRecipe={};
+  globalShopList.forEach((item,i)=>{
+    if(!byRecipe[item.recipe])byRecipe[item.recipe]=[];
+    byRecipe[item.recipe].push({...item,idx:i});
+  });
+  content.innerHTML=Object.entries(byRecipe).map(([recipe,items])=>`
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:8px">
+      <div style="padding:10px 14px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);border-bottom:1px solid var(--border)">${recipe}</div>
+      ${items.map(item=>`
+        <div class="shop-row${item.checked?' checked':''}" onclick="toggleShopTab(${item.idx})" style="padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer">
+          <div class="shop-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="shop-name">${item.name}</span>
+          <span class="shop-amt">${item.amount}</span>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function toggleShopTab(idx){
+  haptic(8);
+  globalShopList[idx].checked=!globalShopList[idx].checked;
+  saveGlobalShopList();
+  renderShoppingTab();
+}
+
+function clearShoppingTab(){
+  haptic(12);
+  globalShopList=[];
+  saveGlobalShopList();
+  renderShoppingTab();
+  toast('Shopping list cleared');
+}
+
+function copyShoppingTab(){
+  haptic(12);
+  if(!globalShopList.length){toast('List is empty');return}
+  const unchecked=globalShopList.filter(i=>!i.checked);
+  const text=unchecked.length
+    ?unchecked.map(i=>`• ${i.name}: ${i.amount}`).join('\n')
+    :'You already have everything!';
+  navigator.clipboard.writeText(text).then(()=>toast('Shopping list copied'));
+}
 
 // ── SHARE
 function shareRecipe(){
