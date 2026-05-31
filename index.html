@@ -196,6 +196,45 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
 /* ── TOAST ── */
 .toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(14px);background:var(--surface);border:1px solid var(--accent);color:var(--text);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:0 0 16px var(--accent-glow)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── FLOATING TIMER ── */
+.timer-float{position:fixed;bottom:calc(var(--tab-h) + 12px);left:50%;transform:translateX(-50%);background:var(--surface);border:2px solid var(--accent);border-radius:16px;padding:12px 18px;display:flex;align-items:center;gap:12px;z-index:1000;box-shadow:0 4px 24px rgba(0,0,0,.4);min-width:240px;display:none}
+.timer-float.visible{display:flex}
+.timer-display{font-size:28px;font-weight:800;letter-spacing:-1px;color:var(--accent);font-variant-numeric:tabular-nums;min-width:80px}
+.timer-display.urgent{color:var(--hard);animation:pulse .5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.timer-btns{display:flex;gap:6px}
+.timer-btn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;transition:all .15s}
+.timer-btn:active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.timer-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;flex:1}
+
+/* ── TIMER IN STEPS ── */
+.step-timer-btn{width:26px;height:26px;border-radius:7px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;margin-top:2px}
+.step-timer-btn svg{width:13px;height:13px}
+.step-timer-btn:active,.step-timer-btn.running{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ── TIMER PICKER MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1100;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.visible{display:flex}
+.modal-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:20px 20px 36px;width:100%;max-width:480px}
+.modal-title{font-size:14px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;text-align:center}
+.timer-picker-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px}
+.timer-pick-val{font-size:48px;font-weight:800;color:var(--text);min-width:72px;text-align:center;font-variant-numeric:tabular-nums}
+.timer-pick-label{font-size:13px;font-weight:600;color:var(--text3)}
+.timer-pick-btns{display:flex;flex-direction:column;gap:4px}
+.timer-pick-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.timer-pick-btn:active{background:var(--accent);border-color:var(--accent)}
+.modal-start-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;color:#fff;cursor:pointer;letter-spacing:.2px;box-shadow:0 4px 20px var(--accent-glow)}
+.modal-cancel{width:100%;background:none;border:none;padding:12px;font-size:14px;font-weight:600;color:var(--text3);cursor:pointer;margin-top:4px}
+
+/* ── REFRESH / CLOSE HINT ── */
+.app-hint-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hint-text{font-size:11px;color:var(--text3);font-weight:500}
+.hint-btns{display:flex;gap:8px;flex-shrink:0}
+.hint-btn{height:28px;padding:0 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .15s}
+.hint-btn svg{width:11px;height:11px}
+.hint-btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
+.hint-close{background:none;border:none;color:var(--text3);font-size:16px;cursor:pointer;padding:2px 4px;line-height:1}
 </style>
 </head>
 <body>
@@ -217,7 +256,57 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
       </div>
     </div>
   </div>
+  <div class="app-hint-bar" id="hintBar">
+    <span class="hint-text">📱 Press Home or swipe up to close &nbsp;·&nbsp; Tap refresh for latest recipes</span>
+    <div class="hint-btns">
+      <button class="hint-btn" onclick="hardRefresh()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Refresh
+      </button>
+      <button class="hint-close" onclick="document.getElementById('hintBar').style.display='none'">✕</button>
+    </div>
+  </div>
 </header>
+
+<!-- FLOATING TIMER -->
+<div class="timer-float" id="timerFloat">
+  <div style="flex:1">
+    <div class="timer-label" id="timerLabel">Timer</div>
+    <div class="timer-display" id="timerDisplay">0:00</div>
+  </div>
+  <div class="timer-btns">
+    <button class="timer-btn" onclick="pauseResumeTimer()" id="timerPauseBtn" title="Pause/Resume">⏸</button>
+    <button class="timer-btn" onclick="stopTimer()" title="Stop">✕</button>
+  </div>
+</div>
+
+<!-- TIMER PICKER MODAL -->
+<div class="modal-overlay" id="timerModal" onclick="if(event.target===this)closeTimerModal()">
+  <div class="modal-sheet">
+    <div class="modal-title">Set Timer</div>
+    <div class="timer-picker-row">
+      <div>
+        <div class="timer-pick-btns">
+          <button class="timer-pick-btn" onclick="adjustPick('min',1)">▲</button>
+          <button class="timer-pick-btn" onclick="adjustPick('min',-1)">▼</button>
+        </div>
+      </div>
+      <div class="timer-pick-val" id="pickMin">0</div>
+      <div class="timer-pick-label">min</div>
+      <div style="font-size:36px;font-weight:800;color:var(--text3);margin:0 4px">:</div>
+      <div class="timer-pick-val" id="pickSec">00</div>
+      <div class="timer-pick-label">sec</div>
+      <div>
+        <div class="timer-pick-btns">
+          <button class="timer-pick-btn" onclick="adjustPick('sec',15)">▲</button>
+          <button class="timer-pick-btn" onclick="adjustPick('sec',-15)">▼</button>
+        </div>
+      </div>
+    </div>
+    <button class="modal-start-btn" onclick="startTimerFromModal()">Start Timer</button>
+    <button class="modal-cancel" onclick="closeTimerModal()">Cancel</button>
+  </div>
+</div>
 
 <main id="main">
 
@@ -601,7 +690,10 @@ function renderSteps(){
   document.getElementById('stepsList').innerHTML=currentRecipe.steps.map((s,i)=>`
     <div class="step-item${done.has(i)?' done':''}" onclick="toggleStep(${i})">
       <div class="step-num-wrap"><span class="step-num">${done.has(i)?'✓':(i+1)}</span></div>
-      <div class="step-text">${s}</div>
+      <div class="step-text" style="flex:1">${s}</div>
+      <button class="step-timer-btn${timerStepIdx===i&&timerRunning?' running':''}" onclick="event.stopPropagation();openTimerModal(${i},'Step ${i+1}')" title="Set timer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+      </button>
     </div>`).join('');
 }
 
@@ -808,6 +900,110 @@ function toast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
   clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// ── REFRESH
+function hardRefresh(){
+  haptic(8);
+  toast('Refreshing...');
+  setTimeout(()=>location.reload(true),400);
+}
+
+// ── TIMER
+let timerInterval=null,timerSeconds=0,timerRunning=false,timerStepIdx=-1;
+let pickMin=0,pickSec=0;
+
+function openTimerModal(stepIdx,label){
+  haptic(8);
+  timerStepIdx=stepIdx;
+  document.getElementById('timerModal').classList.add('visible');
+  document.getElementById('pickMin').textContent=String(pickMin).padStart(1,'0');
+  document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0');
+}
+
+function closeTimerModal(){
+  document.getElementById('timerModal').classList.remove('visible');
+}
+
+function adjustPick(field,delta){
+  haptic(6);
+  if(field==='min'){pickMin=Math.max(0,Math.min(99,pickMin+delta));document.getElementById('pickMin').textContent=pickMin}
+  else{pickSec=Math.max(0,Math.min(59,Math.round((pickSec+delta)/15)*15));document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0')}
+}
+
+function startTimerFromModal(){
+  const total=pickMin*60+pickSec;
+  if(total<=0){toast('Set a time first');return}
+  haptic(12);
+  closeTimerModal();
+  startTimer(total,'Step '+(timerStepIdx+1));
+}
+
+function startTimer(seconds,label){
+  stopTimer();
+  timerSeconds=seconds;
+  timerRunning=true;
+  const float=document.getElementById('timerFloat');
+  const display=document.getElementById('timerDisplay');
+  const lbl=document.getElementById('timerLabel');
+  const pauseBtn=document.getElementById('timerPauseBtn');
+  float.classList.add('visible');
+  lbl.textContent=label||'Timer';
+  pauseBtn.textContent='⏸';
+  updateTimerDisplay();
+  timerInterval=setInterval(()=>{
+    if(!timerRunning)return;
+    timerSeconds--;
+    updateTimerDisplay();
+    if(timerSeconds<=0){
+      clearInterval(timerInterval);
+      timerRunning=false;
+      display.classList.add('urgent');
+      beepTimer();
+      toast('⏰ Timer done!');
+      renderSteps();
+      setTimeout(()=>{display.classList.remove('urgent');stopTimer()},5000);
+    }
+  },1000);
+  renderSteps();
+}
+
+function updateTimerDisplay(){
+  const m=Math.floor(Math.abs(timerSeconds)/60);
+  const s=Math.abs(timerSeconds)%60;
+  document.getElementById('timerDisplay').textContent=m+':'+(s<10?'0':'')+s;
+  document.getElementById('timerDisplay').classList.toggle('urgent',timerSeconds<=10&&timerSeconds>0);
+}
+
+function pauseResumeTimer(){
+  haptic(8);
+  timerRunning=!timerRunning;
+  document.getElementById('timerPauseBtn').textContent=timerRunning?'⏸':'▶';
+}
+
+function stopTimer(){
+  clearInterval(timerInterval);
+  timerRunning=false;
+  timerStepIdx=-1;
+  document.getElementById('timerFloat').classList.remove('visible');
+  document.getElementById('timerDisplay').classList.remove('urgent');
+  if(currentRecipe)renderSteps();
+}
+
+function beepTimer(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [0,0.35,0.7].forEach(t=>{
+      const osc=ctx.createOscillator();
+      const gain=ctx.createGain();
+      osc.connect(gain);gain.connect(ctx.destination);
+      osc.frequency.value=880;
+      gain.gain.setValueAtTime(0.4,ctx.currentTime+t);
+      gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+0.3);
+      osc.start(ctx.currentTime+t);
+      osc.stop(ctx.currentTime+t+0.3);
+    });
+  }catch(e){}
 }
 
 renderHome();
