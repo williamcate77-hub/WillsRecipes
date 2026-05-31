@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/Users/williamcate/Library/Mobile Documents/com~apple~CloudDocs/Documents/GitHub/WillsRecipes/.claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s http://localhost:3456/)",
+      "mcp__Claude_in_Chrome__list_connected_browsers",
+      "Bash(git fsck *)",
+      "Bash(md5)",
+      "Bash(md5 index.html)",
+      "Bash(git reflog *)"
+    ]
+  }
+}
