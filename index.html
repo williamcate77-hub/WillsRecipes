@@ -692,19 +692,20 @@ function fmtIng(amount, unit){
   const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs'];
   if(desc.some(d=>u.includes(d))) return unit;
 
-  // ml → tsp / tbsp conversion for amounts up to 90 ml
+  // ml — always show ml AND tsp/tbsp equivalent side by side
   if(u==='ml'){
+    const mlStr=Math.round(n)+' ml';
     if(n<=90){
-      // Try tbsp (15 ml each) with ½ tbsp precision
+      // Try tbsp (15 ml) with ½ precision
       const tbsp=n/15;
       const tbspR=Math.round(tbsp*2)/2;
-      if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1) return fracStr(tbspR)+' tbsp';
-      // Try tsp (5 ml each) with ¼ tsp precision
+      if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1) return mlStr+' / '+fracStr(tbspR)+' tbsp';
+      // Try tsp (5 ml) with ¼ precision
       const tsp=n/5;
       const tspR=Math.round(tsp*4)/4;
-      if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25) return fracStr(tspR)+' tsp';
+      if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25) return mlStr+' / '+fracStr(tspR)+' tsp';
     }
-    return Math.round(n)+' ml';
+    return mlStr;
   }
 
   // Grams stay as grams
