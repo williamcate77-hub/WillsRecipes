@@ -9,9 +9,9 @@
 <link rel="apple-touch-icon" href="/public/apple-touch-icon.png">
 <link rel="icon" type="image/png" href="/public/icon-192.png">
 <link rel="manifest" href="/public/manifest.json">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
@@ -20,37 +20,39 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        "surface":                "#fbf9f8",
-        "surface-dim":            "#dbdad9",
-        "surface-container-lowest":"#ffffff",
-        "surface-container-low":  "#f5f3f3",
-        "surface-container":      "#efeded",
-        "surface-container-high": "#e9e8e7",
-        "surface-container-highest":"#e4e2e2",
-        "on-surface":             "#1b1c1c",
-        "on-surface-variant":     "#444748",
-        "outline":                "#747878",
-        "outline-variant":        "#c4c7c7",
-        "background":             "#fbf9f8",
-        "on-background":          "#1b1c1c",
-        "primary":                "#000000",
-        "on-primary":             "#ffffff",
-        "primary-container":      "#1c1b1b",
-        "secondary":              "#47663c",
-        "on-secondary":           "#ffffff",
-        "secondary-container":    "#c5eab4",
-        "on-secondary-container": "#4b6b40",
-        "secondary-fixed":        "#c8edb7",
-        "secondary-fixed-dim":    "#acd19d",
-        "error":                  "#ba1a1a",
-        "error-container":        "#ffdad6",
+        "surface-container-low":     "#f5f3f3",
+        "surface":                   "#fbf9f8",
+        "secondary-fixed":           "#c8edb7",
+        "on-primary":                "#ffffff",
+        "surface-container-highest": "#e4e2e2",
+        "surface-dim":               "#dbdad9",
+        "surface-container":         "#efeded",
+        "primary":                   "#000000",
+        "on-surface-variant":        "#444748",
+        "surface-container-high":    "#e9e8e7",
+        "on-primary-container":      "#858383",
+        "error":                     "#ba1a1a",
+        "error-container":           "#ffdad6",
+        "surface-container-lowest":  "#ffffff",
+        "outline-variant":           "#c4c7c7",
+        "outline":                   "#747878",
+        "background":                "#fbf9f8",
+        "primary-container":         "#1c1b1b",
+        "on-background":             "#1b1c1c",
+        "secondary-fixed-dim":       "#acd19d",
+        "on-surface":                "#1b1c1c",
+        "on-secondary":              "#ffffff",
+        "secondary-container":       "#c5eab4",
+        "on-secondary-container":    "#4b6b40",
+        "secondary":                 "#47663c",
+        "surface-variant":           "#e4e2e2",
+        "on-error-container":        "#93000a",
       },
       borderRadius: {
-        "sm":      "0.25rem",
-        "DEFAULT": "0.5rem",
-        "md":      "0.75rem",
-        "lg":      "1rem",
-        "xl":      "1.5rem",
+        "DEFAULT": "0.25rem",
+        "lg":      "0.5rem",
+        "xl":      "0.75rem",
+        "2xl":     "1rem",
         "full":    "9999px",
       },
       spacing: {
@@ -64,24 +66,25 @@ tailwind.config = {
         "container-max":  "1200px",
       },
       fontFamily: {
-        "serif": ["Playfair Display", "Georgia", "serif"],
-        "sans":  ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        "label-md":          ["Inter", "sans-serif"],
+        "body-lg":           ["Inter", "sans-serif"],
+        "headline-lg":       ["Playfair Display", "Georgia", "serif"],
+        "headline-lg-mobile":["Playfair Display", "Georgia", "serif"],
+        "caption":           ["Inter", "sans-serif"],
+        "display-lg":        ["Playfair Display", "Georgia", "serif"],
+        "body-md":           ["Inter", "sans-serif"],
+        "headline-md":       ["Playfair Display", "Georgia", "serif"],
       },
       fontSize: {
-        "display-lg":        ["48px", {lineHeight:"56px", letterSpacing:"-0.02em", fontWeight:"700"}],
+        "label-md":          ["14px", {lineHeight:"20px", letterSpacing:"0.05em", fontWeight:"600"}],
+        "body-lg":           ["18px", {lineHeight:"28px", fontWeight:"400"}],
         "headline-lg":       ["32px", {lineHeight:"40px", fontWeight:"700"}],
         "headline-lg-mobile":["28px", {lineHeight:"36px", fontWeight:"700"}],
-        "headline-md":       ["24px", {lineHeight:"32px", fontWeight:"600"}],
-        "body-lg":           ["18px", {lineHeight:"28px", fontWeight:"400"}],
-        "body-md":           ["16px", {lineHeight:"24px", fontWeight:"400"}],
-        "label-md":          ["14px", {lineHeight:"20px", letterSpacing:"0.05em", fontWeight:"600"}],
         "caption":           ["12px", {lineHeight:"16px", fontWeight:"400"}],
+        "display-lg":        ["48px", {lineHeight:"56px", letterSpacing:"-0.02em", fontWeight:"700"}],
+        "body-md":           ["16px", {lineHeight:"24px", fontWeight:"400"}],
+        "headline-md":       ["24px", {lineHeight:"32px", fontWeight:"600"}],
       },
-      boxShadow: {
-        "long-soft": "0px 10px 30px rgba(26,26,26,0.04)",
-        "lift":      "0px 16px 40px rgba(26,26,26,0.08)",
-        "sm":        "0px 4px 12px rgba(26,26,26,0.04)",
-      }
     }
   }
 }
@@ -91,96 +94,85 @@ tailwind.config = {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     display: inline-block; line-height: 1;
     text-transform: none; letter-spacing: normal; white-space: nowrap;
-    direction: ltr; -webkit-font-smoothing: antialiased;
-    user-select: none;
+    direction: ltr; -webkit-font-smoothing: antialiased; user-select: none;
   }
   .icon-fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   .hide-scrollbar::-webkit-scrollbar { display: none; }
   .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  input[type=range] {
-    -webkit-appearance: none; width: 100%; height: 3px;
-    background: #efeded; border-radius: 2px; outline: none; border: none;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 22px; height: 22px; border-radius: 6px;
-    background: #47663c; cursor: pointer; border: 2px solid #fff;
-    box-shadow: 0 2px 8px rgba(71,102,60,.18);
-  }
+  .recipe-card-shadow { box-shadow: 0px 10px 30px rgba(26,26,26,0.04); }
+  input[type=range] { -webkit-appearance:none; width:100%; height:3px; background:#efeded; border-radius:2px; outline:none; border:none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:6px; background:#47663c; cursor:pointer; border:2px solid #fff; box-shadow:0 2px 6px rgba(71,102,60,.2); }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
   .animate-blink { animation: blink .6s infinite; }
-  body { -webkit-font-smoothing: antialiased; }
+  body { -webkit-font-smoothing: antialiased; min-height: 100dvh; }
 </style>
 </head>
 
-<body class="bg-background text-on-background font-sans overflow-hidden h-dvh flex flex-col">
+<body class="bg-background text-on-background overflow-hidden h-dvh flex flex-col">
 
 <!-- ── HEADER ── -->
-<header id="appHeader" class="bg-surface-container-lowest shadow-long-soft flex-shrink-0 z-40">
-  <!-- Title row -->
-  <div class="flex items-center gap-3 px-5 pt-5 pb-4">
-    <img src="/public/apple-touch-icon.png" alt="" class="w-12 h-12 rounded-xl object-cover flex-shrink-0">
+<header id="appHeader" class="bg-surface-container-lowest flex-shrink-0 z-40 recipe-card-shadow">
+  <div class="flex items-center gap-3 px-margin-mobile pt-5 pb-4">
+    <img src="/public/apple-touch-icon.png" alt="" class="w-12 h-12 rounded-xl object-cover flex-shrink-0 border border-outline-variant/40">
     <div class="flex-1 min-w-0">
-      <p class="font-sans text-[10px] font-semibold text-secondary uppercase tracking-[0.12em] leading-none mb-1.5">A recipe collection by</p>
-      <h1 class="font-serif text-[26px] font-bold text-primary leading-none tracking-tight">Cooking With Will</h1>
+      <p class="font-label-md text-caption text-secondary uppercase tracking-[0.12em] leading-none mb-1.5">A recipe collection by</p>
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary leading-none tracking-tight">Cooking With Will</h1>
     </div>
-    <div class="flex items-center gap-2.5">
+    <div class="flex items-center gap-2">
       <button id="wakeBtn" onclick="toggleWakeLock()"
-        class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-DEFAULT border border-outline-variant bg-surface-container text-on-surface-variant transition-all active:scale-95 active:bg-secondary active:border-secondary active:text-white">
-        <span class="material-symbols-outlined text-[20px]">light_mode</span>
-        <span class="font-sans text-[9px] font-semibold uppercase tracking-wide leading-none">Screen</span>
+        class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-lg border border-outline-variant bg-surface-container text-on-surface-variant active:bg-secondary active:border-secondary active:text-on-secondary transition-all active:scale-95">
+        <span class="material-symbols-outlined" style="font-size:20px">light_mode</span>
+        <span class="font-label-md text-[9px] uppercase tracking-wide leading-none">Screen</span>
       </button>
       <button id="modeBtn" onclick="toggleMode()"
-        class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-DEFAULT border border-outline-variant bg-surface-container text-on-surface-variant transition-all active:scale-95">
-        <span class="material-symbols-outlined text-[20px]" id="modeIcon">dark_mode</span>
-        <span class="font-sans text-[9px] font-semibold uppercase tracking-wide leading-none">Theme</span>
+        class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-lg border border-outline-variant bg-surface-container text-on-surface-variant transition-all active:scale-95">
+        <span class="material-symbols-outlined" id="modeIcon" style="font-size:20px">dark_mode</span>
+        <span class="font-label-md text-[9px] uppercase tracking-wide leading-none">Theme</span>
       </button>
     </div>
   </div>
-  <!-- Hint bar -->
-  <div id="hintBar" class="flex items-center justify-between gap-2 px-5 py-2 border-t border-outline-variant/50 bg-surface-container-low">
-    <span class="font-sans text-caption text-outline">📱 Press Home or swipe up to close · Tap Refresh for latest</span>
+  <div id="hintBar" class="flex items-center justify-between gap-2 px-margin-mobile py-2 border-t border-outline-variant/40 bg-surface-container-low">
+    <span class="font-caption text-caption text-outline">📱 Press Home or swipe up to close · Refresh for latest</span>
     <div class="flex items-center gap-2 flex-shrink-0">
-      <button onclick="hardRefresh()" class="font-sans text-caption font-semibold text-on-surface-variant bg-surface-container-lowest border border-outline-variant rounded-sm px-2.5 py-1 active:scale-95 transition-transform">Refresh</button>
-      <button onclick="document.getElementById('hintBar').style.display='none'" class="text-outline text-[16px] leading-none px-1 py-0.5">✕</button>
+      <button onclick="hardRefresh()" class="font-label-md text-caption font-semibold text-on-surface-variant bg-surface-container-lowest border border-outline-variant rounded px-2.5 py-1 active:scale-95 transition-transform">Refresh</button>
+      <button onclick="document.getElementById('hintBar').style.display='none'" class="text-outline text-base leading-none px-1">✕</button>
     </div>
   </div>
 </header>
 
 <!-- ── FLOATING TIMER ── -->
-<div id="timerFloat" class="hidden fixed bottom-[88px] left-1/2 -translate-x-1/2 z-50 bg-surface-container-lowest border border-secondary/30 rounded-lg px-4 py-3 flex items-center gap-3 shadow-lift min-w-[220px]">
+<div id="timerFloat" class="hidden fixed bottom-[88px] left-1/2 -translate-x-1/2 z-50 bg-surface-container-lowest border border-secondary/30 rounded-xl px-4 py-3 flex items-center gap-3 recipe-card-shadow min-w-[220px]">
   <div class="flex-1">
-    <div id="timerLabel" class="font-sans text-[9px] font-semibold text-outline uppercase tracking-wider">Timer</div>
-    <div id="timerDisplay" class="font-serif text-3xl font-bold text-secondary leading-none">0:00</div>
+    <p class="font-label-md text-[9px] text-outline uppercase tracking-wider" id="timerLabel">Timer</p>
+    <p class="font-display-lg text-[28px] text-secondary leading-none tabular-nums" id="timerDisplay">0:00</p>
   </div>
   <div class="flex gap-1.5">
-    <button onclick="pauseResumeTimer()" id="timerPauseBtn"
-      class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center text-on-surface-variant text-sm font-bold active:bg-secondary active:text-white active:border-secondary transition-all">⏸</button>
-    <button onclick="stopTimer()"
-      class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center text-on-surface-variant text-sm font-bold active:bg-error active:text-white active:border-error transition-all">✕</button>
+    <button onclick="pauseResumeTimer()" id="timerPauseBtn" class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center text-on-surface-variant text-sm font-bold active:bg-secondary active:text-on-secondary active:border-secondary transition-all">⏸</button>
+    <button onclick="stopTimer()" class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center text-on-surface-variant text-sm font-bold active:bg-error active:text-white active:border-error transition-all">✕</button>
   </div>
 </div>
 
 <!-- ── TIMER MODAL ── -->
 <div id="timerModal" onclick="if(event.target===this)closeTimerModal()" class="hidden fixed inset-0 bg-black/40 z-[60] items-end justify-center">
-  <div class="bg-surface-container-lowest rounded-t-xl px-6 pt-6 pb-10 w-full max-w-md shadow-lift">
-    <h3 class="font-serif text-headline-md text-primary text-center mb-6">Set Timer</h3>
+  <div class="bg-surface-container-lowest rounded-t-2xl px-6 pt-6 pb-10 w-full max-w-md recipe-card-shadow">
+    <h3 class="font-headline-md text-headline-md text-primary text-center mb-6">Set Timer</h3>
     <div class="flex items-center justify-center gap-3 mb-6">
       <div class="flex flex-col gap-1.5">
-        <button onclick="adjustPick('min',1)"  class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-white active:border-secondary transition-all">▲</button>
-        <button onclick="adjustPick('min',-1)" class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-white active:border-secondary transition-all">▼</button>
+        <button onclick="adjustPick('min',1)"  class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-on-secondary active:border-secondary transition-all">▲</button>
+        <button onclick="adjustPick('min',-1)" class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-on-secondary active:border-secondary transition-all">▼</button>
       </div>
-      <div id="pickMin" class="font-serif text-display-lg text-primary w-16 text-center tabular-nums">0</div>
-      <div class="font-sans text-caption text-outline uppercase tracking-wider font-semibold">min</div>
-      <div class="font-serif text-[40px] font-bold text-outline-variant">:</div>
-      <div id="pickSec" class="font-serif text-display-lg text-primary w-16 text-center tabular-nums">00</div>
-      <div class="font-sans text-caption text-outline uppercase tracking-wider font-semibold">sec</div>
+      <span id="pickMin" class="font-display-lg text-display-lg text-primary w-16 text-center tabular-nums">0</span>
+      <span class="font-label-md text-label-md text-outline uppercase tracking-wider">min</span>
+      <span class="font-display-lg text-[40px] text-outline-variant">:</span>
+      <span id="pickSec" class="font-display-lg text-display-lg text-primary w-16 text-center tabular-nums">00</span>
+      <span class="font-label-md text-label-md text-outline uppercase tracking-wider">sec</span>
       <div class="flex flex-col gap-1.5">
-        <button onclick="adjustPick('sec',15)"  class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-white active:border-secondary transition-all">▲</button>
-        <button onclick="adjustPick('sec',-15)" class="w-9 h-9 rounded-DEFAULT border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-white active:border-secondary transition-all">▼</button>
+        <button onclick="adjustPick('sec',15)"  class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-on-secondary active:border-secondary transition-all">▲</button>
+        <button onclick="adjustPick('sec',-15)" class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-on-secondary active:border-secondary transition-all">▼</button>
       </div>
     </div>
-    <button onclick="startTimerFromModal()" class="w-full bg-secondary text-white font-sans text-label-md uppercase tracking-widest font-semibold py-4 rounded-DEFAULT shadow-long-soft active:opacity-80 transition-opacity">Start Timer</button>
-    <button onclick="closeTimerModal()" class="w-full font-sans text-caption text-outline font-semibold py-3 mt-1">Cancel</button>
+    <button onclick="startTimerFromModal()" class="w-full bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-widest py-4 rounded-lg active:opacity-80 transition-opacity recipe-card-shadow">Start Timer</button>
+    <button onclick="closeTimerModal()" class="w-full font-caption text-caption text-outline py-3 mt-1">Cancel</button>
   </div>
 </div>
 
@@ -190,18 +182,17 @@ tailwind.config = {
   <!-- HOME -->
   <div id="view-home" class="view active">
     <div class="px-margin-mobile pt-stack-md pb-stack-sm">
-      <p class="font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold mb-stack-sm">Filter by main ingredient</p>
+      <p class="font-label-md text-caption text-outline uppercase tracking-[0.1em] mb-stack-sm">Filter by main ingredient</p>
       <div class="flex gap-2">
-        <!-- Input: cream bg, no border unless focused -->
         <div class="relative flex-1">
           <select id="ingSelect" onchange="onIngSelect()"
-            class="w-full appearance-none bg-surface-container-low border-0 rounded-DEFAULT pl-4 pr-9 py-3 font-sans text-body-md text-on-surface focus:ring-[1.5px] focus:ring-secondary outline-none cursor-pointer transition-all">
+            class="w-full appearance-none bg-surface-container-low border-none rounded-xl pl-4 pr-9 py-3 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-secondary outline-none cursor-pointer transition-all">
             <option value="">All recipes...</option>
           </select>
-          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">expand_more</span>
+          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" style="font-size:18px">expand_more</span>
         </div>
         <button id="ingClear" onclick="clearIngredient()"
-          class="hidden w-11 h-11 rounded-DEFAULT border border-outline-variant bg-surface-container items-center justify-center text-outline text-xl active:bg-error active:text-white active:border-error transition-all flex-shrink-0">✕</button>
+          class="hidden w-11 h-11 rounded-xl border border-outline-variant bg-surface-container items-center justify-center text-outline text-xl active:bg-error active:text-white active:border-error transition-all flex-shrink-0">✕</button>
       </div>
     </div>
     <div id="homeContent" class="pb-4"></div>
@@ -209,106 +200,111 @@ tailwind.config = {
 
   <!-- PINNED -->
   <div id="view-favourites" class="view hidden">
-    <p class="px-margin-mobile pt-5 pb-3 font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold">Pinned Recipes</p>
+    <p class="px-margin-mobile pt-5 pb-3 font-label-md text-caption text-outline uppercase tracking-[0.1em]">Pinned Recipes</p>
     <div id="favList" class="px-margin-mobile flex flex-col gap-2"></div>
     <div id="favEmpty" class="hidden flex-col items-center justify-center py-16">
-      <span class="material-symbols-outlined text-[48px] text-surface-container-highest mb-3">bookmark</span>
-      <p class="font-sans text-body-md text-on-surface-variant">Pin recipes to find them here.</p>
+      <span class="material-symbols-outlined text-surface-container-highest mb-3" style="font-size:48px">bookmark</span>
+      <p class="font-body-md text-body-md text-on-surface-variant">Pin recipes to find them here.</p>
     </div>
   </div>
 
   <!-- NEW -->
   <div id="view-new" class="view hidden">
-    <p class="px-margin-mobile pt-5 pb-3 font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold">Recently Added</p>
+    <p class="px-margin-mobile pt-5 pb-3 font-label-md text-caption text-outline uppercase tracking-[0.1em]">Recently Added</p>
     <div id="newList" class="px-margin-mobile flex flex-col gap-2"></div>
   </div>
 
   <!-- SHOPPING -->
   <div id="view-shoplist" class="view hidden">
-    <p class="px-margin-mobile pt-5 pb-3 font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold">Shopping List</p>
+    <p class="px-margin-mobile pt-5 pb-3 font-label-md text-caption text-outline uppercase tracking-[0.1em]">Shopping List</p>
     <div class="px-margin-mobile flex gap-2 pb-stack-sm">
-      <button onclick="copyShoppingTab()" class="flex-1 bg-secondary text-white font-sans text-label-md uppercase tracking-widest font-semibold py-3 rounded-DEFAULT active:opacity-80 transition-opacity">Copy List</button>
-      <button onclick="clearShoppingTab()" class="bg-surface-container border border-outline-variant text-on-surface-variant font-sans text-label-md font-semibold px-5 py-3 rounded-DEFAULT active:opacity-80 transition-opacity">Clear</button>
+      <button onclick="copyShoppingTab()" class="flex-1 bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-widest py-3 rounded-lg active:opacity-80 transition-opacity">Copy List</button>
+      <button onclick="clearShoppingTab()" class="bg-surface-container border border-outline-variant text-on-surface-variant font-label-md text-label-md px-5 py-3 rounded-lg active:opacity-80 transition-opacity">Clear</button>
     </div>
     <div id="shopTabContent" class="px-margin-mobile flex flex-col gap-2"></div>
     <div id="shopTabEmpty" class="hidden flex-col items-center justify-center py-16">
-      <span class="material-symbols-outlined text-[48px] text-surface-container-highest mb-3">shopping_bag</span>
-      <p class="font-sans text-body-md text-on-surface-variant">Add ingredients from a recipe's shopping list.</p>
+      <span class="material-symbols-outlined text-surface-container-highest mb-3" style="font-size:48px">shopping_bag</span>
+      <p class="font-body-md text-body-md text-on-surface-variant">Add ingredients from a recipe's shopping list.</p>
     </div>
   </div>
 
   <!-- DETAIL -->
   <div id="view-detail" class="view hidden">
-    <div id="detailHero" class="min-h-[140px] relative flex items-end px-5 pb-4 pt-16">
-      <button onclick="closeDetail()"
-        class="absolute top-5 left-5 w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-DEFAULT flex items-center justify-center shadow-sm active:scale-95 transition-transform">
-        <span class="material-symbols-outlined text-[22px] text-on-surface">arrow_back</span>
+    <!-- Hero -->
+    <div id="detailHero" class="min-h-[160px] relative flex items-end px-margin-mobile pb-4 pt-16">
+      <button onclick="closeDetail()" class="absolute top-5 left-5 w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-lg flex items-center justify-center recipe-card-shadow active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-on-surface" style="font-size:22px">arrow_back</span>
       </button>
       <div class="absolute top-5 right-5 flex gap-2">
-        <button id="detailPin" onclick="togglePinDetail()"
-          class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-DEFAULT flex items-center justify-center shadow-sm active:scale-95 transition-all">
-          <span class="material-symbols-outlined text-[20px] text-on-surface" id="detailPinIcon">bookmark</span>
+        <button id="detailPin" onclick="togglePinDetail()" class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-lg flex items-center justify-center recipe-card-shadow active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-on-surface" id="detailPinIcon" style="font-size:20px">bookmark</span>
         </button>
-        <button onclick="shareRecipe()"
-          class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-DEFAULT flex items-center justify-center shadow-sm active:scale-95 transition-transform">
-          <span class="material-symbols-outlined text-[20px] text-on-surface">ios_share</span>
+        <button onclick="shareRecipe()" class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-lg flex items-center justify-center recipe-card-shadow active:scale-95 transition-transform">
+          <span class="material-symbols-outlined text-on-surface" style="font-size:20px">ios_share</span>
         </button>
       </div>
     </div>
+    <!-- Content -->
     <div class="px-margin-mobile pt-stack-md pb-8">
-      <h2 id="detailTitle" class="font-serif text-headline-lg-mobile font-bold text-primary leading-snug mb-3"></h2>
+      <h2 id="detailTitle" class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-3"></h2>
       <div id="detailTags" class="flex flex-wrap gap-2 mb-stack-lg"></div>
       <!-- Serving size -->
-      <div class="bg-surface-container-lowest rounded-lg p-4 mb-stack-lg shadow-long-soft">
-        <p class="font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold mb-3">Serving Size</p>
+      <div class="bg-surface-container-lowest rounded-xl p-4 mb-stack-lg recipe-card-shadow">
+        <p class="font-label-md text-caption text-outline uppercase tracking-[0.1em] mb-3">Serving Size</p>
         <div class="flex justify-between items-baseline mb-3">
-          <span class="font-sans text-body-md text-on-surface-variant">Serves</span>
+          <span class="font-body-md text-body-md text-on-surface-variant">Serves</span>
           <div class="flex items-baseline gap-1.5">
-            <span id="portionVal" class="font-serif text-[36px] font-bold text-secondary leading-none">2</span>
-            <span class="font-sans text-caption text-outline">people</span>
+            <span id="portionVal" class="font-display-lg text-[36px] text-secondary leading-none tabular-nums">2</span>
+            <span class="font-caption text-caption text-outline">people</span>
           </div>
         </div>
         <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()">
       </div>
       <!-- Ingredients -->
-      <h3 class="font-serif text-headline-md text-primary mb-stack-sm">Ingredients</h3>
-      <div id="ingList" class="bg-surface-container-lowest rounded-lg overflow-hidden mb-stack-lg shadow-long-soft"></div>
+      <h3 class="font-headline-md text-headline-md text-primary mb-stack-sm">Ingredients</h3>
+      <div id="ingList" class="bg-surface-container-lowest rounded-xl overflow-hidden mb-stack-lg recipe-card-shadow"></div>
       <!-- Method -->
-      <h3 class="font-serif text-headline-md text-primary mb-stack-sm">Method</h3>
-      <div id="stepsList" class="flex flex-col gap-3 mb-stack-lg"></div>
-      <!-- Shopping list -->
-      <h3 class="font-serif text-headline-md text-primary mb-1">Shopping List</h3>
-      <p class="font-sans text-caption text-outline mb-3">Tick what you already have — see what to buy.</p>
-      <div id="shopList" class="bg-surface-container-lowest rounded-lg overflow-hidden mb-stack-md shadow-long-soft"></div>
-      <button onclick="copyShopList()" class="w-full bg-secondary text-white font-sans text-label-md uppercase tracking-widest font-semibold py-4 rounded-DEFAULT shadow-long-soft active:opacity-80 transition-opacity mb-6">Copy Shopping List</button>
+      <h3 class="font-headline-md text-headline-md text-primary mb-stack-sm">Method</h3>
+      <div id="stepsList" class="space-y-stack-md mb-stack-lg"></div>
+      <!-- Shopping -->
+      <h3 class="font-headline-md text-headline-md text-primary mb-1">Shopping List</h3>
+      <p class="font-caption text-caption text-outline mb-3">Tick what you already have — see what to buy.</p>
+      <div id="shopList" class="bg-surface-container-lowest rounded-xl overflow-hidden mb-stack-md recipe-card-shadow"></div>
+      <button onclick="copyShopList()" class="w-full bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-widest py-4 rounded-lg active:opacity-80 transition-opacity recipe-card-shadow mb-6">Copy Shopping List</button>
     </div>
   </div>
 
 </main>
 
 <!-- ── TAB BAR ── -->
-<nav class="flex-shrink-0 h-[68px] bg-surface-container-lowest border-t border-outline-variant/50 flex shadow-[0px_-4px_20px_rgba(26,26,26,0.04)]">
-  <button id="tab-home" onclick="switchTab('home')" class="tab flex-1 flex flex-col items-center justify-center gap-1 text-secondary transition-colors pb-1">
-    <span class="material-symbols-outlined icon-fill text-[24px]">home</span>
-    <span class="font-sans text-label-md">Recipes</span>
+<nav class="flex-shrink-0 h-[68px] bg-surface-container-lowest border-t border-surface-container flex shadow-[0px_-10px_30px_rgba(26,26,26,0.04)]">
+  <button id="tab-home" onclick="switchTab('home')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1">
+    <div class="flex flex-col items-center px-3 py-1 rounded-xl bg-secondary-container/20 transition-all">
+      <span class="material-symbols-outlined icon-fill text-secondary" style="font-size:24px">home</span>
+      <span class="font-label-md text-label-md text-secondary">Recipes</span>
+    </div>
   </button>
-  <button id="tab-favourites" onclick="switchTab('favourites')" class="tab flex-1 flex flex-col items-center justify-center gap-1 text-outline transition-colors pb-1">
-    <span class="material-symbols-outlined text-[24px]">bookmark</span>
-    <span class="font-sans text-label-md">Pinned</span>
+  <button id="tab-favourites" onclick="switchTab('favourites')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1">
+    <div class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">bookmark</span>
+      <span class="font-label-md text-label-md text-on-surface-variant">Pinned</span>
+    </div>
   </button>
-  <button id="tab-new" onclick="switchTab('new')" class="tab flex-1 flex flex-col items-center justify-center gap-1 text-outline transition-colors pb-1">
-    <span class="material-symbols-outlined text-[24px]">add_circle</span>
-    <span class="font-sans text-label-md">New</span>
+  <button id="tab-new" onclick="switchTab('new')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1">
+    <div class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">add_circle</span>
+      <span class="font-label-md text-label-md text-on-surface-variant">New</span>
+    </div>
   </button>
-  <button id="tab-shoplist" onclick="switchTab('shoplist')" class="tab flex-1 flex flex-col items-center justify-center gap-1 text-outline transition-colors pb-1">
-    <span class="material-symbols-outlined text-[24px]">shopping_bag</span>
-    <span class="font-sans text-label-md">Shopping</span>
+  <button id="tab-shoplist" onclick="switchTab('shoplist')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1">
+    <div class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">shopping_bag</span>
+      <span class="font-label-md text-label-md text-on-surface-variant">Shopping</span>
+    </div>
   </button>
 </nav>
 
-<div id="toast"
-  class="fixed bottom-[88px] left-1/2 -translate-x-1/2 translate-y-3 opacity-0 pointer-events-none z-50 bg-surface-container-lowest border border-secondary/30 text-on-surface font-sans text-[13px] font-semibold px-4 py-2.5 rounded-DEFAULT shadow-lift whitespace-nowrap transition-all duration-200">
-</div>
+<div id="toast" class="fixed bottom-[88px] left-1/2 -translate-x-1/2 translate-y-3 opacity-0 pointer-events-none z-50 bg-surface-container-lowest border border-secondary/30 text-on-surface font-label-md text-label-md px-4 py-2.5 rounded-xl recipe-card-shadow whitespace-nowrap transition-all duration-200"></div>
 
 <script src="recipes.js"></script>
 <script src="recipes2.js"></script>
@@ -322,39 +318,33 @@ const SEAFOOD_INGREDIENTS=new Set(['Clams','Dover Sole','Fish','Mackerel','Musse
 
 function getIngredientOptions(){
   const raw=[...new Set(ALL_RECIPES.map(r=>r.mainIngredient))].sort();
-  const grouped=[]; let seafoodAdded=false;
+  const grouped=[];let seafoodAdded=false;
   raw.forEach(ing=>{
     if(SEAFOOD_INGREDIENTS.has(ing)){
       if(!seafoodAdded){grouped.push({label:'Seafood',value:'__SEAFOOD__'});seafoodAdded=true;}
-    } else {
-      grouped.push({label:ing,value:ing});
-    }
+    }else{grouped.push({label:ing,value:ing});}
   });
   return grouped;
 }
 
-// ── HAPTIC
 function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
 
-// ── STATE
 let currentTab='home',currentRecipe=null,prevTab='home';
 let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
 let activeIngredient=null,shopChecked={},stepsDone={},portionScale=1;
-let wakeLock=null;
-let openCategories=new Set();
+let wakeLock=null,openCategories=new Set();
 
 // ── DARK MODE
 let isDark=false;
 function toggleMode(){
-  haptic(8); isDark=!isDark;
+  haptic(8);isDark=!isDark;
   document.documentElement.classList.toggle('dark',isDark);
   document.getElementById('modeIcon').textContent=isDark?'light_mode':'dark_mode';
   localStorage.setItem('darkMode',isDark?'1':'0');
 }
 (function(){
   if(localStorage.getItem('darkMode')==='1'){
-    isDark=true;
-    document.documentElement.classList.add('dark');
+    isDark=true;document.documentElement.classList.add('dark');
     document.getElementById('modeIcon').textContent='light_mode';
   }
 })();
@@ -370,19 +360,26 @@ function showView(name){
 function switchTab(tab){
   haptic(8);
   if(currentRecipe&&tab!=='detail')closeDetail(false);
+  // Reset all tab inner divs
   document.querySelectorAll('.tab').forEach(t=>{
-    t.classList.remove('text-secondary');t.classList.add('text-outline');
+    const d=t.querySelector('div');
     const ic=t.querySelector('.material-symbols-outlined');
-    if(ic)ic.classList.remove('icon-fill');
+    const lb=t.querySelector('span.font-label-md');
+    if(d){d.classList.remove('bg-secondary-container/20');}
+    if(ic){ic.classList.remove('text-secondary','icon-fill');ic.classList.add('text-on-surface-variant');}
+    if(lb){lb.classList.remove('text-secondary');lb.classList.add('text-on-surface-variant');}
   });
+  // Activate selected
   const at=document.getElementById('tab-'+tab);
   if(at){
-    at.classList.add('text-secondary');at.classList.remove('text-outline');
+    const d=at.querySelector('div');
     const ic=at.querySelector('.material-symbols-outlined');
-    if(ic)ic.classList.add('icon-fill');
+    const lb=at.querySelector('span.font-label-md');
+    if(d){d.classList.add('bg-secondary-container/20');}
+    if(ic){ic.classList.add('text-secondary','icon-fill');ic.classList.remove('text-on-surface-variant');}
+    if(lb){lb.classList.add('text-secondary');lb.classList.remove('text-on-surface-variant');}
   }
-  showView(tab);
-  currentTab=tab;
+  showView(tab);currentTab=tab;
   const hdr=document.getElementById('appHeader');
   if(hdr)hdr.style.display=(tab==='detail')?'none':'';
   if(tab==='home')renderHome();
@@ -399,7 +396,6 @@ const CAT_ICONS={
   'Bread & Bakes':'bakery_dining','Sauces':'water_drop','Desserts':'cake'
 };
 
-// ── HOME
 function renderHome(){populateIngSelect();renderAccordion()}
 
 function populateIngSelect(){
@@ -408,21 +404,13 @@ function populateIngSelect(){
   sel.innerHTML=`<option value="">All recipes...</option>`+
     options.map(o=>`<option value="${o.value}"${activeIngredient===o.value?' selected':''}>${o.label}</option>`).join('');
   const has=!!activeIngredient;
-  sel.classList.toggle('ring-[1.5px]',has);
-  sel.classList.toggle('ring-secondary',has);
+  sel.classList.toggle('ring-2',has);sel.classList.toggle('ring-secondary',has);
   sel.classList.toggle('text-secondary',has);
   const clr=document.getElementById('ingClear');
-  clr.classList.toggle('hidden',!has);
-  clr.classList.toggle('flex',has);
+  clr.classList.toggle('hidden',!has);clr.classList.toggle('flex',has);
 }
-
-function onIngSelect(){
-  haptic(8);activeIngredient=document.getElementById('ingSelect').value||null;
-  populateIngSelect();renderAccordion();
-}
-function clearIngredient(){
-  haptic(8);activeIngredient=null;populateIngSelect();renderAccordion();
-}
+function onIngSelect(){haptic(8);activeIngredient=document.getElementById('ingSelect').value||null;populateIngSelect();renderAccordion()}
+function clearIngredient(){haptic(8);activeIngredient=null;populateIngSelect();renderAccordion()}
 
 function getFiltered(){
   if(!activeIngredient)return ALL_RECIPES;
@@ -430,12 +418,10 @@ function getFiltered(){
   return ALL_RECIPES.filter(r=>r.mainIngredient===activeIngredient);
 }
 
-function diffClass(d){
+function diffBadge(d){
   return d==='easy'
-    ?'bg-secondary-container/50 text-on-secondary-container'
-    :d==='medium'
-    ?'bg-amber-100 text-amber-800'
-    :'bg-red-100 text-red-700';
+    ?'bg-secondary-container text-on-secondary-container'
+    :d==='medium'?'bg-amber-100 text-amber-800':'bg-error-container text-on-error-container';
 }
 
 function renderAccordion(){
@@ -444,8 +430,8 @@ function renderAccordion(){
   const el=document.getElementById('homeContent');
   if(!recipes.length){
     el.innerHTML=`<div class="flex flex-col items-center py-16">
-      <span class="material-symbols-outlined text-[48px] text-surface-container-highest mb-3">search_off</span>
-      <p class="font-sans text-body-md text-on-surface-variant">No recipes found.</p>
+      <span class="material-symbols-outlined text-surface-container-highest mb-3" style="font-size:48px">search_off</span>
+      <p class="font-body-md text-body-md text-on-surface-variant">No recipes found.</p>
     </div>`;return;
   }
   let html='<div class="flex flex-col gap-2 px-margin-mobile pt-stack-sm pb-stack-lg">';
@@ -456,36 +442,33 @@ function renderAccordion(){
     const icon=CAT_ICONS[cat]||'restaurant';
     const safeCat=cat.replace(/['"&<>]/g,'_');
     html+=`
-    <div class="bg-surface-container-lowest rounded-lg shadow-long-soft overflow-hidden">
+    <div class="bg-surface-container-lowest rounded-xl overflow-hidden recipe-card-shadow">
       <button onclick="toggleCat('${safeCat}','${cat}')"
-        class="w-full flex items-center justify-between px-4 py-3.5 transition-colors active:bg-surface-container ${isOpen?'border-b border-outline-variant/50':''}">
+        class="w-full flex items-center justify-between px-4 py-3.5 transition-colors active:bg-surface-container-low ${isOpen?'border-b border-outline-variant/40':''}">
         <div class="flex items-center gap-3">
           <div class="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></div>
-          <span class="font-serif text-[17px] font-bold text-primary">${cat}</span>
-          <span class="font-sans text-caption text-outline bg-surface-container px-2 py-0.5 rounded-full">${list.length}</span>
+          <span class="font-headline-md text-[17px] text-primary leading-none">${cat}</span>
+          <span class="font-caption text-caption text-outline bg-surface-container px-2 py-0.5 rounded-full">${list.length}</span>
         </div>
-        <span class="material-symbols-outlined text-[20px] text-outline transition-transform duration-200 ${isOpen?'rotate-180 !text-secondary':''}">expand_more</span>
+        <span class="material-symbols-outlined text-outline transition-transform duration-200 ${isOpen?'rotate-180 !text-secondary':''}" style="font-size:20px">expand_more</span>
       </button>
-      ${isOpen?`<div>
-        ${list.map((r,idx)=>{const ip=pinned.includes(r.id);return`
-        <button onclick="openRecipe(${r.id})" class="w-full flex items-center gap-3 px-4 py-3 text-left active:bg-surface-container transition-colors ${idx<list.length-1?'border-b border-outline-variant/40':''}">
-          <div class="w-10 h-10 rounded-DEFAULT bg-secondary-container/40 flex items-center justify-center flex-shrink-0">
-            <span class="material-symbols-outlined text-[18px] text-secondary">${icon}</span>
+      ${isOpen?`<div>${list.map((r,idx)=>{const ip=pinned.includes(r.id);return`
+        <button onclick="openRecipe(${r.id})" class="w-full flex items-center gap-3 px-4 py-3 text-left active:bg-surface-container-low transition-colors ${idx<list.length-1?'border-b border-outline-variant/40':''}">
+          <div class="w-10 h-10 rounded-lg bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-secondary" style="font-size:18px">${icon}</span>
           </div>
           <div class="flex-1 min-w-0">
-            <p class="font-serif text-[15px] font-bold text-primary leading-snug mb-1">${r.name}</p>
+            <p class="font-headline-md text-[15px] text-primary leading-snug mb-1">${r.name}</p>
             <div class="flex gap-1.5 flex-wrap">
-              <span class="font-sans text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-sm ${diffClass(r.difficulty)}">${cap(r.difficulty)}</span>
-              <span class="font-sans text-[10px] font-medium px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.calories} kcal</span>
-              <span class="font-sans text-[10px] font-medium px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.time}</span>
+              <span class="font-label-md text-[10px] uppercase tracking-wide px-2 py-0.5 rounded ${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
+              <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-outline">${r.calories} kcal</span>
+              <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-outline">${r.time}</span>
             </div>
           </div>
-          <button onclick="event.stopPropagation();togglePin(${r.id})"
-            class="w-8 h-8 rounded-DEFAULT flex items-center justify-center flex-shrink-0 transition-all ${ip?'text-secondary':'text-outline hover:text-secondary'}">
-            <span class="material-symbols-outlined text-[20px] ${ip?'icon-fill':''}">bookmark</span>
+          <button onclick="event.stopPropagation();togglePin(${r.id})" class="w-8 h-8 flex items-center justify-center flex-shrink-0 transition-all">
+            <span class="material-symbols-outlined transition-all ${ip?'icon-fill text-secondary':'text-on-surface-variant'}" style="font-size:20px">bookmark</span>
           </button>
-        </button>`}).join('')}
-      </div>`:''}
+        </button>`}).join('')}</div>`:''}
     </div>`;
   });
   html+='</div>';
@@ -494,31 +477,27 @@ function renderAccordion(){
 
 function toggleCat(s,cat){
   haptic(8);
-  if(openCategories.has(cat))openCategories.delete(cat);
-  else openCategories.add(cat);
+  if(openCategories.has(cat))openCategories.delete(cat);else openCategories.add(cat);
   renderAccordion();
 }
 
-// ── RECIPE LIST CARD (pinned/new)
 function recipeCardHTML(r){
   const ip=pinned.includes(r.id);
   const icon=CAT_ICONS[r.category]||'restaurant';
-  return`<button onclick="openRecipe(${r.id})"
-    class="w-full flex items-center gap-3 px-4 py-3 bg-surface-container-lowest rounded-lg shadow-long-soft text-left active:scale-[.99] transition-all">
-    <div class="w-11 h-11 rounded-DEFAULT bg-secondary-container/40 flex items-center justify-center flex-shrink-0">
-      <span class="material-symbols-outlined text-[20px] text-secondary">${icon}</span>
+  return`<button onclick="openRecipe(${r.id})" class="w-full flex items-center gap-3 px-4 py-3 bg-surface-container-lowest rounded-xl recipe-card-shadow text-left active:scale-[.99] transition-all">
+    <div class="w-11 h-11 rounded-lg bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-secondary" style="font-size:20px">${icon}</span>
     </div>
     <div class="flex-1 min-w-0">
-      <p class="font-serif text-[15px] font-bold text-primary leading-snug mb-1">${r.name}</p>
+      <p class="font-headline-md text-[15px] text-primary leading-snug mb-1">${r.name}</p>
       <div class="flex gap-1.5 flex-wrap">
-        <span class="font-sans text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-sm ${diffClass(r.difficulty)}">${cap(r.difficulty)}</span>
-        <span class="font-sans text-[10px] font-medium px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.calories} kcal</span>
-        <span class="font-sans text-[10px] font-medium px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.time}</span>
+        <span class="font-label-md text-[10px] uppercase tracking-wide px-2 py-0.5 rounded ${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
+        <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-outline">${r.calories} kcal</span>
+        <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-outline">${r.time}</span>
       </div>
     </div>
-    <button onclick="event.stopPropagation();togglePin(${r.id})"
-      class="w-8 h-8 rounded-DEFAULT flex items-center justify-center flex-shrink-0 transition-all ${ip?'text-secondary':'text-outline'}">
-      <span class="material-symbols-outlined text-[20px] ${ip?'icon-fill':''}">bookmark</span>
+    <button onclick="event.stopPropagation();togglePin(${r.id})" class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined transition-all ${ip?'icon-fill text-secondary':'text-on-surface-variant'}" style="font-size:20px">bookmark</span>
     </button>
   </button>`;
 }
@@ -532,44 +511,36 @@ function renderFavourites(){
   list.innerHTML=pr.map(r=>recipeCardHTML(r)).join('');
 }
 function renderNew(){
-  const sorted=[...ALL_RECIPES].sort((a,b)=>b.id-a.id);
-  document.getElementById('newList').innerHTML=sorted.map(r=>recipeCardHTML(r)).join('');
+  document.getElementById('newList').innerHTML=[...ALL_RECIPES].sort((a,b)=>b.id-a.id).map(r=>recipeCardHTML(r)).join('');
 }
-
 function togglePin(id){
   haptic(12);
-  if(pinned.includes(id))pinned=pinned.filter(p=>p!==id);
-  else pinned.push(id);
+  if(pinned.includes(id))pinned=pinned.filter(p=>p!==id);else pinned.push(id);
   localStorage.setItem('pinned',JSON.stringify(pinned));
   if(currentTab==='home')renderAccordion();
   if(currentTab==='favourites')renderFavourites();
   toast(pinned.includes(id)?'Recipe pinned':'Unpinned');
 }
-function togglePinDetail(){
-  if(!currentRecipe)return; haptic(12);togglePin(currentRecipe.id);updateDetailPin();
-}
+function togglePinDetail(){if(!currentRecipe)return;haptic(12);togglePin(currentRecipe.id);updateDetailPin()}
 function updateDetailPin(){
   const ip=pinned.includes(currentRecipe.id);
   const btn=document.getElementById('detailPin');
-  btn.className=`w-10 h-10 border rounded-DEFAULT flex items-center justify-center shadow-sm active:scale-95 transition-all ${ip?'bg-secondary border-secondary':'bg-surface-container-lowest border-outline-variant/60'}`;
+  btn.className=`w-10 h-10 border rounded-lg flex items-center justify-center recipe-card-shadow active:scale-95 transition-all ${ip?'bg-secondary border-secondary':'bg-surface-container-lowest border-outline-variant/60'}`;
   const icon=document.getElementById('detailPinIcon');
-  icon.className=`material-symbols-outlined text-[20px] ${ip?'icon-fill text-white':'text-on-surface'}`;
+  icon.className=`material-symbols-outlined ${ip?'icon-fill text-on-secondary':'text-on-surface'}`;
+  icon.style.fontSize='20px';
 }
 
-// ── DETAIL
 function openRecipe(id){
   haptic(8);
-  currentRecipe=ALL_RECIPES.find(r=>r.id===id);
-  prevTab=currentTab;
+  currentRecipe=ALL_RECIPES.find(r=>r.id===id);prevTab=currentTab;
   if(!shopChecked[id])shopChecked[id]=new Set();
   if(!stepsDone[id])stepsDone[id]=new Set();
   portionScale=1;
   const slider=document.getElementById('portionSlider');
-  slider.value=currentRecipe.serves;
-  slider.max=Math.max(20,currentRecipe.serves*4);
+  slider.value=currentRecipe.serves;slider.max=Math.max(20,currentRecipe.serves*4);
   document.getElementById('portionVal').textContent=currentRecipe.serves;
   renderDetailContent();
-  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('text-secondary');t.classList.add('text-outline');});
   showView('detail');
   document.getElementById('appHeader').style.display='none';
   currentTab='detail';
@@ -582,10 +553,10 @@ function renderDetailContent(){
   document.getElementById('detailTitle').textContent=r.name;
   updateDetailPin();
   document.getElementById('detailTags').innerHTML=`
-    <span class="font-sans text-[11px] font-bold uppercase tracking-wide px-3 py-1 rounded-full ${diffClass(r.difficulty)}">${cap(r.difficulty)}</span>
-    <span class="font-sans text-[11px] font-medium px-3 py-1 rounded-full bg-surface-container text-outline">${r.calories} kcal/serve</span>
-    <span class="font-sans text-[11px] font-medium px-3 py-1 rounded-full bg-surface-container text-outline">${r.time}</span>
-    <span class="font-sans text-[11px] font-medium px-3 py-1 rounded-full bg-surface-container text-outline">Serves ${r.serves}</span>`;
+    <span class="font-label-md text-[11px] uppercase tracking-wide px-3 py-1 rounded-full ${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
+    <span class="font-caption text-caption px-3 py-1 rounded-full bg-surface-container text-outline">${r.calories} kcal/serve</span>
+    <span class="font-caption text-caption px-3 py-1 rounded-full bg-surface-container text-outline">${r.time}</span>
+    <span class="font-caption text-caption px-3 py-1 rounded-full bg-surface-container text-outline">Serves ${r.serves}</span>`;
   renderIngredients();renderSteps();renderShopList();
 }
 
@@ -597,7 +568,7 @@ function heroGrad(cat){
     'Seafood':        'linear-gradient(150deg,#d0e4f4,#bcd4ec)',
     'Meat & Poultry': 'linear-gradient(150deg,#f4e4d4,#ecd4bc)',
     'Vegetarian':     'linear-gradient(150deg,#d4f0cc,#bce4b0)',
-    'Pasta & Rice':   'linear-gradient(150deg,#f4eccC,#ece0b4)',
+    'Pasta & Rice':   'linear-gradient(150deg,#f4eccc,#ece0b4)',
     'Sides':          'linear-gradient(150deg,#ece8d8,#e0dccc)',
     'Bread & Bakes':  'linear-gradient(150deg,#f4e8d4,#ecdcc0)',
     'Sauces':         'linear-gradient(150deg,#ecdcf0,#e0cce4)',
@@ -609,68 +580,57 @@ function heroGrad(cat){
 function renderIngredients(){
   document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
     const display=fmtIng(ing.amount*portionScale,ing.unit);
-    const border=i<arr.length-1?'border-b border-outline-variant/40':'';
-    return`<div class="flex items-center px-4 py-3 gap-3 ${border}">
+    return`<div class="flex items-center px-4 py-3 gap-3 ${i<arr.length-1?'border-b border-outline-variant/40':''}">
       <div class="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></div>
-      <span class="flex-1 font-sans text-body-md text-on-surface">${ing.name}</span>
-      <span class="font-sans text-[14px] font-semibold text-secondary whitespace-nowrap">${display}</span>
+      <span class="flex-1 font-body-md text-body-md text-on-surface">${ing.name}</span>
+      <span class="font-label-md text-label-md text-secondary whitespace-nowrap">${display}</span>
     </div>`;
   }).join('');
 }
 
 function renderSteps(){
   const done=stepsDone[currentRecipe.id];
-  /* Design spec: large serif step numbers to the LEFT of text */
+  /* Design spec: large serif numbers "01", "02" to the left — font-display-lg text-secondary/20 */
   document.getElementById('stepsList').innerHTML=currentRecipe.steps.map((s,i)=>`
-    <div onclick="toggleStep(${i})"
-      class="flex gap-4 p-4 bg-surface-container-lowest rounded-lg shadow-long-soft cursor-pointer active:scale-[.99] transition-all ${done.has(i)?'opacity-45':''}">
-      <span class="font-serif text-[32px] font-bold leading-none flex-shrink-0 mt-0.5 w-10 text-center ${done.has(i)?'text-secondary':'text-secondary/20'}">${done.has(i)?'✓':(i+1)}</span>
+    <div onclick="toggleStep(${i})" class="flex gap-4 bg-surface-container-lowest rounded-xl p-4 recipe-card-shadow cursor-pointer active:scale-[.99] transition-all ${done.has(i)?'opacity-50':''}">
+      <span class="font-display-lg text-display-lg leading-none flex-shrink-0 w-10 text-right transition-colors ${done.has(i)?'text-secondary':'text-secondary/20'}">${done.has(i)?'✓':String(i+1).padStart(2,'0')}</span>
       <div class="flex-1 pt-1">
-        <p class="font-sans text-body-md text-on-surface-variant leading-relaxed">${s}</p>
+        <p class="font-label-md text-label-md text-primary uppercase tracking-widest mb-1">Step ${i+1}</p>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">${s}</p>
       </div>
-      <div class="flex flex-col items-center gap-1 pl-3 border-l border-outline-variant/50 flex-shrink-0">
-        <span class="font-sans text-[8px] font-semibold text-outline uppercase tracking-wider">Timer</span>
+      <div class="flex flex-col items-center gap-1 pl-3 border-l border-outline-variant/40 flex-shrink-0">
+        <span class="font-label-md text-[8px] text-outline uppercase tracking-wider">Timer</span>
         <button onclick="event.stopPropagation();openTimerModal(${i},'Step ${i+1}')"
-          class="w-7 h-7 rounded-sm border border-outline-variant bg-surface-container flex items-center justify-center active:bg-secondary active:border-secondary active:text-white transition-all ${timerStepIdx===i&&timerRunning?'bg-secondary border-secondary':''}">
-          <span class="material-symbols-outlined text-[14px] ${timerStepIdx===i&&timerRunning?'text-white':'text-outline'}">timer</span>
+          class="w-7 h-7 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center active:bg-secondary active:border-secondary active:text-on-secondary transition-all ${timerStepIdx===i&&timerRunning?'bg-secondary border-secondary':''}">
+          <span class="material-symbols-outlined ${timerStepIdx===i&&timerRunning?'text-on-secondary':'text-outline'}" style="font-size:14px">timer</span>
         </button>
       </div>
     </div>`).join('');
 }
 
 function toggleStep(i){
-  haptic(8);
-  const d=stepsDone[currentRecipe.id];
-  if(d.has(i))d.delete(i);else d.add(i);
-  renderSteps();
+  haptic(8);const d=stepsDone[currentRecipe.id];
+  if(d.has(i))d.delete(i);else d.add(i);renderSteps();
 }
 
 function renderShopList(){
   const c=shopChecked[currentRecipe.id];
   document.getElementById('shopList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
-    const display=fmtIng(ing.amount*portionScale,ing.unit);
-    const border=i<arr.length-1?'border-b border-outline-variant/40':'';
-    const checked=c.has(i);
-    return`<div onclick="toggleShop(${i})" class="flex items-center gap-3 px-4 py-3 ${border} cursor-pointer active:bg-surface-container transition-colors">
-      <div class="w-5 h-5 rounded-sm border-2 ${checked?'bg-secondary border-secondary':'border-outline'} flex items-center justify-center flex-shrink-0 transition-all">
-        ${checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
+    const display=fmtIng(ing.amount*portionScale,ing.unit);const checked=c.has(i);
+    return`<div onclick="toggleShop(${i})" class="flex items-center gap-3 px-4 py-3 ${i<arr.length-1?'border-b border-outline-variant/40':''} cursor-pointer active:bg-surface-container-low transition-colors">
+      <div class="w-5 h-5 rounded border-2 ${checked?'bg-secondary border-secondary':'border-outline-variant'} flex items-center justify-center flex-shrink-0 transition-all">
+        ${checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
       </div>
-      <span class="flex-1 font-sans text-body-md ${checked?'line-through text-outline':'text-on-surface'}">${ing.name}</span>
-      <span class="font-sans text-[14px] font-semibold ${checked?'text-outline':'text-secondary'} whitespace-nowrap">${display}</span>
+      <span class="flex-1 font-body-md text-body-md ${checked?'line-through text-outline':'text-on-surface'}">${ing.name}</span>
+      <span class="font-label-md text-label-md ${checked?'text-outline':'text-secondary'} whitespace-nowrap">${display}</span>
     </div>`;
   }).join('');
 }
 
-function toggleShop(i){
-  haptic(8);
-  const c=shopChecked[currentRecipe.id];
-  if(c.has(i))c.delete(i);else c.add(i);
-  renderShopList();
-}
+function toggleShop(i){haptic(8);const c=shopChecked[currentRecipe.id];if(c.has(i))c.delete(i);else c.add(i);renderShopList()}
 
 function copyShopList(){
-  haptic(12);
-  const r=currentRecipe;const c=shopChecked[r.id];
+  haptic(12);const r=currentRecipe;const c=shopChecked[r.id];
   const serves=Math.round(r.serves*portionScale);
   const toBuy=r.ingredients.filter((_,i)=>!c.has(i));
   const text=`Shopping list for "${r.name}" (serves ${serves}):\n\n${toBuy.length?toBuy.map(ing=>`• ${ing.name}: ${fmtIng(ing.amount*portionScale,ing.unit)}`).join('\n'):'You already have everything!'}`;
@@ -682,58 +642,44 @@ function copyShopList(){
   });
   saveGlobalShopList();
 }
-
-function closeDetail(dh=true){
-  if(dh)haptic(8);
-  currentRecipe=null;
-  switchTab(prevTab==='detail'?'home':prevTab);
-}
+function closeDetail(dh=true){if(dh)haptic(8);currentRecipe=null;switchTab(prevTab==='detail'?'home':prevTab)}
 function onPortion(){
-  haptic(6);
-  const n=parseInt(document.getElementById('portionSlider').value);
-  portionScale=n/currentRecipe.serves;
-  document.getElementById('portionVal').textContent=n;
+  haptic(6);const n=parseInt(document.getElementById('portionSlider').value);
+  portionScale=n/currentRecipe.serves;document.getElementById('portionVal').textContent=n;
   renderIngredients();renderShopList();
 }
 
-// ── SHOPPING TAB
 let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
 function saveGlobalShopList(){localStorage.setItem('globalShopList',JSON.stringify(globalShopList))}
 function renderShoppingTab(){
-  const empty=document.getElementById('shopTabEmpty');
-  const content=document.getElementById('shopTabContent');
+  const empty=document.getElementById('shopTabEmpty');const content=document.getElementById('shopTabContent');
   if(!globalShopList.length){empty.classList.remove('hidden');empty.classList.add('flex');content.innerHTML='';return}
   empty.classList.add('hidden');empty.classList.remove('flex');
   const byRecipe={};
-  globalShopList.forEach((item,i)=>{
-    if(!byRecipe[item.recipe])byRecipe[item.recipe]=[];
-    byRecipe[item.recipe].push({...item,idx:i});
-  });
+  globalShopList.forEach((item,i)=>{if(!byRecipe[item.recipe])byRecipe[item.recipe]=[];byRecipe[item.recipe].push({...item,idx:i})});
   content.innerHTML=Object.entries(byRecipe).map(([recipe,items])=>`
-    <div class="bg-surface-container-lowest rounded-lg shadow-long-soft overflow-hidden">
+    <div class="bg-surface-container-lowest rounded-xl overflow-hidden recipe-card-shadow">
       <div class="px-4 py-2.5 border-b border-outline-variant/40">
-        <p class="font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold">${recipe}</p>
+        <p class="font-label-md text-caption text-outline uppercase tracking-[0.1em]">${recipe}</p>
       </div>
       ${items.map(item=>`
-        <div onclick="toggleShopTab(${item.idx})" class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant/40 last:border-b-0 cursor-pointer active:bg-surface-container transition-colors">
-          <div class="w-5 h-5 rounded-sm border-2 ${item.checked?'bg-secondary border-secondary':'border-outline'} flex items-center justify-center flex-shrink-0 transition-all">
-            ${item.checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
+        <div onclick="toggleShopTab(${item.idx})" class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant/40 last:border-b-0 cursor-pointer active:bg-surface-container-low transition-colors">
+          <div class="w-5 h-5 rounded border-2 ${item.checked?'bg-secondary border-secondary':'border-outline-variant'} flex items-center justify-center flex-shrink-0 transition-all">
+            ${item.checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
           </div>
-          <span class="flex-1 font-sans text-body-md ${item.checked?'line-through text-outline':'text-on-surface'}">${item.name}</span>
-          <span class="font-sans text-[14px] font-semibold ${item.checked?'text-outline':'text-secondary'} whitespace-nowrap">${item.amount}</span>
+          <span class="flex-1 font-body-md text-body-md ${item.checked?'line-through text-outline':'text-on-surface'}">${item.name}</span>
+          <span class="font-label-md text-label-md ${item.checked?'text-outline':'text-secondary'} whitespace-nowrap">${item.amount}</span>
         </div>`).join('')}
     </div>`).join('');
 }
 function toggleShopTab(idx){haptic(8);globalShopList[idx].checked=!globalShopList[idx].checked;saveGlobalShopList();renderShoppingTab()}
 function clearShoppingTab(){haptic(12);globalShopList=[];saveGlobalShopList();renderShoppingTab();toast('Shopping list cleared')}
 function copyShoppingTab(){
-  haptic(12);
-  if(!globalShopList.length){toast('List is empty');return}
+  haptic(12);if(!globalShopList.length){toast('List is empty');return}
   const unchecked=globalShopList.filter(i=>!i.checked);
   navigator.clipboard.writeText(unchecked.length?unchecked.map(i=>`• ${i.name}: ${i.amount}`).join('\n'):'You already have everything!').then(()=>toast('Shopping list copied'));
 }
 
-// ── SHARE
 function shareRecipe(){
   haptic(8);const r=currentRecipe;
   const text=`${r.name}\n\nServes ${r.serves} | ${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
@@ -741,19 +687,16 @@ function shareRecipe(){
   else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied'));
 }
 
-// ── WAKE LOCK
 async function toggleWakeLock(){
   haptic(8);const btn=document.getElementById('wakeBtn');
   if(wakeLock){
     await wakeLock.release();wakeLock=null;
-    btn.classList.remove('bg-secondary','border-secondary','text-white');
-    toast('Screen sleep restored');
-  } else {
+    btn.classList.remove('bg-secondary','border-secondary','text-on-secondary');toast('Screen sleep restored');
+  }else{
     try{
       wakeLock=await navigator.wakeLock.request('screen');
-      btn.classList.add('bg-secondary','border-secondary','text-white');
-      toast('Screen will stay on');
-      wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('bg-secondary','border-secondary','text-white');});
+      btn.classList.add('bg-secondary','border-secondary','text-on-secondary');toast('Screen will stay on');
+      wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('bg-secondary','border-secondary','text-on-secondary')});
     }catch(e){toast('Wake lock not available')}
   }
 }
@@ -763,7 +706,6 @@ document.addEventListener('visibilitychange',async()=>{
   }
 });
 
-// ── HELPERS
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 function fracStr(n){
   const w=Math.floor(n),f=n-w;
@@ -780,31 +722,25 @@ function fmtIng(amount,unit){
   if(u==='g')return Math.round(n)+'g';
   if(u==='ml'){
     if(n<=90){
-      const tbsp=n/15;const tbspR=Math.round(tbsp*2)/2;
+      const tbsp=n/15,tbspR=Math.round(tbsp*2)/2;
       if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1)return fracStr(tbspR)+' tbsp';
-      const tsp=n/5;const tspR=Math.round(tsp*4)/4;
+      const tsp=n/5,tspR=Math.round(tsp*4)/4;
       if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25)return fracStr(tspR)+' tsp';
     }
     return Math.round(n)+'ml';
   }
-  const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets',
-             'stalk','stalks','piece','pieces','slice','slices','leaf','leaves',
-             'lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
+  const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets','stalk','stalks','piece','pieces','slice','slices','leaf','leaves','lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
   if(cnt.some(c=>u.includes(c)))return(n%1===0?n.toString():fracStr(n))+' '+unit;
   return(n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString())+' '+unit;
 }
 
 function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.classList.remove('opacity-0','translate-y-3');
-  t.classList.add('opacity-100','translate-y-0');
-  clearTimeout(t._t);
-  t._t=setTimeout(()=>{t.classList.add('opacity-0','translate-y-3');t.classList.remove('opacity-100','translate-y-0')},2400);
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.classList.remove('opacity-0','translate-y-3');t.classList.add('opacity-100','translate-y-0');
+  clearTimeout(t._t);t._t=setTimeout(()=>{t.classList.add('opacity-0','translate-y-3');t.classList.remove('opacity-100','translate-y-0')},2400);
 }
 function hardRefresh(){haptic(8);toast('Refreshing...');setTimeout(()=>location.reload(true),400)}
 
-// ── TIMER
 let timerInterval=null,timerSeconds=0,timerRunning=false,timerStepIdx=-1;
 let pickMin=0,pickSec=0;
 
@@ -814,17 +750,14 @@ function openTimerModal(stepIdx){
   document.getElementById('pickMin').textContent=pickMin;
   document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0');
 }
-function closeTimerModal(){
-  const m=document.getElementById('timerModal');m.classList.add('hidden');m.classList.remove('flex');
-}
+function closeTimerModal(){const m=document.getElementById('timerModal');m.classList.add('hidden');m.classList.remove('flex')}
 function adjustPick(field,delta){
   haptic(6);
   if(field==='min'){pickMin=Math.max(0,Math.min(99,pickMin+delta));document.getElementById('pickMin').textContent=pickMin}
   else{pickSec=Math.max(0,Math.min(59,Math.round((pickSec+delta)/15)*15));document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0')}
 }
 function startTimerFromModal(){
-  const total=pickMin*60+pickSec;
-  if(total<=0){toast('Set a time first');return}
+  const total=pickMin*60+pickSec;if(total<=0){toast('Set a time first');return}
   haptic(12);closeTimerModal();startTimer(total,'Step '+(timerStepIdx+1));
 }
 function startTimer(seconds,label){
@@ -834,43 +767,35 @@ function startTimer(seconds,label){
   document.getElementById('timerPauseBtn').textContent='⏸';
   updateTimerDisplay();
   timerInterval=setInterval(()=>{
-    if(!timerRunning)return;
-    timerSeconds--;updateTimerDisplay();
+    if(!timerRunning)return;timerSeconds--;updateTimerDisplay();
     if(timerSeconds<=0){
       clearInterval(timerInterval);timerRunning=false;
       document.getElementById('timerDisplay').classList.add('animate-blink','!text-error');
       beepTimer();toast('⏰ Timer done!');renderSteps();
       setTimeout(()=>stopTimer(),5000);
     }
-  },1000);
-  renderSteps();
+  },1000);renderSteps();
 }
 function updateTimerDisplay(){
   const m=Math.floor(Math.abs(timerSeconds)/60),s=Math.abs(timerSeconds)%60;
   const d=document.getElementById('timerDisplay');
   d.textContent=m+':'+(s<10?'0':'')+s;
   const urgent=timerSeconds<=10&&timerSeconds>0;
-  d.classList.toggle('!text-error',urgent);
-  d.classList.toggle('text-secondary',!urgent);
+  d.classList.toggle('!text-error',urgent);d.classList.toggle('text-secondary',!urgent);
 }
-function pauseResumeTimer(){
-  haptic(8);timerRunning=!timerRunning;
-  document.getElementById('timerPauseBtn').textContent=timerRunning?'⏸':'▶';
-}
+function pauseResumeTimer(){haptic(8);timerRunning=!timerRunning;document.getElementById('timerPauseBtn').textContent=timerRunning?'⏸':'▶'}
 function stopTimer(){
   clearInterval(timerInterval);timerRunning=false;timerStepIdx=-1;
   const f=document.getElementById('timerFloat');f.classList.add('hidden');f.classList.remove('flex');
-  const d=document.getElementById('timerDisplay');
-  d.classList.remove('animate-blink','!text-error');d.classList.add('text-secondary');
+  const d=document.getElementById('timerDisplay');d.classList.remove('animate-blink','!text-error');d.classList.add('text-secondary');
   if(currentRecipe)renderSteps();
 }
 function beepTimer(){
   try{
     const ctx=new(window.AudioContext||window.webkitAudioContext)();
     [0,.35,.7].forEach(t=>{
-      const o=ctx.createOscillator(),g=ctx.createGain();
-      o.connect(g);g.connect(ctx.destination);o.frequency.value=880;
-      g.gain.setValueAtTime(.4,ctx.currentTime+t);
+      const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=880;g.gain.setValueAtTime(.4,ctx.currentTime+t);
       g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+t+.3);
       o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+.3);
     });
