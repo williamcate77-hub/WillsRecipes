@@ -633,13 +633,6 @@ function renderSteps(){
         <p class="font-label-md text-label-md text-primary uppercase tracking-widest mb-1">Step ${i+1}</p>
         <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">${s}</p>
       </div>
-      <div class="flex flex-col items-center gap-1 pl-3 border-l border-outline-variant/40 flex-shrink-0">
-        <span class="font-label-md text-[8px] text-outline uppercase tracking-wider">Timer</span>
-        <button onclick="event.stopPropagation();openTimerModal(${i},'Step ${i+1}')"
-          class="w-7 h-7 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center active:bg-secondary active:border-secondary active:text-on-secondary transition-all ${timerStepIdx===i&&timerRunning?'bg-secondary border-secondary':''}">
-          <span class="material-symbols-outlined ${timerStepIdx===i&&timerRunning?'text-on-secondary':'text-outline'}" style="font-size:14px">timer</span>
-        </button>
-      </div>
     </div>`).join('');
 }
 
