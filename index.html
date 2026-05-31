@@ -682,45 +682,41 @@ function fracStr(n){
   return w?`${w}${m[1]}`:m[1];
 }
 
-// Returns a fully formatted "amount unit" string, converting ml → tsp/tbsp where appropriate
+// Returns a compact formatted string e.g. "200g", "1 tbsp", "2 tsp", "100ml"
 function fmtIng(amount, unit){
   if(!amount||isNaN(amount))return'';
   const n=amount;
-  const u=unit.toLowerCase();
+  const u=unit.toLowerCase().trim();
 
-  // Descriptive units — show blank amount, just the unit label
+  // Descriptive — no quantity, just the label
   const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs'];
   if(desc.some(d=>u.includes(d))) return unit;
 
-  // ml — always show ml AND tsp/tbsp equivalent side by side
+  // Grams — compact, no space
+  if(u==='g') return Math.round(n)+'g';
+
+  // ml — convert to tbsp/tsp if it divides cleanly, else show ml
   if(u==='ml'){
-    const mlStr=Math.round(n)+' ml';
     if(n<=90){
-      // Try tbsp (15 ml) with ½ precision
       const tbsp=n/15;
       const tbspR=Math.round(tbsp*2)/2;
-      if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1) return mlStr+' / '+fracStr(tbspR)+' tbsp';
-      // Try tsp (5 ml) with ¼ precision
+      if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1) return fracStr(tbspR)+' tbsp';
       const tsp=n/5;
       const tspR=Math.round(tsp*4)/4;
-      if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25) return mlStr+' / '+fracStr(tspR)+' tsp';
+      if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25) return fracStr(tspR)+' tsp';
     }
-    return mlStr;
+    return Math.round(n)+'ml';
   }
 
-  // Grams stay as grams
-  if(u==='g') return Math.round(n)+' g';
-
-  // Countable units
+  // Countable units (whole, cloves, eggs, etc.)
   const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets',
              'stalk','stalks','piece','pieces','slice','slices','leaf','leaves',
              'lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
   if(cnt.some(c=>u.includes(c))){
-    const v=n%1===0?n.toString():fracStr(n);
-    return v+' '+unit;
+    return(n%1===0?n.toString():fracStr(n))+' '+unit;
   }
 
-  // Everything else
+  // Everything else (tbsp, tsp already in unit field, kg, L, etc.)
   const v=n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString();
   return v+' '+unit;
 }
