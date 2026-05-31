@@ -422,4 +422,26 @@ steps:[
   'Serve chilled. Best enjoyed on the day it is made.',
 ]},
 
+
+// ── SIDES ──────────────────────────────────────────────
+{id:142,name:'Easy Greek-Style Lemon Potatoes',category:'Sides',difficulty:'easy',serves:4,time:'55 min',calories:280,mainIngredient:'Potatoes',
+ingredients:[
+  {name:'Potatoes',amount:800,unit:'g'},
+  {name:'Olive oil',amount:60,unit:'ml'},
+  {name:'Fresh lemon juice',amount:60,unit:'ml'},
+  {name:'Garlic',amount:3,unit:'cloves'},
+  {name:'Salt',amount:1,unit:'to taste'},
+  {name:'Pepper',amount:1,unit:'to taste'},
+  {name:'Water or vegetable broth',amount:120,unit:'ml'},
+],
+steps:[
+  'Preheat the oven to 200°C.',
+  'Peel and cut the potatoes into wedges.',
+  'Arrange the potato wedges in a single layer in a large baking dish or pan.',
+  'In a bowl, whisk together olive oil, lemon juice, minced garlic, salt, pepper, and water or vegetable broth.',
+  'Pour the mixture over the potatoes, ensuring they are evenly coated.',
+  'Roast in the oven until the edges are crispy and the insides are tender, basting occasionally with the pan juices.',
+  'Serve hot.',
+]},
+
 ];
