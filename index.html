@@ -9,42 +9,66 @@
 <link rel="apple-touch-icon" href="/public/apple-touch-icon.png">
 <link rel="icon" type="image/png" href="/public/icon-192.png">
 <link rel="manifest" href="/public/manifest.json">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet">
 <style>
-/* ── COLOUR TOKENS ── */
+/* ── EPICUREAN COLOUR TOKENS ── */
 :root {
-  --bg:#0d0d16; --surface:#13131f; --surface2:#1c1c2e; --surface3:#242438; --border:#2e2e4a;
-  --accent:#7c6fff; --accent2:#00e5ff; --accent-glow:rgba(124,111,255,.25);
-  --text:#e4e4f0; --text2:#9090b8; --text3:#5a5a7a;
-  --easy:#00c896; --medium:#ffaa00; --hard:#ff4d6d;
-  --tab-h:72px; --radius:14px; --font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  /* Light (default) — warm cream editorial */
+  --bg:#fbf9f8; --surface:#ffffff; --surface2:#f5f3f3; --surface3:#efeded; --border:#c4c7c7;
+  --accent:#47663c; --accent2:#acd19d; --accent-glow:rgba(71,102,60,.15);
+  --accent-container:#c5eab4; --on-accent-container:#4b6b40;
+  --text:#1b1c1c; --text2:#444748; --text3:#747878;
+  --easy:#47663c; --medium:#8a5a1e; --hard:#ba1a1a;
+  --tab-h:68px; --radius:8px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-serif:'Playfair Display',Georgia,serif;
+  --shadow:0px 10px 30px rgba(26,26,26,0.06);
+  --shadow-sm:0px 4px 12px rgba(26,26,26,0.05);
 }
-body.light {
-  --bg:#f0f0fa; --surface:#ffffff; --surface2:#e8e8f8; --surface3:#d8d8f0; --border:#c4c4e0;
-  --accent:#5a50e0; --accent2:#0090bb; --accent-glow:rgba(90,80,224,.15);
-  --text:#0a0a1e; --text2:#40406a; --text3:#8080aa;
-  --easy:#009e72; --medium:#cc8800; --hard:#cc2244;
+body.dark {
+  --bg:#1a1a18; --surface:#242422; --surface2:#2e2e2c; --surface3:#383836; --border:#48484a;
+  --accent:#7dab6e; --accent2:#acd19d; --accent-glow:rgba(125,171,110,.18);
+  --accent-container:#2a3d26; --on-accent-container:#acd19d;
+  --text:#f0ece8; --text2:#a8a4a0; --text3:#706c68;
+  --easy:#7dab6e; --medium:#c89a5a; --hard:#ff8080;
+  --shadow:0px 10px 30px rgba(0,0,0,.25);
+  --shadow-sm:0px 4px 12px rgba(0,0,0,.2);
 }
 
 /* ── RESET ── */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.5;overflow:hidden;height:100dvh;display:flex;flex-direction:column;transition:background .3s,color .3s}
+.ms{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;font-size:22px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;direction:ltr;-webkit-font-smoothing:antialiased}
+.ms.fill{font-variation-settings:'FILL' 1}
+.serif{font-family:var(--font-serif)}
 
 /* ── HEADER ── */
-header{background:var(--surface);padding:14px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0;transition:background .3s,border-color .3s}
-.header-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
-.app-title{font-size:22px;font-weight:900;letter-spacing:0.5px;text-transform:uppercase;flex:1;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;padding-top:2px}
-.header-controls{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.mode-btn{width:36px;height:36px;border-radius:18px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-bottom:2px}
-.mode-btn svg{width:16px;height:16px}
-.mode-btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
-.wake-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
-.header-btn{height:34px;padding:0 12px;border-radius:17px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap;letter-spacing:.3px}
-.header-btn svg{width:13px;height:13px;flex-shrink:0}
-.header-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 12px var(--accent-glow)}
-.wake-sub{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.3px;text-transform:uppercase}
+header{background:var(--surface);padding:14px 20px 10px;border-bottom:1px solid var(--border);flex-shrink:0;transition:background .3s,border-color .3s}
+.header-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.app-title{font-family:var(--font-serif);font-size:24px;font-weight:700;letter-spacing:-0.3px;color:var(--text);flex:1;line-height:1.15}
+.app-title span{display:block;font-size:11px;font-family:var(--font);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:1px}
+.header-controls{display:flex;align-items:center;gap:8px}
+.icon-btn{width:38px;height:38px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.icon-btn:active,.icon-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.icon-btn .ms{font-size:18px}
+.wake-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.wake-sub{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.04em;text-transform:uppercase}
 
 /* ── HEADER ICON ── */
-.header-icon{width:84px;height:84px;border-radius:10px;object-fit:cover;flex-shrink:0}
+.header-icon{width:44px;height:44px;border-radius:var(--radius);object-fit:cover;flex-shrink:0;border:1.5px solid var(--border)}
+
+/* ── HINT BAR ── */
+.app-hint-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:7px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hint-text{font-size:11px;color:var(--text3);font-weight:500}
+.hint-btns{display:flex;gap:8px;flex-shrink:0;align-items:center}
+.hint-btn{height:26px;padding:0 10px;border-radius:6px;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);font-size:11px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .15s}
+.hint-btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
+.hint-close{background:none;border:none;color:var(--text3);font-size:16px;cursor:pointer;padding:2px 4px;line-height:1}
 
 /* ── MAIN ── */
 main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--tab-h) + 8px)}
@@ -53,216 +77,195 @@ main::-webkit-scrollbar{display:none}
 .view.active{display:block}
 
 /* ── INGREDIENT SELECTOR ── */
-.ing-selector-wrap{padding:14px 20px 6px}
-.ing-selector-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--text3);margin-bottom:8px}
+.ing-selector-wrap{padding:14px 16px 6px}
+.ing-selector-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);margin-bottom:7px}
 .ing-select-row{display:flex;gap:8px;align-items:center}
-.ing-select{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:11px 36px 11px 14px;font-size:15px;font-weight:600;color:var(--text);-webkit-appearance:none;appearance:none;outline:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235a5a7a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;transition:border-color .2s,box-shadow .2s}
+.ing-select{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 34px 10px 12px;font-size:14px;font-weight:500;font-family:var(--font);color:var(--text);-webkit-appearance:none;appearance:none;outline:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23747878' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:border-color .2s,box-shadow .2s}
 .ing-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
 .ing-select.has-value{border-color:var(--accent);color:var(--accent)}
-.ing-clear{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;display:none;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:16px;font-weight:700}
+.ing-clear{width:36px;height:36px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;display:none;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:18px}
 .ing-clear.visible{display:flex}
 .ing-clear:active{background:var(--hard);border-color:var(--hard);color:#fff}
 
 /* ── ACCORDION ── */
-.cat-section{margin:6px 16px 0}
-.cat-header{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .2s,background .2s,border-radius .15s}
+.cat-section{margin:5px 14px 0}
+.cat-header{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:13px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .2s,background .2s,border-radius .15s;box-shadow:var(--shadow-sm)}
 .cat-header:active{background:var(--surface2)}
-.cat-header.open{border-color:var(--accent);border-bottom-left-radius:0;border-bottom-right-radius:0;box-shadow:0 0 0 1px var(--accent) inset}
+.cat-header.open{border-color:var(--accent);border-bottom-left-radius:0;border-bottom-right-radius:0}
 .cat-header-left{display:flex;align-items:center;gap:10px}
-.cat-dot{width:8px;height:8px;border-radius:4px;flex-shrink:0}
-.cat-name{font-size:16px;font-weight:700;letter-spacing:-0.1px}
-.cat-count{font-size:12px;font-weight:700;color:var(--text3);background:var(--surface2);padding:2px 8px;border-radius:8px}
-.cat-chevron{color:var(--text3);transition:transform .22s}
-.cat-chevron svg{width:18px;height:18px;display:block}
+.cat-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.cat-name{font-family:var(--font-serif);font-size:16px;font-weight:700;letter-spacing:-0.1px}
+.cat-count{font-size:11px;font-weight:600;color:var(--text3);background:var(--surface2);padding:1px 7px;border-radius:20px;border:1px solid var(--border)}
+.cat-chevron{color:var(--text3);transition:transform .22s;display:flex;align-items:center}
+.cat-chevron .ms{font-size:20px}
 .cat-header.open .cat-chevron{transform:rotate(180deg);color:var(--accent)}
-.cat-body{display:none;background:var(--surface);border:1.5px solid var(--accent);border-top:none;border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius);overflow:hidden}
+.cat-body{display:none;background:var(--surface);border:1.5px solid var(--accent);border-top:none;border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
 .cat-body.open{display:block}
 .cat-recipe-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer;transition:background .1s}
 .cat-recipe-row:last-child{border-bottom:none}
 .cat-recipe-row:active{background:var(--surface2)}
-.cat-recipe-name{font-size:14px;font-weight:600;margin-bottom:4px;line-height:1.3}
+.cat-recipe-name{font-size:14px;font-weight:600;margin-bottom:3px;line-height:1.3;color:var(--text)}
 .cat-recipe-meta{display:flex;gap:5px;flex-wrap:wrap}
-.cat-swatch{width:40px;height:40px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.cat-swatch{width:40px;height:40px;border-radius:var(--radius);flex-shrink:0;background:var(--accent-container);display:flex;align-items:center;justify-content:center}
+.cat-swatch .ms{font-size:18px;color:var(--on-accent-container)}
 
 /* ── TAGS ── */
-.tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.3px;text-transform:uppercase}
-.tag-easy{background:rgba(0,200,150,.15);color:var(--easy)}
-.tag-medium{background:rgba(255,170,0,.15);color:var(--medium)}
-.tag-hard{background:rgba(255,77,109,.15);color:var(--hard)}
+.tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;font-family:var(--font)}
+.tag-easy{background:rgba(71,102,60,.12);color:var(--easy)}
+.tag-medium{background:rgba(138,90,30,.12);color:var(--medium)}
+.tag-hard{background:rgba(186,26,26,.12);color:var(--hard)}
 .tag-muted{background:var(--surface2);color:var(--text3);font-weight:600;text-transform:none;font-size:11px}
 
 /* ── PIN BUTTON ── */
-.card-pin{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
-.card-pin svg{width:13px;height:13px}
-.card-pin.pinned{background:var(--accent);border-color:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
-.card-pin.pinned svg{stroke:#fff}
+.card-pin{width:30px;height:30px;border-radius:6px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.card-pin .ms{font-size:15px;color:var(--text3)}
+.card-pin.pinned{background:var(--accent);border-color:var(--accent)}
+.card-pin.pinned .ms{color:#fff}
 
 /* ── EMPTY ── */
 .empty{text-align:center;padding:60px 24px;color:var(--text3)}
-.empty-icon{width:52px;height:52px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
-.empty-icon svg{width:22px;height:22px;stroke:var(--text3)}
-.empty p{font-size:15px;font-weight:500}
+.empty-icon{width:52px;height:52px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;border:1.5px solid var(--border)}
+.empty-icon .ms{font-size:24px;color:var(--text3)}
+.empty p{font-size:15px;font-weight:500;color:var(--text2)}
 
 /* ── PINNED VIEW ── */
-.section-label{padding:18px 20px 8px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.4px}
-.recipe-list{padding:0 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
-.recipe-card{background:var(--surface);border-radius:var(--radius);border:1.5px solid var(--border);cursor:pointer;display:flex;align-items:center;padding:14px;gap:14px;transition:transform .12s,border-color .15s}
+.section-label{padding:18px 16px 8px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.09em}
+.recipe-list{padding:0 14px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.recipe-card{background:var(--surface);border-radius:var(--radius);border:1.5px solid var(--border);cursor:pointer;display:flex;align-items:center;padding:13px;gap:13px;transition:transform .12s,border-color .15s;box-shadow:var(--shadow-sm)}
 .recipe-card:active{transform:scale(.985)}
-.recipe-card.pinned{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-glow)}
-.card-swatch{width:50px;height:50px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.recipe-card.pinned{border-color:var(--accent)}
+.card-swatch{width:48px;height:48px;border-radius:var(--radius);flex-shrink:0;background:var(--accent-container);display:flex;align-items:center;justify-content:center}
+.card-swatch .ms{font-size:20px;color:var(--on-accent-container)}
 .card-info{flex:1;min-width:0}
-.card-name{font-size:15px;font-weight:700;line-height:1.25;margin-bottom:5px}
+.card-name{font-family:var(--font-serif);font-size:15px;font-weight:700;line-height:1.25;margin-bottom:4px;color:var(--text)}
 .card-meta{display:flex;gap:5px;flex-wrap:wrap}
 
-/* ── SWATCH COLOURS ── */
-.sw-entrees{background:rgba(0,200,150,.15);color:#00c896}
-.sw-salads{background:rgba(80,200,100,.15);color:#40c060}
-.sw-soups{background:rgba(140,80,220,.15);color:#a060e0}
-.sw-sky{background:rgba(0,180,220,.15);color:#00b4dc}
-.sw-mains{background:rgba(255,100,80,.15);color:#ff6450}
-.sw-veggie{background:rgba(80,200,80,.15);color:#40c040}
-.sw-pasta{background:rgba(255,160,0,.15);color:#ffa000}
-.sw-sides{background:rgba(160,130,80,.15);color:#b09050}
-.sw-snacks{background:rgba(80,160,255,.15);color:#50a0ff}
-.sw-sauces{background:rgba(220,80,180,.15);color:#dc50b4}
-.sw-desserts{background:rgba(255,80,120,.15);color:#ff5080}
-
 /* ── DETAIL ── */
-.detail-hero{height:160px;display:flex;align-items:flex-end;padding:16px;position:relative;flex-shrink:0}
-.hero-back{position:absolute;top:14px;left:14px;width:36px;height:36px;background:#fff;border:1.5px solid #e0e0e8;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1a1a2a;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.hero-back svg{width:16px;height:16px}
+.detail-hero{min-height:140px;display:flex;align-items:flex-end;padding:16px;position:relative;flex-shrink:0}
+.hero-back{position:absolute;top:14px;left:14px;width:36px;height:36px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);box-shadow:var(--shadow-sm)}
+.hero-back .ms{font-size:20px}
 .hero-actions{position:absolute;top:14px;right:14px;display:flex;gap:7px}
-.hero-btn{width:36px;height:36px;background:#fff;border:1.5px solid #e0e0e8;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1a1a2a;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.hero-btn svg{width:15px;height:15px}
-.hero-btn.pinned{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 10px var(--accent-glow)}
+.hero-btn{width:36px;height:36px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .15s;box-shadow:var(--shadow-sm)}
+.hero-btn .ms{font-size:18px}
+.hero-btn.pinned{background:var(--accent);border-color:var(--accent);color:#fff}
 .detail-body{padding:20px 18px}
-.detail-title{font-size:26px;font-weight:800;line-height:1.15;letter-spacing:-0.3px;margin-bottom:10px}
+.detail-title{font-family:var(--font-serif);font-size:26px;font-weight:700;line-height:1.2;letter-spacing:-0.3px;margin-bottom:10px;color:var(--text)}
 .detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
-.detail-tag{font-size:12px;font-weight:700;padding:4px 10px;border-radius:7px}
+.detail-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;font-family:var(--font);text-transform:uppercase;letter-spacing:.05em}
 
 /* Portion */
-.card-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:18px}
-.card-block-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:12px}
+.card-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:18px;box-shadow:var(--shadow-sm)}
+.card-block-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);margin-bottom:12px;font-family:var(--font)}
 .portion-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.portion-label{font-size:16px;font-weight:600;color:var(--text)}
-.portion-value{font-size:28px;font-weight:800;color:var(--accent);letter-spacing:-0.5px;line-height:1}
-.portion-suffix{font-size:13px;font-weight:500;color:var(--text3);margin-left:3px}
-input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--surface3);border-radius:2px;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:8px;background:var(--accent);cursor:pointer;border:2px solid var(--surface);box-shadow:0 0 8px var(--accent-glow)}
-input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;background:var(--accent);cursor:pointer;border:2px solid var(--surface)}
+.portion-label{font-size:15px;font-weight:600;color:var(--text)}
+.portion-value{font-family:var(--font-serif);font-size:28px;font-weight:700;color:var(--accent);letter-spacing:-0.5px;line-height:1}
+.portion-suffix{font-size:12px;font-weight:500;color:var(--text3);margin-left:3px}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--surface3);border-radius:2px;outline:none;border:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:6px;background:var(--accent);cursor:pointer;border:2px solid var(--surface);box-shadow:0 2px 8px var(--accent-glow)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:6px;background:var(--accent);cursor:pointer;border:2px solid var(--surface)}
 
-.block-label{font-size:18px;font-weight:800;letter-spacing:-0.2px;margin-bottom:12px;margin-top:4px}
+.block-label{font-family:var(--font-serif);font-size:20px;font-weight:700;letter-spacing:-0.2px;margin-bottom:12px;margin-top:4px;color:var(--text)}
 
 /* Ingredients */
-.ing-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
-.ing-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:10px}
+.ing-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow-sm)}
+.ing-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);gap:10px}
 .ing-row:last-child{border-bottom:none}
-.ing-dot{width:5px;height:5px;border-radius:2.5px;background:var(--accent);flex-shrink:0}
-.ing-name{flex:1;font-size:15px;font-weight:500}
-.ing-amount{font-size:14px;font-weight:700;color:var(--accent);white-space:nowrap}
+.ing-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.ing-name{flex:1;font-size:14px;font-weight:500;color:var(--text)}
+.ing-amount{font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap}
 
 /* Steps */
 .steps-list{margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
-.step-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;gap:12px;cursor:pointer;transition:opacity .2s,border-color .2s}
-.step-item.done{opacity:.4;border-color:var(--easy)}
-.step-num-wrap{width:28px;height:28px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 8px var(--accent-glow)}
-.step-item.done .step-num-wrap{background:var(--easy);box-shadow:none}
-.step-num{font-size:12px;font-weight:800;color:#fff}
-.step-text{font-size:14px;line-height:1.65;color:var(--text2);padding-top:3px}
+.step-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;gap:12px;cursor:pointer;transition:opacity .2s,border-color .2s;box-shadow:var(--shadow-sm)}
+.step-item.done{opacity:.45;border-color:var(--accent)}
+.step-num-wrap{width:30px;height:30px;border-radius:var(--radius);background:var(--accent-container);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-item.done .step-num-wrap{background:var(--accent)}
+.step-num{font-family:var(--font-serif);font-size:14px;font-weight:700;color:var(--on-accent-container)}
+.step-item.done .step-num{color:#fff}
+.step-text{font-size:14px;line-height:1.65;color:var(--text2);padding-top:2px}
 
 /* Shopping */
-.shop-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
-.shop-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer}
+.shop-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+.shop-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer}
 .shop-row:last-child{border-bottom:none}
-.shop-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.shop-row.checked .shop-check{background:var(--easy);border-color:var(--easy)}
+.shop-check{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.shop-row.checked .shop-check{background:var(--accent);border-color:var(--accent)}
 .shop-row.checked .shop-check svg{display:block}
-.shop-check svg{display:none;width:11px;height:11px;stroke:#fff;stroke-width:3}
-.shop-name{flex:1;font-size:15px;font-weight:500}
+.shop-check svg{display:none;width:10px;height:10px;stroke:#fff;stroke-width:3}
+.shop-name{flex:1;font-size:14px;font-weight:500;color:var(--text)}
 .shop-row.checked .shop-name{text-decoration:line-through;color:var(--text3)}
 .shop-amt{font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap}
 .export-row{margin-bottom:24px}
-.export-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:16px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;text-align:center;letter-spacing:.2px;box-shadow:0 4px 20px var(--accent-glow);transition:opacity .15s}
+.export-btn{width:100%;background:var(--accent);border:none;border-radius:var(--radius);padding:15px;font-size:14px;font-weight:700;font-family:var(--font);color:#fff;cursor:pointer;text-align:center;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 4px 16px var(--accent-glow);transition:opacity .15s}
 .export-btn:active{opacity:.8}
 
 /* ── TAB BAR ── */
 .tab-bar{height:var(--tab-h);background:var(--surface);border-top:1px solid var(--border);display:flex;flex-shrink:0}
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;transition:color .15s;padding-bottom:6px}
-.tab-icon{width:20px;height:20px}
-.tab-icon svg{width:20px;height:20px;stroke-width:1.8}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--text3);font-size:10px;font-weight:700;font-family:var(--font);text-transform:uppercase;letter-spacing:.06em;transition:color .15s;padding-bottom:6px}
+.tab .ms{font-size:22px;transition:all .15s}
 .tab.active{color:var(--accent)}
-.tab.active .tab-icon svg{stroke-width:2.5}
+.tab.active .ms{font-variation-settings:'FILL' 1}
 
 /* ── TOAST ── */
-.toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(14px);background:var(--surface);border:1px solid var(--accent);color:var(--text);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:0 0 16px var(--accent-glow)}
+.toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(14px);background:var(--surface);border:1px solid var(--accent);color:var(--text);padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;font-family:var(--font);opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:var(--shadow)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ── FLOATING TIMER ── */
-.timer-float{position:fixed;bottom:calc(var(--tab-h) + 12px);left:50%;transform:translateX(-50%);background:var(--surface);border:2px solid var(--accent);border-radius:16px;padding:12px 18px;display:flex;align-items:center;gap:12px;z-index:1000;box-shadow:0 4px 24px rgba(0,0,0,.4);min-width:240px;display:none}
+.timer-float{position:fixed;bottom:calc(var(--tab-h) + 12px);left:50%;transform:translateX(-50%);background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;z-index:1000;box-shadow:var(--shadow);min-width:220px;display:none}
 .timer-float.visible{display:flex}
-.timer-display{font-size:28px;font-weight:800;letter-spacing:-1px;color:var(--accent);font-variant-numeric:tabular-nums;min-width:80px}
+.timer-display{font-family:var(--font-serif);font-size:28px;font-weight:700;color:var(--accent);min-width:72px;letter-spacing:-.5px}
 .timer-display.urgent{color:var(--hard);animation:pulse .5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .timer-btns{display:flex;gap:6px}
-.timer-btn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;transition:all .15s}
+.timer-btn{width:32px;height:32px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:var(--font);transition:all .15s}
 .timer-btn:active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.timer-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;flex:1}
+.timer-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;flex:1;font-family:var(--font)}
 
 /* ── TIMER IN STEPS ── */
-.step-timer-btn{width:26px;height:26px;border-radius:7px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;margin-top:2px}
-.step-timer-btn svg{width:13px;height:13px}
+.step-timer-btn{width:26px;height:26px;border-radius:6px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;margin-top:2px}
+.step-timer-btn .ms{font-size:14px}
 .step-timer-btn:active,.step-timer-btn.running{background:var(--accent);border-color:var(--accent);color:#fff}
 
 /* ── TIMER PICKER MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1100;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1100;display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.visible{display:flex}
-.modal-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:20px 20px 36px;width:100%;max-width:480px}
-.modal-title{font-size:14px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;text-align:center}
+.modal-sheet{background:var(--surface);border-radius:16px 16px 0 0;padding:20px 20px 36px;width:100%;max-width:480px}
+.modal-title{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center}
 .timer-picker-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px}
-.timer-pick-val{font-size:48px;font-weight:800;color:var(--text);min-width:72px;text-align:center;font-variant-numeric:tabular-nums}
-.timer-pick-label{font-size:13px;font-weight:600;color:var(--text3)}
+.timer-pick-val{font-family:var(--font-serif);font-size:48px;font-weight:700;color:var(--text);min-width:68px;text-align:center;font-variant-numeric:tabular-nums}
+.timer-pick-label{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-family:var(--font)}
 .timer-pick-btns{display:flex;flex-direction:column;gap:4px}
-.timer-pick-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.timer-pick-btn:active{background:var(--accent);border-color:var(--accent)}
-.modal-start-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;color:#fff;cursor:pointer;letter-spacing:.2px;box-shadow:0 4px 20px var(--accent-glow)}
-.modal-cancel{width:100%;background:none;border:none;padding:12px;font-size:14px;font-weight:600;color:var(--text3);cursor:pointer;margin-top:4px}
-
-/* ── REFRESH / CLOSE HINT ── */
-.app-hint-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.hint-text{font-size:11px;color:var(--text3);font-weight:500}
-.hint-btns{display:flex;gap:8px;flex-shrink:0}
-.hint-btn{height:28px;padding:0 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .15s}
-.hint-btn svg{width:11px;height:11px}
-.hint-btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
-.hint-close{background:none;border:none;color:var(--text3);font-size:16px;cursor:pointer;padding:2px 4px;line-height:1}
+.timer-pick-btn{width:32px;height:32px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:var(--font)}
+.timer-pick-btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
+.modal-start-btn{width:100%;background:var(--accent);border:none;border-radius:var(--radius);padding:15px;font-size:14px;font-weight:700;font-family:var(--font);color:#fff;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 16px var(--accent-glow)}
+.modal-cancel{width:100%;background:none;border:none;padding:12px;font-size:14px;font-weight:600;color:var(--text3);cursor:pointer;margin-top:4px;font-family:var(--font)}
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-row">
-    <span class="app-title">Cooking<br>With Will</span>
     <img class="header-icon" src="/public/apple-touch-icon.png" alt="Cooking With Will">
+    <div class="app-title">
+      <span>A recipe collection by</span>
+      Cooking With Will
+    </div>
     <div class="header-controls">
-      <button class="mode-btn" id="modeBtn" onclick="toggleMode()" title="Toggle dark/light">
-        <svg id="modeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
       <div class="wake-wrap">
-        <button class="header-btn" id="wakeBtn" onclick="toggleWakeLock()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          Screen on
+        <button class="icon-btn" id="wakeBtn" onclick="toggleWakeLock()" title="Keep screen on">
+          <span class="ms" id="wakeIcon">light_mode</span>
         </button>
-        <span class="wake-sub">Leave device on while cooking</span>
+        <span class="wake-sub">Screen on</span>
       </div>
+      <button class="icon-btn" id="modeBtn" onclick="toggleMode()" title="Toggle dark/light">
+        <span class="ms" id="modeIcon">dark_mode</span>
+      </button>
     </div>
   </div>
   <div class="app-hint-bar" id="hintBar">
     <span class="hint-text">📱 Press Home or swipe up to close &nbsp;·&nbsp; Tap refresh for latest recipes</span>
     <div class="hint-btns">
-      <button class="hint-btn" onclick="hardRefresh()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-        Refresh
-      </button>
+      <button class="hint-btn" onclick="hardRefresh()">Refresh</button>
       <button class="hint-close" onclick="document.getElementById('hintBar').style.display='none'">✕</button>
     </div>
   </div>
@@ -293,7 +296,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
       </div>
       <div class="timer-pick-val" id="pickMin">0</div>
       <div class="timer-pick-label">min</div>
-      <div style="font-size:36px;font-weight:800;color:var(--text3);margin:0 4px">:</div>
+      <div style="font-family:var(--font-serif);font-size:36px;font-weight:700;color:var(--text3);margin:0 4px">:</div>
       <div class="timer-pick-val" id="pickSec">00</div>
       <div class="timer-pick-label">sec</div>
       <div>
@@ -313,7 +316,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
   <!-- HOME -->
   <div class="view active" id="view-home">
     <div class="ing-selector-wrap">
-      <div class="ing-selector-label">Select a main ingredient for dish</div>
+      <div class="ing-selector-label">Filter by main ingredient</div>
       <div class="ing-select-row">
         <select class="ing-select" id="ingSelect" onchange="onIngSelect()">
           <option value="">All recipes...</option>
@@ -329,7 +332,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
     <div class="section-label">Pinned Recipes</div>
     <div class="recipe-list" id="favList"></div>
     <div class="empty" id="favEmpty" style="display:none">
-      <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="empty-icon"><span class="ms">bookmark</span></div>
       <p>Pin recipes to find them here.</p>
     </div>
   </div>
@@ -343,13 +346,13 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
   <!-- SHOPPING LIST -->
   <div class="view" id="view-shoplist">
     <div class="section-label">Shopping List</div>
-    <div style="padding:0 16px 12px;display:flex;gap:8px">
-      <button onclick="copyShoppingTab()" style="flex:1;background:var(--accent);border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;letter-spacing:.2px">Copy List</button>
-      <button onclick="clearShoppingTab()" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;font-weight:700;color:var(--text3);cursor:pointer">Clear</button>
+    <div style="padding:0 14px 12px;display:flex;gap:8px">
+      <button onclick="copyShoppingTab()" style="flex:1;background:var(--accent);border:none;border-radius:var(--radius);padding:11px;font-size:13px;font-weight:700;font-family:var(--font);color:#fff;cursor:pointer;letter-spacing:.04em;text-transform:uppercase">Copy List</button>
+      <button onclick="clearShoppingTab()" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:11px 16px;font-size:13px;font-weight:700;font-family:var(--font);color:var(--text3);cursor:pointer">Clear</button>
     </div>
     <div class="recipe-list" id="shopTabContent"></div>
     <div class="empty" id="shopTabEmpty" style="display:none">
-      <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+      <div class="empty-icon"><span class="ms">shopping_bag</span></div>
       <p>Add ingredients from a recipe's shopping list.</p>
     </div>
   </div>
@@ -358,14 +361,14 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
   <div class="view" id="view-detail">
     <div class="detail-hero" id="detailHero">
       <button class="hero-back" onclick="closeDetail()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span class="ms">arrow_back</span>
       </button>
       <div class="hero-actions">
         <button class="hero-btn" id="detailPin" onclick="togglePinDetail()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="ms" id="detailPinIcon">bookmark</span>
         </button>
         <button class="hero-btn" onclick="shareRecipe()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <span class="ms">ios_share</span>
         </button>
       </div>
     </div>
@@ -397,19 +400,19 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;bac
 
 <nav class="tab-bar">
   <button class="tab active" id="tab-home" onclick="switchTab('home')">
-    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+    <span class="ms">home</span>
     Recipes
   </button>
   <button class="tab" id="tab-favourites" onclick="switchTab('favourites')">
-    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+    <span class="ms">bookmark</span>
     Pinned
   </button>
   <button class="tab" id="tab-new" onclick="switchTab('new')">
-    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+    <span class="ms">add_circle</span>
     New
   </button>
   <button class="tab" id="tab-shoplist" onclick="switchTab('shoplist')">
-    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></span>
+    <span class="ms">shopping_bag</span>
     Shopping
   </button>
 </nav>
@@ -431,31 +434,26 @@ let currentTab='home',currentRecipe=null,prevTab='home';
 let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
 let activeIngredient=null,shopChecked={},stepsDone={},portionScale=1;
 let wakeLock=null;
-let openCategories=new Set(); // all collapsed by default
+let openCategories=new Set();
 
 // ── DARK / LIGHT MODE
 let isDark=false;
 function toggleMode(){
   haptic(8);
   isDark=!isDark;
-  document.body.classList.toggle('light',!isDark);
-  const icon=document.getElementById('modeIcon');
-  icon.innerHTML=isDark
-    ?'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
-    :'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  document.body.classList.toggle('dark',isDark);
+  document.getElementById('modeIcon').textContent=isDark?'light_mode':'dark_mode';
   localStorage.setItem('darkMode',isDark?'1':'0');
 }
 (function(){
   const saved=localStorage.getItem('darkMode');
-  // default light — only go dark if explicitly saved as dark
   if(saved==='1'){
     isDark=true;
-    document.body.classList.remove('light');
-    document.getElementById('modeIcon').innerHTML='<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    document.body.classList.add('dark');
+    document.getElementById('modeIcon').textContent='light_mode';
   } else {
     isDark=false;
-    document.body.classList.add('light');
-    document.getElementById('modeIcon').innerHTML='<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+    document.getElementById('modeIcon').textContent='dark_mode';
   }
 })();
 
@@ -475,9 +473,22 @@ function switchTab(tab){
   if(tab==='shoplist')renderShoppingTab();
 }
 
-// ── HOME
-const CAT_DOTS={'Dips & Starters':'#00c896','Salads':'#40c060','Soups':'#a060e0','Seafood':'#00b4dc','Meat & Poultry':'#ff6450','Vegetarian':'#40c040','Pasta & Rice':'#ffa000','Sides':'#b09050','Bread & Bakes':'#50a0ff','Sauces':'#dc50b4','Desserts':'#ff5080'};
+// ── CATEGORY ICONS
+const CAT_ICONS={
+  'Dips & Starters':'tapas',
+  'Salads':'eco',
+  'Soups':'soup_kitchen',
+  'Seafood':'set_meal',
+  'Meat & Poultry':'restaurant',
+  'Vegetarian':'grass',
+  'Pasta & Rice':'ramen_dining',
+  'Sides':'brunch_dining',
+  'Bread & Bakes':'bakery_dining',
+  'Sauces':'water_drop',
+  'Desserts':'cake'
+};
 
+// ── HOME
 function renderHome(){populateIngSelect();renderAccordion()}
 
 function populateIngSelect(){
@@ -513,32 +524,30 @@ function getFiltered(){
 
 function renderAccordion(){
   const recipes=getFiltered();
-  // auto-open all categories that have matching recipes when filtering
   if(activeIngredient)recipes.forEach(r=>openCategories.add(r.category));
   const el=document.getElementById('homeContent');
   if(!recipes.length){
-    el.innerHTML=`<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><p>No recipes found.</p></div>`;
+    el.innerHTML=`<div class="empty"><div class="empty-icon"><span class="ms">search_off</span></div><p>No recipes found.</p></div>`;
     return;
   }
-  let html='<div style="padding:10px 0 4px">';
+  let html='<div style="padding:10px 0 6px">';
   CATEGORIES.forEach(cat=>{
     const list=recipes.filter(r=>r.category===cat);
     if(!list.length)return;
     const isOpen=openCategories.has(cat);
-    const dot=CAT_DOTS[cat]||'#7c6fff';
-    const sw=SW[cat]||'sw-mains';
+    const icon=CAT_ICONS[cat]||'restaurant';
     html+=`<div class="cat-section">
       <div class="cat-header${isOpen?' open':''}" onclick="toggleCat('${cat.replace(/&/g,'and')}','${cat}')">
         <div class="cat-header-left">
-          <div class="cat-dot" style="background:${dot}"></div>
+          <div class="cat-dot"></div>
           <span class="cat-name">${cat}</span>
           <span class="cat-count">${list.length}</span>
         </div>
-        <span class="cat-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span class="cat-chevron"><span class="ms">expand_more</span></span>
       </div>
       <div class="cat-body${isOpen?' open':''}">
         ${list.map(r=>{const ip=pinned.includes(r.id);return`<div class="cat-recipe-row" onclick="openRecipe(${r.id})">
-          <div class="cat-swatch ${sw}">${cat.substring(0,2).toUpperCase()}</div>
+          <div class="cat-swatch"><span class="ms">${icon}</span></div>
           <div style="flex:1;min-width:0">
             <div class="cat-recipe-name">${r.name}</div>
             <div class="cat-recipe-meta">
@@ -548,7 +557,7 @@ function renderAccordion(){
             </div>
           </div>
           <button class="card-pin${ip?' pinned':''}" onclick="event.stopPropagation();togglePin(${r.id})">
-            <svg viewBox="0 0 24 24" fill="${ip?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span class="ms${ip?' fill':''}">${ip?'bookmark':'bookmark'}</span>
           </button>
         </div>`}).join('')}
       </div>
@@ -568,8 +577,9 @@ function toggleCat(safeKey,cat){
 // ── FAVOURITES
 function recipeCardHTML(r){
   const ip=pinned.includes(r.id);
+  const icon=CAT_ICONS[r.category]||'restaurant';
   return`<div class="recipe-card${ip?' pinned':''}" onclick="openRecipe(${r.id})">
-    <div class="card-swatch ${SW[r.category]||'sw-mains'}">${r.category.substring(0,2).toUpperCase()}</div>
+    <div class="card-swatch"><span class="ms">${icon}</span></div>
     <div class="card-info">
       <div class="card-name">${r.name}</div>
       <div class="card-meta">
@@ -579,7 +589,7 @@ function recipeCardHTML(r){
       </div>
     </div>
     <button class="card-pin${ip?' pinned':''}" onclick="event.stopPropagation();togglePin(${r.id})">
-      <svg viewBox="0 0 24 24" fill="${ip?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="ms${ip?' fill':''}">${ip?'bookmark':'bookmark'}</span>
     </button>
   </div>`;
 }
@@ -610,7 +620,10 @@ function togglePinDetail(){
 
 function updateDetailPin(){
   const btn=document.getElementById('detailPin');
-  btn.classList.toggle('pinned',pinned.includes(currentRecipe.id));
+  const icon=document.getElementById('detailPinIcon');
+  const ip=pinned.includes(currentRecipe.id);
+  btn.classList.toggle('pinned',ip);
+  icon.className='ms'+(ip?' fill':'');
 }
 
 // ── DETAIL
@@ -648,34 +661,25 @@ function renderDetailContent(){
 }
 
 function heroGrad(cat){
-  const dark={
-    'Dips & Starters':'linear-gradient(135deg,#0d1a14,#1a2e20)',
-    'Salads':'linear-gradient(135deg,#0d1a10,#162a18)',
-    'Soups':'linear-gradient(135deg,#140d1e,#201428)',
-    'Seafood':'linear-gradient(135deg,#0d141e,#101e2e)',
-    'Meat & Poultry':'linear-gradient(135deg,#1e100d,#2e1610)',
-    'Vegetarian':'linear-gradient(135deg,#0d1a0d,#142214)',
-    'Pasta & Rice':'linear-gradient(135deg,#1a140d,#261c10)',
-    'Sides':'linear-gradient(135deg,#161410,#201e16)',
-    'Bread & Bakes':'linear-gradient(135deg,#0d1420,#10182e)',
-    'Sauces':'linear-gradient(135deg,#1a0d18,#281020)',
-    'Desserts':'linear-gradient(135deg,#1a0d12,#2e1018)',
-  };
-  const light={
-    'Dips & Starters':'linear-gradient(135deg,#d4ede4,#c0e0d0)',
-    'Salads':'linear-gradient(135deg,#d4edce,#bce0b8)',
-    'Soups':'linear-gradient(135deg,#ddd4f0,#cec0e8)',
+  const gradients={
+    'Dips & Starters':'linear-gradient(135deg,#d4ede4,#c8e8da)',
+    'Salads':'linear-gradient(135deg,#d4edce,#c4e4bc)',
+    'Soups':'linear-gradient(135deg,#ece8d8,#e0dcc8)',
     'Seafood':'linear-gradient(135deg,#ccdcf0,#b8cce4)',
-    'Meat & Poultry':'linear-gradient(135deg,#f0d8d0,#e8c8bc)',
-    'Vegetarian':'linear-gradient(135deg,#d0edcc,#bce0b4)',
-    'Pasta & Rice':'linear-gradient(135deg,#f0e4cc,#e8d8b4)',
-    'Sides':'linear-gradient(135deg,#ece8d8,#e0dcc8)',
-    'Bread & Bakes':'linear-gradient(135deg,#ccdcf0,#bcd0e8)',
-    'Sauces':'linear-gradient(135deg,#f0d0ec,#e8c0e0)',
-    'Desserts':'linear-gradient(135deg,#f0d0d8,#e8bcc8)',
+    'Meat & Poultry':'linear-gradient(135deg,#f0e0d0,#e8d0bc)',
+    'Vegetarian':'linear-gradient(135deg,#d0edcc,#bce4b4)',
+    'Pasta & Rice':'linear-gradient(135deg,#f0e8cc,#e8dab4)',
+    'Sides':'linear-gradient(135deg,#e8e4d4,#dcd8c4)',
+    'Bread & Bakes':'linear-gradient(135deg,#f0e4d0,#e8d8bc)',
+    'Sauces':'linear-gradient(135deg,#e8d8ec,#dcc8e0)',
+    'Desserts':'linear-gradient(135deg,#f0d8d8,#e8c8c8)',
   };
-  const map=isDark?dark:light;
-  return map[cat]||(isDark?'linear-gradient(135deg,#0d0d16,#16162a)':'linear-gradient(135deg,#e0e0f4,#d0d0ec)');
+  if(isDark){
+    return gradients[cat]
+      ?gradients[cat].replace(/#[a-f0-9]{6}/gi,m=>{const d=parseInt(m.slice(1),16);const r=(d>>16&255)>>1,g=(d>>8&255)>>1,b=(d&255)>>1;return`#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`})
+      :'linear-gradient(135deg,#1e2420,#1a2018)';
+  }
+  return gradients[cat]||'linear-gradient(135deg,#f0ece8,#e8e4e0)';
 }
 
 function renderIngredients(){
@@ -692,9 +696,9 @@ function renderSteps(){
       <div class="step-num-wrap"><span class="step-num">${done.has(i)?'✓':(i+1)}</span></div>
       <div class="step-text" style="flex:1">${s}</div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding-left:12px;border-left:1.5px solid var(--border);flex-shrink:0">
-        <span style="font-size:8px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text3)">Timer</span>
+        <span style="font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);font-family:var(--font)">Timer</span>
         <button class="step-timer-btn${timerStepIdx===i&&timerRunning?' running':''}" onclick="event.stopPropagation();openTimerModal(${i},'Step ${i+1}')" title="Set timer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+          <span class="ms">timer</span>
         </button>
       </div>
     </div>`).join('');
@@ -735,10 +739,8 @@ function copyShopList(){
   const items=toBuy.map(ing=>`• ${ing.name}: ${fmtIng(ing.amount*portionScale,ing.unit)}`);
   const text=`Shopping list for "${r.name}" (serves ${serves}):\n\n${items.length?items.join('\n'):'You already have everything!'}`;
   navigator.clipboard.writeText(text).then(()=>toast('Copied & added to Shopping List'));
-  // also add to global shopping list tab
   toBuy.forEach(ing=>{
     const amount=fmtIng(ing.amount*portionScale,ing.unit);
-    // avoid duplicates from same recipe
     const exists=globalShopList.find(x=>x.name===ing.name&&x.recipe===r.name);
     if(!exists)globalShopList.push({name:ing.name,amount,recipe:r.name,checked:false});
   });
@@ -768,7 +770,6 @@ function renderNew(){
 
 // ── SHOPPING LIST TAB
 let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
-// each item: {name, amount, recipe, checked}
 
 function saveGlobalShopList(){localStorage.setItem('globalShopList',JSON.stringify(globalShopList))}
 
@@ -777,17 +778,16 @@ function renderShoppingTab(){
   const content=document.getElementById('shopTabContent');
   if(!globalShopList.length){empty.style.display='';content.innerHTML='';return}
   empty.style.display='none';
-  // group by recipe
   const byRecipe={};
   globalShopList.forEach((item,i)=>{
     if(!byRecipe[item.recipe])byRecipe[item.recipe]=[];
     byRecipe[item.recipe].push({...item,idx:i});
   });
   content.innerHTML=Object.entries(byRecipe).map(([recipe,items])=>`
-    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:8px">
-      <div style="padding:10px 14px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);border-bottom:1px solid var(--border)">${recipe}</div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:8px;box-shadow:var(--shadow-sm)">
+      <div style="padding:9px 14px 7px;font-size:10px;font-weight:700;font-family:var(--font);text-transform:uppercase;letter-spacing:.09em;color:var(--text3);border-bottom:1px solid var(--border)">${recipe}</div>
       ${items.map(item=>`
-        <div class="shop-row${item.checked?' checked':''}" onclick="toggleShopTab(${item.idx})" style="padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer">
+        <div class="shop-row${item.checked?' checked':''}" onclick="toggleShopTab(${item.idx})" style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer">
           <div class="shop-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="shop-name">${item.name}</span>
           <span class="shop-amt">${item.amount}</span>
@@ -861,54 +861,38 @@ function fracStr(n){
   return w?`${w}${m[1]}`:m[1];
 }
 
-// Returns a compact formatted string e.g. "200g", "1 tbsp", "2 tsp", "100ml"
-function fmtIng(amount, unit){
+function fmtIng(amount,unit){
   if(!amount||isNaN(amount))return'';
   const n=amount;
   const u=unit.toLowerCase().trim();
-
-  // Descriptive — no quantity, just the label
   const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs'];
-  if(desc.some(d=>u.includes(d))) return unit;
-
-  // Grams — compact, no space
-  if(u==='g') return Math.round(n)+'g';
-
-  // ml — convert to tbsp/tsp if it divides cleanly, else show ml
+  if(desc.some(d=>u.includes(d)))return unit;
+  if(u==='g')return Math.round(n)+'g';
   if(u==='ml'){
     if(n<=90){
-      const tbsp=n/15;
-      const tbspR=Math.round(tbsp*2)/2;
-      if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1) return fracStr(tbspR)+' tbsp';
-      const tsp=n/5;
-      const tspR=Math.round(tsp*4)/4;
-      if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25) return fracStr(tspR)+' tsp';
+      const tbsp=n/15;const tbspR=Math.round(tbsp*2)/2;
+      if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1)return fracStr(tbspR)+' tbsp';
+      const tsp=n/5;const tspR=Math.round(tsp*4)/4;
+      if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25)return fracStr(tspR)+' tsp';
     }
     return Math.round(n)+'ml';
   }
-
-  // Countable units (whole, cloves, eggs, etc.)
   const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets',
              'stalk','stalks','piece','pieces','slice','slices','leaf','leaves',
              'lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
-  if(cnt.some(c=>u.includes(c))){
-    return(n%1===0?n.toString():fracStr(n))+' '+unit;
-  }
-
-  // Everything else (tbsp, tsp already in unit field, kg, L, etc.)
+  if(cnt.some(c=>u.includes(c)))return(n%1===0?n.toString():fracStr(n))+' '+unit;
   const v=n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString();
   return v+' '+unit;
 }
+
 function toast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
   clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);
 }
 
-// ── REFRESH
 function hardRefresh(){
-  haptic(8);
-  toast('Refreshing...');
+  haptic(8);toast('Refreshing...');
   setTimeout(()=>location.reload(true),400);
 }
 
@@ -923,29 +907,20 @@ function openTimerModal(stepIdx,label){
   document.getElementById('pickMin').textContent=String(pickMin).padStart(1,'0');
   document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0');
 }
-
-function closeTimerModal(){
-  document.getElementById('timerModal').classList.remove('visible');
-}
-
+function closeTimerModal(){document.getElementById('timerModal').classList.remove('visible')}
 function adjustPick(field,delta){
   haptic(6);
   if(field==='min'){pickMin=Math.max(0,Math.min(99,pickMin+delta));document.getElementById('pickMin').textContent=pickMin}
   else{pickSec=Math.max(0,Math.min(59,Math.round((pickSec+delta)/15)*15));document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0')}
 }
-
 function startTimerFromModal(){
   const total=pickMin*60+pickSec;
   if(total<=0){toast('Set a time first');return}
-  haptic(12);
-  closeTimerModal();
+  haptic(12);closeTimerModal();
   startTimer(total,'Step '+(timerStepIdx+1));
 }
-
 function startTimer(seconds,label){
-  stopTimer();
-  timerSeconds=seconds;
-  timerRunning=true;
+  stopTimer();timerSeconds=seconds;timerRunning=true;
   const float=document.getElementById('timerFloat');
   const display=document.getElementById('timerDisplay');
   const lbl=document.getElementById('timerLabel');
@@ -956,55 +931,42 @@ function startTimer(seconds,label){
   updateTimerDisplay();
   timerInterval=setInterval(()=>{
     if(!timerRunning)return;
-    timerSeconds--;
-    updateTimerDisplay();
+    timerSeconds--;updateTimerDisplay();
     if(timerSeconds<=0){
-      clearInterval(timerInterval);
-      timerRunning=false;
-      display.classList.add('urgent');
-      beepTimer();
-      toast('⏰ Timer done!');
-      renderSteps();
+      clearInterval(timerInterval);timerRunning=false;
+      display.classList.add('urgent');beepTimer();
+      toast('⏰ Timer done!');renderSteps();
       setTimeout(()=>{display.classList.remove('urgent');stopTimer()},5000);
     }
   },1000);
   renderSteps();
 }
-
 function updateTimerDisplay(){
   const m=Math.floor(Math.abs(timerSeconds)/60);
   const s=Math.abs(timerSeconds)%60;
   document.getElementById('timerDisplay').textContent=m+':'+(s<10?'0':'')+s;
   document.getElementById('timerDisplay').classList.toggle('urgent',timerSeconds<=10&&timerSeconds>0);
 }
-
 function pauseResumeTimer(){
-  haptic(8);
-  timerRunning=!timerRunning;
+  haptic(8);timerRunning=!timerRunning;
   document.getElementById('timerPauseBtn').textContent=timerRunning?'⏸':'▶';
 }
-
 function stopTimer(){
-  clearInterval(timerInterval);
-  timerRunning=false;
-  timerStepIdx=-1;
+  clearInterval(timerInterval);timerRunning=false;timerStepIdx=-1;
   document.getElementById('timerFloat').classList.remove('visible');
   document.getElementById('timerDisplay').classList.remove('urgent');
   if(currentRecipe)renderSteps();
 }
-
 function beepTimer(){
   try{
     const ctx=new(window.AudioContext||window.webkitAudioContext)();
     [0,0.35,0.7].forEach(t=>{
-      const osc=ctx.createOscillator();
-      const gain=ctx.createGain();
+      const osc=ctx.createOscillator();const gain=ctx.createGain();
       osc.connect(gain);gain.connect(ctx.destination);
       osc.frequency.value=880;
       gain.gain.setValueAtTime(0.4,ctx.currentTime+t);
       gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+0.3);
-      osc.start(ctx.currentTime+t);
-      osc.stop(ctx.currentTime+t+0.3);
+      osc.start(ctx.currentTime+t);osc.stop(ctx.currentTime+t+0.3);
     });
   }catch(e){}
 }
