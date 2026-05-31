@@ -102,8 +102,6 @@ tailwind.config = {
   .recipe-card-shadow { box-shadow: 0px 10px 30px rgba(26,26,26,0.04); }
   input[type=range] { -webkit-appearance:none; width:100%; height:3px; background:#efeded; border-radius:2px; outline:none; border:none; }
   input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:6px; background:#47663c; cursor:pointer; border:2px solid #fff; box-shadow:0 2px 6px rgba(71,102,60,.2); }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
-  .animate-blink { animation: blink .6s infinite; }
   /* View fade transitions */
   .view { animation: fadeIn 200ms ease-in-out; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
@@ -142,42 +140,6 @@ tailwind.config = {
     </div>
   </div>
 </header>
-
-<!-- ── FLOATING TIMER ── -->
-<div id="timerFloat" class="hidden fixed bottom-[88px] left-1/2 -translate-x-1/2 z-50 bg-surface-container-lowest border border-secondary/30 rounded-xl px-4 py-3 flex items-center gap-3 recipe-card-shadow min-w-[220px]">
-  <div class="flex-1">
-    <p class="font-label-md text-[9px] text-outline uppercase tracking-wider" id="timerLabel">Timer</p>
-    <p class="font-display-lg text-[28px] text-secondary leading-none tabular-nums" id="timerDisplay">0:00</p>
-  </div>
-  <div class="flex gap-1.5">
-    <button onclick="pauseResumeTimer()" id="timerPauseBtn" class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center text-on-surface-variant text-sm font-bold active:bg-secondary active:text-on-secondary active:border-secondary transition-all">⏸</button>
-    <button onclick="stopTimer()" class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center text-on-surface-variant text-sm font-bold active:bg-error active:text-white active:border-error transition-all">✕</button>
-  </div>
-</div>
-
-<!-- ── TIMER MODAL ── -->
-<div id="timerModal" onclick="if(event.target===this)closeTimerModal()" class="hidden fixed inset-0 bg-black/40 z-[60] items-end justify-center">
-  <div class="bg-surface-container-lowest rounded-t-2xl px-6 pt-6 pb-10 w-full max-w-md recipe-card-shadow">
-    <h3 class="font-headline-md text-headline-md text-primary text-center mb-6">Set Timer</h3>
-    <div class="flex items-center justify-center gap-3 mb-6">
-      <div class="flex flex-col gap-1.5">
-        <button onclick="adjustPick('min',1)"  class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-on-secondary active:border-secondary transition-all">▲</button>
-        <button onclick="adjustPick('min',-1)" class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-on-secondary active:border-secondary transition-all">▼</button>
-      </div>
-      <span id="pickMin" class="font-display-lg text-display-lg text-primary w-16 text-center tabular-nums">0</span>
-      <span class="font-label-md text-label-md text-outline uppercase tracking-wider">min</span>
-      <span class="font-display-lg text-[40px] text-outline-variant">:</span>
-      <span id="pickSec" class="font-display-lg text-display-lg text-primary w-16 text-center tabular-nums">00</span>
-      <span class="font-label-md text-label-md text-outline uppercase tracking-wider">sec</span>
-      <div class="flex flex-col gap-1.5">
-        <button onclick="adjustPick('sec',15)"  class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-on-secondary active:border-secondary transition-all">▲</button>
-        <button onclick="adjustPick('sec',-15)" class="w-9 h-9 rounded-lg border border-outline-variant bg-surface-container flex items-center justify-center font-bold text-on-surface-variant active:bg-secondary active:text-on-secondary active:border-secondary transition-all">▼</button>
-      </div>
-    </div>
-    <button onclick="startTimerFromModal()" class="w-full bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-widest py-4 rounded-lg active:opacity-80 transition-opacity recipe-card-shadow">Start Timer</button>
-    <button onclick="closeTimerModal()" class="w-full font-caption text-caption text-outline py-3 mt-1">Cancel</button>
-  </div>
-</div>
 
 <!-- ── MAIN ── -->
 <main id="main" class="flex-1 overflow-y-auto overscroll-contain pb-[72px]">
@@ -354,17 +316,6 @@ function onSearch(){
     if(icon)icon.textContent=activeSearch?'close':'search';
     renderAccordion();
   },300);
-}
-
-// ── NOTIFICATIONS
-function requestNotificationPermission(){
-  if('Notification' in window&&Notification.permission==='default')
-    Notification.requestPermission();
-}
-function fireNotification(title,body){
-  if('Notification' in window&&Notification.permission==='granted'){
-    new Notification(title,{body,icon:'/public/icon-192.png',badge:'/public/icon-192.png'});
-  }
 }
 
 // ── DARK MODE
@@ -768,71 +719,6 @@ function toast(msg){
   clearTimeout(t._t);t._t=setTimeout(()=>{t.classList.add('opacity-0','translate-y-3');t.classList.remove('opacity-100','translate-y-0')},2400);
 }
 function hardRefresh(){haptic(8);toast('Refreshing...');setTimeout(()=>location.reload(true),400)}
-
-let timerInterval=null,timerSeconds=0,timerRunning=false,timerStepIdx=-1;
-let pickMin=0,pickSec=0;
-
-function openTimerModal(stepIdx){
-  haptic(8);timerStepIdx=stepIdx;
-  const m=document.getElementById('timerModal');m.classList.remove('hidden');m.classList.add('flex');
-  document.getElementById('pickMin').textContent=pickMin;
-  document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0');
-}
-function closeTimerModal(){const m=document.getElementById('timerModal');m.classList.add('hidden');m.classList.remove('flex')}
-function adjustPick(field,delta){
-  haptic(6);
-  if(field==='min'){pickMin=Math.max(0,Math.min(99,pickMin+delta));document.getElementById('pickMin').textContent=pickMin}
-  else{pickSec=Math.max(0,Math.min(59,Math.round((pickSec+delta)/15)*15));document.getElementById('pickSec').textContent=String(pickSec).padStart(2,'0')}
-}
-function startTimerFromModal(){
-  const total=pickMin*60+pickSec;if(total<=0){toast('Set a time first');return}
-  haptic(12);closeTimerModal();
-  requestNotificationPermission();
-  startTimer(total,'Step '+(timerStepIdx+1));
-}
-function startTimer(seconds,label){
-  stopTimer();timerSeconds=seconds;timerRunning=true;
-  const f=document.getElementById('timerFloat');f.classList.remove('hidden');f.classList.add('flex');
-  document.getElementById('timerLabel').textContent=label||'Timer';
-  document.getElementById('timerPauseBtn').textContent='⏸';
-  updateTimerDisplay();
-  timerInterval=setInterval(()=>{
-    if(!timerRunning)return;timerSeconds--;updateTimerDisplay();
-    if(timerSeconds<=0){
-      clearInterval(timerInterval);timerRunning=false;
-      document.getElementById('timerDisplay').classList.add('animate-blink','!text-error');
-      beepTimer();toast('⏰ Timer done!');
-      fireNotification('⏰ Timer done!', timerStepIdx>=0?`Step ${timerStepIdx+1} complete`:'Your cooking timer has finished.');
-      renderSteps();
-      setTimeout(()=>stopTimer(),5000);
-    }
-  },1000);renderSteps();
-}
-function updateTimerDisplay(){
-  const m=Math.floor(Math.abs(timerSeconds)/60),s=Math.abs(timerSeconds)%60;
-  const d=document.getElementById('timerDisplay');
-  d.textContent=m+':'+(s<10?'0':'')+s;
-  const urgent=timerSeconds<=10&&timerSeconds>0;
-  d.classList.toggle('!text-error',urgent);d.classList.toggle('text-secondary',!urgent);
-}
-function pauseResumeTimer(){haptic(8);timerRunning=!timerRunning;document.getElementById('timerPauseBtn').textContent=timerRunning?'⏸':'▶'}
-function stopTimer(){
-  clearInterval(timerInterval);timerRunning=false;timerStepIdx=-1;
-  const f=document.getElementById('timerFloat');f.classList.add('hidden');f.classList.remove('flex');
-  const d=document.getElementById('timerDisplay');d.classList.remove('animate-blink','!text-error');d.classList.add('text-secondary');
-  if(currentRecipe)renderSteps();
-}
-function beepTimer(){
-  try{
-    const ctx=new(window.AudioContext||window.webkitAudioContext)();
-    [0,.35,.7].forEach(t=>{
-      const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);
-      o.frequency.value=880;g.gain.setValueAtTime(.4,ctx.currentTime+t);
-      g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+t+.3);
-      o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+.3);
-    });
-  }catch(e){}
-}
 
 renderHome();
 </script>
