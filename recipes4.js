@@ -814,4 +814,19 @@ ingredients:[
 steps:[
   'Mix all ingredients together.',
 ]},
+{id:161,name:'DIY Taramosalata',category:'Dips & Starters',difficulty:'easy',serves:6,time:'15 min',calories:220,mainIngredient:'Cod roe',
+ingredients:[
+  {name:'Cod roe',amount:100,unit:'g'},
+  {name:'Olive oil',amount:200,unit:'ml'},
+  {name:'Lemon juice',amount:2,unit:'tbsp'},
+  {name:'Bread',amount:3,unit:'slice'},
+],
+steps:[
+  'Prepare the cod roe by removing any membranes if necessary.',
+  'Soak the bread in water, then squeeze out the excess liquid.',
+  'Blend the cod roe with the soaked bread until smooth.',
+  'Slowly drizzle in olive oil while blending to create a creamy emulsion.',
+  'Add lemon juice to taste and adjust the seasoning if needed.',
+  'Chill before serving with bread or vegetables.',
+]},
 ];
