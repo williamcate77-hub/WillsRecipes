@@ -39,7 +39,7 @@ button,select,input{font-family:var(--sans);color:inherit;font-size:inherit}
 
 /* Header */
 .hdr{background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;gap:12px;padding:16px 20px;box-shadow:var(--shadow);z-index:10}
-.hdr-logo{width:44px;height:44px;border-radius:12px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
+.hdr-logo{width:44px;height:44px;border-radius:10px;flex-shrink:0;overflow:hidden}
 .hdr-title-block{flex:1;min-width:0}
 .hdr-eyebrow{font-size:9px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.12em;margin-bottom:2px}
 .hdr-title{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-.5px}
@@ -297,7 +297,10 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 
 <!-- ── HEADER ── -->
 <header class="hdr" id="appHdr">
-  <img src="/public/apple-touch-icon.png" class="hdr-logo" alt="">
+  <svg class="hdr-logo" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style="border:none">
+    <rect width="44" height="44" rx="10" fill="#2d7f3e"/>
+    <circle cx="22" cy="22" r="14" fill="#ffffff"/>
+  </svg>
   <div class="hdr-title-block">
     <p class="hdr-eyebrow">A recipe collection by</p>
     <h1 class="hdr-title">Cooking With Will</h1>
