@@ -9,7 +9,23 @@
       "Bash(git fsck *)",
       "Bash(md5)",
       "Bash(md5 index.html)",
-      "Bash(git reflog *)"
+      "Bash(git reflog *)",
+      "Bash(git update-index *)",
+      "Bash(git restore *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(cd \"/Users/williamcate/Library/Mobile Documents/com~apple~CloudDocs/Documents/GitHub/WillsRecipes\" && git ls-files --stage | grep -v \"recipe-sync-log\" > /tmp/clean_index.txt && wc -l /tmp/clean_index.txt)",
+      "Bash(git read-tree *)",
+      "Bash(git write-tree *)",
+      "Bash(git commit --allow-empty -m ' *)",
+      "Bash(git hash-object *)",
+      "Bash(cd \"/Users/williamcate/Library/Mobile Documents/com~apple~CloudDocs/Documents/GitHub/WillsRecipes\" && rm -f .git/index && git read-tree dea5bc1dd18514e9a54cee1d7ba2e4ca44528d6c && git write-tree && echo \"✓ Index rebuilt from HEAD tree\")",
+      "Bash(printf '.DS_Store\\\\n.recipe-sync-log.json\\\\n')",
+      "Bash(git rm *)",
+      "Bash(ls \"/Users/williamcate/Library/Mobile Documents/com~apple~CloudDocs/Documents/GitHub/\")",
+      "Bash(git log *)",
+      "Bash(which gh *)"
     ]
   }
 }
