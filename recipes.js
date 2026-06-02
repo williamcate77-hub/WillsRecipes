@@ -36,7 +36,7 @@ steps:[
   'Top with radish slices, dill and fresh mint. Serve chilled.',
 ]},
 
-{id:2,name:'Beetroot Dip with Yoghurt & Dukkah',category:'Dips & Starters',difficulty:'easy',serves:4,time:'60 min',calories:150,mainIngredient:'Beetroot',
+{id:2,name:'Beetroot Dip with Yoghurt & Dukkah',category:'Dips & Starters',difficulty:'easy',serves:4,time:'70 min',calories:150,mainIngredient:'Beetroot',
 ingredients:[
   {name:'Beetroot, scrubbed',amount:500,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
@@ -131,6 +131,25 @@ steps:[
   'Spread babaganoush on a large platter. Top with grilled haloumi.',
   'Drizzle with honey and lemon juice, sprinkle with za\'atar.',
   'Finish with the cucumber herb salad.',
+]},
+
+{id:7,name:'Grilled Smoky Oysters with Soy & Coconut Vinaigrette',category:'Dips & Starters',difficulty:'medium',serves:4,time:'15 min',calories:80,mainIngredient:'Oysters',
+ingredients:[
+  {name:'Fresh shucked oysters',amount:12,unit:'whole'},
+  {name:'Olive oil',amount:15,unit:'ml'},
+  {name:'Soy sauce',amount:15,unit:'ml'},
+  {name:'Rice vinegar',amount:15,unit:'ml'},
+  {name:'Coconut cream',amount:30,unit:'ml'},
+  {name:'Sesame oil',amount:5,unit:'ml'},
+  {name:'Red chilli, finely sliced',amount:0.5,unit:'whole'},
+  {name:'Spring onion, finely chopped',amount:1,unit:'whole'},
+],
+steps:[
+  'Heat barbecue or grill pan until very hot.',
+  'Brush oysters lightly with olive oil.',
+  'Place oysters shell-side down on grill for 2–3 minutes until lightly smoky.',
+  'Mix soy sauce, rice vinegar, coconut cream, sesame oil, chilli and spring onion.',
+  'Spoon vinaigrette over oysters and serve immediately.',
 ]},
 
 {id:8,name:'Smoky Oysters over Coals with Coconut Vinaigrette',category:'Dips & Starters',difficulty:'medium',serves:4,time:'20 min',calories:90,mainIngredient:'Oysters',
@@ -271,7 +290,7 @@ steps:[
   'Drizzle with olive oil, pomegranate molasses and za\'atar. Scatter feta and serve with lemon.',
 ]},
 
-{id:15,name:'Heirloom Tomato & Ricotta Salad',category:'Salads',difficulty:'medium',serves:4,time:'60 min',calories:280,mainIngredient:'Tomatoes',
+{id:15,name:'Heirloom Tomato & Ricotta Salad',category:'Salads',difficulty:'medium',serves:4,time:'75 min',calories:280,mainIngredient:'Tomatoes',
 ingredients:[
   {name:'Heirloom tomatoes',amount:1000,unit:'g'},
   {name:'Extra virgin olive oil',amount:30,unit:'ml'},
@@ -326,7 +345,7 @@ steps:[
   'Sprinkle with toasted seeds to serve.',
 ]},
 
-{id:18,name:'Roast Beetroot Salad with Goat Cheese',category:'Salads',difficulty:'easy',serves:4,time:'65 min',calories:260,mainIngredient:'Beetroot',
+{id:18,name:'Roast Beetroot Salad with Goat Cheese',category:'Salads',difficulty:'easy',serves:4,time:'70 min',calories:260,mainIngredient:'Beetroot',
 ingredients:[
   {name:'Beetroot, scrubbed',amount:500,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
@@ -439,7 +458,7 @@ steps:[
   'Scatter crumbled goat\'s cheese, walnuts and parsley over the top. Serve warm.',
 ]},
 
-{id:24,name:'Marinated Beetroots, Whipped Feta, Lentils & Za\'atar',category:'Salads',difficulty:'medium',serves:2,time:'75 min',calories:420,mainIngredient:'Beetroot',
+{id:24,name:'Marinated Beetroots, Whipped Feta, Lentils & Za\'atar',category:'Salads',difficulty:'medium',serves:2,time:'1 hr 20 min',calories:420,mainIngredient:'Beetroot',
 ingredients:[
   {name:'Beetroots',amount:5,unit:'whole'},
   {name:'Red wine vinegar',amount:80,unit:'ml'},
@@ -764,7 +783,7 @@ steps:[
   'Add prawns to soup and cook until pink, 2–3 minutes. Pour over noodles and serve with sprouts, coriander and lime.',
 ]},
 
-{id:40,name:'Roast Pumpkin Soup with Coconut & Chilli',category:'Soups',difficulty:'easy',serves:4,time:'40 min',calories:260,mainIngredient:'Pumpkin',
+{id:40,name:'Roast Pumpkin Soup with Coconut & Chilli',category:'Soups',difficulty:'easy',serves:4,time:'45 min',calories:260,mainIngredient:'Pumpkin',
 ingredients:[
   {name:'Pumpkin, peeled and diced',amount:1000,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},

@@ -129,7 +129,7 @@ steps:[
   'Squeeze lemon juice over, scatter parsley and serve immediately.',
 ]},
 
-{id:49,name:'Grilled Chimichurri Prawns',category:'Seafood',difficulty:'easy',serves:2,time:'20 min + marinade',calories:320,mainIngredient:'Prawns',
+{id:49,name:'Grilled Chimichurri Prawns',category:'Seafood',difficulty:'easy',serves:2,time:'20 min + 5 hr marinade',calories:320,mainIngredient:'Prawns',
 ingredients:[
   {name:'Parsley, chopped',amount:1,unit:'cup'},
   {name:'Coriander, chopped',amount:1,unit:'cup'},

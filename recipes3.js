@@ -129,7 +129,7 @@ steps:[
   'Squeeze lemon juice over, scatter zest and chopped toasted almonds.',
 ]},
 
-{id:88,name:'Grilled Eggplant with Miso Dressing',category:'Sides',difficulty:'easy',serves:4,time:'20 min',calories:140,mainIngredient:'Eggplant',
+{id:88,name:'Grilled Eggplant with Miso Dressing',category:'Sides',difficulty:'easy',serves:4,time:'25 min',calories:140,mainIngredient:'Eggplant',
 ingredients:[
   {name:'Large eggplants, halved lengthways',amount:2,unit:'whole'},
   {name:'Olive oil',amount:30,unit:'ml'},
@@ -368,7 +368,7 @@ steps:[
   'Top with chilli oil and fennel fronds to serve.',
 ]},
 
-{id:102,name:'Brown Rice & Herb Pilaf with Toasted Almonds',category:'Sides',difficulty:'easy',serves:2,time:'35 min',calories:340,mainIngredient:'Brown Rice',
+{id:102,name:'Brown Rice & Herb Pilaf with Toasted Almonds',category:'Sides',difficulty:'easy',serves:2,time:'40 min',calories:340,mainIngredient:'Brown Rice',
 ingredients:[
   {name:'Brown rice',amount:150,unit:'g'},
   {name:'Onion, finely chopped',amount:1,unit:'whole'},
@@ -655,7 +655,7 @@ steps:[
 ]},
 
 // ── DESSERTS ─────────────────────────────────────────────
-{id:119,name:'Lemon Tart',category:'Desserts',difficulty:'medium',serves:6,time:'60 min',calories:380,mainIngredient:'Lemon',
+{id:119,name:'Lemon Tart',category:'Desserts',difficulty:'medium',serves:6,time:'75 min',calories:380,mainIngredient:'Lemon',
 ingredients:[
   {name:'Plain flour',amount:200,unit:'g'},
   {name:'Cold butter, cubed',amount:100,unit:'g'},

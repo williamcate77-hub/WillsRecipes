@@ -1,534 +1,522 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Cooking With Will</title>
-<link rel="apple-touch-icon" href="/public/apple-touch-icon.png">
-<link rel="icon" type="image/png" href="/public/icon-192.png">
-<link rel="manifest" href="/public/manifest.json">
-<link href="https://fonts.googleapis.com" rel="preconnect">
-<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        "surface-container-low":     "#f5f3f3",
-        "surface":                   "#fbf9f8",
-        "secondary-fixed":           "#c8edb7",
-        "on-primary":                "#ffffff",
-        "surface-container-highest": "#e4e2e2",
-        "surface-dim":               "#dbdad9",
-        "surface-container":         "#efeded",
-        "primary":                   "#1a1a1a",
-        "on-surface-variant":        "#444748",
-        "surface-container-high":    "#e9e8e7",
-        "on-primary-container":      "#858383",
-        "error":                     "#ba1a1a",
-        "error-container":           "#ffdad6",
-        "surface-container-lowest":  "#ffffff",
-        "outline-variant":           "#c4c7c7",
-        "outline":                   "#747878",
-        "background":                "#fbf9f8",
-        "primary-container":         "#1c1b1b",
-        "on-background":             "#1b1c1c",
-        "secondary-fixed-dim":       "#acd19d",
-        "on-surface":                "#1b1c1c",
-        "on-secondary":              "#ffffff",
-        "secondary-container":       "#c5eab4",
-        "on-secondary-container":    "#4b6b40",
-        "secondary":                 "#47663c",
-        "surface-variant":           "#e4e2e2",
-        "on-error-container":        "#93000a",
-      },
-      borderRadius: {
-        "DEFAULT": "0.5rem",
-        "lg":      "0.75rem",
-        "xl":      "1rem",
-        "2xl":     "1.5rem",
-        "full":    "9999px",
-      },
-      spacing: {
-        "stack-sm":       "8px",
-        "stack-md":       "16px",
-        "stack-lg":       "32px",
-        "section-gap":    "80px",
-        "margin-mobile":  "20px",
-        "margin-desktop": "64px",
-        "gutter":         "24px",
-        "container-max":  "1200px",
-      },
-      fontFamily: {
-        "label-md":          ["Inter", "sans-serif"],
-        "body-lg":           ["Inter", "sans-serif"],
-        "headline-lg":       ["Playfair Display", "Georgia", "serif"],
-        "headline-lg-mobile":["Playfair Display", "Georgia", "serif"],
-        "caption":           ["Inter", "sans-serif"],
-        "display-lg":        ["Playfair Display", "Georgia", "serif"],
-        "body-md":           ["Inter", "sans-serif"],
-        "headline-md":       ["Playfair Display", "Georgia", "serif"],
-      },
-      fontSize: {
-        "label-md":          ["14px", {lineHeight:"20px", letterSpacing:"0.05em", fontWeight:"600"}],
-        "body-lg":           ["18px", {lineHeight:"28px", fontWeight:"400"}],
-        "headline-lg":       ["32px", {lineHeight:"40px", fontWeight:"700"}],
-        "headline-lg-mobile":["28px", {lineHeight:"36px", fontWeight:"700"}],
-        "caption":           ["12px", {lineHeight:"16px", fontWeight:"400"}],
-        "display-lg":        ["48px", {lineHeight:"56px", letterSpacing:"-0.02em", fontWeight:"700"}],
-        "body-md":           ["16px", {lineHeight:"24px", fontWeight:"400"}],
-        "headline-md":       ["24px", {lineHeight:"32px", fontWeight:"600"}],
-      },
-    }
-  }
-}
-</script>
 <style>
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    display: inline-block; line-height: 1;
-    text-transform: none; letter-spacing: normal; white-space: nowrap;
-    direction: ltr; -webkit-font-smoothing: antialiased; user-select: none;
-  }
-  .icon-fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-  .hide-scrollbar::-webkit-scrollbar { display: none; }
-  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  .recipe-card-shadow { box-shadow: 0px 10px 30px rgba(26,26,26,0.04); }
-  input[type=range] { -webkit-appearance:none; width:100%; height:3px; background:#efeded; border-radius:2px; outline:none; border:none; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:6px; background:#47663c; cursor:pointer; border:2px solid #fff; box-shadow:0 2px 6px rgba(71,102,60,.2); }
-  /* View fade transitions */
-  .view { animation: fadeIn 200ms ease-in-out; }
-  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-  body { -webkit-font-smoothing: antialiased; min-height: 100dvh; }
+/* ── COLOUR TOKENS ── */
+:root {
+  --bg:#0d0d16; --surface:#13131f; --surface2:#1c1c2e; --surface3:#242438; --border:#2e2e4a;
+  --accent:#7c6fff; --accent2:#00e5ff; --accent-glow:rgba(124,111,255,.25);
+  --text:#e4e4f0; --text2:#9090b8; --text3:#5a5a7a;
+  --easy:#00c896; --medium:#ffaa00; --hard:#ff4d6d;
+  --tab-h:72px; --radius:14px; --font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body.light {
+  --bg:#f0f0fa; --surface:#ffffff; --surface2:#e8e8f8; --surface3:#d8d8f0; --border:#c4c4e0;
+  --accent:#5a50e0; --accent2:#0090bb; --accent-glow:rgba(90,80,224,.15);
+  --text:#0a0a1e; --text2:#40406a; --text3:#8080aa;
+  --easy:#009e72; --medium:#cc8800; --hard:#cc2244;
+}
+
+/* ── RESET ── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.5;overflow:hidden;height:100dvh;display:flex;flex-direction:column;transition:background .3s,color .3s}
+
+/* ── HEADER ── */
+header{background:var(--surface);padding:14px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0;transition:background .3s,border-color .3s}
+.header-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.app-title{font-size:22px;font-weight:900;letter-spacing:0.5px;text-transform:uppercase;flex:1;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;padding-top:2px}
+.header-controls{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.mode-btn{width:36px;height:36px;border-radius:18px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-bottom:2px}
+.mode-btn svg{width:16px;height:16px}
+.mode-btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
+.wake-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.header-btn{height:34px;padding:0 12px;border-radius:17px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap;letter-spacing:.3px}
+.header-btn svg{width:13px;height:13px;flex-shrink:0}
+.header-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 12px var(--accent-glow)}
+.wake-sub{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.3px;text-transform:uppercase}
+
+/* ── SEARCH ── */
+.search-wrap{position:relative}
+.search-input{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:11px 40px 11px 42px;font-size:15px;font-weight:500;color:var(--text);outline:none;transition:border-color .2s,background .2s,box-shadow .2s;-webkit-appearance:none}
+.search-input::placeholder{color:var(--text3);font-weight:400}
+.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+.search-icon svg{width:16px;height:16px;display:block}
+.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--surface3);border:none;color:var(--text3);width:20px;height:20px;border-radius:10px;font-size:11px;cursor:pointer;display:none;align-items:center;justify-content:center;font-weight:700}
+
+/* ── MAIN ── */
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--tab-h) + 8px)}
+main::-webkit-scrollbar{display:none}
+.view{display:none}
+.view.active{display:block}
+
+/* ── INGREDIENT SELECTOR ── */
+.ing-selector-wrap{padding:14px 20px 6px}
+.ing-selector-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--text3);margin-bottom:8px}
+.ing-select-row{display:flex;gap:8px;align-items:center}
+.ing-select{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:11px 36px 11px 14px;font-size:15px;font-weight:600;color:var(--text);-webkit-appearance:none;appearance:none;outline:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235a5a7a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;transition:border-color .2s,box-shadow .2s}
+.ing-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.ing-select.has-value{border-color:var(--accent);color:var(--accent)}
+.ing-clear{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;display:none;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:16px;font-weight:700}
+.ing-clear.visible{display:flex}
+.ing-clear:active{background:var(--hard);border-color:var(--hard);color:#fff}
+
+/* ── ACCORDION ── */
+.cat-section{margin:6px 16px 0}
+.cat-header{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .2s,background .2s,border-radius .15s}
+.cat-header:active{background:var(--surface2)}
+.cat-header.open{border-color:var(--accent);border-bottom-left-radius:0;border-bottom-right-radius:0;box-shadow:0 0 0 1px var(--accent) inset}
+.cat-header-left{display:flex;align-items:center;gap:10px}
+.cat-dot{width:8px;height:8px;border-radius:4px;flex-shrink:0}
+.cat-name{font-size:16px;font-weight:700;letter-spacing:-0.1px}
+.cat-count{font-size:12px;font-weight:700;color:var(--text3);background:var(--surface2);padding:2px 8px;border-radius:8px}
+.cat-chevron{color:var(--text3);transition:transform .22s}
+.cat-chevron svg{width:18px;height:18px;display:block}
+.cat-header.open .cat-chevron{transform:rotate(180deg);color:var(--accent)}
+.cat-body{display:none;background:var(--surface);border:1.5px solid var(--accent);border-top:none;border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius);overflow:hidden}
+.cat-body.open{display:block}
+.cat-recipe-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer;transition:background .1s}
+.cat-recipe-row:last-child{border-bottom:none}
+.cat-recipe-row:active{background:var(--surface2)}
+.cat-recipe-name{font-size:14px;font-weight:600;margin-bottom:4px;line-height:1.3}
+.cat-recipe-meta{display:flex;gap:5px;flex-wrap:wrap}
+.cat-swatch{width:40px;height:40px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+
+/* ── TAGS ── */
+.tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.3px;text-transform:uppercase}
+.tag-easy{background:rgba(0,200,150,.15);color:var(--easy)}
+.tag-medium{background:rgba(255,170,0,.15);color:var(--medium)}
+.tag-hard{background:rgba(255,77,109,.15);color:var(--hard)}
+.tag-muted{background:var(--surface2);color:var(--text3);font-weight:600;text-transform:none;font-size:11px}
+
+/* ── PIN BUTTON ── */
+.card-pin{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.card-pin svg{width:13px;height:13px}
+.card-pin.pinned{background:var(--accent);border-color:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.card-pin.pinned svg{stroke:#fff}
+
+/* ── EMPTY ── */
+.empty{text-align:center;padding:60px 24px;color:var(--text3)}
+.empty-icon{width:52px;height:52px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.empty-icon svg{width:22px;height:22px;stroke:var(--text3)}
+.empty p{font-size:15px;font-weight:500}
+
+/* ── PINNED VIEW ── */
+.section-label{padding:18px 20px 8px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.4px}
+.recipe-list{padding:0 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.recipe-card{background:var(--surface);border-radius:var(--radius);border:1.5px solid var(--border);cursor:pointer;display:flex;align-items:center;padding:14px;gap:14px;transition:transform .12s,border-color .15s}
+.recipe-card:active{transform:scale(.985)}
+.recipe-card.pinned{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-glow)}
+.card-swatch{width:50px;height:50px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.card-info{flex:1;min-width:0}
+.card-name{font-size:15px;font-weight:700;line-height:1.25;margin-bottom:5px}
+.card-meta{display:flex;gap:5px;flex-wrap:wrap}
+
+/* ── SWATCH COLOURS ── */
+.sw-entrees{background:rgba(0,200,150,.15);color:#00c896}
+.sw-salads{background:rgba(80,200,100,.15);color:#40c060}
+.sw-soups{background:rgba(140,80,220,.15);color:#a060e0}
+.sw-sky{background:rgba(0,180,220,.15);color:#00b4dc}
+.sw-mains{background:rgba(255,100,80,.15);color:#ff6450}
+.sw-veggie{background:rgba(80,200,80,.15);color:#40c040}
+.sw-pasta{background:rgba(255,160,0,.15);color:#ffa000}
+.sw-sides{background:rgba(160,130,80,.15);color:#b09050}
+.sw-snacks{background:rgba(80,160,255,.15);color:#50a0ff}
+.sw-sauces{background:rgba(220,80,180,.15);color:#dc50b4}
+.sw-desserts{background:rgba(255,80,120,.15);color:#ff5080}
+
+/* ── DETAIL ── */
+.detail-hero{height:160px;display:flex;align-items:flex-end;padding:16px;position:relative;flex-shrink:0}
+.hero-back{position:absolute;top:14px;left:14px;width:36px;height:36px;background:#fff;border:1.5px solid #e0e0e8;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1a1a2a;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.hero-back svg{width:16px;height:16px}
+.hero-actions{position:absolute;top:14px;right:14px;display:flex;gap:7px}
+.hero-btn{width:36px;height:36px;background:#fff;border:1.5px solid #e0e0e8;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1a1a2a;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.hero-btn svg{width:15px;height:15px}
+.hero-btn.pinned{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 10px var(--accent-glow)}
+.detail-body{padding:20px 18px}
+.detail-title{font-size:26px;font-weight:800;line-height:1.15;letter-spacing:-0.3px;margin-bottom:10px}
+.detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.detail-tag{font-size:12px;font-weight:700;padding:4px 10px;border-radius:7px}
+
+/* Portion */
+.card-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:18px}
+.card-block-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:12px}
+.portion-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.portion-label{font-size:16px;font-weight:600;color:var(--text)}
+.portion-value{font-size:28px;font-weight:800;color:var(--accent);letter-spacing:-0.5px;line-height:1}
+.portion-suffix{font-size:13px;font-weight:500;color:var(--text3);margin-left:3px}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--surface3);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:8px;background:var(--accent);cursor:pointer;border:2px solid var(--surface);box-shadow:0 0 8px var(--accent-glow)}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:8px;background:var(--accent);cursor:pointer;border:2px solid var(--surface)}
+
+.block-label{font-size:18px;font-weight:800;letter-spacing:-0.2px;margin-bottom:12px;margin-top:4px}
+
+/* Ingredients */
+.ing-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
+.ing-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:10px}
+.ing-row:last-child{border-bottom:none}
+.ing-dot{width:5px;height:5px;border-radius:2.5px;background:var(--accent);flex-shrink:0}
+.ing-name{flex:1;font-size:15px;font-weight:500}
+.ing-amount{font-size:14px;font-weight:700;color:var(--accent);white-space:nowrap}
+
+/* Steps */
+.steps-list{margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
+.step-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;gap:12px;cursor:pointer;transition:opacity .2s,border-color .2s}
+.step-item.done{opacity:.4;border-color:var(--easy)}
+.step-num-wrap{width:28px;height:28px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 8px var(--accent-glow)}
+.step-item.done .step-num-wrap{background:var(--easy);box-shadow:none}
+.step-num{font-size:12px;font-weight:800;color:#fff}
+.step-text{font-size:14px;line-height:1.65;color:var(--text2);padding-top:3px}
+
+/* Shopping */
+.shop-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.shop-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer}
+.shop-row:last-child{border-bottom:none}
+.shop-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.shop-row.checked .shop-check{background:var(--easy);border-color:var(--easy)}
+.shop-row.checked .shop-check svg{display:block}
+.shop-check svg{display:none;width:11px;height:11px;stroke:#fff;stroke-width:3}
+.shop-name{flex:1;font-size:15px;font-weight:500}
+.shop-row.checked .shop-name{text-decoration:line-through;color:var(--text3)}
+.shop-amt{font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap}
+.export-row{margin-bottom:24px}
+.export-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:16px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;text-align:center;letter-spacing:.2px;box-shadow:0 4px 20px var(--accent-glow);transition:opacity .15s}
+.export-btn:active{opacity:.8}
+
+/* ── TAB BAR ── */
+.tab-bar{height:var(--tab-h);background:var(--surface);border-top:1px solid var(--border);display:flex;flex-shrink:0}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;transition:color .15s;padding-bottom:6px}
+.tab-icon{width:20px;height:20px}
+.tab-icon svg{width:20px;height:20px;stroke-width:1.8}
+.tab.active{color:var(--accent)}
+.tab.active .tab-icon svg{stroke-width:2.5}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(14px);background:var(--surface);border:1px solid var(--accent);color:var(--text);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:0 0 16px var(--accent-glow)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
+<body>
 
-<body class="bg-background text-on-background overflow-hidden h-dvh flex flex-col">
-
-<!-- ── HEADER ── -->
-<header id="appHeader" class="bg-surface-container-lowest flex-shrink-0 z-40 recipe-card-shadow">
-  <div class="flex items-center gap-3 px-margin-mobile pt-5 pb-4">
-    <img src="/public/apple-touch-icon.png" alt="" class="w-12 h-12 rounded-xl object-cover flex-shrink-0 border border-outline-variant/40">
-    <div class="flex-1 min-w-0">
-      <p class="font-label-md text-caption text-secondary uppercase tracking-[0.12em] leading-none mb-1.5">A recipe collection by</p>
-      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary leading-none tracking-tight">Cooking With Will</h1>
-    </div>
-    <div class="flex items-center gap-2">
-      <button id="wakeBtn" onclick="toggleWakeLock()"
-        class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-lg border border-outline-variant bg-surface-container text-on-surface-variant active:bg-secondary active:border-secondary active:text-on-secondary transition-all active:scale-95">
-        <span class="material-symbols-outlined" style="font-size:20px">light_mode</span>
-        <span class="font-label-md text-[9px] uppercase tracking-wide leading-none">Screen</span>
+<header>
+  <div class="header-row">
+    <span class="app-title">Cooking<br>With Will</span>
+    <div class="header-controls">
+      <button class="mode-btn" id="modeBtn" onclick="toggleMode()" title="Toggle dark/light">
+        <svg id="modeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <button id="modeBtn" onclick="toggleMode()"
-        class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-lg border border-outline-variant bg-surface-container text-on-surface-variant transition-all active:scale-95">
-        <span class="material-symbols-outlined" id="modeIcon" style="font-size:20px">dark_mode</span>
-        <span class="font-label-md text-[9px] uppercase tracking-wide leading-none">Theme</span>
-      </button>
+      <div class="wake-wrap">
+        <button class="header-btn" id="wakeBtn" onclick="toggleWakeLock()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          Screen on
+        </button>
+        <span class="wake-sub">Leave device on while cooking</span>
+      </div>
     </div>
   </div>
-  <div id="hintBar" class="flex items-center justify-between gap-2 px-margin-mobile py-2 border-t border-outline-variant/40 bg-surface-container-low">
-    <span class="font-caption text-caption text-outline">Tap Refresh to get the latest recipes</span>
-    <div class="flex items-center gap-2 flex-shrink-0">
-      <button onclick="hardRefresh()" class="font-label-md text-caption font-semibold text-on-surface-variant bg-surface-container-lowest border border-outline-variant rounded px-2.5 py-1 active:scale-95 transition-transform">Refresh</button>
-      <button onclick="document.getElementById('hintBar').style.display='none'" class="text-outline text-base leading-none px-1">✕</button>
-    </div>
+  <div class="search-wrap">
+    <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+    <input class="search-input" id="searchInput" type="search" placeholder="Search recipe or ingredient..." oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">&#x2715;</button>
   </div>
 </header>
 
-<!-- ── MAIN ── -->
-<main id="main" class="flex-1 overflow-y-auto overscroll-contain pb-[72px]">
+<main id="main">
 
   <!-- HOME -->
-  <div id="view-home" class="view active">
-    <div class="px-margin-mobile pt-stack-md pb-stack-sm space-y-2">
-      <!-- Search bar -->
-      <div class="relative">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none transition-colors" id="searchIcon" style="font-size:20px">search</span>
-        <input id="searchInput" oninput="onSearch()" type="text" placeholder="Search recipes…"
-          class="w-full bg-surface-container-low border-none rounded-xl pl-10 pr-4 py-3 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-secondary outline-none transition-all placeholder:text-outline">
-      </div>
-      <!-- Ingredient filter -->
-      <p class="font-label-md text-caption text-outline uppercase tracking-[0.1em]">Filter by main ingredient</p>
-      <div class="flex gap-2">
-        <div class="relative flex-1">
-          <select id="ingSelect" onchange="onIngSelect()"
-            class="w-full appearance-none bg-surface-container-low border-none rounded-xl pl-4 pr-9 py-3 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-secondary outline-none cursor-pointer transition-all">
-            <option value="">All recipes...</option>
-          </select>
-          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" style="font-size:18px">expand_more</span>
-        </div>
-        <button id="ingClear" onclick="clearIngredient()"
-          class="hidden w-11 h-11 rounded-xl border border-outline-variant bg-surface-container items-center justify-center text-outline text-xl active:bg-error active:text-white active:border-error transition-all flex-shrink-0">✕</button>
+  <div class="view active" id="view-home">
+    <div class="ing-selector-wrap">
+      <div class="ing-selector-label">Select a main ingredient for dish</div>
+      <div class="ing-select-row">
+        <select class="ing-select" id="ingSelect" onchange="onIngSelect()">
+          <option value="">All recipes...</option>
+        </select>
+        <button class="ing-clear" id="ingClear" onclick="clearIngredient()">&#x2715;</button>
       </div>
     </div>
-    <div id="homeContent" class="pb-4"></div>
+    <div id="homeContent"></div>
   </div>
 
   <!-- PINNED -->
-  <div id="view-favourites" class="view hidden">
-    <p class="px-margin-mobile pt-5 pb-3 font-label-md text-caption text-outline uppercase tracking-[0.1em]">Pinned Recipes</p>
-    <div id="favList" class="px-margin-mobile flex flex-col gap-2"></div>
-    <div id="favEmpty" class="hidden flex-col items-center justify-center py-16">
-      <span class="material-symbols-outlined text-surface-container-highest mb-3" style="font-size:48px">bookmark</span>
-      <p class="font-body-md text-body-md text-on-surface-variant">Pin recipes to find them here.</p>
-    </div>
-  </div>
-
-  <!-- NEW -->
-  <div id="view-new" class="view hidden">
-    <p class="px-margin-mobile pt-5 pb-3 font-label-md text-caption text-outline uppercase tracking-[0.1em]">Recently Added</p>
-    <div id="newList" class="px-margin-mobile flex flex-col gap-2"></div>
-  </div>
-
-  <!-- SHOPPING -->
-  <div id="view-shoplist" class="view hidden">
-    <p class="px-margin-mobile pt-5 pb-3 font-label-md text-caption text-outline uppercase tracking-[0.1em]">Shopping List</p>
-    <div class="px-margin-mobile flex gap-2 pb-stack-sm">
-      <button onclick="copyShoppingTab()" class="flex-1 bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-widest py-3 rounded-lg active:opacity-80 transition-opacity">Copy List</button>
-      <button onclick="clearShoppingTab()" class="bg-surface-container border border-outline-variant text-on-surface-variant font-label-md text-label-md px-5 py-3 rounded-lg active:opacity-80 transition-opacity">Clear</button>
-    </div>
-    <div id="shopTabContent" class="px-margin-mobile flex flex-col gap-2"></div>
-    <div id="shopTabEmpty" class="hidden flex-col items-center justify-center py-16">
-      <span class="material-symbols-outlined text-surface-container-highest mb-3" style="font-size:48px">shopping_bag</span>
-      <p class="font-body-md text-body-md text-on-surface-variant">Add ingredients from a recipe's shopping list.</p>
+  <div class="view" id="view-favourites">
+    <div class="section-label">Pinned Recipes</div>
+    <div class="recipe-list" id="favList"></div>
+    <div class="empty" id="favEmpty" style="display:none">
+      <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <p>Pin recipes to find them here.</p>
     </div>
   </div>
 
   <!-- DETAIL -->
-  <div id="view-detail" class="view hidden">
-    <!-- Hero -->
-    <div id="detailHero" class="min-h-[160px] relative flex items-end px-margin-mobile pb-4 pt-16">
-      <button onclick="closeDetail()" class="absolute top-5 left-5 w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-lg flex items-center justify-center recipe-card-shadow active:scale-95 transition-transform">
-        <span class="material-symbols-outlined text-on-surface" style="font-size:22px">arrow_back</span>
+  <div class="view" id="view-detail">
+    <div class="detail-hero" id="detailHero">
+      <button class="hero-back" onclick="closeDetail()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="absolute top-5 right-5 flex gap-2">
-        <button id="detailPin" onclick="togglePinDetail()" class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-lg flex items-center justify-center recipe-card-shadow active:scale-95 transition-all">
-          <span class="material-symbols-outlined text-on-surface" id="detailPinIcon" style="font-size:20px">bookmark</span>
+      <div class="hero-actions">
+        <button class="hero-btn" id="detailPin" onclick="togglePinDetail()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </button>
-        <button onclick="shareRecipe()" class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-lg flex items-center justify-center recipe-card-shadow active:scale-95 transition-transform">
-          <span class="material-symbols-outlined text-on-surface" style="font-size:20px">ios_share</span>
+        <button class="hero-btn" onclick="shareRecipe()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
         </button>
       </div>
     </div>
-    <!-- Content -->
-    <div class="px-margin-mobile pt-stack-md pb-8">
-      <h2 id="detailTitle" class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-3"></h2>
-      <div id="detailTags" class="flex flex-wrap gap-2 mb-stack-lg"></div>
-      <!-- Serving size -->
-      <div class="bg-surface-container-lowest rounded-xl p-4 mb-stack-lg recipe-card-shadow">
-        <p class="font-label-md text-caption text-outline uppercase tracking-[0.1em] mb-3">Serving Size</p>
-        <div class="flex justify-between items-baseline mb-3">
-          <span class="font-body-md text-body-md text-on-surface-variant">Serves</span>
-          <div class="flex items-baseline gap-1.5">
-            <span id="portionVal" class="font-display-lg text-[36px] text-secondary leading-none tabular-nums">2</span>
-            <span class="font-caption text-caption text-outline">people</span>
-          </div>
+    <div class="detail-body">
+      <div class="detail-title" id="detailTitle"></div>
+      <div class="detail-tags" id="detailTags"></div>
+      <div class="card-block">
+        <div class="card-block-title">Serving Size</div>
+        <div class="portion-row">
+          <span class="portion-label">Serves</span>
+          <div><span class="portion-value" id="portionVal">2</span><span class="portion-suffix">people</span></div>
         </div>
         <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()">
       </div>
-      <!-- Ingredients -->
-      <h3 class="font-headline-md text-headline-md text-primary mb-stack-sm">Ingredients</h3>
-      <div id="ingList" class="bg-surface-container-lowest rounded-xl overflow-hidden mb-stack-lg recipe-card-shadow"></div>
-      <!-- Method -->
-      <h3 class="font-headline-md text-headline-md text-primary mb-stack-sm">Method</h3>
-      <div id="stepsList" class="space-y-stack-md mb-stack-lg"></div>
-      <!-- Shopping -->
-      <h3 class="font-headline-md text-headline-md text-primary mb-1">Shopping List</h3>
-      <p class="font-caption text-caption text-outline mb-3">Tick what you already have — see what to buy.</p>
-      <div id="shopList" class="bg-surface-container-lowest rounded-xl overflow-hidden mb-stack-md recipe-card-shadow"></div>
-      <button onclick="copyShopList()" class="w-full bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-widest py-4 rounded-lg active:opacity-80 transition-opacity recipe-card-shadow mb-6">Copy Shopping List</button>
+      <div class="block-label">Ingredients</div>
+      <div class="ing-list" id="ingList"></div>
+      <div class="block-label">Method</div>
+      <div class="steps-list" id="stepsList"></div>
+      <div class="block-label">Shopping List</div>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:12px;font-weight:500;">Tick what you already have — see what to buy.</p>
+      <div class="shop-list" id="shopList"></div>
+      <div class="export-row">
+        <button class="export-btn" onclick="copyShopList()">Copy Shopping List</button>
+      </div>
     </div>
   </div>
 
 </main>
 
-<!-- ── TAB BAR ── -->
-<nav class="flex-shrink-0 h-[68px] bg-surface-container-lowest border-t border-surface-container flex shadow-[0px_-10px_30px_rgba(26,26,26,0.04)]">
-  <button id="tab-home" onclick="switchTab('home')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1">
-    <div class="flex flex-col items-center px-3 py-1 rounded-xl bg-secondary-container/20 transition-all">
-      <span class="material-symbols-outlined icon-fill text-secondary" style="font-size:24px">home</span>
-      <span class="font-label-md text-label-md text-secondary">Recipes</span>
-    </div>
+<nav class="tab-bar">
+  <button class="tab active" id="tab-home" onclick="switchTab('home')">
+    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+    Recipes
   </button>
-  <button id="tab-favourites" onclick="switchTab('favourites')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1">
-    <div class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">bookmark</span>
-      <span class="font-label-md text-label-md text-on-surface-variant">Pinned</span>
-    </div>
-  </button>
-  <button id="tab-new" onclick="switchTab('new')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1">
-    <div class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">add_circle</span>
-      <span class="font-label-md text-label-md text-on-surface-variant">New</span>
-    </div>
-  </button>
-  <button id="tab-shoplist" onclick="switchTab('shoplist')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1">
-    <div class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">shopping_bag</span>
-      <span class="font-label-md text-label-md text-on-surface-variant">Shopping</span>
-    </div>
+  <button class="tab" id="tab-favourites" onclick="switchTab('favourites')">
+    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+    Pinned
   </button>
 </nav>
 
-<div id="toast" class="fixed bottom-[88px] left-1/2 -translate-x-1/2 translate-y-3 opacity-0 pointer-events-none z-50 bg-surface-container-lowest border border-secondary/30 text-on-surface font-label-md text-label-md px-4 py-2.5 rounded-xl recipe-card-shadow whitespace-nowrap transition-all duration-200"></div>
+<div class="toast" id="toast"></div>
 
 <script src="recipes.js"></script>
 <script src="recipes2.js"></script>
 <script src="recipes3.js"></script>
-<script src="recipes4.js"></script>
 <script>
-const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3,...RECIPES4];
+const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3];
 
-// ── SEAFOOD GROUP
-const SEAFOOD_INGREDIENTS=new Set(['Clams','Dover Sole','Fish','Mackerel','Mussels','Oysters','Prawns','Salmon','Sardines','Scallops','Seafood','Smoked Trout','Snapper','Tuna']);
-
-function getIngredientOptions(){
-  const raw=[...new Set(ALL_RECIPES.map(r=>r.mainIngredient))].sort();
-  const grouped=[];let seafoodAdded=false;
-  raw.forEach(ing=>{
-    if(SEAFOOD_INGREDIENTS.has(ing)){
-      if(!seafoodAdded){grouped.push({label:'Seafood',value:'__SEAFOOD__'});seafoodAdded=true;}
-    }else{grouped.push({label:ing,value:ing});}
-  });
-  return grouped;
-}
-
+// ── HAPTIC
 function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
 
+// ── STATE
 let currentTab='home',currentRecipe=null,prevTab='home';
 let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
-let activeIngredient=null,activeSearch='',shopChecked={},stepsDone={},portionScale=1;
-let wakeLock=null,openCategories=new Set();
+let activeIngredient=null,shopChecked={},stepsDone={},portionScale=1;
+let wakeLock=null;
+let openCategories=new Set(); // all collapsed by default
 
-// ── DEBOUNCED SEARCH
-let _searchTimer=null;
-function onSearch(){
-  clearTimeout(_searchTimer);
-  _searchTimer=setTimeout(()=>{
-    activeSearch=document.getElementById('searchInput').value.trim().toLowerCase();
-    const icon=document.getElementById('searchIcon');
-    if(icon)icon.textContent=activeSearch?'close':'search';
-    renderAccordion();
-  },300);
-}
-
-// ── DARK MODE
+// ── DARK / LIGHT MODE
 let isDark=false;
 function toggleMode(){
-  haptic(8);isDark=!isDark;
-  document.documentElement.classList.toggle('dark',isDark);
-  document.getElementById('modeIcon').textContent=isDark?'light_mode':'dark_mode';
+  haptic(8);
+  isDark=!isDark;
+  document.body.classList.toggle('light',!isDark);
+  const icon=document.getElementById('modeIcon');
+  icon.innerHTML=isDark
+    ?'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
+    :'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
   localStorage.setItem('darkMode',isDark?'1':'0');
 }
 (function(){
-  if(localStorage.getItem('darkMode')==='1'){
-    isDark=true;document.documentElement.classList.add('dark');
-    document.getElementById('modeIcon').textContent='light_mode';
+  const saved=localStorage.getItem('darkMode');
+  // default light — only go dark if explicitly saved as dark
+  if(saved==='1'){
+    isDark=true;
+    document.body.classList.remove('light');
+    document.getElementById('modeIcon').innerHTML='<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  } else {
+    isDark=false;
+    document.body.classList.add('light');
+    document.getElementById('modeIcon').innerHTML='<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
   }
 })();
-
-// ── VIEWS
-function showView(name){
-  document.querySelectorAll('.view').forEach(v=>{v.classList.add('hidden');v.classList.remove('active')});
-  const el=document.getElementById('view-'+name);
-  el.classList.remove('hidden');el.classList.add('active');
-}
 
 // ── TABS
 function switchTab(tab){
   haptic(8);
   if(currentRecipe&&tab!=='detail')closeDetail(false);
-  // Reset all tab inner divs
-  document.querySelectorAll('.tab').forEach(t=>{
-    const d=t.querySelector('div');
-    const ic=t.querySelector('.material-symbols-outlined');
-    const lb=t.querySelector('span.font-label-md');
-    if(d){d.classList.remove('bg-secondary-container/20');}
-    if(ic){ic.classList.remove('text-secondary','icon-fill');ic.classList.add('text-on-surface-variant');}
-    if(lb){lb.classList.remove('text-secondary');lb.classList.add('text-on-surface-variant');}
-  });
-  // Activate selected
-  const at=document.getElementById('tab-'+tab);
-  if(at){
-    const d=at.querySelector('div');
-    const ic=at.querySelector('.material-symbols-outlined');
-    const lb=at.querySelector('span.font-label-md');
-    if(d){d.classList.add('bg-secondary-container/20');}
-    if(ic){ic.classList.add('text-secondary','icon-fill');ic.classList.remove('text-on-surface-variant');}
-    if(lb){lb.classList.add('text-secondary');lb.classList.remove('text-on-surface-variant');}
-  }
-  showView(tab);currentTab=tab;
-  const hdr=document.getElementById('appHeader');
-  if(hdr)hdr.style.display=(tab==='detail')?'none':'';
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('view-'+tab).classList.add('active');
+  currentTab=tab;
+  document.querySelector('header').style.display=tab==='detail'?'none':'';
   if(tab==='home')renderHome();
   if(tab==='favourites')renderFavourites();
-  if(tab==='new')renderNew();
-  if(tab==='shoplist')renderShoppingTab();
 }
 
-// ── CATEGORY ICONS
-const CAT_ICONS={
-  'Dips & Starters':'tapas','Salads':'eco','Soups':'soup_kitchen',
-  'Seafood':'set_meal','Meat & Poultry':'restaurant','Vegetarian':'grass',
-  'Pasta & Rice':'ramen_dining','Sides':'brunch_dining',
-  'Bread & Bakes':'bakery_dining','Sauces':'water_drop','Desserts':'cake'
-};
+// ── HOME
+const CAT_DOTS={'Dips & Starters':'#00c896','Salads':'#40c060','Soups':'#a060e0','Seafood':'#00b4dc','Meat & Poultry':'#ff6450','Vegetarian':'#40c040','Pasta & Rice':'#ffa000','Sides':'#b09050','Bread & Bakes':'#50a0ff','Sauces':'#dc50b4','Desserts':'#ff5080'};
 
 function renderHome(){populateIngSelect();renderAccordion()}
 
 function populateIngSelect(){
   const sel=document.getElementById('ingSelect');
-  const options=getIngredientOptions();
-  sel.innerHTML=`<option value="">All recipes...</option>`+
-    options.map(o=>`<option value="${o.value}"${activeIngredient===o.value?' selected':''}>${o.label}</option>`).join('');
-  const has=!!activeIngredient;
-  sel.classList.toggle('ring-2',has);sel.classList.toggle('ring-secondary',has);
-  sel.classList.toggle('text-secondary',has);
-  const clr=document.getElementById('ingClear');
-  clr.classList.toggle('hidden',!has);clr.classList.toggle('flex',has);
+  const ingredients=[...new Set(ALL_RECIPES.map(r=>r.mainIngredient))].sort();
+  sel.innerHTML=`<option value="">All recipes...</option>`+ingredients.map(i=>`<option value="${i}"${activeIngredient===i?' selected':''}>${i}</option>`).join('');
+  sel.classList.toggle('has-value',!!activeIngredient);
+  document.getElementById('ingClear').classList.toggle('visible',!!activeIngredient);
 }
-function onIngSelect(){haptic(8);activeIngredient=document.getElementById('ingSelect').value||null;populateIngSelect();renderAccordion()}
-function clearIngredient(){haptic(8);activeIngredient=null;populateIngSelect();renderAccordion()}
+
+function onIngSelect(){
+  haptic(8);
+  activeIngredient=document.getElementById('ingSelect').value||null;
+  document.getElementById('ingSelect').classList.toggle('has-value',!!activeIngredient);
+  document.getElementById('ingClear').classList.toggle('visible',!!activeIngredient);
+  renderAccordion();
+}
+
+function clearIngredient(){
+  haptic(8);
+  activeIngredient=null;
+  document.getElementById('ingSelect').value='';
+  document.getElementById('ingSelect').classList.remove('has-value');
+  document.getElementById('ingClear').classList.remove('visible');
+  renderAccordion();
+}
 
 function getFiltered(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
   let list=ALL_RECIPES;
-  if(activeIngredient==='__SEAFOOD__') list=list.filter(r=>SEAFOOD_INGREDIENTS.has(r.mainIngredient));
-  else if(activeIngredient) list=list.filter(r=>r.mainIngredient===activeIngredient);
-  if(activeSearch) list=list.filter(r=>r.name.toLowerCase().includes(activeSearch)||r.category.toLowerCase().includes(activeSearch));
+  if(activeIngredient)list=list.filter(r=>r.mainIngredient===activeIngredient);
+  if(q)list=list.filter(r=>r.name.toLowerCase().includes(q)||r.mainIngredient.toLowerCase().includes(q));
   return list;
-}
-
-function diffBadge(d){
-  return d==='easy'
-    ?'bg-secondary-container text-on-secondary-container'
-    :d==='medium'?'bg-amber-100 text-amber-800':'bg-error-container text-on-error-container';
 }
 
 function renderAccordion(){
   const recipes=getFiltered();
-  if(activeIngredient)recipes.forEach(r=>openCategories.add(r.category));
   const el=document.getElementById('homeContent');
   if(!recipes.length){
-    el.innerHTML=`<div class="flex flex-col items-center py-16">
-      <span class="material-symbols-outlined text-surface-container-highest mb-3" style="font-size:48px">search_off</span>
-      <p class="font-body-md text-body-md text-on-surface-variant">No recipes found.</p>
-    </div>`;return;
+    el.innerHTML=`<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><p>No recipes found.</p></div>`;
+    return;
   }
-  let html='<div class="flex flex-col gap-2 px-margin-mobile pt-stack-sm pb-stack-lg">';
+  let html='<div style="padding:10px 0 4px">';
   CATEGORIES.forEach(cat=>{
     const list=recipes.filter(r=>r.category===cat);
     if(!list.length)return;
     const isOpen=openCategories.has(cat);
-    const icon=CAT_ICONS[cat]||'restaurant';
-    const safeCat=cat.replace(/['"&<>]/g,'_');
-    html+=`
-    <div class="bg-surface-container-lowest rounded-xl overflow-hidden recipe-card-shadow">
-      <button onclick="toggleCat('${safeCat}','${cat}')"
-        class="w-full flex items-center justify-between px-4 py-3.5 transition-colors active:bg-surface-container-low ${isOpen?'border-b border-outline-variant/40':''}">
-        <div class="flex items-center gap-3">
-          <div class="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></div>
-          <span class="font-headline-md text-[17px] text-primary leading-none">${cat}</span>
-          <span class="font-caption text-caption text-outline bg-surface-container px-2 py-0.5 rounded-full">${list.length}</span>
+    const dot=CAT_DOTS[cat]||'#7c6fff';
+    const sw=SW[cat]||'sw-mains';
+    html+=`<div class="cat-section">
+      <div class="cat-header${isOpen?' open':''}" onclick="toggleCat('${cat.replace(/&/g,'and')}','${cat}')">
+        <div class="cat-header-left">
+          <div class="cat-dot" style="background:${dot}"></div>
+          <span class="cat-name">${cat}</span>
+          <span class="cat-count">${list.length}</span>
         </div>
-        <span class="material-symbols-outlined text-outline transition-transform duration-200 ${isOpen?'rotate-180 !text-secondary':''}" style="font-size:20px">expand_more</span>
-      </button>
-      ${isOpen?`<div>${list.map((r,idx)=>{const ip=pinned.includes(r.id);return`
-        <button onclick="openRecipe(${r.id})" class="w-full flex items-center gap-3 px-4 py-3 text-left active:bg-surface-container-low transition-colors ${idx<list.length-1?'border-b border-outline-variant/40':''}">
-          <div class="w-10 h-10 rounded-lg bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
-            <span class="material-symbols-outlined text-secondary" style="font-size:18px">${icon}</span>
-          </div>
-          <div class="flex-1 min-w-0">
-            <p class="font-headline-md text-[15px] text-primary leading-snug mb-1">${r.name}</p>
-            <div class="flex gap-1.5 flex-wrap">
-              <span class="font-label-md text-[10px] uppercase tracking-wide px-2 py-0.5 rounded ${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
-              <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-outline">${r.calories} kcal</span>
-              <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-outline">${r.time}</span>
+        <span class="cat-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="cat-body${isOpen?' open':''}">
+        ${list.map(r=>{const ip=pinned.includes(r.id);return`<div class="cat-recipe-row" onclick="openRecipe(${r.id})">
+          <div class="cat-swatch ${sw}">${cat.substring(0,2).toUpperCase()}</div>
+          <div style="flex:1;min-width:0">
+            <div class="cat-recipe-name">${r.name}</div>
+            <div class="cat-recipe-meta">
+              <span class="tag tag-${r.difficulty}">${cap(r.difficulty)}</span>
+              <span class="tag tag-muted">${r.calories} kcal</span>
+              <span class="tag tag-muted">${r.time}</span>
             </div>
           </div>
-          <button onclick="event.stopPropagation();togglePin(${r.id})" class="w-8 h-8 flex items-center justify-center flex-shrink-0 transition-all">
-            <span class="material-symbols-outlined transition-all ${ip?'icon-fill text-secondary':'text-on-surface-variant'}" style="font-size:20px">bookmark</span>
+          <button class="card-pin${ip?' pinned':''}" onclick="event.stopPropagation();togglePin(${r.id})">
+            <svg viewBox="0 0 24 24" fill="${ip?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </button>
-        </button>`}).join('')}</div>`:''}
+        </div>`}).join('')}
+      </div>
     </div>`;
   });
   html+='</div>';
   el.innerHTML=html;
 }
 
-function toggleCat(s,cat){
+function toggleCat(safeKey,cat){
   haptic(8);
-  if(openCategories.has(cat))openCategories.delete(cat);else openCategories.add(cat);
+  if(openCategories.has(cat))openCategories.delete(cat);
+  else openCategories.add(cat);
   renderAccordion();
 }
 
+// ── FAVOURITES
 function recipeCardHTML(r){
   const ip=pinned.includes(r.id);
-  const icon=CAT_ICONS[r.category]||'restaurant';
-  return`<button onclick="openRecipe(${r.id})" class="w-full flex items-center gap-3 px-4 py-3 bg-surface-container-lowest rounded-xl recipe-card-shadow text-left active:scale-[.99] transition-all">
-    <div class="w-11 h-11 rounded-lg bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
-      <span class="material-symbols-outlined text-secondary" style="font-size:20px">${icon}</span>
-    </div>
-    <div class="flex-1 min-w-0">
-      <p class="font-headline-md text-[15px] text-primary leading-snug mb-1">${r.name}</p>
-      <div class="flex gap-1.5 flex-wrap">
-        <span class="font-label-md text-[10px] uppercase tracking-wide px-2 py-0.5 rounded ${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
-        <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-outline">${r.calories} kcal</span>
-        <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-outline">${r.time}</span>
+  return`<div class="recipe-card${ip?' pinned':''}" onclick="openRecipe(${r.id})">
+    <div class="card-swatch ${SW[r.category]||'sw-mains'}">${r.category.substring(0,2).toUpperCase()}</div>
+    <div class="card-info">
+      <div class="card-name">${r.name}</div>
+      <div class="card-meta">
+        <span class="tag tag-${r.difficulty}">${cap(r.difficulty)}</span>
+        <span class="tag tag-muted">${r.calories} kcal</span>
+        <span class="tag tag-muted">${r.time}</span>
       </div>
     </div>
-    <button onclick="event.stopPropagation();togglePin(${r.id})" class="w-8 h-8 flex items-center justify-center flex-shrink-0">
-      <span class="material-symbols-outlined transition-all ${ip?'icon-fill text-secondary':'text-on-surface-variant'}" style="font-size:20px">bookmark</span>
+    <button class="card-pin${ip?' pinned':''}" onclick="event.stopPropagation();togglePin(${r.id})">
+      <svg viewBox="0 0 24 24" fill="${ip?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
     </button>
-  </button>`;
+  </div>`;
 }
 
 function renderFavourites(){
   const list=document.getElementById('favList');
   const empty=document.getElementById('favEmpty');
   const pr=ALL_RECIPES.filter(r=>pinned.includes(r.id));
-  if(!pr.length){list.innerHTML='';empty.classList.remove('hidden');empty.classList.add('flex');return}
-  empty.classList.add('hidden');empty.classList.remove('flex');
+  if(!pr.length){list.innerHTML='';empty.style.display='';return}
+  empty.style.display='none';
   list.innerHTML=pr.map(r=>recipeCardHTML(r)).join('');
 }
-function renderNew(){
-  document.getElementById('newList').innerHTML=[...ALL_RECIPES].sort((a,b)=>b.id-a.id).map(r=>recipeCardHTML(r)).join('');
-}
+
 function togglePin(id){
   haptic(12);
-  if(pinned.includes(id))pinned=pinned.filter(p=>p!==id);else pinned.push(id);
+  if(pinned.includes(id))pinned=pinned.filter(p=>p!==id);
+  else pinned.push(id);
   localStorage.setItem('pinned',JSON.stringify(pinned));
   if(currentTab==='home')renderAccordion();
   if(currentTab==='favourites')renderFavourites();
   toast(pinned.includes(id)?'Recipe pinned':'Unpinned');
 }
-function togglePinDetail(){if(!currentRecipe)return;haptic(12);togglePin(currentRecipe.id);updateDetailPin()}
-function updateDetailPin(){
-  const ip=pinned.includes(currentRecipe.id);
-  const btn=document.getElementById('detailPin');
-  btn.className=`w-10 h-10 border rounded-lg flex items-center justify-center recipe-card-shadow active:scale-95 transition-all ${ip?'bg-secondary border-secondary':'bg-surface-container-lowest border-outline-variant/60'}`;
-  const icon=document.getElementById('detailPinIcon');
-  icon.className=`material-symbols-outlined ${ip?'icon-fill text-on-secondary':'text-on-surface'}`;
-  icon.style.fontSize='20px';
+
+function togglePinDetail(){
+  if(!currentRecipe)return;
+  haptic(12);togglePin(currentRecipe.id);updateDetailPin();
 }
 
+function updateDetailPin(){
+  const btn=document.getElementById('detailPin');
+  btn.classList.toggle('pinned',pinned.includes(currentRecipe.id));
+}
+
+// ── DETAIL
 function openRecipe(id){
   haptic(8);
-  currentRecipe=ALL_RECIPES.find(r=>r.id===id);prevTab=currentTab;
+  currentRecipe=ALL_RECIPES.find(r=>r.id===id);
+  prevTab=currentTab;
   if(!shopChecked[id])shopChecked[id]=new Set();
   if(!stepsDone[id])stepsDone[id]=new Set();
   portionScale=1;
   const slider=document.getElementById('portionSlider');
-  slider.value=currentRecipe.serves;slider.max=Math.max(20,currentRecipe.serves*4);
+  slider.value=currentRecipe.serves;
+  slider.max=Math.max(20,currentRecipe.serves*4);
   document.getElementById('portionVal').textContent=currentRecipe.serves;
   renderDetailContent();
-  showView('detail');
-  document.getElementById('appHeader').style.display='none';
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-detail').classList.add('active');
+  document.querySelector('header').style.display='none';
   currentTab='detail';
   document.getElementById('main').scrollTop=0;
 }
@@ -539,153 +527,166 @@ function renderDetailContent(){
   document.getElementById('detailTitle').textContent=r.name;
   updateDetailPin();
   document.getElementById('detailTags').innerHTML=`
-    <span class="font-label-md text-[11px] uppercase tracking-wide px-3 py-1 rounded-full ${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
-    <span class="font-caption text-caption px-3 py-1 rounded-full bg-surface-container text-outline">${r.calories} kcal/serve</span>
-    <span class="font-caption text-caption px-3 py-1 rounded-full bg-surface-container text-outline">${r.time}</span>
-    <span class="font-caption text-caption px-3 py-1 rounded-full bg-surface-container text-outline">Serves ${r.serves}</span>`;
+    <span class="detail-tag tag-${r.difficulty}">${cap(r.difficulty)}</span>
+    <span class="detail-tag tag-muted">${r.calories} kcal/serve</span>
+    <span class="detail-tag tag-muted">${r.time}</span>
+    <span class="detail-tag tag-muted">Serves ${r.serves}</span>`;
   renderIngredients();renderSteps();renderShopList();
 }
 
 function heroGrad(cat){
-  const g={
-    'Dips & Starters':'linear-gradient(150deg,#ddf0e8,#cce8d8)',
-    'Salads':         'linear-gradient(150deg,#d8f0cc,#c4e4b4)',
-    'Soups':          'linear-gradient(150deg,#f0e8d8,#e4dccc)',
-    'Seafood':        'linear-gradient(150deg,#d0e4f4,#bcd4ec)',
-    'Meat & Poultry': 'linear-gradient(150deg,#f4e4d4,#ecd4bc)',
-    'Vegetarian':     'linear-gradient(150deg,#d4f0cc,#bce4b0)',
-    'Pasta & Rice':   'linear-gradient(150deg,#f4eccc,#ece0b4)',
-    'Sides':          'linear-gradient(150deg,#ece8d8,#e0dccc)',
-    'Bread & Bakes':  'linear-gradient(150deg,#f4e8d4,#ecdcc0)',
-    'Sauces':         'linear-gradient(150deg,#ecdcf0,#e0cce4)',
-    'Desserts':       'linear-gradient(150deg,#f4dce0,#eccccc)',
+  const dark={
+    'Dips & Starters':'linear-gradient(135deg,#0d1a14,#1a2e20)',
+    'Salads':'linear-gradient(135deg,#0d1a10,#162a18)',
+    'Soups':'linear-gradient(135deg,#140d1e,#201428)',
+    'Seafood':'linear-gradient(135deg,#0d141e,#101e2e)',
+    'Meat & Poultry':'linear-gradient(135deg,#1e100d,#2e1610)',
+    'Vegetarian':'linear-gradient(135deg,#0d1a0d,#142214)',
+    'Pasta & Rice':'linear-gradient(135deg,#1a140d,#261c10)',
+    'Sides':'linear-gradient(135deg,#161410,#201e16)',
+    'Bread & Bakes':'linear-gradient(135deg,#0d1420,#10182e)',
+    'Sauces':'linear-gradient(135deg,#1a0d18,#281020)',
+    'Desserts':'linear-gradient(135deg,#1a0d12,#2e1018)',
   };
-  return g[cat]||'linear-gradient(150deg,#f0ece8,#e8e4e0)';
+  const light={
+    'Dips & Starters':'linear-gradient(135deg,#d4ede4,#c0e0d0)',
+    'Salads':'linear-gradient(135deg,#d4edce,#bce0b8)',
+    'Soups':'linear-gradient(135deg,#ddd4f0,#cec0e8)',
+    'Seafood':'linear-gradient(135deg,#ccdcf0,#b8cce4)',
+    'Meat & Poultry':'linear-gradient(135deg,#f0d8d0,#e8c8bc)',
+    'Vegetarian':'linear-gradient(135deg,#d0edcc,#bce0b4)',
+    'Pasta & Rice':'linear-gradient(135deg,#f0e4cc,#e8d8b4)',
+    'Sides':'linear-gradient(135deg,#ece8d8,#e0dcc8)',
+    'Bread & Bakes':'linear-gradient(135deg,#ccdcf0,#bcd0e8)',
+    'Sauces':'linear-gradient(135deg,#f0d0ec,#e8c0e0)',
+    'Desserts':'linear-gradient(135deg,#f0d0d8,#e8bcc8)',
+  };
+  const map=isDark?dark:light;
+  return map[cat]||(isDark?'linear-gradient(135deg,#0d0d16,#16162a)':'linear-gradient(135deg,#e0e0f4,#d0d0ec)');
 }
 
 function renderIngredients(){
-  document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
+  document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map(ing=>{
     const display=fmtIng(ing.amount*portionScale,ing.unit);
-    return`<div class="flex items-center px-4 py-3 gap-3 ${i<arr.length-1?'border-b border-outline-variant/40':''}">
-      <div class="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></div>
-      <span class="flex-1 font-body-md text-body-md text-on-surface">${ing.name}</span>
-      <span class="font-label-md text-label-md text-secondary whitespace-nowrap">${display}</span>
-    </div>`;
+    return`<div class="ing-row"><div class="ing-dot"></div><span class="ing-name">${ing.name}</span><span class="ing-amount">${display}</span></div>`;
   }).join('');
+}
+
+function scaleStepText(text, scale){
+  if(Math.abs(scale-1)<0.01) return text;
+  // Only scale numbers followed by cooking measurement units — never time or temperature
+  return text.replace(
+    /\b(\d+(?:\.\d+)?)\s*(g|kg|ml|L|tbsp|tsp|cups?)\b/gi,
+    (match, num, unit)=>{
+      const scaled=parseFloat(num)*scale;
+      const u=unit.toLowerCase().replace(/s$/,'');
+      return fmtIng(scaled, u==='l'?'L':u);
+    }
+  );
 }
 
 function renderSteps(){
   const done=stepsDone[currentRecipe.id];
-  /* Design spec: large serif numbers "01", "02" to the left — font-display-lg text-secondary/20 */
   document.getElementById('stepsList').innerHTML=currentRecipe.steps.map((s,i)=>`
-    <div onclick="toggleStep(${i})" class="flex gap-4 bg-surface-container-lowest rounded-xl p-4 recipe-card-shadow cursor-pointer active:scale-[.99] transition-all ${done.has(i)?'opacity-50':''}">
-      <span class="font-display-lg text-display-lg leading-none flex-shrink-0 w-10 text-right transition-colors ${done.has(i)?'text-secondary':'text-secondary/20'}">${done.has(i)?'✓':String(i+1).padStart(2,'0')}</span>
-      <div class="flex-1 pt-1">
-        <p class="font-label-md text-label-md text-primary uppercase tracking-widest mb-1">Step ${i+1}</p>
-        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">${s}</p>
-      </div>
+    <div class="step-item${done.has(i)?' done':''}" onclick="toggleStep(${i})">
+      <div class="step-num-wrap"><span class="step-num">${done.has(i)?'✓':(i+1)}</span></div>
+      <div class="step-text">${scaleStepText(s,portionScale)}</div>
     </div>`).join('');
 }
 
 function toggleStep(i){
-  haptic(8);const d=stepsDone[currentRecipe.id];
-  if(d.has(i))d.delete(i);else d.add(i);renderSteps();
+  haptic(8);
+  const d=stepsDone[currentRecipe.id];
+  if(d.has(i))d.delete(i);else d.add(i);
+  renderSteps();
 }
 
 function renderShopList(){
   const c=shopChecked[currentRecipe.id];
-  document.getElementById('shopList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
-    const display=fmtIng(ing.amount*portionScale,ing.unit);const checked=c.has(i);
-    return`<div onclick="toggleShop(${i})" class="flex items-center gap-3 px-4 py-3 ${i<arr.length-1?'border-b border-outline-variant/40':''} cursor-pointer active:bg-surface-container-low transition-colors">
-      <div class="w-5 h-5 rounded border-2 ${checked?'bg-secondary border-secondary':'border-outline-variant'} flex items-center justify-center flex-shrink-0 transition-all">
-        ${checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
-      </div>
-      <span class="flex-1 font-body-md text-body-md ${checked?'line-through text-outline':'text-on-surface'}">${ing.name}</span>
-      <span class="font-label-md text-label-md ${checked?'text-outline':'text-secondary'} whitespace-nowrap">${display}</span>
+  document.getElementById('shopList').innerHTML=currentRecipe.ingredients.map((ing,i)=>{
+    const display=fmtIng(ing.amount*portionScale,ing.unit);
+    return`<div class="shop-row${c.has(i)?' checked':''}" onclick="toggleShop(${i})">
+      <div class="shop-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="shop-name">${ing.name}</span>
+      <span class="shop-amt">${display}</span>
     </div>`;
   }).join('');
 }
 
-function toggleShop(i){haptic(8);const c=shopChecked[currentRecipe.id];if(c.has(i))c.delete(i);else c.add(i);renderShopList()}
+function toggleShop(i){
+  haptic(8);
+  const c=shopChecked[currentRecipe.id];
+  if(c.has(i))c.delete(i);else c.add(i);
+  renderShopList();
+}
 
 function copyShopList(){
-  haptic(12);const r=currentRecipe;const c=shopChecked[r.id];
+  haptic(12);
+  const r=currentRecipe;
+  const c=shopChecked[r.id];
   const serves=Math.round(r.serves*portionScale);
-  const toBuy=r.ingredients.filter((_,i)=>!c.has(i));
-  const text=`Shopping list for "${r.name}" (serves ${serves}):\n\n${toBuy.length?toBuy.map(ing=>`• ${ing.name}: ${fmtIng(ing.amount*portionScale,ing.unit)}`).join('\n'):'You already have everything!'}`;
-  navigator.clipboard.writeText(text).then(()=>toast('Copied & added to Shopping List'));
-  toBuy.forEach(ing=>{
-    const amount=fmtIng(ing.amount*portionScale,ing.unit);
-    if(!globalShopList.find(x=>x.name===ing.name&&x.recipe===r.name))
-      globalShopList.push({name:ing.name,amount,recipe:r.name,checked:false});
-  });
-  saveGlobalShopList();
+  const items=r.ingredients.filter((_,i)=>!c.has(i)).map(ing=>`• ${ing.name}: ${fmtIng(ing.amount*portionScale,ing.unit)}`);
+  const text=`Shopping list for "${r.name}" (serves ${serves}):\n\n${items.length?items.join('\n'):'You already have everything!'}`;
+  navigator.clipboard.writeText(text).then(()=>toast('Shopping list copied'));
 }
-function closeDetail(dh=true){if(dh)haptic(8);currentRecipe=null;switchTab(prevTab==='detail'?'home':prevTab)}
+
+function closeDetail(dh=true){
+  if(dh)haptic(8);
+  currentRecipe=null;
+  switchTab(prevTab==='detail'?'home':prevTab);
+}
+
+// ── PORTION
 function onPortion(){
-  haptic(6);const n=parseInt(document.getElementById('portionSlider').value);
-  portionScale=n/currentRecipe.serves;document.getElementById('portionVal').textContent=n;
+  haptic(6);
+  const n=parseInt(document.getElementById('portionSlider').value);
+  portionScale=n/currentRecipe.serves;
+  document.getElementById('portionVal').textContent=n;
   renderIngredients();renderShopList();
 }
 
-let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
-function saveGlobalShopList(){localStorage.setItem('globalShopList',JSON.stringify(globalShopList))}
-function renderShoppingTab(){
-  const empty=document.getElementById('shopTabEmpty');const content=document.getElementById('shopTabContent');
-  if(!globalShopList.length){empty.classList.remove('hidden');empty.classList.add('flex');content.innerHTML='';return}
-  empty.classList.add('hidden');empty.classList.remove('flex');
-  const byRecipe={};
-  globalShopList.forEach((item,i)=>{if(!byRecipe[item.recipe])byRecipe[item.recipe]=[];byRecipe[item.recipe].push({...item,idx:i})});
-  content.innerHTML=Object.entries(byRecipe).map(([recipe,items])=>`
-    <div class="bg-surface-container-lowest rounded-xl overflow-hidden recipe-card-shadow">
-      <div class="px-4 py-2.5 border-b border-outline-variant/40">
-        <p class="font-label-md text-caption text-outline uppercase tracking-[0.1em]">${recipe}</p>
-      </div>
-      ${items.map(item=>`
-        <div onclick="toggleShopTab(${item.idx})" class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant/40 last:border-b-0 cursor-pointer active:bg-surface-container-low transition-colors">
-          <div class="w-5 h-5 rounded border-2 ${item.checked?'bg-secondary border-secondary':'border-outline-variant'} flex items-center justify-center flex-shrink-0 transition-all">
-            ${item.checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
-          </div>
-          <span class="flex-1 font-body-md text-body-md ${item.checked?'line-through text-outline':'text-on-surface'}">${item.name}</span>
-          <span class="font-label-md text-label-md ${item.checked?'text-outline':'text-secondary'} whitespace-nowrap">${item.amount}</span>
-        </div>`).join('')}
-    </div>`).join('');
+// ── SEARCH
+function onSearch(){
+  const q=document.getElementById('searchInput').value;
+  document.getElementById('searchClear').style.display=q?'flex':'none';
+  if(currentTab!=='home')switchTab('home');
+  renderAccordion();
 }
-function toggleShopTab(idx){haptic(8);globalShopList[idx].checked=!globalShopList[idx].checked;saveGlobalShopList();renderShoppingTab()}
-function clearShoppingTab(){haptic(12);globalShopList=[];saveGlobalShopList();renderShoppingTab();toast('Shopping list cleared')}
-function copyShoppingTab(){
-  haptic(12);if(!globalShopList.length){toast('List is empty');return}
-  const unchecked=globalShopList.filter(i=>!i.checked);
-  navigator.clipboard.writeText(unchecked.length?unchecked.map(i=>`• ${i.name}: ${i.amount}`).join('\n'):'You already have everything!').then(()=>toast('Shopping list copied'));
-}
+function clearSearch(){haptic(8);document.getElementById('searchInput').value='';document.getElementById('searchClear').style.display='none';renderAccordion()}
 
+// ── SHARE
 function shareRecipe(){
-  haptic(8);const r=currentRecipe;
+  haptic(8);
+  const r=currentRecipe;
   const text=`${r.name}\n\nServes ${r.serves} | ${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
   if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
   else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied'));
 }
 
+// ── WAKE LOCK
 async function toggleWakeLock(){
-  haptic(8);const btn=document.getElementById('wakeBtn');
+  haptic(8);
+  const btn=document.getElementById('wakeBtn');
   if(wakeLock){
     await wakeLock.release();wakeLock=null;
-    btn.classList.remove('bg-secondary','border-secondary','text-on-secondary');toast('Screen sleep restored');
+    btn.classList.remove('active');toast('Screen sleep restored');
   }else{
     try{
       wakeLock=await navigator.wakeLock.request('screen');
-      btn.classList.add('bg-secondary','border-secondary','text-on-secondary');toast('Screen will stay on');
-      wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('bg-secondary','border-secondary','text-on-secondary')});
+      btn.classList.add('active');toast('Screen will stay on');
+      wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('active')});
     }catch(e){toast('Wake lock not available')}
   }
 }
 document.addEventListener('visibilitychange',async()=>{
-  if(document.getElementById('wakeBtn').classList.contains('bg-secondary')&&document.visibilityState==='visible'){
+  if(document.getElementById('wakeBtn').classList.contains('active')&&document.visibilityState==='visible'){
     try{wakeLock=await navigator.wakeLock.request('screen')}catch(e){}
   }
 });
 
+// ── HELPERS
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
 function fracStr(n){
   const w=Math.floor(n),f=n-w;
   const fr=[[0.25,'¼'],[0.33,'⅓'],[0.5,'½'],[0.67,'⅔'],[0.75,'¾']];
@@ -693,32 +694,50 @@ function fracStr(n){
   if(!m)return parseFloat(n.toFixed(1)).toString();
   return w?`${w}${m[1]}`:m[1];
 }
-function fmtIng(amount,unit){
+
+// Returns a compact formatted string e.g. "200g", "1 tbsp", "2 tsp", "100ml"
+function fmtIng(amount, unit){
   if(!amount||isNaN(amount))return'';
-  const n=amount;const u=unit.toLowerCase().trim();
+  const n=amount;
+  const u=unit.toLowerCase().trim();
+
+  // Descriptive — no quantity, just the label
   const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs'];
-  if(desc.some(d=>u.includes(d)))return unit;
-  if(u==='g')return Math.round(n)+'g';
+  if(desc.some(d=>u.includes(d))) return unit;
+
+  // Grams — compact, no space
+  if(u==='g') return Math.round(n)+'g';
+
+  // ml — convert to tbsp/tsp if it divides cleanly, else show ml
   if(u==='ml'){
     if(n<=90){
-      const tbsp=n/15,tbspR=Math.round(tbsp*2)/2;
-      if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1)return fracStr(tbspR)+' tbsp';
-      const tsp=n/5,tspR=Math.round(tsp*4)/4;
-      if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25)return fracStr(tspR)+' tsp';
+      const tbsp=n/15;
+      const tbspR=Math.round(tbsp*2)/2;
+      if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1) return fracStr(tbspR)+' tbsp';
+      const tsp=n/5;
+      const tspR=Math.round(tsp*4)/4;
+      if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25) return fracStr(tspR)+' tsp';
     }
     return Math.round(n)+'ml';
   }
-  const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets','stalk','stalks','piece','pieces','slice','slices','leaf','leaves','lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
-  if(cnt.some(c=>u.includes(c)))return(n%1===0?n.toString():fracStr(n))+' '+unit;
-  return(n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString())+' '+unit;
-}
 
-function toast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;
-  t.classList.remove('opacity-0','translate-y-3');t.classList.add('opacity-100','translate-y-0');
-  clearTimeout(t._t);t._t=setTimeout(()=>{t.classList.add('opacity-0','translate-y-3');t.classList.remove('opacity-100','translate-y-0')},2400);
+  // Countable units (whole, cloves, eggs, etc.)
+  const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets',
+             'stalk','stalks','piece','pieces','slice','slices','leaf','leaves',
+             'lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
+  if(cnt.some(c=>u.includes(c))){
+    return(n%1===0?n.toString():fracStr(n))+' '+unit;
+  }
+
+  // Everything else (tbsp, tsp already in unit field, kg, L, etc.)
+  const v=n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString();
+  return v+' '+unit;
 }
-function hardRefresh(){haptic(8);toast('Refreshing...');setTimeout(()=>location.reload(true),400)}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);
+}
 
 renderHome();
 </script>
