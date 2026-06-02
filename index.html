@@ -634,7 +634,6 @@ function renderFeed(){
         <span class="feed-card-emoji">${emoji}</span>
         <div class="feed-card-badges">
           <span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span>
-          <span class="time-chip">${r.time}</span>
         </div>
         <div class="feed-card-add">
           <button class="feed-card-add-btn" onclick="event.stopPropagation();addAllFromCard(${r.id})">
@@ -710,7 +709,7 @@ function recipeCard(r,showSave=true){
       <div class="rcrd-text">
         <div class="rcrd-name">${r.name}</div>
         <div class="rcrd-cat">${r.category}</div>
-        <div class="rcrd-meta"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span><span class="badge" style="background:var(--surface);color:var(--text2)">${r.time}</span><span class="badge" style="background:var(--surface);color:var(--text2)">${r.calories} kcal</span></div>
+        <div class="rcrd-meta"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span><span class="badge" style="background:var(--surface);color:var(--text2)">${r.calories} kcal</span></div>
       </div>
     </div>
     ${showSave?`<button class="rcrd-save${ip?' saved':''}" id="rsb-${r.id}" onclick="togglePin(${r.id})"><span class="ms">bookmark</span><span class="slbl">${ip?'Saved':'Save'}</span></button>`:''}
@@ -777,7 +776,7 @@ function renderDetailContent(){
   document.getElementById('detTitle').textContent=r.name;
   updateDetPin();
   const d=r.difficulty;
-  document.getElementById('detTags').innerHTML=`<span class="badge badge-${d} det-tag" style="padding:5px 12px;border-radius:20px">${cap(d)}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${r.calories} kcal/serve</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${r.time}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">Serves ${r.serves}</span>`;
+  document.getElementById('detTags').innerHTML=`<span class="badge badge-${d} det-tag" style="padding:5px 12px;border-radius:20px">${cap(d)}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${r.calories} kcal/serve</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">Serves ${r.serves}</span>`;
   renderIngredients();renderSteps();renderShopList();
 }
 
@@ -859,10 +858,12 @@ function mergeIntoShopList(ingredients,recipeName,scale){
 }
 
 function closeDetail(dh=true){
-  if(dh)haptic(8);currentRecipe=null;
+  if(dh)haptic(8);
+  currentRecipe=null;
   document.getElementById('appHdr').style.display='';
   document.getElementById('tabBar').style.display='';
-  switchTab(prevTab==='detail'?'home':prevTab);
+  const target=prevTab==='detail'?'home':prevTab;
+  showTab(target);
 }
 
 function onPortion(){
@@ -929,9 +930,16 @@ function finishCooking(){haptic(12);clearCookingState();exitCooking();toast('Gre
 function exitCooking(){
   stopCookingTimer();
   document.getElementById('cookingView').classList.add('hidden');
-  document.getElementById('appHdr').style.display='';
-  document.getElementById('tabBar').style.display='';
   if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null;document.getElementById('wakeBtn').classList.remove('on');}
+  // Return to recipe detail (header stays hidden — detail handles its own chrome)
+  // If no recipe is open, go back to home
+  if(currentRecipe){
+    // detail view is still rendered underneath — just let it show
+  } else {
+    document.getElementById('appHdr').style.display='';
+    document.getElementById('tabBar').style.display='';
+    showTab('home');
+  }
   renderContinueBanner();
 }
 function toggleIngDrawer(){
@@ -967,8 +975,8 @@ function stopCookingTimer(){
 function beep(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[0,.35,.7].forEach(t=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;g.gain.setValueAtTime(.4,ctx.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+t+.3);o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+.3);});}catch(e){}}
 
 // ── TABS
-function switchTab(tab){
-  haptic(8);
+// showTab: shared nav logic — no side-effects, no recursion
+function showTab(tab){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   const at=document.getElementById('tab-'+tab);if(at)at.classList.add('active');
   document.querySelectorAll('.view').forEach(v=>{v.style.display='none';v.classList.remove('active')});
@@ -980,6 +988,14 @@ function switchTab(tab){
   if(tab==='saved')renderSaved();
   if(tab==='latest')renderLatest();
   if(tab==='shoplist'){setShopSort(shopSort);updateShopBadge();}
+}
+function switchTab(tab){
+  haptic(8);
+  // If currently in detail view, close it cleanly first
+  if(currentTab==='detail'){
+    currentRecipe=null;
+  }
+  showTab(tab);
 }
 
 // ── SHOPPING TAB
