@@ -25,7 +25,13 @@
       "Bash(git rm *)",
       "Bash(ls \"/Users/williamcate/Library/Mobile Documents/com~apple~CloudDocs/Documents/GitHub/\")",
       "Bash(git log *)",
-      "Bash(which gh *)"
+      "Bash(which gh *)",
+      "Bash(python3)",
+      "Read(//usr/local/bin/**)",
+      "Read(//opt/homebrew/bin/**)",
+      "Read(//usr/bin/**)",
+      "Bash(ruby -e \"require 'webrick'; puts 'webrick ok'\")",
+      "Bash(perl -e \"use HTTP::Server::Simple; print 'ok'\")"
     ]
   }
 }

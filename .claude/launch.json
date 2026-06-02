@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "WillsRecipes",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "3456"],
+      "runtimeExecutable": "/usr/bin/ruby",
+      "runtimeArgs": ["-e", "require 'webrick'; s=WEBrick::HTTPServer.new(Port:3456,DocumentRoot:'/Users/williamcate/Library/Mobile Documents/com~apple~CloudDocs/Documents/GitHub/WillsRecipes',BindAddress:'127.0.0.1',Logger:WEBrick::Log.new(nil,WEBrick::BasicLog::WARN),AccessLog:[]); trap('INT'){s.shutdown}; s.start"],
       "port": 3456
     }
   ]

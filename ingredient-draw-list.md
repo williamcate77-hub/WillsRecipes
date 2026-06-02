@@ -155,7 +155,7 @@
 | 143 | mushroom | `mushroom` | 2 | 86.0% |
 | 144 | clam | `clam` | 2 | 86.1% |
 | 145 | corn cobs | `corn-cobs` | 2 | 86.3% |
-| 146 | gruyère | `gruy-re` | 2 | 86.4% |
+| 146 | gruyère | `gruyere` | 2 | 86.4% |
 | 147 | sweet potato | `sweet-potato` | 2 | 86.6% |
 | 148 | garlicky whipped tahini | `garlicky-whipped-tahini` | 2 | 86.7% |
 | 149 | maple syrup | `maple-syrup` | 2 | 86.8% |
@@ -202,7 +202,7 @@
 | 190 | bean sprout | `bean-sprout` | 1 | 90.4% |
 | 191 | dry white wine | `dry-white-wine` | 1 | 90.4% |
 | 192 | cornichon | `cornichon` | 1 | 90.5% |
-| 193 | crème fraîche | `cr-me-fra-che` | 1 | 90.6% |
+| 193 | crème fraîche | `creme-fraiche` | 1 | 90.6% |
 | 194 | gochujang dressing | `gochujang-dressing` | 1 | 90.6% |
 | 195 | edamame beans | `edamame-beans` | 1 | 90.7% |
 | 196 | kimchi | `kimchi` | 1 | 90.8% |
@@ -403,7 +403,7 @@ Use the generic fallback assets for these rather than commissioning individual i
 | coriander seeds | `coriander-seeds` | `generic-produce` |
 | cornflour | `cornflour` | `generic-produce` |
 | cornichon | `cornichon` | `generic-produce` |
-| crème fraîche | `cr-me-fra-che` | `generic-produce` |
+| crème fraîche | `creme-fraiche` | `generic-produce` |
 | curry paste | `curry-paste` | `generic-produce` |
 | dairy-free pesto | `dairy-free-pesto` | `generic-produce` |
 | distilled white vinegar | `distilled-white-vinegar` | `generic-produce` |
