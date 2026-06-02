@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,269 +13,441 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-tailwind.config = {
-  darkMode:"class",
-  theme:{
-    extend:{
-      colors:{
-        "surface":                  "#fbf9f8",
-        "surface-dim":              "#dbdad9",
-        "surface-container-lowest": "#ffffff",
-        "surface-container-low":    "#f5f3f3",
-        "surface-container":        "#efeded",
-        "surface-container-high":   "#e9e8e7",
-        "surface-container-highest":"#e4e2e2",
-        "on-surface":               "#1b1c1c",
-        "on-surface-variant":       "#444748",
-        "outline":                  "#747878",
-        "outline-variant":          "#c4c7c7",
-        "background":               "#fbf9f8",
-        "on-background":            "#1b1c1c",
-        "primary":                  "#1a1a1a",
-        "on-primary":               "#ffffff",
-        "primary-container":        "#1c1b1b",
-        "error":                    "#ba1a1a",
-        "error-container":          "#ffdad6",
-        "on-error-container":       "#93000a",
-        "secondary":                "#47663c",
-        "on-secondary":             "#ffffff",
-        "secondary-container":      "#c5eab4",
-        "on-secondary-container":   "#4b6b40",
-        "secondary-fixed-dim":      "#acd19d",
-      },
-      borderRadius:{
-        "DEFAULT":"0.5rem","lg":"0.75rem","xl":"1rem","2xl":"1.5rem","full":"9999px",
-      },
-      fontFamily:{
-        "serif":  ["Playfair Display","Georgia","serif"],
-        "sans":   ["Inter","-apple-system","BlinkMacSystemFont","sans-serif"],
-        "label-md":["Inter","sans-serif"],
-        "body-md": ["Inter","sans-serif"],
-        "body-lg": ["Inter","sans-serif"],
-        "headline-md":["Playfair Display","Georgia","serif"],
-        "headline-lg":["Playfair Display","Georgia","serif"],
-        "headline-lg-mobile":["Playfair Display","Georgia","serif"],
-        "display-lg":["Playfair Display","Georgia","serif"],
-        "caption":["Inter","sans-serif"],
-      },
-      fontSize:{
-        "label-md":  ["14px",{lineHeight:"20px",letterSpacing:"0.05em",fontWeight:"600"}],
-        "body-md":   ["16px",{lineHeight:"24px",fontWeight:"400"}],
-        "body-lg":   ["18px",{lineHeight:"28px",fontWeight:"400"}],
-        "headline-md":["24px",{lineHeight:"32px",fontWeight:"600"}],
-        "headline-lg":["32px",{lineHeight:"40px",fontWeight:"700"}],
-        "headline-lg-mobile":["28px",{lineHeight:"36px",fontWeight:"700"}],
-        "display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"700"}],
-        "caption":   ["12px",{lineHeight:"16px",fontWeight:"400"}],
-      },
-      boxShadow:{
-        "card":"0px 10px 30px rgba(26,26,26,0.04)",
-        "card-lift":"0px 16px 40px rgba(26,26,26,0.08)",
-      },
-    }
-  }
-}
-</script>
 <style>
-  .material-symbols-outlined{
-    font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
-    display:inline-block;line-height:1;text-transform:none;letter-spacing:normal;
-    white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;user-select:none;
-  }
-  .icon-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
-  .hide-scrollbar::-webkit-scrollbar{display:none;}
-  .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
-  input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:#efeded;border-radius:2px;outline:none;border:none;}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:6px;background:#47663c;cursor:pointer;border:2px solid #fff;box-shadow:0 2px 6px rgba(71,102,60,.2);}
-  .view{animation:fadeIn 200ms ease-in-out;}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
-  body{-webkit-font-smoothing:antialiased;}
+/* ── COLOUR SYSTEM ── */
+:root {
+  --bg:         #fafaf8;
+  --card:       #ffffff;
+  --surface:    #f2f2f0;
+  --surface2:   #e8e8e6;
+  --border:     #e0e0e0;
+  --text:       #1a1a1a;
+  --text2:      #767676;
+  --text3:      #9e9e9e;
+  --green:      #2d7f3e;
+  --green-bg:   #c5eab4;
+  --green-text: #1a5c28;
+  --green-dim:  rgba(45,127,62,0.10);
+  --warm:       #d4a574;
+  --warm-bg:    rgba(212,165,116,0.14);
+  --error:      #ba1a1a;
+  --tab-h:      80px;
+  --r:          8px;
+  --serif:      'Playfair Display', Georgia, serif;
+  --sans:       'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --shadow:     0 2px 12px rgba(0,0,0,0.06);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.08);
+}
+html.dark {
+  --bg:         #1a1a1a;
+  --card:       #2a2a2a;
+  --surface:    #242424;
+  --surface2:   #2f2f2f;
+  --border:     #383838;
+  --text:       #ffffff;
+  --text2:      #b0b0b0;
+  --text3:      #686868;
+  --green:      #4caf50;
+  --green-bg:   rgba(76,175,80,0.16);
+  --green-text: #a5d6a7;
+  --green-dim:  rgba(76,175,80,0.10);
+  --warm:       #e8b896;
+  --warm-bg:    rgba(232,184,150,0.12);
+}
+
+/* ── RESET ── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;overflow:hidden;height:100dvh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+button,select,input{font-family:var(--sans);color:inherit}
+
+/* ── MATERIAL ICONS ── */
+.ms{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;direction:ltr;-webkit-font-smoothing:antialiased;user-select:none;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.ms-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* ── HEADER ── */
+.app-header{background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0;box-shadow:var(--shadow)}
+.app-header-inner{display:flex;align-items:center;gap:12px;padding:20px 20px 16px}
+.app-logo{width:48px;height:48px;border-radius:12px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
+.app-title-block{flex:1;min-width:0}
+.app-eyebrow{font-size:10px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.12em;line-height:1;margin-bottom:4px}
+.app-title{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-.5px}
+.header-btns{display:flex;gap:8px;flex-shrink:0}
+.hbtn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 12px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .2s;flex-shrink:0}
+.hbtn .ms{font-size:20px}
+.hbtn span.label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;line-height:1}
+.hbtn:active,.hbtn.on{background:var(--green);border-color:var(--green);color:#fff}
+.hint-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 20px;background:var(--surface);border-top:1px solid var(--border)}
+.hint-bar span{font-size:12px;color:var(--text3)}
+.hint-bar-btns{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.hint-refresh{font-size:12px;font-weight:600;color:var(--text2);background:var(--card);border:1px solid var(--border);border-radius:4px;padding:4px 10px;cursor:pointer}
+.hint-refresh:active{background:var(--green);border-color:var(--green);color:#fff}
+.hint-close{background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:0 2px;line-height:1}
+
+/* ── MAIN ── */
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:calc(var(--tab-h) + 8px)}
+main::-webkit-scrollbar{display:none}
+.view{display:none;animation:fadeIn 220ms ease-out}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SEARCH ── */
+.search-wrap{position:relative;padding:16px 20px 8px}
+.search-input{width:100%;background:var(--surface);border:none;border-radius:var(--r);padding:12px 16px 12px 44px;font-size:16px;color:var(--text);outline:none;transition:box-shadow .2s;-webkit-appearance:none}
+.search-input::placeholder{color:var(--text3)}
+.search-input:focus{box-shadow:0 0 0 2px var(--green)}
+.search-icon-wrap{position:absolute;left:34px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none;display:flex;align-items:center}
+.search-icon-wrap .ms{font-size:20px}
+
+/* ── FILTER ── */
+.filter-wrap{padding:4px 20px 8px}
+.filter-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--text3);margin-bottom:6px}
+.filter-row{display:flex;gap:8px;align-items:center}
+.filter-select{flex:1;background:var(--surface);border:none;border-radius:var(--r);padding:11px 36px 11px 14px;font-size:15px;color:var(--text);outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23767676' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:box-shadow .2s}
+.filter-select:focus{box-shadow:0 0 0 2px var(--green)}
+.filter-select.active{color:var(--green);box-shadow:0 0 0 2px var(--green)}
+.filter-clear{width:40px;height:40px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--text3);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .15s}
+.filter-clear.show{display:flex}
+.filter-clear:active{background:var(--error);border-color:var(--error);color:#fff}
+
+/* ── ACCORDION ── */
+.acc-section{margin:0 20px 10px}
+.acc-header{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .18s,border-radius .15s;box-shadow:var(--shadow)}
+.acc-header:active{background:var(--surface)}
+.acc-header.open{border-color:var(--green);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.acc-left{display:flex;align-items:center;gap:10px}
+.acc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;transition:transform .2s}
+.acc-header.open .acc-dot{transform:scale(1.2)}
+.acc-name{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--text)}
+.acc-count{font-size:12px;font-weight:600;color:var(--text3);background:var(--surface);padding:2px 8px;border-radius:20px;border:1px solid var(--border)}
+.acc-chevron{color:var(--text3);transition:transform .2s;display:flex;align-items:center}
+.acc-chevron .ms{font-size:20px}
+.acc-header.open .acc-chevron{transform:rotate(180deg);color:var(--green)}
+.acc-body{display:none;background:var(--card);border:1px solid var(--green);border-top:none;border-bottom-left-radius:var(--r);border-bottom-right-radius:var(--r);overflow:hidden}
+.acc-body.open{display:block}
+
+/* ── RECIPE ROW ── */
+.rrow{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);gap:14px;cursor:pointer;transition:background .1s}
+.rrow:last-child{border-bottom:none}
+.rrow:active{background:var(--surface)}
+.rrow-icon{width:44px;height:44px;border-radius:var(--r);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.rrow-icon .ms{font-size:20px}
+.rrow-body{flex:1;min-width:0}
+.rrow-name{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text);line-height:1.25;margin-bottom:5px}
+.rrow-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.badge-easy{background:rgba(45,127,62,.12);color:#1a5c28}
+.badge-medium{background:rgba(212,130,0,.12);color:#7a4e00}
+.badge-hard{background:rgba(186,26,26,.1);color:#8b0000}
+html.dark .badge-easy{background:rgba(76,175,80,.18);color:#a5d6a7}
+html.dark .badge-medium{background:rgba(255,152,0,.15);color:#ffcc80}
+html.dark .badge-hard{background:rgba(244,67,54,.15);color:#ef9a9a}
+.meta-chip{font-size:12px;color:var(--text2)}
+
+/* ── SAVE BUTTON (in row) ── */
+.save-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px;border-radius:var(--r);border:none;background:none;cursor:pointer;color:var(--text3);transition:all .2s;flex-shrink:0;min-width:44px;min-height:44px;justify-content:center}
+.save-btn .ms{font-size:22px;transition:all .25s}
+.save-btn .slabel{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;transition:color .2s}
+.save-btn.saved{color:var(--green)}
+.save-btn.saved .ms{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+@keyframes savePop{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}
+.save-btn.pop .ms{animation:savePop .3s ease-out}
+
+/* ── SECTION LABEL ── */
+.section-lbl{padding:20px 20px 6px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--text3)}
+
+/* ── CARD (Saved/New views) ── */
+.card{display:flex;align-items:stretch;background:var(--card);border-radius:var(--r);border:1px solid var(--border);margin:0 20px 10px;overflow:hidden;box-shadow:var(--shadow)}
+.card:active{opacity:.9}
+.card-stripe{width:4px;flex-shrink:0;border-radius:var(--r) 0 0 var(--r)}
+.card-inner{display:flex;align-items:center;gap:14px;padding:16px;flex:1;cursor:pointer;transition:background .1s}
+.card-inner:active{background:var(--surface)}
+.card-icon{width:48px;height:48px;border-radius:var(--r);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.card-icon .ms{font-size:22px}
+.card-text{flex:1;min-width:0}
+.card-name{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--text);line-height:1.25;margin-bottom:6px}
+.card-cat{font-size:12px;color:var(--text2)}
+.card-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+
+/* ── EMPTY STATE ── */
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:60px 32px}
+.empty-icon{width:72px;height:72px;border-radius:20px;background:var(--green-dim);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.empty-icon .ms{font-size:36px;color:var(--green)}
+.empty-title{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px}
+.empty-body{font-size:16px;color:var(--text2);line-height:1.5;margin-bottom:24px;max-width:280px}
+.empty-cta{background:var(--green);color:#fff;border:none;border-radius:var(--r);padding:14px 28px;font-size:16px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.empty-cta:active{opacity:.8}
+
+/* ── SHOPPING SORT TOGGLE ── */
+.sort-toggle{display:flex;background:var(--surface);border-radius:var(--r);padding:4px;margin:0 20px 12px;gap:4px}
+.sort-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px;border-radius:6px;border:none;background:none;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s}
+.sort-btn.active{background:var(--card);color:var(--green);box-shadow:var(--shadow)}
+.sort-btn .ms{font-size:16px}
+
+/* ── SHOP SECTION HEADER ── */
+.shop-section-hdr{display:flex;align-items:center;padding:14px 16px 10px;border-bottom:1px solid var(--border)}
+.shop-section-dot{width:9px;height:9px;border-radius:50%;background:var(--green);margin-right:10px;flex-shrink:0}
+.shop-section-name{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text);flex:1}
+.shop-section-count{font-size:12px;color:var(--text3)}
+
+/* ── SHOP ROW ── */
+.shop-row{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer;transition:background .1s}
+.shop-row:last-child{border-bottom:none}
+.shop-row:active{background:var(--surface)}
+.shop-check{width:22px;height:22px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.shop-row.checked .shop-check{background:var(--green);border-color:var(--green)}
+.shop-row.checked .shop-check svg{display:block}
+.shop-check svg{display:none;width:12px;height:12px;stroke:#fff;stroke-width:3}
+.shop-name{flex:1;font-size:16px;color:var(--text);transition:all .15s}
+.shop-row.checked .shop-name{text-decoration:line-through;color:var(--text3)}
+.shop-amt{font-size:14px;font-weight:600;color:var(--green);white-space:nowrap;transition:color .15s}
+.shop-row.checked .shop-amt{color:var(--text3)}
+
+/* ── DETAIL HERO ── */
+.detail-hero{min-height:200px;display:flex;align-items:flex-end;position:relative;flex-shrink:0}
+.hero-back{position:absolute;top:20px;left:20px;width:44px;height:44px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.hero-back .ms{font-size:22px;color:var(--text)}
+.hero-btns{position:absolute;top:20px;right:20px;display:flex;gap:10px}
+.hero-btn{width:44px;height:44px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all .18s}
+.hero-btn .ms{font-size:20px;color:var(--text)}
+.hero-btn.saved{background:var(--green);border-color:var(--green)}
+.hero-btn.saved .ms{color:#fff;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* ── DETAIL BODY ── */
+.detail-body{padding:20px 20px 40px}
+.detail-title{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);line-height:1.2;letter-spacing:-.3px;margin-bottom:10px}
+.detail-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.detail-tag{font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;border:none}
+
+/* ── SAVE BANNER ── */
+.save-banner{display:flex;align-items:center;gap:12px;background:var(--warm-bg);border:1px solid var(--warm);border-radius:var(--r);padding:14px 16px;margin-bottom:20px}
+.save-banner .ms{font-size:22px;color:var(--warm);flex-shrink:0}
+.save-banner-text{flex:1;font-size:15px;color:var(--text2)}
+.save-banner-btn{background:var(--warm);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.save-banner-btn:active{opacity:.8}
+
+/* ── SERVING SIZE ── */
+.serve-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:24px;box-shadow:var(--shadow)}
+.serve-label-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.serve-label{font-size:14px;color:var(--text2)}
+.serve-num{font-family:var(--serif);font-size:40px;font-weight:700;color:var(--green);line-height:1;transition:opacity .2s}
+.serve-num.fading{opacity:.3}
+.serve-unit{font-size:13px;color:var(--text3);margin-left:4px}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--surface2);border-radius:2px;outline:none;border:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:8px;background:var(--green);cursor:pointer;border:2px solid var(--card);box-shadow:0 2px 8px rgba(0,0,0,.15);transition:transform .1s}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
+
+/* ── SECTION HEADER (detail) ── */
+.detail-section-hdr{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--text);margin:28px 0 14px}
+
+/* ── INGREDIENT LIST ── */
+.ing-list{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:24px;box-shadow:var(--shadow)}
+.ing-row{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);gap:12px}
+.ing-row:last-child{border-bottom:none}
+.ing-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+.ing-name{flex:1;font-size:16px;color:var(--text);line-height:1.4}
+.ing-amt{font-size:15px;font-weight:600;color:var(--green);white-space:nowrap}
+
+/* ── STEPS ── */
+.steps-list{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+.step-item{display:flex;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;cursor:pointer;transition:all .25s;box-shadow:var(--shadow)}
+.step-item.done{opacity:.45;border-color:var(--green)}
+.step-num{font-family:var(--serif);font-size:36px;font-weight:700;color:rgba(45,127,62,.18);line-height:1;flex-shrink:0;width:44px;text-align:right;transition:color .25s}
+html.dark .step-num{color:rgba(76,175,80,.2)}
+.step-item.done .step-num{color:var(--green)}
+.step-body{flex:1;padding-top:4px}
+.step-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);margin-bottom:4px}
+.step-text{font-size:16px;line-height:1.6;color:var(--text2)}
+@keyframes stepCheck{0%{transform:scale(0.8)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.step-item.done .step-num{animation:stepCheck .3s ease-out}
+
+/* ── SHOPPING IN DETAIL ── */
+.shop-block{background:var(--surface);border-radius:var(--r);padding:16px;margin-bottom:8px;border:1px solid var(--border)}
+.shop-block-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.shop-block-hdr .ms{font-size:22px;color:var(--green)}
+.shop-block-title{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--text)}
+.shop-block-sub{font-size:14px;color:var(--text2);margin-bottom:14px;line-height:1.4}
+.shop-list-inner{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow)}
+
+/* ── BUTTONS ── */
+.btn-primary{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#fff;border:none;border-radius:var(--r);padding:16px 24px;font-size:16px;font-weight:600;cursor:pointer;transition:opacity .15s;letter-spacing:-.1px}
+.btn-primary:active{opacity:.8}
+.btn-primary .ms{font-size:20px}
+.btn-secondary{background:var(--surface);color:var(--text2);border:1px solid var(--border);border-radius:var(--r);padding:14px 20px;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-secondary:active{background:var(--surface2)}
+
+/* ── SHOP TAB ACTIONS ── */
+.shop-actions{display:flex;gap:10px;padding:0 20px 12px}
+
+/* ── TAB BAR ── */
+.tab-bar{height:var(--tab-h);background:var(--card);border-top:1px solid var(--border);display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom,0)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--text3);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:color .18s;padding-bottom:4px;position:relative}
+.tab-pill{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 12px;border-radius:10px;transition:background .2s}
+.tab-pill .ms{font-size:24px;transition:all .2s}
+.tab.active .tab-pill{background:var(--green-dim)}
+.tab.active{color:var(--green)}
+.tab.active .tab-pill .ms{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+.tab-badge{position:absolute;top:8px;right:calc(50% - 24px);background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;display:none}
+.tab-badge.show{display:block}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(12px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:var(--r);font-size:14px;font-weight:600;opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:var(--shadow-lg)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 
-<body class="bg-background text-on-background font-sans overflow-hidden h-dvh flex flex-col">
+<body>
 
-<!-- ── HEADER ── -->
-<header id="appHeader" class="bg-surface-container-lowest flex-shrink-0 z-40 shadow-card">
-  <div class="flex items-center gap-3 px-5 pt-5 pb-4">
-    <img src="/public/apple-touch-icon.png" alt="" class="w-12 h-12 rounded-xl object-cover flex-shrink-0 border border-outline-variant/40">
-    <div class="flex-1 min-w-0">
-      <p class="font-sans text-[10px] font-semibold text-secondary uppercase tracking-[0.12em] leading-none mb-1.5">A recipe collection by</p>
-      <h1 class="font-serif text-[26px] font-bold text-primary leading-none tracking-tight">Cooking With Will</h1>
+<header class="app-header" id="appHeader">
+  <div class="app-header-inner">
+    <img src="/public/apple-touch-icon.png" alt="" class="app-logo">
+    <div class="app-title-block">
+      <p class="app-eyebrow">A recipe collection by</p>
+      <h1 class="app-title">Cooking With Will</h1>
     </div>
-    <div class="flex items-center gap-2">
-      <button id="wakeBtn" onclick="toggleWakeLock()" class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-DEFAULT border border-outline-variant bg-surface-container text-on-surface-variant active:bg-secondary active:border-secondary active:text-on-secondary transition-all active:scale-95">
-        <span class="material-symbols-outlined" style="font-size:20px">light_mode</span>
-        <span class="font-sans text-[9px] font-semibold uppercase tracking-wide leading-none">Screen</span>
+    <div class="header-btns">
+      <button class="hbtn" id="wakeBtn" onclick="toggleWakeLock()" title="Keep screen on">
+        <span class="ms">light_mode</span>
+        <span class="label">Screen</span>
       </button>
-      <button id="modeBtn" onclick="toggleMode()" class="flex flex-col items-center gap-1 px-3 py-2.5 rounded-DEFAULT border border-outline-variant bg-surface-container text-on-surface-variant transition-all active:scale-95">
-        <span class="material-symbols-outlined" id="modeIcon" style="font-size:20px">dark_mode</span>
-        <span class="font-sans text-[9px] font-semibold uppercase tracking-wide leading-none">Theme</span>
+      <button class="hbtn" id="modeBtn" onclick="toggleMode()" title="Toggle theme">
+        <span class="ms" id="modeIcon">dark_mode</span>
+        <span class="label">Theme</span>
       </button>
     </div>
   </div>
-  <div id="hintBar" class="flex items-center justify-between gap-2 px-5 py-2 border-t border-outline-variant/40 bg-surface-container-low">
-    <span class="font-sans text-caption text-outline">Tap Refresh to get the latest recipes</span>
-    <div class="flex items-center gap-2 flex-shrink-0">
-      <button onclick="hardRefresh()" class="font-sans text-caption font-semibold text-on-surface-variant bg-surface-container-lowest border border-outline-variant rounded-sm px-2.5 py-1 active:scale-95 transition-transform">Refresh</button>
-      <button onclick="document.getElementById('hintBar').style.display='none'" class="text-outline text-base leading-none px-1">✕</button>
+  <div class="hint-bar" id="hintBar">
+    <span>Tap Refresh to see new recipes</span>
+    <div class="hint-bar-btns">
+      <button class="hint-refresh" onclick="hardRefresh()">Refresh</button>
+      <button class="hint-close" onclick="document.getElementById('hintBar').style.display='none'">✕</button>
     </div>
   </div>
 </header>
 
-<!-- ── MAIN ── -->
-<main id="main" class="flex-1 overflow-y-auto overscroll-contain pb-[72px]">
+<main id="main">
 
-  <!-- ── HOME ── -->
-  <div id="view-home" class="view active">
-    <div class="px-5 pt-4 pb-2 space-y-3">
-      <!-- Search -->
-      <div class="relative">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" style="font-size:20px" id="searchIcon">search</span>
-        <input id="searchInput" oninput="onSearch()" type="text" placeholder="Search recipes…"
-          class="w-full font-body-md text-body-md bg-surface-container-low border-none rounded-xl pl-10 pr-4 py-3 text-on-surface focus:ring-2 focus:ring-secondary outline-none transition-all placeholder:text-outline">
+  <!-- HOME -->
+  <div class="view active" id="view-home">
+    <div class="search-wrap">
+      <div class="search-icon-wrap" style="top:50%;transform:translateY(calc(-50% + 8px))">
+        <span class="ms" id="searchIcon" style="font-size:20px">search</span>
       </div>
-      <!-- Ingredient filter -->
-      <div>
-        <p class="font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold mb-2">Filter by main ingredient</p>
-        <div class="flex gap-2">
-          <div class="relative flex-1">
-            <select id="ingSelect" onchange="onIngSelect()"
-              class="w-full appearance-none font-body-md text-body-md bg-surface-container-low border-none rounded-xl pl-4 pr-9 py-3 text-on-surface focus:ring-2 focus:ring-secondary outline-none cursor-pointer transition-all">
-              <option value="">All recipes...</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" style="font-size:18px">expand_more</span>
-          </div>
-          <button id="ingClear" onclick="clearIngredient()" class="hidden w-11 h-11 rounded-xl border border-outline-variant bg-surface-container items-center justify-center text-outline text-xl active:bg-error active:text-white transition-all flex-shrink-0">✕</button>
-        </div>
+      <input class="search-input" id="searchInput" type="text" placeholder="Search recipes…" oninput="onSearch()">
+    </div>
+    <div class="filter-wrap">
+      <div class="filter-label">Filter by main ingredient</div>
+      <div class="filter-row">
+        <select class="filter-select" id="ingSelect" onchange="onIngSelect()">
+          <option value="">All recipes...</option>
+        </select>
+        <button class="filter-clear" id="ingClear" onclick="clearIngredient()">✕</button>
       </div>
     </div>
-    <div id="homeContent" class="pb-4"></div>
+    <div id="homeContent" style="padding-top:4px"></div>
   </div>
 
-  <!-- ── SAVED ── -->
-  <div id="view-saved" class="view hidden">
-    <div class="px-5 pt-5 pb-3">
-      <h2 class="font-serif text-headline-lg-mobile text-primary mb-1">Saved Recipes</h2>
-      <p class="font-sans text-caption text-outline">Your personal cookbook</p>
+  <!-- SAVED -->
+  <div class="view" id="view-saved">
+    <div style="padding:24px 20px 16px">
+      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Saved Recipes</h2>
+      <p style="font-size:14px;color:var(--text2)">Your personal cookbook</p>
     </div>
-    <div id="savedList" class="px-5 flex flex-col gap-3"></div>
-    <div id="savedEmpty" class="hidden flex-col items-center justify-center py-20 px-8 text-center">
-      <div class="w-16 h-16 rounded-2xl bg-secondary-container/30 flex items-center justify-center mb-4">
-        <span class="material-symbols-outlined text-secondary" style="font-size:32px">bookmark</span>
-      </div>
-      <h3 class="font-serif text-headline-md text-primary mb-2">No saved recipes yet</h3>
-      <p class="font-sans text-body-md text-on-surface-variant">Tap the bookmark on any recipe to save it here.</p>
+    <div id="savedList"></div>
+    <div class="empty" id="savedEmpty" style="display:none">
+      <div class="empty-icon"><span class="ms" style="font-size:36px">bookmark</span></div>
+      <h3 class="empty-title">Nothing saved yet</h3>
+      <p class="empty-body">You haven't saved any recipes yet. Find something that speaks to you.</p>
+      <button class="empty-cta" onclick="switchTab('home')">Browse recipes</button>
     </div>
   </div>
 
-  <!-- ── NEW ── -->
-  <div id="view-new" class="view hidden">
-    <div class="px-5 pt-5 pb-3">
-      <h2 class="font-serif text-headline-lg-mobile text-primary mb-1">Recently Added</h2>
-      <p class="font-sans text-caption text-outline">Latest recipes in the collection</p>
+  <!-- NEW -->
+  <div class="view" id="view-new">
+    <div style="padding:24px 20px 16px">
+      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Recently Added</h2>
+      <p style="font-size:14px;color:var(--text2)">Latest recipes in the collection</p>
     </div>
-    <div id="newList" class="px-5 flex flex-col gap-2"></div>
+    <div id="newList"></div>
   </div>
 
-  <!-- ── SHOPPING LIST ── -->
-  <div id="view-shoplist" class="view hidden">
-    <div class="px-5 pt-5 pb-3">
-      <h2 class="font-serif text-headline-lg-mobile text-primary mb-1">Shopping List</h2>
-      <p class="font-sans text-caption text-outline" id="shopListSubtitle">Items to pick up</p>
+  <!-- SHOPPING -->
+  <div class="view" id="view-shoplist">
+    <div style="padding:24px 20px 16px">
+      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Shopping List</h2>
+      <p style="font-size:14px;color:var(--text2)" id="shopSubtitle">Items to pick up</p>
     </div>
-    <!-- Sort toggle -->
-    <div class="px-5 mb-3">
-      <div class="flex bg-surface-container rounded-DEFAULT p-1 gap-1">
-        <button id="sortRecipeBtn" onclick="setShopSort('recipe')"
-          class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-sm font-sans text-label-md transition-all bg-surface-container-lowest text-secondary shadow-card">
-          <span class="material-symbols-outlined" style="font-size:16px">receipt_long</span>By Recipe
-        </button>
-        <button id="sortAisleBtn" onclick="setShopSort('aisle')"
-          class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-sm font-sans text-label-md transition-all text-on-surface-variant">
-          <span class="material-symbols-outlined" style="font-size:16px">store</span>By Aisle
-        </button>
-      </div>
-    </div>
-    <!-- Actions -->
-    <div class="px-5 flex gap-2 pb-3">
-      <button onclick="copyShoppingTab()" class="flex-1 flex items-center justify-center gap-2 bg-secondary text-on-secondary font-sans text-label-md uppercase tracking-widest py-3 rounded-DEFAULT active:opacity-80 transition-opacity">
-        <span class="material-symbols-outlined" style="font-size:16px">content_copy</span>Copy List
+    <div class="sort-toggle">
+      <button class="sort-btn active" id="sortRecipeBtn" onclick="setShopSort('recipe')">
+        <span class="ms" style="font-size:16px">receipt_long</span>By Recipe
       </button>
-      <button onclick="clearShoppingTab()" class="bg-surface-container border border-outline-variant text-on-surface-variant font-sans text-label-md px-5 py-3 rounded-DEFAULT active:opacity-80 transition-opacity">Clear</button>
+      <button class="sort-btn" id="sortAisleBtn" onclick="setShopSort('aisle')">
+        <span class="ms" style="font-size:16px">store</span>By Aisle
+      </button>
     </div>
-    <div id="shopTabContent" class="px-5 flex flex-col gap-2 pb-4"></div>
-    <div id="shopTabEmpty" class="hidden flex-col items-center justify-center py-20 px-8 text-center">
-      <div class="w-16 h-16 rounded-2xl bg-surface-container flex items-center justify-center mb-4">
-        <span class="material-symbols-outlined text-outline" style="font-size:32px">shopping_bag</span>
-      </div>
-      <h3 class="font-serif text-headline-md text-primary mb-2">Your list is empty</h3>
-      <p class="font-sans text-body-md text-on-surface-variant">Open a recipe and add ingredients to your shopping list.</p>
+    <div class="shop-actions">
+      <button class="btn-primary" style="flex:1;padding:12px 16px;font-size:15px" onclick="copyShoppingTab()">
+        <span class="ms" style="font-size:18px">content_copy</span>Copy list
+      </button>
+      <button class="btn-secondary" style="padding:12px 16px;font-size:14px" onclick="clearShoppingTab()">Clear</button>
+    </div>
+    <div id="shopTabContent" style="padding:0 20px 24px;display:flex;flex-direction:column;gap:10px"></div>
+    <div class="empty" id="shopTabEmpty" style="display:none">
+      <div class="empty-icon"><span class="ms" style="font-size:36px">shopping_bag</span></div>
+      <h3 class="empty-title">Your list is empty</h3>
+      <p class="empty-body">Open a recipe, tick what you already have, then add the rest to your list.</p>
+      <button class="empty-cta" onclick="switchTab('home')">Browse recipes</button>
     </div>
   </div>
 
-  <!-- ── DETAIL ── -->
-  <div id="view-detail" class="view hidden">
-    <!-- Hero gradient -->
-    <div id="detailHero" class="min-h-[160px] relative flex items-end px-5 pb-4 pt-16">
-      <button onclick="closeDetail()" class="absolute top-5 left-5 w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-DEFAULT flex items-center justify-center shadow-card active:scale-95 transition-transform">
-        <span class="material-symbols-outlined text-on-surface" style="font-size:22px">arrow_back</span>
+  <!-- DETAIL -->
+  <div class="view" id="view-detail">
+    <div class="detail-hero" id="detailHero">
+      <button class="hero-back" onclick="closeDetail()">
+        <span class="ms">arrow_back</span>
       </button>
-      <div class="absolute top-5 right-5 flex gap-2">
-        <button id="detailPin" onclick="togglePinDetail()" class="w-10 h-10 border rounded-DEFAULT flex items-center justify-center shadow-card active:scale-95 transition-all bg-surface-container-lowest border-outline-variant/60">
-          <span class="material-symbols-outlined text-on-surface" id="detailPinIcon" style="font-size:20px">bookmark</span>
+      <div class="hero-btns">
+        <button class="hero-btn" id="detailPinBtn" onclick="togglePinDetail()">
+          <span class="ms" id="detailPinIcon">bookmark</span>
         </button>
-        <button onclick="shareRecipe()" class="w-10 h-10 bg-surface-container-lowest border border-outline-variant/60 rounded-DEFAULT flex items-center justify-center shadow-card active:scale-95 transition-transform">
-          <span class="material-symbols-outlined text-on-surface" style="font-size:20px">ios_share</span>
+        <button class="hero-btn" onclick="shareRecipe()">
+          <span class="ms">ios_share</span>
         </button>
       </div>
     </div>
-    <!-- Content -->
-    <div class="px-5 pt-4 pb-8">
-      <h2 id="detailTitle" class="font-serif text-headline-lg-mobile text-primary mb-3"></h2>
-      <div id="detailTags" class="flex flex-wrap gap-2 mb-6"></div>
-
-      <!-- Save banner (shown when not saved) -->
-      <div id="saveBanner" class="bg-secondary-container/30 border border-secondary/20 rounded-lg p-3 mb-5 flex items-center gap-3">
-        <span class="material-symbols-outlined text-secondary" style="font-size:22px">bookmark_add</span>
-        <span class="font-sans text-body-md text-on-secondary-container flex-1">Save this recipe to your collection</span>
-        <button onclick="togglePinDetail()" class="bg-secondary text-on-secondary font-sans text-label-md px-4 py-2 rounded-DEFAULT active:opacity-80 transition-opacity text-[13px]">Save</button>
+    <div class="detail-body">
+      <h2 class="detail-title" id="detailTitle"></h2>
+      <div class="detail-tags" id="detailTags"></div>
+      <!-- Save banner -->
+      <div class="save-banner" id="saveBanner">
+        <span class="ms">bookmark_add</span>
+        <span class="save-banner-text">Save this recipe to your collection</span>
+        <button class="save-banner-btn" onclick="togglePinDetail()">Save to your collection</button>
       </div>
-
       <!-- Serving size -->
-      <div class="bg-surface-container-lowest rounded-xl p-4 mb-5 shadow-card">
-        <p class="font-sans text-caption text-outline uppercase tracking-[0.1em] font-semibold mb-3">Serving Size</p>
-        <div class="flex justify-between items-baseline mb-3">
-          <span class="font-sans text-body-md text-on-surface-variant">Serves</span>
-          <div class="flex items-baseline gap-1.5">
-            <span id="portionVal" class="font-serif text-[36px] font-bold text-secondary leading-none tabular-nums">2</span>
-            <span class="font-sans text-caption text-outline">people</span>
-          </div>
+      <div class="serve-card">
+        <div class="serve-label-row">
+          <span class="serve-label">Serves</span>
+          <div><span class="serve-num" id="portionVal">2</span><span class="serve-unit">people</span></div>
         </div>
         <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()">
       </div>
-
       <!-- Ingredients -->
-      <h3 class="font-serif text-headline-md text-primary mb-3">Ingredients</h3>
-      <div id="ingList" class="bg-surface-container-lowest rounded-xl overflow-hidden mb-5 shadow-card"></div>
-
+      <h3 class="detail-section-hdr">Ingredients</h3>
+      <div class="ing-list" id="ingList"></div>
       <!-- Method -->
-      <h3 class="font-serif text-headline-md text-primary mb-3">Method</h3>
-      <div id="stepsList" class="space-y-3 mb-6"></div>
-
-      <!-- Shopping list section -->
-      <div class="bg-surface-container-low rounded-xl p-4 mb-2">
-        <div class="flex items-center gap-2 mb-1">
-          <span class="material-symbols-outlined text-secondary" style="font-size:20px">shopping_bag</span>
-          <h3 class="font-serif text-headline-md text-primary">Shopping List</h3>
+      <h3 class="detail-section-hdr">Method</h3>
+      <div class="steps-list" id="stepsList"></div>
+      <!-- Shopping list -->
+      <div class="shop-block">
+        <div class="shop-block-hdr">
+          <span class="ms">shopping_bag</span>
+          <span class="shop-block-title">Shopping List</span>
         </div>
-        <p class="font-sans text-caption text-outline mb-4">Tick what you <strong>already have</strong> — the rest will be added to your list.</p>
-        <div id="shopList" class="bg-surface-container-lowest rounded-lg overflow-hidden mb-4 shadow-card"></div>
-        <button onclick="addToShoppingList()" class="w-full flex items-center justify-center gap-2 bg-secondary text-on-secondary font-sans text-label-md uppercase tracking-widest py-4 rounded-DEFAULT shadow-card active:opacity-80 transition-opacity">
-          <span class="material-symbols-outlined" style="font-size:18px">add_shopping_cart</span>
-          Add to Shopping List
+        <p class="shop-block-sub">Tick what you <strong>already have</strong> — add the rest to your list.</p>
+        <div class="shop-list-inner" id="shopList"></div>
+        <button class="btn-primary" onclick="addToShoppingList()" style="margin-top:2px">
+          <span class="ms" style="font-size:20px">add_shopping_cart</span>
+          Add these to your list
         </button>
       </div>
     </div>
@@ -283,35 +455,36 @@ tailwind.config = {
 
 </main>
 
-<!-- ── TAB BAR ── -->
-<nav class="flex-shrink-0 h-[68px] bg-surface-container-lowest border-t border-outline-variant/50 flex shadow-[0px_-4px_20px_rgba(26,26,26,0.04)]">
-  <button id="tab-home" onclick="switchTab('home')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1 active:scale-95 transition-transform">
-    <div class="flex flex-col items-center px-3 py-1 rounded-xl bg-secondary-container/20 transition-all">
-      <span class="material-symbols-outlined icon-fill text-secondary" style="font-size:24px">home</span>
-      <span class="font-sans text-label-md text-secondary">Recipes</span>
+<!-- TAB BAR -->
+<nav class="tab-bar">
+  <button class="tab active" id="tab-home" onclick="switchTab('home')">
+    <div class="tab-pill">
+      <span class="ms">home</span>
+      <span>Recipes</span>
     </div>
   </button>
-  <button id="tab-saved" onclick="switchTab('saved')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1 active:scale-95 transition-transform">
-    <div class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">bookmark</span>
-      <span class="font-sans text-label-md text-on-surface-variant">Saved</span>
+  <button class="tab" id="tab-saved" onclick="switchTab('saved')">
+    <div class="tab-pill">
+      <span class="ms">bookmark</span>
+      <span>Saved</span>
     </div>
   </button>
-  <button id="tab-new" onclick="switchTab('new')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1 active:scale-95 transition-transform">
-    <div class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">add_circle</span>
-      <span class="font-sans text-label-md text-on-surface-variant">New</span>
+  <button class="tab" id="tab-new" onclick="switchTab('new')">
+    <div class="tab-pill">
+      <span class="ms">add_circle</span>
+      <span>New</span>
     </div>
   </button>
-  <button id="tab-shoplist" onclick="switchTab('shoplist')" class="tab flex-1 flex flex-col items-center justify-center gap-0.5 pb-1 active:scale-95 transition-transform">
-    <div id="shopTabBtn" class="flex flex-col items-center px-3 py-1 rounded-xl transition-all">
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px">shopping_bag</span>
-      <span class="font-sans text-label-md text-on-surface-variant">Shopping</span>
+  <button class="tab" id="tab-shoplist" onclick="switchTab('shoplist')">
+    <div class="tab-pill">
+      <span class="ms">shopping_bag</span>
+      <span>Shopping</span>
     </div>
+    <span class="tab-badge" id="shopBadge"></span>
   </button>
 </nav>
 
-<div id="toast" class="fixed bottom-[88px] left-1/2 -translate-x-1/2 translate-y-3 opacity-0 pointer-events-none z-50 bg-surface-container-lowest border border-secondary/30 text-on-surface font-sans text-[13px] font-semibold px-4 py-2.5 rounded-xl shadow-card-lift whitespace-nowrap transition-all duration-200"></div>
+<div class="toast" id="toast"></div>
 
 <script src="recipes.js"></script>
 <script src="recipes2.js"></script>
@@ -324,44 +497,54 @@ const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3,...RECIPES4];
 const SEAFOOD_INGREDIENTS=new Set(['Clams','Dover Sole','Fish','Mackerel','Mussels','Oysters','Prawns','Salmon','Sardines','Scallops','Seafood','Smoked Trout','Snapper','Tuna']);
 function getIngredientOptions(){
   const raw=[...new Set(ALL_RECIPES.map(r=>r.mainIngredient))].sort();
-  const grouped=[];let seafoodAdded=false;
+  const grouped=[];let sf=false;
   raw.forEach(ing=>{
-    if(SEAFOOD_INGREDIENTS.has(ing)){
-      if(!seafoodAdded){grouped.push({label:'Seafood',value:'__SEAFOOD__'});seafoodAdded=true;}
-    }else grouped.push({label:ing,value:ing});
+    if(SEAFOOD_INGREDIENTS.has(ing)){if(!sf){grouped.push({label:'Seafood',value:'__SEAFOOD__'});sf=true;}}
+    else grouped.push({label:ing,value:ing});
   });
   return grouped;
 }
 
-// ── SHOPPING AISLE MAP
+// ── CATEGORY COLOURS (per design brief)
+const CAT_COLORS={
+  'Dips & Starters':'#4CAF50','Salads':'#17A2B8','Soups':'#9C27B0',
+  'Seafood':'#00BCD4','Meat & Poultry':'#F44336','Vegetarian':'#8BC34A',
+  'Pasta & Rice':'#FF9800','Sides':'#795548','Bread & Bakes':'#FFC107',
+  'Sauces':'#E91E63','Desserts':'#FF5722'
+};
+const CAT_ICONS={
+  'Dips & Starters':'tapas','Salads':'eco','Soups':'soup_kitchen',
+  'Seafood':'set_meal','Meat & Poultry':'restaurant','Vegetarian':'grass',
+  'Pasta & Rice':'ramen_dining','Sides':'brunch_dining',
+  'Bread & Bakes':'bakery_dining','Sauces':'water_drop','Desserts':'cake'
+};
+
+// ── AISLE MAP
 const AISLES=[
-  {name:'🥬 Produce',       kw:['onion','garlic','tomato','lettuce','spinach','lemon','lime','basil','parsley','thyme','rosemary','mint','coriander','mushroom','capsicum','zucchini','eggplant','broccoli','kale','cucumber','celery','carrot','beetroot','pumpkin','potato','sweet potato','avocado','spring onion','leek','chilli','ginger','apple','orange','fennel','asparagus','pea','corn','green bean','cauliflower','cabbage','shallot','radish','rocket','bok choy','silverbeet','butternut','herb','sage','dill','tarragon','chive','bay','oregano','fruit','berr','grape','cherry','peach','plum','fig','date','melon','watermelon','mango','pineapple']},
-  {name:'🥩 Meat & Seafood', kw:['chicken','beef','lamb','pork','salmon','tuna','prawn','fish','scallop','oyster','mussel','clam','bacon','sausage','mince','steak','fillet','duck','veal','anchovy','sardine','mackerel','snapper','trout','sole','squid','octopus','crab','seafood','meat']},
-  {name:'🧀 Dairy & Eggs',   kw:['egg','milk','cream','butter','cheese','yoghurt','yogurt','feta','ricotta','parmesan','mozzarella','burrata','haloumi','halloumi','mascarpone','brie','cheddar','pecorino','gruyere','creme fraiche','sour cream','custard','ghee']},
-  {name:'🍞 Bread & Bakery', kw:['bread','sourdough','pita','flatbread','roll','bun','tortilla','crouton','baguette','ciabatta','focaccia','crumpet','bagel','pastry','croissant','wrap','lavash']},
-  {name:'🥫 Pantry',         kw:['pasta','rice','flour','lentil','chickpea','bean','quinoa','farro','barley','oat','couscous','noodle','lasagne','breadcrumb','panko','canned','tinned','stock','broth','coconut milk','coconut cream','tomato paste','crushed tomato','brown rice','wild rice','buckwheat','polenta','semolina','split pea']},
-  {name:'🫙 Condiments & Spices',kw:['oil','olive oil','vinegar','soy sauce','fish sauce','oyster sauce','hoisin','tahini','honey','mustard','maple syrup','miso','harissa','sriracha','salt','pepper','sugar','cumin','paprika','turmeric','cinnamon','curry','garam masala','sumac','zaatar','dukkah','vanilla','cocoa','chilli flakes','star anise','cardamom','coriander seed','fennel seed','saffron','allspice','nutmeg','clove','sauce','dressing','paste','seasoning','spice','marmalade','jam','relish']},
-  {name:'🥜 Nuts & Seeds',   kw:['nut','almond','walnut','pine nut','cashew','pistachio','hazelnut','peanut','seed','sesame','pepita','sunflower','pumpkin seed','flaxseed','chia','pecan','macadamia','tahini']},
-  {name:'🍷 Deli & Specialty',kw:['prosciutto','salami','ham','deli','smoked','pancetta','chorizo','capers','olive','anchovy','sundried','truffle','balsamic','miso','tofu','tempeh']},
+  {name:'🥬 Produce',kw:['onion','garlic','tomato','lettuce','spinach','lemon','lime','basil','parsley','thyme','rosemary','mint','coriander','mushroom','capsicum','zucchini','eggplant','broccoli','kale','cucumber','celery','carrot','beetroot','pumpkin','potato','sweet potato','avocado','spring onion','leek','chilli','ginger','fennel','asparagus','pea','corn','green bean','cauliflower','cabbage','shallot','radish','rocket','bok choy','silverbeet','butternut','herb','sage','dill','chive','fruit','berr','grape','cherry','peach','plum','fig','watermelon']},
+  {name:'🥩 Meat & Seafood',kw:['chicken','beef','lamb','pork','salmon','tuna','prawn','fish','scallop','oyster','mussel','clam','bacon','sausage','mince','steak','fillet','duck','anchovy','sardine','mackerel','snapper','trout','sole']},
+  {name:'🧀 Dairy & Eggs',kw:['egg','milk','cream','butter','cheese','yoghurt','yogurt','feta','ricotta','parmesan','mozzarella','burrata','haloumi','halloumi','mascarpone','brie','cheddar','sour cream','ghee']},
+  {name:'🍞 Bread & Bakery',kw:['bread','sourdough','pita','flatbread','roll','bun','tortilla','crouton','baguette','ciabatta','focaccia','bagel','wrap']},
+  {name:'🥫 Pantry',kw:['pasta','rice','flour','lentil','chickpea','bean','quinoa','farro','barley','oat','couscous','noodle','breadcrumb','panko','canned','tinned','stock','broth','coconut milk','coconut cream','tomato paste','crushed tomato','brown rice','wild rice','buckwheat','polenta']},
+  {name:'🫙 Condiments & Spices',kw:['oil','olive oil','vinegar','soy sauce','fish sauce','tahini','honey','mustard','maple syrup','miso','harissa','sriracha','salt','pepper','sugar','cumin','paprika','turmeric','cinnamon','curry','garam masala','sumac','zaatar','dukkah','vanilla','cocoa','chilli flakes','star anise','cardamom','spice','sauce','dressing','paste','seasoning']},
+  {name:'🥜 Nuts & Seeds',kw:['nut','almond','walnut','pine nut','cashew','pistachio','hazelnut','peanut','seed','sesame','pepita','sunflower','pumpkin seed','flaxseed','chia','pecan']},
+  {name:'🍷 Deli & Specialty',kw:['prosciutto','salami','ham','deli','smoked','pancetta','chorizo','capers','olive','sundried','truffle','balsamic','tofu','tempeh']},
 ];
 function getAisle(name){
   const n=name.toLowerCase();
   for(const a of AISLES){if(a.kw.some(k=>n.includes(k)))return a.name;}
-  return '🛒 Other';
+  return'🛒 Other';
 }
 
-// ── HAPTIC
-function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
-
 // ── STATE
+function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
 let currentTab='home',currentRecipe=null,prevTab='home';
 let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
 let activeIngredient=null,activeSearch='',shopChecked={},stepsDone={},portionScale=1;
 let wakeLock=null,openCategories=new Set(),shopSort='recipe';
 let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
-let shopBadge=0;
 
-// ── SEARCH (debounced 300ms)
+// ── SEARCH (300ms debounce)
 let _st=null;
 function onSearch(){
   clearTimeout(_st);
@@ -387,35 +570,17 @@ function toggleMode(){
   }
 })();
 
-// ── VIEWS
-function showView(name){
-  document.querySelectorAll('.view').forEach(v=>{v.classList.add('hidden');v.classList.remove('active')});
-  const el=document.getElementById('view-'+name);
-  if(el){el.classList.remove('hidden');el.classList.add('active');}
-}
-
 // ── TABS
 function switchTab(tab){
   haptic(8);
   if(currentRecipe&&tab!=='detail')closeDetail(false);
-  document.querySelectorAll('.tab').forEach(t=>{
-    const d=t.querySelector('div');
-    const ic=t.querySelector('.material-symbols-outlined');
-    const lb=t.querySelector('span.font-sans');
-    if(d)d.classList.remove('bg-secondary-container/20');
-    if(ic){ic.classList.remove('text-secondary','icon-fill');ic.classList.add('text-on-surface-variant');}
-    if(lb){lb.classList.remove('text-secondary');lb.classList.add('text-on-surface-variant');}
-  });
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   const at=document.getElementById('tab-'+tab);
-  if(at){
-    const d=at.querySelector('div');
-    const ic=at.querySelector('.material-symbols-outlined');
-    const lb=at.querySelector('span.font-sans');
-    if(d)d.classList.add('bg-secondary-container/20');
-    if(ic){ic.classList.add('text-secondary','icon-fill');ic.classList.remove('text-on-surface-variant');}
-    if(lb){lb.classList.add('text-secondary');lb.classList.remove('text-on-surface-variant');}
-  }
-  showView(tab);currentTab=tab;
+  if(at)at.classList.add('active');
+  document.querySelectorAll('.view').forEach(v=>{v.style.display='none';v.classList.remove('active')});
+  const v=document.getElementById('view-'+tab);
+  if(v){v.style.display='block';v.classList.add('active');}
+  currentTab=tab;
   const hdr=document.getElementById('appHeader');
   if(hdr)hdr.style.display=(tab==='detail')?'none':'';
   if(tab==='home')renderHome();
@@ -424,29 +589,19 @@ function switchTab(tab){
   if(tab==='shoplist'){updateShopBadge();renderShoppingTab();}
 }
 
-// ── CATEGORY ICONS
-const CAT_ICONS={
-  'Dips & Starters':'tapas','Salads':'eco','Soups':'soup_kitchen',
-  'Seafood':'set_meal','Meat & Poultry':'restaurant','Vegetarian':'grass',
-  'Pasta & Rice':'ramen_dining','Sides':'brunch_dining',
-  'Bread & Bakes':'bakery_dining','Sauces':'water_drop','Desserts':'cake'
-};
-
-function renderHome(){populateIngSelect();renderAccordion()}
-
+// ── FILTER
 function populateIngSelect(){
   const sel=document.getElementById('ingSelect');
-  const options=getIngredientOptions();
+  const opts=getIngredientOptions();
   sel.innerHTML=`<option value="">All recipes...</option>`+
-    options.map(o=>`<option value="${o.value}"${activeIngredient===o.value?' selected':''}>${o.label}</option>`).join('');
+    opts.map(o=>`<option value="${o.value}"${activeIngredient===o.value?' selected':''}>${o.label}</option>`).join('');
   const has=!!activeIngredient;
-  sel.classList.toggle('ring-2',has);sel.classList.toggle('ring-secondary',has);sel.classList.toggle('text-secondary',has);
+  sel.classList.toggle('active',has);
   const clr=document.getElementById('ingClear');
-  clr.classList.toggle('hidden',!has);clr.classList.toggle('flex',has);
+  clr.classList.toggle('show',has);
 }
 function onIngSelect(){haptic(8);activeIngredient=document.getElementById('ingSelect').value||null;populateIngSelect();renderAccordion();}
 function clearIngredient(){haptic(8);activeIngredient=null;populateIngSelect();renderAccordion();}
-
 function getFiltered(){
   let list=ALL_RECIPES;
   if(activeIngredient==='__SEAFOOD__')list=list.filter(r=>SEAFOOD_INGREDIENTS.has(r.mainIngredient));
@@ -455,8 +610,10 @@ function getFiltered(){
   return list;
 }
 
+function renderHome(){populateIngSelect();renderAccordion();}
+
 function diffBadge(d){
-  return d==='easy'?'bg-secondary-container text-on-secondary-container':d==='medium'?'bg-amber-100 text-amber-800':'bg-error-container text-on-error-container';
+  return`badge badge-${d}`;
 }
 
 function renderAccordion(){
@@ -464,50 +621,55 @@ function renderAccordion(){
   if(activeIngredient||activeSearch)recipes.forEach(r=>openCategories.add(r.category));
   const el=document.getElementById('homeContent');
   if(!recipes.length){
-    el.innerHTML=`<div class="flex flex-col items-center py-16 px-8 text-center">
-      <span class="material-symbols-outlined text-surface-container-highest mb-3" style="font-size:48px">search_off</span>
-      <p class="font-serif text-headline-md text-primary mb-1">No recipes found</p>
-      <p class="font-sans text-body-md text-on-surface-variant">Try a different search or filter</p>
+    el.innerHTML=`<div class="empty">
+      <div class="empty-icon"><span class="ms" style="font-size:36px">search_off</span></div>
+      <h3 class="empty-title">No recipes found</h3>
+      <p class="empty-body">Try a different search or filter</p>
     </div>`;return;
   }
-  let html='<div class="flex flex-col gap-2 px-5 pt-2 pb-4">';
+  let html='';
   CATEGORIES.forEach(cat=>{
     const list=recipes.filter(r=>r.category===cat);
     if(!list.length)return;
     const isOpen=openCategories.has(cat);
+    const color=CAT_COLORS[cat]||'#4CAF50';
     const icon=CAT_ICONS[cat]||'restaurant';
     const sc=cat.replace(/['"&<>]/g,'_');
-    html+=`<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-card">
-      <button onclick="toggleCat('${sc}','${cat}')" class="w-full flex items-center justify-between px-4 py-3.5 transition-colors active:bg-surface-container-low ${isOpen?'border-b border-outline-variant/40':''}">
-        <div class="flex items-center gap-3">
-          <div class="w-2 h-2 rounded-full bg-secondary flex-shrink-0"></div>
-          <span class="font-serif text-[17px] font-bold text-primary">${cat}</span>
-          <span class="font-sans text-caption text-outline bg-surface-container px-2 py-0.5 rounded-full">${list.length}</span>
+    html+=`<div class="acc-section">
+      <div class="acc-header${isOpen?' open':''}" onclick="toggleCat('${sc}','${cat}')">
+        <div class="acc-left">
+          <div class="acc-dot" style="background:${color}"></div>
+          <span class="acc-name">${cat}</span>
+          <span class="acc-count">${list.length}</span>
         </div>
-        <span class="material-symbols-outlined text-outline transition-transform duration-200 ${isOpen?'rotate-180 !text-secondary':''}" style="font-size:20px">expand_more</span>
-      </button>
-      ${isOpen?`<div>${list.map((r,idx)=>{const ip=pinned.includes(r.id);return`
-        <div class="flex items-center gap-3 px-4 py-3 ${idx<list.length-1?'border-b border-outline-variant/40':''} active:bg-surface-container-low transition-colors">
-          <button onclick="openRecipe(${r.id})" class="w-10 h-10 rounded-DEFAULT bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
-            <span class="material-symbols-outlined text-secondary" style="font-size:18px">${icon}</span>
-          </button>
-          <button onclick="openRecipe(${r.id})" class="flex-1 min-w-0 text-left">
-            <p class="font-serif text-[15px] font-bold text-primary leading-snug mb-1">${r.name}</p>
-            <div class="flex gap-1.5 flex-wrap">
-              <span class="font-sans text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-sm ${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
-              <span class="font-sans text-caption px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.calories} kcal</span>
-              <span class="font-sans text-caption px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.time}</span>
-            </div>
-          </button>
-          <button onclick="togglePin(${r.id})" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-DEFAULT transition-all active:scale-90 ${ip?'text-secondary':'text-outline-variant hover:text-secondary'}">
-            <span class="material-symbols-outlined ${ip?'icon-fill':''}" style="font-size:22px">bookmark</span>
-            <span class="font-sans text-[8px] font-semibold uppercase tracking-wide">${ip?'Saved':'Save'}</span>
-          </button>
-        </div>`}).join('')}</div>`:''}
+        <div class="acc-chevron"><span class="ms">expand_more</span></div>
+      </div>
+      <div class="acc-body${isOpen?' open':''}">
+        ${list.map(r=>{
+          const ip=pinned.includes(r.id);
+          return`<div class="rrow">
+            <button onclick="openRecipe(${r.id})" class="rrow-icon" style="background:${color}18">
+              <span class="ms" style="color:${color};font-size:20px">${icon}</span>
+            </button>
+            <button onclick="openRecipe(${r.id})" class="rrow-body" style="background:none;border:none;cursor:pointer;text-align:left">
+              <div class="rrow-name">${r.name}</div>
+              <div class="rrow-meta">
+                <span class="${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
+                <span class="meta-chip">${r.time}</span>
+                <span class="meta-chip">·</span>
+                <span class="meta-chip">${r.calories} kcal</span>
+              </div>
+            </button>
+            <button class="save-btn${ip?' saved':''}" onclick="togglePin(${r.id})" id="savebtn-${r.id}">
+              <span class="ms">bookmark</span>
+              <span class="slabel">${ip?'Saved':'Save'}</span>
+            </button>
+          </div>`;
+        }).join('')}
+      </div>
     </div>`;
   });
-  html+='</div>';
-  el.innerHTML=html;
+  el.innerHTML=html||'';
 }
 
 function toggleCat(s,cat){
@@ -516,50 +678,53 @@ function toggleCat(s,cat){
   renderAccordion();
 }
 
-// ── SAVED CARD (rich version)
+// ── CARDS (Saved/New)
 function savedCardHTML(r){
-  const ip=pinned.includes(r.id);
+  const color=CAT_COLORS[r.category]||'#4CAF50';
   const icon=CAT_ICONS[r.category]||'restaurant';
-  return`<div class="bg-surface-container-lowest rounded-xl shadow-card overflow-hidden">
-    <div class="flex items-stretch">
-      <div class="w-1.5 bg-secondary flex-shrink-0 rounded-l-xl"></div>
-      <button onclick="openRecipe(${r.id})" class="flex-1 flex items-center gap-3 px-4 py-4 text-left active:bg-surface-container-low transition-colors">
-        <div class="w-12 h-12 rounded-DEFAULT bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
-          <span class="material-symbols-outlined text-secondary" style="font-size:22px">${icon}</span>
+  return`<div class="card">
+    <div class="card-stripe" style="background:${color}"></div>
+    <div class="card-inner" onclick="openRecipe(${r.id})">
+      <div class="card-icon" style="background:${color}18">
+        <span class="ms" style="color:${color};font-size:22px">${icon}</span>
+      </div>
+      <div class="card-text">
+        <div class="card-name">${r.name}</div>
+        <div class="card-cat">${r.category}</div>
+        <div class="card-meta">
+          <span class="${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
+          <span class="meta-chip">${r.time}</span>
+          <span class="meta-chip">·</span>
+          <span class="meta-chip">${r.calories} kcal</span>
         </div>
-        <div class="flex-1 min-w-0">
-          <p class="font-serif text-[16px] font-bold text-primary leading-snug mb-1.5">${r.name}</p>
-          <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="font-sans text-caption text-on-secondary-container bg-secondary-container/50 px-2 py-0.5 rounded-full">${r.category}</span>
-            <span class="font-sans text-caption text-outline">${r.time}</span>
-            <span class="font-sans text-caption text-outline">· ${r.calories} kcal</span>
-          </div>
-        </div>
-        <span class="material-symbols-outlined text-secondary icon-fill" style="font-size:20px">bookmark</span>
-      </button>
+      </div>
+      <span class="ms ms-fill" style="color:${color};font-size:22px;flex-shrink:0">bookmark</span>
     </div>
   </div>`;
 }
 
-// ── SIMPLE CARD (new/search views)
 function recipeCardHTML(r){
   const ip=pinned.includes(r.id);
+  const color=CAT_COLORS[r.category]||'#4CAF50';
   const icon=CAT_ICONS[r.category]||'restaurant';
-  return`<div class="flex items-center gap-3 px-4 py-3 bg-surface-container-lowest rounded-xl shadow-card active:scale-[.99] transition-all">
-    <button onclick="openRecipe(${r.id})" class="w-11 h-11 rounded-DEFAULT bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
-      <span class="material-symbols-outlined text-secondary" style="font-size:20px">${icon}</span>
-    </button>
-    <button onclick="openRecipe(${r.id})" class="flex-1 min-w-0 text-left">
-      <p class="font-serif text-[15px] font-bold text-primary leading-snug mb-1">${r.name}</p>
-      <div class="flex gap-1.5 flex-wrap">
-        <span class="font-sans text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-sm ${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
-        <span class="font-sans text-caption px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.calories} kcal</span>
-        <span class="font-sans text-caption px-2 py-0.5 rounded-sm bg-surface-container text-outline">${r.time}</span>
+  return`<div class="card">
+    <div class="card-inner" onclick="openRecipe(${r.id})">
+      <div class="card-icon" style="background:${color}18">
+        <span class="ms" style="color:${color};font-size:22px">${icon}</span>
       </div>
-    </button>
-    <button onclick="togglePin(${r.id})" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-DEFAULT transition-all active:scale-90 ${ip?'text-secondary':'text-outline-variant'}">
-      <span class="material-symbols-outlined ${ip?'icon-fill':''}" style="font-size:22px">bookmark</span>
-      <span class="font-sans text-[8px] font-semibold uppercase tracking-wide">${ip?'Saved':'Save'}</span>
+      <div class="card-text">
+        <div class="card-name">${r.name}</div>
+        <div class="card-meta">
+          <span class="${diffBadge(r.difficulty)}">${cap(r.difficulty)}</span>
+          <span class="meta-chip">${r.time}</span>
+          <span class="meta-chip">·</span>
+          <span class="meta-chip">${r.calories} kcal</span>
+        </div>
+      </div>
+    </div>
+    <button class="save-btn${ip?' saved':''}" onclick="togglePin(${r.id})" style="margin-right:12px">
+      <span class="ms">bookmark</span>
+      <span class="slabel">${ip?'Saved':'Save'}</span>
     </button>
   </div>`;
 }
@@ -568,8 +733,8 @@ function renderSaved(){
   const list=document.getElementById('savedList');
   const empty=document.getElementById('savedEmpty');
   const pr=ALL_RECIPES.filter(r=>pinned.includes(r.id));
-  if(!pr.length){list.innerHTML='';empty.classList.remove('hidden');empty.classList.add('flex');return;}
-  empty.classList.add('hidden');empty.classList.remove('flex');
+  if(!pr.length){list.innerHTML='';empty.style.display='flex';return;}
+  empty.style.display='none';
   list.innerHTML=pr.map(r=>savedCardHTML(r)).join('');
 }
 function renderNew(){
@@ -578,28 +743,38 @@ function renderNew(){
 
 function togglePin(id){
   haptic(12);
-  if(pinned.includes(id))pinned=pinned.filter(p=>p!==id);else pinned.push(id);
+  const wasSaved=pinned.includes(id);
+  if(wasSaved)pinned=pinned.filter(p=>p!==id);
+  else pinned.push(id);
   localStorage.setItem('pinned',JSON.stringify(pinned));
   const isSaved=pinned.includes(id);
+  // Animate the button
+  const btn=document.getElementById('savebtn-'+id);
+  if(btn){
+    btn.classList.toggle('saved',isSaved);
+    btn.querySelector('.slabel').textContent=isSaved?'Saved':'Save';
+    btn.classList.add('pop');
+    setTimeout(()=>btn.classList.remove('pop'),350);
+  }
   if(currentTab==='home')renderAccordion();
   if(currentTab==='saved')renderSaved();
-  toast(isSaved?'Recipe saved to your collection ✓':'Removed from saved');
+  if(currentTab==='new')renderNew();
+  toast(isSaved?'Saved to your collection ✓':'Removed from saved');
 }
+
 function togglePinDetail(){
   if(!currentRecipe)return;haptic(12);togglePin(currentRecipe.id);updateDetailPin();
 }
 function updateDetailPin(){
   const ip=pinned.includes(currentRecipe.id);
-  const btn=document.getElementById('detailPin');
-  btn.className=`w-10 h-10 border rounded-DEFAULT flex items-center justify-center shadow-card active:scale-95 transition-all ${ip?'bg-secondary border-secondary':'bg-surface-container-lowest border-outline-variant/60'}`;
-  const icon=document.getElementById('detailPinIcon');
-  icon.className=`material-symbols-outlined ${ip?'icon-fill text-on-secondary':'text-on-surface'}`;
-  icon.style.fontSize='20px';
-  // Banner
+  const btn=document.getElementById('detailPinBtn');
+  if(btn)btn.classList.toggle('saved',ip);
+  document.getElementById('detailPinIcon').textContent='bookmark';
   const banner=document.getElementById('saveBanner');
   if(banner)banner.style.display=ip?'none':'flex';
 }
 
+// ── DETAIL
 function openRecipe(id){
   haptic(8);
   currentRecipe=ALL_RECIPES.find(r=>r.id===id);prevTab=currentTab;
@@ -610,7 +785,9 @@ function openRecipe(id){
   slider.value=currentRecipe.serves;slider.max=Math.max(20,currentRecipe.serves*4);
   document.getElementById('portionVal').textContent=currentRecipe.serves;
   renderDetailContent();
-  showView('detail');
+  document.querySelectorAll('.view').forEach(v=>{v.style.display='none';v.classList.remove('active')});
+  const v=document.getElementById('view-detail');
+  v.style.display='block';v.classList.add('active');
   document.getElementById('appHeader').style.display='none';
   currentTab='detail';
   document.getElementById('main').scrollTop=0;
@@ -618,30 +795,44 @@ function openRecipe(id){
 
 function renderDetailContent(){
   const r=currentRecipe;
-  document.getElementById('detailHero').style.background=heroGrad(r.category);
+  const color=CAT_COLORS[r.category]||'#4CAF50';
+  const grad=heroGrad(r.category);
+  const hero=document.getElementById('detailHero');
+  hero.style.background=grad;
   document.getElementById('detailTitle').textContent=r.name;
   updateDetailPin();
-  const diff=diffBadge(r.difficulty);
   document.getElementById('detailTags').innerHTML=`
-    <span class="font-sans text-[11px] font-bold uppercase tracking-wide px-3 py-1 rounded-full ${diff}">${cap(r.difficulty)}</span>
-    <span class="font-sans text-caption px-3 py-1 rounded-full bg-surface-container text-outline">${r.calories} kcal/serve</span>
-    <span class="font-sans text-caption px-3 py-1 rounded-full bg-surface-container text-outline">${r.time}</span>
-    <span class="font-sans text-caption px-3 py-1 rounded-full bg-surface-container text-outline">Serves ${r.serves}</span>`;
+    <span class="${diffBadge(r.difficulty)} detail-tag">${cap(r.difficulty)}</span>
+    <span class="detail-tag" style="background:var(--surface);color:var(--text2);font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px">${r.calories} kcal/serve</span>
+    <span class="detail-tag" style="background:var(--surface);color:var(--text2);font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px">${r.time}</span>
+    <span class="detail-tag" style="background:var(--surface);color:var(--text2);font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px">Serves ${r.serves}</span>`;
   renderIngredients();renderSteps();renderShopList();
 }
 
 function heroGrad(cat){
-  const g={'Dips & Starters':'linear-gradient(150deg,#ddf0e8,#cce8d8)','Salads':'linear-gradient(150deg,#d8f0cc,#c4e4b4)','Soups':'linear-gradient(150deg,#f0e8d8,#e4dccc)','Seafood':'linear-gradient(150deg,#d0e4f4,#bcd4ec)','Meat & Poultry':'linear-gradient(150deg,#f4e4d4,#ecd4bc)','Vegetarian':'linear-gradient(150deg,#d4f0cc,#bce4b0)','Pasta & Rice':'linear-gradient(150deg,#f4eccc,#ece0b4)','Sides':'linear-gradient(150deg,#ece8d8,#e0dccc)','Bread & Bakes':'linear-gradient(150deg,#f4e8d4,#ecdcc0)','Sauces':'linear-gradient(150deg,#ecdcf0,#e0cce4)','Desserts':'linear-gradient(150deg,#f4dce0,#eccccc)'};
+  const g={
+    'Dips & Starters':'linear-gradient(150deg,#ddf0e8,#cce8d8)',
+    'Salads':          'linear-gradient(150deg,#d8f0e8,#c0e8d8)',
+    'Soups':           'linear-gradient(150deg,#ede8f0,#ddd8e8)',
+    'Seafood':         'linear-gradient(150deg,#d0e8f4,#b8d4ec)',
+    'Meat & Poultry':  'linear-gradient(150deg,#f4e4d4,#ecd4bc)',
+    'Vegetarian':      'linear-gradient(150deg,#d8f0cc,#c4e4b4)',
+    'Pasta & Rice':    'linear-gradient(150deg,#f4eccc,#ece0b4)',
+    'Sides':           'linear-gradient(150deg,#ece8d8,#e0dccc)',
+    'Bread & Bakes':   'linear-gradient(150deg,#f4e8d4,#ecdcc0)',
+    'Sauces':          'linear-gradient(150deg,#f0d8e8,#e8c8dc)',
+    'Desserts':        'linear-gradient(150deg,#f4dce0,#eccccc)',
+  };
   return g[cat]||'linear-gradient(150deg,#f0ece8,#e8e4e0)';
 }
 
 function renderIngredients(){
   document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
     const display=fmtIng(ing.amount*portionScale,ing.unit);
-    return`<div class="flex items-center px-4 py-3 gap-3 ${i<arr.length-1?'border-b border-outline-variant/40':''}">
-      <div class="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></div>
-      <span class="flex-1 font-sans text-body-md text-on-surface">${ing.name}</span>
-      <span class="font-sans text-[14px] font-semibold text-secondary whitespace-nowrap">${display}</span>
+    return`<div class="ing-row${i<arr.length-1?'':' last'}">
+      <div class="ing-dot"></div>
+      <span class="ing-name">${ing.name}</span>
+      <span class="ing-amt">${display}</span>
     </div>`;
   }).join('');
 }
@@ -649,26 +840,40 @@ function renderIngredients(){
 function renderSteps(){
   const done=stepsDone[currentRecipe.id];
   document.getElementById('stepsList').innerHTML=currentRecipe.steps.map((s,i)=>`
-    <div onclick="toggleStep(${i})" class="flex gap-4 bg-surface-container-lowest rounded-xl p-4 shadow-card cursor-pointer active:scale-[.99] transition-all ${done.has(i)?'opacity-45':''}">
-      <span class="font-serif text-display-lg leading-none flex-shrink-0 w-10 text-right ${done.has(i)?'text-secondary':'text-secondary/20'}" style="font-size:40px">${done.has(i)?'✓':String(i+1).padStart(2,'0')}</span>
-      <div class="flex-1 pt-1">
-        <p class="font-sans text-label-md text-primary uppercase tracking-widest mb-1">Step ${i+1}</p>
-        <p class="font-sans text-body-md text-on-surface-variant leading-relaxed">${s}</p>
+    <div class="step-item${done.has(i)?' done':''}" onclick="toggleStep(${i})">
+      <div class="step-num">${done.has(i)?'✓':String(i+1).padStart(2,'0')}</div>
+      <div class="step-body">
+        <p class="step-label">Step ${i+1}</p>
+        <p class="step-text">${s}</p>
       </div>
     </div>`).join('');
 }
-function toggleStep(i){haptic(8);const d=stepsDone[currentRecipe.id];if(d.has(i))d.delete(i);else d.add(i);renderSteps();}
+
+function toggleStep(i){
+  haptic(8);
+  const d=stepsDone[currentRecipe.id];
+  const wasDone=d.has(i);
+  if(wasDone)d.delete(i);else d.add(i);
+  renderSteps();
+  // Auto-scroll to next step when marking done
+  if(!wasDone){
+    setTimeout(()=>{
+      const steps=document.querySelectorAll('.step-item');
+      const next=steps[i+1];
+      if(next)next.scrollIntoView({behavior:'smooth',block:'center'});
+    },300);
+  }
+}
 
 function renderShopList(){
   const c=shopChecked[currentRecipe.id];
   document.getElementById('shopList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
-    const display=fmtIng(ing.amount*portionScale,ing.unit);const checked=c.has(i);
-    return`<div onclick="toggleShop(${i})" class="flex items-center gap-3 px-4 py-3 ${i<arr.length-1?'border-b border-outline-variant/40':''} cursor-pointer active:bg-surface-container-low transition-colors">
-      <div class="w-5 h-5 rounded border-2 ${checked?'bg-secondary border-secondary':'border-outline-variant'} flex items-center justify-center flex-shrink-0 transition-all">
-        ${checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
-      </div>
-      <span class="flex-1 font-sans text-body-md ${checked?'line-through text-outline':'text-on-surface'}">${ing.name}</span>
-      <span class="font-sans text-[14px] font-semibold ${checked?'text-outline':'text-secondary'} whitespace-nowrap">${display}</span>
+    const display=fmtIng(ing.amount*portionScale,ing.unit);
+    const checked=c.has(i);
+    return`<div class="shop-row${checked?' checked':''}" onclick="toggleShop(${i})">
+      <div class="shop-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="shop-name">${ing.name}</span>
+      <span class="shop-amt">${display}</span>
     </div>`;
   }).join('');
 }
@@ -678,45 +883,39 @@ function addToShoppingList(){
   haptic(12);
   const r=currentRecipe;const c=shopChecked[r.id];
   const toBuy=r.ingredients.filter((_,i)=>!c.has(i));
-  if(!toBuy.length){toast('Nothing to add — all ticked!');return;}
+  if(!toBuy.length){toast('Nothing to add — everything is ticked!');return;}
   toBuy.forEach(ing=>{
     const amount=fmtIng(ing.amount*portionScale,ing.unit);
     if(!globalShopList.find(x=>x.name===ing.name&&x.recipe===r.name))
       globalShopList.push({name:ing.name,amount,recipe:r.name,aisle:getAisle(ing.name),checked:false});
   });
   saveGlobalShopList();updateShopBadge();
-  toast(`${toBuy.length} item${toBuy.length===1?'':'s'} added to shopping list`);
+  toast(`${toBuy.length} item${toBuy.length===1?'':'s'} added to your list`);
 }
 
 function closeDetail(dh=true){if(dh)haptic(8);currentRecipe=null;switchTab(prevTab==='detail'?'home':prevTab);}
 function onPortion(){
   haptic(6);const n=parseInt(document.getElementById('portionSlider').value);
-  portionScale=n/currentRecipe.serves;document.getElementById('portionVal').textContent=n;
-  renderIngredients();renderShopList();
+  portionScale=n/currentRecipe.serves;
+  const el=document.getElementById('portionVal');
+  el.classList.add('fading');
+  setTimeout(()=>{el.textContent=n;el.classList.remove('fading');renderIngredients();renderShopList();},150);
 }
 
 // ── SHOPPING TAB
 function saveGlobalShopList(){localStorage.setItem('globalShopList',JSON.stringify(globalShopList));}
-
 function updateShopBadge(){
   const count=globalShopList.filter(i=>!i.checked).length;
-  const lbl=document.querySelector('#tab-shoplist span.font-sans');
-  if(lbl)lbl.textContent=count?`Shopping (${count})`:'Shopping';
+  const badge=document.getElementById('shopBadge');
+  if(badge){badge.textContent=count||'';badge.classList.toggle('show',count>0);}
+  const sub=document.getElementById('shopSubtitle');
+  if(sub)sub.textContent=count?`${count} item${count===1?'':'s'} to get`:'Items to pick up';
 }
 
 function setShopSort(mode){
   haptic(6);shopSort=mode;
-  const rb=document.getElementById('sortRecipeBtn');
-  const ab=document.getElementById('sortAisleBtn');
-  if(rb&&ab){
-    if(mode==='recipe'){
-      rb.className=rb.className.replace('text-on-surface-variant','text-secondary').replace('bg-surface-container-lowest','').concat(' bg-surface-container-lowest text-secondary shadow-card');
-      ab.className=ab.className.replace('bg-surface-container-lowest text-secondary shadow-card','').concat(' text-on-surface-variant');
-    }else{
-      ab.className=ab.className.replace('text-on-surface-variant','text-secondary').replace('bg-surface-container-lowest','').concat(' bg-surface-container-lowest text-secondary shadow-card');
-      rb.className=rb.className.replace('bg-surface-container-lowest text-secondary shadow-card','').concat(' text-on-surface-variant');
-    }
-  }
+  document.getElementById('sortRecipeBtn').classList.toggle('active',mode==='recipe');
+  document.getElementById('sortAisleBtn').classList.toggle('active',mode==='aisle');
   renderShoppingTab();
 }
 
@@ -724,52 +923,43 @@ function renderShoppingTab(){
   const empty=document.getElementById('shopTabEmpty');
   const content=document.getElementById('shopTabContent');
   updateShopBadge();
-  if(!globalShopList.length){empty.classList.remove('hidden');empty.classList.add('flex');content.innerHTML='';return;}
-  empty.classList.add('hidden');empty.classList.remove('flex');
+  if(!globalShopList.length){empty.style.display='flex';content.innerHTML='';return;}
+  empty.style.display='none';
+
+  function itemsHTML(items){
+    return items.map(item=>`
+      <div class="shop-row${item.checked?' checked':''}" onclick="toggleShopTab(${item.idx})">
+        <div class="shop-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="shop-name">${item.name}</span>
+        <span class="shop-amt">${item.amount}</span>
+      </div>`).join('');
+  }
 
   if(shopSort==='recipe'){
-    // Group by recipe
     const byRecipe={};
     globalShopList.forEach((item,i)=>{if(!byRecipe[item.recipe])byRecipe[item.recipe]=[];byRecipe[item.recipe].push({...item,idx:i});});
     content.innerHTML=Object.entries(byRecipe).map(([recipe,items])=>`
-      <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-card">
-        <div class="px-4 py-3 border-b border-outline-variant/40 flex items-center gap-2">
-          <span class="material-symbols-outlined text-secondary" style="font-size:16px">receipt_long</span>
-          <p class="font-sans text-label-md text-on-surface font-semibold">${recipe}</p>
-          <span class="font-sans text-caption text-outline ml-auto">${items.filter(i=>!i.checked).length} to get</span>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)">
+        <div class="shop-section-hdr">
+          <div class="shop-section-dot"></div>
+          <span class="shop-section-name">${recipe}</span>
+          <span class="shop-section-count">${items.filter(i=>!i.checked).length} to get</span>
         </div>
-        ${items.map(item=>shopItemRow(item)).join('')}
+        ${itemsHTML(items)}
       </div>`).join('');
   } else {
-    // Group by aisle
     const byAisle={};
-    globalShopList.forEach((item,i)=>{
-      const a=item.aisle||getAisle(item.name);
-      if(!byAisle[a])byAisle[a]=[];
-      byAisle[a].push({...item,idx:i});
-    });
-    // Sort aisles in order defined
-    const aisleOrder=AISLES.map(a=>a.name).concat(['🛒 Other']);
-    const sorted=aisleOrder.filter(a=>byAisle[a]);
-    content.innerHTML=sorted.map(aisle=>`
-      <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-card">
-        <div class="px-4 py-3 border-b border-outline-variant/40 flex items-center gap-2">
-          <p class="font-sans text-label-md text-on-surface font-semibold">${aisle}</p>
-          <span class="font-sans text-caption text-outline ml-auto">${byAisle[aisle].filter(i=>!i.checked).length} items</span>
+    globalShopList.forEach((item,i)=>{const a=item.aisle||getAisle(item.name);if(!byAisle[a])byAisle[a]=[];byAisle[a].push({...item,idx:i});});
+    const order=AISLES.map(a=>a.name).concat(['🛒 Other']);
+    content.innerHTML=order.filter(a=>byAisle[a]).map(aisle=>`
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)">
+        <div class="shop-section-hdr">
+          <span class="shop-section-name">${aisle}</span>
+          <span class="shop-section-count">${byAisle[aisle].filter(i=>!i.checked).length} items</span>
         </div>
-        ${byAisle[aisle].map(item=>shopItemRow(item)).join('')}
+        ${itemsHTML(byAisle[aisle])}
       </div>`).join('');
   }
-}
-
-function shopItemRow(item){
-  return`<div onclick="toggleShopTab(${item.idx})" class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant/40 last:border-b-0 cursor-pointer active:bg-surface-container-low transition-colors">
-    <div class="w-5 h-5 rounded border-2 ${item.checked?'bg-secondary border-secondary':'border-outline-variant'} flex items-center justify-center flex-shrink-0 transition-all">
-      ${item.checked?`<svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
-    </div>
-    <span class="flex-1 font-sans text-body-md ${item.checked?'line-through text-outline':'text-on-surface'}">${item.name}</span>
-    <span class="font-sans text-[13px] font-semibold ${item.checked?'text-outline':'text-secondary'} whitespace-nowrap">${item.amount}</span>
-  </div>`;
 }
 
 function toggleShopTab(idx){haptic(8);globalShopList[idx].checked=!globalShopList[idx].checked;saveGlobalShopList();renderShoppingTab();}
@@ -777,55 +967,57 @@ function clearShoppingTab(){haptic(12);globalShopList=[];saveGlobalShopList();re
 function copyShoppingTab(){
   haptic(12);if(!globalShopList.length){toast('List is empty');return;}
   const unchecked=globalShopList.filter(i=>!i.checked);
-  const text=unchecked.length
-    ?unchecked.map(i=>`• ${i.name}: ${i.amount}  (${i.recipe})`).join('\n')
-    :'You have everything!';
-  navigator.clipboard.writeText(text).then(()=>toast('Shopping list copied'));
+  navigator.clipboard.writeText(
+    unchecked.length?unchecked.map(i=>`• ${i.name}: ${i.amount}  (${i.recipe})`).join('\n'):'You have everything!'
+  ).then(()=>toast('Shopping list copied'));
 }
 
 function shareRecipe(){
   haptic(8);const r=currentRecipe;
   const text=`${r.name}\n\nServes ${r.serves} | ${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
   if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
-  else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied'));
+  else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied to clipboard'));
 }
 
+// ── WAKE LOCK
 async function toggleWakeLock(){
   haptic(8);const btn=document.getElementById('wakeBtn');
-  if(wakeLock){await wakeLock.release();wakeLock=null;btn.classList.remove('bg-secondary','border-secondary','text-on-secondary');toast('Screen sleep restored');}
-  else{try{wakeLock=await navigator.wakeLock.request('screen');btn.classList.add('bg-secondary','border-secondary','text-on-secondary');toast('Screen will stay on');wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('bg-secondary','border-secondary','text-on-secondary');});}catch(e){toast('Wake lock not available');}}
+  if(wakeLock){await wakeLock.release();wakeLock=null;btn.classList.remove('on');toast('Screen sleep restored');}
+  else{try{wakeLock=await navigator.wakeLock.request('screen');btn.classList.add('on');toast('Screen will stay on');wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('on');});}catch(e){toast('Wake lock not available');}}
 }
 document.addEventListener('visibilitychange',async()=>{
-  if(document.getElementById('wakeBtn').classList.contains('bg-secondary')&&document.visibilityState==='visible'){try{wakeLock=await navigator.wakeLock.request('screen');}catch(e){}}
+  if(document.getElementById('wakeBtn').classList.contains('on')&&document.visibilityState==='visible'){try{wakeLock=await navigator.wakeLock.request('screen');}catch(e){}}
 });
 
+// ── HELPERS
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
 function fracStr(n){
   const w=Math.floor(n),f=n-w;
-  const fr=[[0.25,'¼'],[0.33,'⅓'],[0.5,'½'],[0.67,'⅔'],[0.75,'¾']];
-  const m=fr.find(([v])=>Math.abs(f-v)<0.09);
+  const fr=[[.25,'¼'],[.33,'⅓'],[.5,'½'],[.67,'⅔'],[.75,'¾']];
+  const m=fr.find(([v])=>Math.abs(f-v)<.09);
   if(!m)return parseFloat(n.toFixed(1)).toString();
   return w?`${w}${m[1]}`:m[1];
 }
 function fmtIng(amount,unit){
   if(!amount||isNaN(amount))return'';
-  const n=amount;const u=unit.toLowerCase().trim();
+  const n=amount,u=unit.toLowerCase().trim();
   const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs'];
   if(desc.some(d=>u.includes(d)))return unit;
   if(u==='g')return Math.round(n)+'g';
   if(u==='ml'){
-    if(n<=90){const tbsp=n/15,tbspR=Math.round(tbsp*2)/2;if(Math.abs(tbspR-tbsp)<0.09&&tbspR>=1)return fracStr(tbspR)+' tbsp';const tsp=n/5,tspR=Math.round(tsp*4)/4;if(Math.abs(tspR-tsp)<0.09&&tspR>=0.25)return fracStr(tspR)+' tsp';}
+    if(n<=90){
+      const tbsp=n/15,tbspR=Math.round(tbsp*2)/2;if(Math.abs(tbspR-tbsp)<.09&&tbspR>=1)return fracStr(tbspR)+' tbsp';
+      const tsp=n/5,tspR=Math.round(tsp*4)/4;if(Math.abs(tspR-tsp)<.09&&tspR>=.25)return fracStr(tspR)+' tsp';
+    }
     return Math.round(n)+'ml';
   }
   const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets','stalk','stalks','piece','pieces','slice','slices','leaf','leaves','lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
   if(cnt.some(c=>u.includes(c)))return(n%1===0?n.toString():fracStr(n))+' '+unit;
   return(n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString())+' '+unit;
 }
-
 function toast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;
-  t.classList.remove('opacity-0','translate-y-3');t.classList.add('opacity-100','translate-y-0');
-  clearTimeout(t._t);t._t=setTimeout(()=>{t.classList.add('opacity-0','translate-y-3');t.classList.remove('opacity-100','translate-y-0');},2600);
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600);
 }
 function hardRefresh(){haptic(8);toast('Refreshing...');setTimeout(()=>location.reload(true),400);}
 
