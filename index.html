@@ -101,8 +101,8 @@ main::-webkit-scrollbar{display:none}
 .feed{display:flex;flex-direction:column;gap:12px;padding:0 20px 8px}
 .feed-card{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;box-shadow:var(--shadow);transition:box-shadow .2s}
 .feed-card:active{opacity:.92}
-.feed-card-img{height:150px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.feed-card-emoji{font-size:56px;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.15))}
+.feed-card-img{height:4px;display:block;position:relative;overflow:hidden;flex-shrink:0}
+.feed-card-emoji{display:none}
 .feed-card-badges{position:absolute;bottom:10px;left:10px;display:flex;gap:6px}
 .feed-card-add{position:absolute;top:10px;right:10px;z-index:2}
 .feed-card-add-btn{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.92);backdrop-filter:blur(4px);border:none;border-radius:20px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--green);cursor:pointer;box-shadow:var(--shadow);transition:all .2s;white-space:nowrap}
@@ -639,23 +639,19 @@ function renderFeed(){
     const emoji=CAT_EMOJI[r.category]||'🍽';
     const grad=cardGrad(r.category);
     return`<div class="feed-card">
-      <div class="feed-card-img" style="background:${grad}" onclick="openRecipe(${r.id})">
-        <span class="feed-card-emoji">${emoji}</span>
-        <div class="feed-card-badges">
-          <span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span>
-        </div>
-        <div class="feed-card-add">
-          <button class="feed-card-add-btn" onclick="event.stopPropagation();addAllFromCard(${r.id})">
-            <span class="ms" style="font-size:14px">add_shopping_cart</span>Add to list
-          </button>
-        </div>
-      </div>
+      <div class="feed-card-img" style="background:${grad}"></div>
       <div class="feed-card-body" onclick="openRecipe(${r.id})">
         <div class="feed-card-title">${r.name}</div>
         <div class="feed-card-meta">
-          <span class="feed-meta-chip" style="color:${col};font-size:11px;font-weight:700">${r.category}</span>
+          <span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span>
+          <span class="feed-meta-chip" style="color:${col};font-size:11px;font-weight:600;margin-left:4px">${r.category}</span>
           <span class="feed-meta-chip">·</span>
           <span class="feed-meta-chip">${r.calories} kcal</span>
+          <button class="feed-card-add-btn" style="margin-left:auto" onclick="event.stopPropagation();addAllFromCard(${r.id})">
+            <span class="ms" style="font-size:14px">add_shopping_cart</span>Add to list
+          </button>
+        </div>
+        <div class="feed-card-meta" style="margin-top:2px">
           <span class="feed-meta-chip" style="margin-left:auto;color:var(--${ip?'green':'text3'});cursor:pointer;font-weight:${ip?'700':'400'}" onclick="event.stopPropagation();togglePin(${r.id})">${ip?'✓ Saved':'Save'}</span>
         </div>
       </div>
