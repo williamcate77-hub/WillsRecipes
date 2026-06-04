@@ -799,7 +799,7 @@ ingredients:[
   {name:'Sambal oelek',amount:250,unit:'g'},
 ],
 steps:[
-  'Part A: slice 1 kilo of ginger using the robot coupe slicing blade. Add salt and garlic, 500 ml of vegetable oil and 250 ml of vinegar, and blend in the robot coupe. Add the remaining 400 ml of vegetable oil slowly, otherwise it will split. It should have a creamy consistency. Set aside in a large bowl.',
+  'Part A: slice 1 kilo of ginger using the robot coupe slicing blade. Add salt and garlic, 500 ml of vegetable oil and 250 ml of vinegar, and blend in the robot coupe. Gradually add approximately 280 ml of the remaining vegetable oil (about 30% less than the full 400 ml works best — add slowly to avoid splitting). The mixture should be smooth and creamy. Set aside in a large bowl.',
   'Part B: finely chop the coriander roots and place in the blending robot coupe with the remaining ingredients. Blend till smooth but not too much or it will go bright green. Mix it in the bowl with Part A.',
   'Part C: mix the sambal oelek in with the ginger mix.',
   'Cover with cling film and allow to rest for 24 hours in the cool room.',

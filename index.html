@@ -288,6 +288,26 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 .tab-badge{position:absolute;top:10px;right:calc(50% - 22px);background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px;display:none}
 .tab-badge.show{display:block}
 
+/* Shelves */
+.shelf{margin-bottom:4px}
+.shelf-hdr{display:flex;align-items:flex-end;justify-content:space-between;padding:20px 20px 10px}
+.shelf-hdr-left{}
+.shelf-title{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--text);line-height:1.2}
+.shelf-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.shelf-seeall{font-size:13px;font-weight:600;color:var(--green);background:none;border:none;cursor:pointer;padding:4px 0 4px 12px;flex-shrink:0;white-space:nowrap}
+.shelf-row{display:flex;gap:10px;overflow-x:auto;padding:0 20px 4px;scrollbar-width:none}
+.shelf-row::-webkit-scrollbar{display:none}
+.shelf-card{flex-shrink:0;width:160px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;cursor:pointer;box-shadow:var(--shadow);transition:opacity .15s;active:opacity:.8}
+.shelf-card:active{opacity:.8}
+.shelf-card-body{padding:11px 12px 13px}
+.shelf-card-name{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.shelf-card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+/* Browse / back header */
+.browse-back-row{display:flex;align-items:center;gap:8px;padding:12px 20px 8px}
+.browse-back-btn{background:none;border:none;cursor:pointer;color:var(--green);font-size:14px;font-weight:600;display:flex;align-items:center;gap:2px;padding:0;flex-shrink:0}
+.browse-back-btn .ms{font-size:18px}
+.browse-page-title{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.browse-page-count{font-size:12px;color:var(--text3);flex-shrink:0}
 /* Toast */
 .toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(12px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:var(--r);font-size:14px;font-weight:600;opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -354,17 +374,17 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 <!-- ── MAIN ── -->
 <main id="main">
 
-  <!-- HOME: food-first feed -->
+  <!-- HOME -->
   <div class="view active" id="view-home">
-    <!-- Unified smart search -->
+    <!-- Search (always visible) -->
     <div class="search-bar">
       <div class="search-icon"><span class="ms" id="searchIcon">search</span></div>
       <input class="search-input" id="searchInput" type="text" placeholder="Search recipes or ingredients…" oninput="onSearch()">
       <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
     </div>
-    <!-- Category chips -->
-    <div class="chips-row" id="chipsRow"></div>
-    <!-- Continue cooking banner -->
+    <!-- Category chips (search/chip mode only) -->
+    <div class="chips-row hide-scrollbar" id="chipsRow" style="display:none"></div>
+    <!-- Continue cooking banner (shelves mode only) -->
     <div id="continueBanner" style="display:none" class="continue-banner" onclick="resumeCooking()">
       <span class="ms">restaurant</span>
       <div class="continue-banner-body">
@@ -374,21 +394,34 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
       </div>
       <div class="continue-banner-arrow"><span class="ms">arrow_forward</span></div>
     </div>
-    <!-- Recently viewed -->
-    <div id="rvSection" class="rv-section" style="display:none">
-      <div class="rv-title">Recently viewed</div>
-      <div class="rv-row" id="rvRow"></div>
+    <!-- SHELVES (default home) -->
+    <div id="homeShelves"></div>
+    <!-- BROWSE (shelf "See all") -->
+    <div id="homeBrowse" style="display:none">
+      <div class="browse-back-row">
+        <button class="browse-back-btn" onclick="hideBrowse()"><span class="ms">arrow_back</span>Home</button>
+        <span class="browse-page-title" id="browseTitle"></span>
+        <span class="browse-page-count" id="browseCount"></span>
+      </div>
+      <div class="card-list" id="browseList" style="padding-bottom:16px"></div>
+      <div class="empty" id="browseEmpty" style="display:none">
+        <div class="empty-icon"><span class="ms">search_off</span></div>
+        <h3 class="empty-title">Nothing here</h3>
+      </div>
     </div>
-    <!-- Feed -->
-    <div class="feed-section-hdr" id="feedHdr" style="display:none">
-      <h3 id="feedHdrTitle">All recipes</h3>
-      <span class="feed-section-count" id="feedHdrCount"></span>
-    </div>
-    <div class="feed" id="homeFeed"></div>
-    <div class="empty" id="homeEmpty" style="display:none">
-      <div class="empty-icon"><span class="ms">search_off</span></div>
-      <h3 class="empty-title">No recipes found</h3>
-      <p class="empty-body">Try a different search or browse by category</p>
+    <!-- FEED (search / chip filter results) -->
+    <div id="homeFeedWrap" style="display:none">
+      <div class="browse-back-row">
+        <button class="browse-back-btn" onclick="clearFilters()"><span class="ms">arrow_back</span>Home</button>
+        <span class="browse-page-title" id="feedHdrTitle"></span>
+        <span class="browse-page-count" id="feedHdrCount"></span>
+      </div>
+      <div class="feed" id="homeFeed" style="padding-top:4px"></div>
+      <div class="empty" id="homeEmpty" style="display:none">
+        <div class="empty-icon"><span class="ms">search_off</span></div>
+        <h3 class="empty-title">No recipes found</h3>
+        <p class="empty-body">Try a different search or category</p>
+      </div>
     </div>
   </div>
 
@@ -536,7 +569,10 @@ let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
 let activeChip='All',activeSearch='',shopChecked={},stepsDone={},portionScale=1;
 let wakeLock=null,shopSort='aisle';
 let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
-let recentlyViewed=JSON.parse(localStorage.getItem('recentlyViewed')||'[]');
+// recentlyViewed: [{id, ts}] — migrate from old [id] format
+let recentlyViewed=JSON.parse(localStorage.getItem('recentlyViewed')||'[]')
+  .map(x=>typeof x==='number'?{id:x,ts:0}:x).filter(x=>x&&x.id);
+let browseMode=null; // null | {title, recipes}
 
 // ── COOKING STATE
 let cookingRecipe=null,cookingStep=0,ckTimerSecs=0,ckTimerInterval=null,ckTimerRunning=false;
@@ -564,7 +600,15 @@ function toggleMode(){
   if(localStorage.getItem('darkMode')==='1'){isDark=true;document.documentElement.classList.add('dark');document.getElementById('modeIcon').textContent='light_mode';}
 })();
 
-// ── SMART SEARCH (debounced 300ms, single surface)
+// ── TIME PARSER
+function parseMinutes(s){
+  if(!s)return 999;let m=0;
+  const h=s.match(/(\d+)\s*hr/i);const mn=s.match(/(\d+)\s*min/i);
+  if(h)m+=parseInt(h[1])*60;if(mn)m+=parseInt(mn[1]);
+  return m||999;
+}
+
+// ── SMART SEARCH (debounced 300ms)
 let _st=null;
 function onSearch(){
   clearTimeout(_st);
@@ -573,32 +617,41 @@ function onSearch(){
     const clr=document.getElementById('searchClear');
     if(clr)clr.style.display=activeSearch?'flex':'none';
     document.getElementById('searchIcon').textContent=activeSearch?'manage_search':'search';
-    if(activeSearch)activeChip='All';
-    renderChips();renderFeed();
+    browseMode=null;
+    renderHomeMode();
   },300);
 }
 function clearSearch(){
   activeSearch='';document.getElementById('searchInput').value='';
   document.getElementById('searchClear').style.display='none';
   document.getElementById('searchIcon').textContent='search';
-  renderFeed();
+  renderHomeMode();
+}
+function clearFilters(){
+  activeSearch='';activeChip='All';browseMode=null;
+  document.getElementById('searchInput').value='';
+  document.getElementById('searchClear').style.display='none';
+  document.getElementById('searchIcon').textContent='search';
+  renderHomeMode();
 }
 
 // ── CATEGORY CHIPS
 function renderChips(){
-  const row=document.getElementById('chipsRow');
-  if(!row)return;
+  const row=document.getElementById('chipsRow');if(!row)return;
   const cats=['All',...Object.keys(CAT_COLOR)];
   row.innerHTML=cats.map(c=>`<button class="chip${activeChip===c&&!activeSearch?' active':''}" onclick="setChip('${c.replace(/'/g,"\\'")}')">
     ${c==='All'?'All':`${CAT_EMOJI[c]||''} ${c}`}
   </button>`).join('');
 }
 function setChip(cat){
-  haptic(6);activeChip=cat;activeSearch='';document.getElementById('searchInput').value='';
+  haptic(6);activeChip=cat;activeSearch='';browseMode=null;
+  document.getElementById('searchInput').value='';
   document.getElementById('searchClear').style.display='none';
   document.getElementById('searchIcon').textContent='search';
-  renderChips();renderFeed();
+  renderHomeMode();
 }
+// Called from shelf "See all" for categories
+function setChipFromShelf(cat){haptic(6);activeChip=cat;browseMode=null;renderHomeMode();}
 
 // ── INGREDIENT SEARCH MATCH
 // Excludes derived forms — "chicken stock" should not match a search for "chicken"
@@ -621,25 +674,55 @@ function getFiltered(){
   return list;
 }
 
-// ── RENDER FEED (food-first cards)
+// ── HOME MODE DISPATCHER ───────────────────────────────────
+let _shelfReg={},_shelfN=0;
+
+function renderHomeMode(){
+  const filtered=activeSearch||(activeChip&&activeChip!=='All');
+  document.getElementById('homeShelves').style.display=(!filtered&&!browseMode)?'block':'none';
+  document.getElementById('homeBrowse').style.display=browseMode?'block':'none';
+  document.getElementById('homeFeedWrap').style.display=(filtered&&!browseMode)?'block':'none';
+  document.getElementById('chipsRow').style.display=filtered?'':'none';
+  const banner=document.getElementById('continueBanner');
+  if(banner)banner.style.display=(!filtered&&!browseMode)?'':'none';
+  if(browseMode){renderBrowseView();}
+  else if(filtered){renderChips();renderFeed();}
+  else{renderContinueBanner();renderShelves();}
+}
+function renderHome(){renderHomeMode();}
+
+function hideBrowse(){browseMode=null;renderHomeMode();}
+
+function openShelfBrowse(key){
+  const d=_shelfReg[key];if(!d)return;
+  browseMode={title:d.title,sub:d.sub,recipes:d.recipes};renderHomeMode();
+}
+
+// ── BROWSE VIEW ───────────────────────────────────────────
+function renderBrowseView(){
+  if(!browseMode)return;
+  document.getElementById('browseTitle').textContent=browseMode.title;
+  document.getElementById('browseCount').textContent=`${browseMode.recipes.length} recipe${browseMode.recipes.length===1?'':'s'}`;
+  const empty=document.getElementById('browseEmpty');
+  const list=document.getElementById('browseList');
+  if(!browseMode.recipes.length){list.innerHTML='';empty.style.display='flex';return;}
+  empty.style.display='none';
+  list.innerHTML=browseMode.recipes.map(r=>recipeCard(r)).join('');
+}
+
+// ── FEED (search / chip filter results) ──────────────────
 function renderFeed(){
   const recipes=getFiltered();
   const feed=document.getElementById('homeFeed');
   const empty=document.getElementById('homeEmpty');
-  const hdr=document.getElementById('feedHdr');
-  const hdrTitle=document.getElementById('feedHdrTitle');
-  const hdrCount=document.getElementById('feedHdrCount');
-  if(!recipes.length){feed.innerHTML='';empty.style.display='flex';if(hdr)hdr.style.display='none';return;}
+  document.getElementById('feedHdrTitle').textContent=
+    activeSearch?`Results for "${activeSearch}"`:activeChip;
+  document.getElementById('feedHdrCount').textContent=
+    `${recipes.length} recipe${recipes.length===1?'':'s'}`;
+  if(!recipes.length){feed.innerHTML='';empty.style.display='flex';return;}
   empty.style.display='none';
-  if(hdr){
-    hdr.style.display='flex';
-    hdrTitle.textContent=activeSearch?`Results for "${activeSearch}"`:activeChip==='All'?'All recipes':activeChip;
-    hdrCount.textContent=`${recipes.length} recipe${recipes.length===1?'':'s'}`;
-  }
   feed.innerHTML=recipes.map(r=>{
-    const ip=pinned.includes(r.id);
-    const col=CAT_COLOR[r.category]||'#4CAF50';
-    const emoji=CAT_EMOJI[r.category]||'🍽';
+    const ip=pinned.includes(r.id);const col=CAT_COLOR[r.category]||'#4CAF50';
     const grad=cardGrad(r.category);
     return`<div class="feed-card">
       <div class="feed-card-img" style="background:${grad}"></div>
@@ -662,31 +745,15 @@ function renderFeed(){
   }).join('');
 }
 
-// ── RECENTLY VIEWED
+// ── RECENTLY VIEWED (timestamped, deduped, capped at 20) ──
 function addToRecentlyViewed(id){
-  recentlyViewed=[id,...recentlyViewed.filter(r=>r!==id)].slice(0,6);
+  recentlyViewed=[{id,ts:Date.now()},...recentlyViewed.filter(x=>x.id!==id)].slice(0,20);
   localStorage.setItem('recentlyViewed',JSON.stringify(recentlyViewed));
 }
-function renderRecentlyViewed(){
-  const sec=document.getElementById('rvSection');
-  const row=document.getElementById('rvRow');
-  const valid=recentlyViewed.filter(id=>ALL_RECIPES.find(r=>r.id===id));
-  if(!valid.length||activeSearch||activeChip!=='All'){sec.style.display='none';return;}
-  sec.style.display='block';
-  row.innerHTML=valid.map(id=>{
-    const r=ALL_RECIPES.find(x=>x.id===id);if(!r)return'';
-    const grad=cardGrad(r.category);
-    return`<div class="rv-card" onclick="openRecipe(${r.id})">
-      <div class="rv-img" style="background:${grad}">${CAT_EMOJI[r.category]||'🍽'}</div>
-      <div class="rv-name">${r.name}</div>
-    </div>`;
-  }).join('');
-}
 
-// ── CONTINUE COOKING BANNER
+// ── CONTINUE COOKING ──────────────────────────────────────
 function renderContinueBanner(){
-  const state=getCookingState();
-  const banner=document.getElementById('continueBanner');
+  const state=getCookingState();const banner=document.getElementById('continueBanner');
   if(!state){banner.style.display='none';return;}
   const r=ALL_RECIPES.find(x=>x.id===state.id);
   if(!r){banner.style.display='none';return;}
@@ -695,16 +762,73 @@ function renderContinueBanner(){
   banner.style.display='flex';
 }
 function resumeCooking(){
-  const state=getCookingState();
-  if(!state)return;
-  const r=ALL_RECIPES.find(x=>x.id===state.id);
-  if(!r)return;
-  currentRecipe=r;cookingStep=state.step;
-  openCookingMode(r,cookingStep);
+  const state=getCookingState();if(!state)return;
+  const r=ALL_RECIPES.find(x=>x.id===state.id);if(!r)return;
+  currentRecipe=r;cookingStep=state.step;openCookingMode(r,cookingStep);
 }
 
-function renderHome(){
-  renderChips();renderContinueBanner();renderRecentlyViewed();renderFeed();
+// ── SHELVES (curated home page) ───────────────────────────
+function shelfCard(r){
+  const grad=cardGrad(r.category);
+  return`<div class="shelf-card" onclick="openRecipe(${r.id})">
+    <div style="height:3px;background:${grad}"></div>
+    <div class="shelf-card-body">
+      <div class="shelf-card-name">${r.name}</div>
+      <div class="shelf-card-meta">
+        <span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span>
+        <span style="font-size:10px;color:var(--text3)">${r.calories} kcal</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderShelves(){
+  _shelfReg={};_shelfN=0;
+  const el=document.getElementById('homeShelves');if(!el)return;
+  const sections=[
+    {
+      title:'Recently viewed',sub:null,seeAll:false,cap:5,
+      recipes:recentlyViewed.slice().sort((a,b)=>b.ts-a.ts).slice(0,5)
+        .map(x=>ALL_RECIPES.find(r=>r.id===x.id)).filter(Boolean)
+    },{
+      title:'Quick tonight',sub:'Under 30 minutes',seeAll:'shelf',cap:8,
+      recipes:ALL_RECIPES.filter(r=>parseMinutes(r.time)<=30)
+    },{
+      title:'Recently added',sub:null,seeAll:'shelf',cap:8,
+      recipes:[...ALL_RECIPES].sort((a,b)=>b.id-a.id)
+    },{
+      title:'From your saved',sub:null,seeAll:'saved',cap:5,
+      recipes:ALL_RECIPES.filter(r=>pinned.includes(r.id))
+    },
+    ...CATEGORIES.map(cat=>({
+      title:cat,sub:null,seeAll:'cat',cap:8,cat,
+      recipes:ALL_RECIPES.filter(r=>r.category===cat)
+    }))
+  ];
+  let html='<div style="padding-bottom:24px">';
+  sections.forEach(s=>{
+    if(!s.recipes.length)return;
+    const shown=s.recipes.slice(0,s.cap);
+    const key='sh'+(++_shelfN);
+    _shelfReg[key]={title:s.title,sub:s.sub,recipes:s.recipes};
+    let btn='';
+    if(s.seeAll==='shelf'&&s.recipes.length>s.cap)
+      btn=`<button class="shelf-seeall" onclick="openShelfBrowse('${key}')">See all →</button>`;
+    else if(s.seeAll==='saved'&&s.recipes.length>s.cap)
+      btn=`<button class="shelf-seeall" onclick="switchTab('saved')">See all →</button>`;
+    else if(s.seeAll==='cat')
+      btn=`<button class="shelf-seeall" onclick="setChipFromShelf('${s.cat.replace(/'/g,"\\'")}')">See all →</button>`;
+    html+=`<div class="shelf">
+      <div class="shelf-hdr">
+        <div class="shelf-hdr-left">
+          <h3 class="shelf-title">${s.title}</h3>
+          ${s.sub?`<p class="shelf-sub">${s.sub}</p>`:''}
+        </div>${btn}
+      </div>
+      <div class="shelf-row hide-scrollbar">${shown.map(r=>shelfCard(r)).join('')}</div>
+    </div>`;
+  });
+  el.innerHTML=html+'</div>';
 }
 
 // ── SAVED / LATEST
@@ -795,12 +919,22 @@ function renderIngredients(){
   }).join('');
 }
 
+// Scale numbers in step text when portion changes (e.g. "500 ml" → "250 ml" at ×0.5)
+function scaleStepText(text,scale){
+  if(Math.abs(scale-1)<0.01)return text;
+  return text.replace(/\b(\d+(?:\.\d+)?)\s*(g|kg|ml|L|tbsp|tsp|cups?)\b/gi,(match,num,unit)=>{
+    const scaled=parseFloat(num)*scale;
+    const u=unit.toLowerCase().replace(/s$/,'');
+    return fmtIng(scaled,u==='l'?'L':u);
+  });
+}
+
 function renderSteps(){
   const done=stepsDone[currentRecipe.id];
   document.getElementById('stepsList').innerHTML=currentRecipe.steps.map((s,i)=>`
     <div class="step-item${done.has(i)?' done':''}" onclick="toggleStep(${i})">
       <div class="step-num">${done.has(i)?'✓':String(i+1).padStart(2,'0')}</div>
-      <div class="step-text-wrap"><div class="step-lbl">Step ${i+1}</div><div class="step-text">${s}</div></div>
+      <div class="step-text-wrap"><div class="step-lbl">Step ${i+1}</div><div class="step-text">${scaleStepText(s,portionScale)}</div></div>
     </div>`).join('');
 }
 function toggleStep(i){
@@ -1097,9 +1231,16 @@ function fmtIng(amount,unit){
   if(u==='g'){n=roundShoppable(n,'g');return Math.round(n)+'g';}
   if(u==='ml'){
     n=roundShoppable(n,'ml');
-    if(n<=90){const tbsp=n/15,tbspR=Math.round(tbsp*2)/2;if(Math.abs(tbspR-tbsp)<.09&&tbspR>=1)return fracStr(tbspR)+' tbsp';const tsp=n/5,tspR=Math.round(tsp*4)/4;if(Math.abs(tspR-tsp)<.09&&tspR>=.25)return fracStr(tspR)+' tsp';}
+    if(n<=90){
+      const tbsp=n/15,tbspR=Math.round(tbsp*2)/2;
+      if(Math.abs(tbspR-tbsp)<.09&&tbspR>=1)return`${fracStr(tbspR)} tbsp (${Math.round(tbspR*15)}ml)`;
+      const tsp=n/5,tspR=Math.round(tsp*4)/4;
+      if(Math.abs(tspR-tsp)<.09&&tspR>=.25)return`${fracStr(tspR)} tsp (${Math.round(tspR*5)}ml)`;
+    }
     return Math.round(n)+'ml';
   }
+  if(u==='tbsp')return`${fracStr(n)} tbsp (${Math.round(n*15)}ml)`;
+  if(u==='tsp') return`${fracStr(n)} tsp (${Math.round(n*5)}ml)`;
   const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets','stalk','stalks','piece','pieces','slice','slices','leaf','leaves','lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
   if(cnt.some(c=>u.includes(c))){const pu=pluralUnit(n,u);return(n%1===0?n.toString():fracStr(n))+' '+pu;}
   return(n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString())+' '+unit;
