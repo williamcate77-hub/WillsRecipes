@@ -789,7 +789,7 @@ steps:[
 ingredients:[
   {name:'Ginger, chopped into thin pieces',amount:1,unit:'kg'},
   {name:'Fresh garlic',amount:150,unit:'g'},
-  {name:'Vegetable oil',amount:900,unit:'ml'},
+  {name:'Vegetable oil',amount:450,unit:'ml'},
   {name:'White vinegar',amount:250,unit:'ml'},
   {name:'Salt',amount:5,unit:'tbsp'},
   {name:'Lemongrass, defrosted',amount:320,unit:'g'},
@@ -799,7 +799,7 @@ ingredients:[
   {name:'Sambal oelek',amount:250,unit:'g'},
 ],
 steps:[
-  'Part A: slice 1 kilo of ginger using the robot coupe slicing blade. Add salt and garlic, 500 ml of vegetable oil and 250 ml of vinegar, and blend in the robot coupe. Gradually add approximately 280 ml of the remaining vegetable oil (about 30% less than the full 400 ml works best — add slowly to avoid splitting). The mixture should be smooth and creamy. Set aside in a large bowl.',
+  'Part A: slice 1 kilo of ginger using the robot coupe slicing blade. Add salt and garlic, 250 ml of vegetable oil and 250 ml of vinegar, and blend in the robot coupe. Gradually add approximately 140 ml of the remaining vegetable oil (add slowly to avoid splitting). The mixture should be smooth and creamy. Set aside in a large bowl.',
   'Part B: finely chop the coriander roots and place in the blending robot coupe with the remaining ingredients. Blend till smooth but not too much or it will go bright green. Mix it in the bowl with Part A.',
   'Part C: mix the sambal oelek in with the ginger mix.',
   'Cover with cling film and allow to rest for 24 hours in the cool room.',
