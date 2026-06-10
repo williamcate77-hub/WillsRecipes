@@ -238,9 +238,9 @@ ingredients:[
   {name:'Smoked paprika',amount:5,unit:'g'},
   {name:'Saffron threads',amount:1,unit:'pinch'},
   {name:'Fish stock',amount:1000,unit:'ml'},
-  {name:'Prawns',prep:'peeled',amount:200,unit:'g'},
-  {name:'Mussels',prep:'cleaned',amount:200,unit:'g'},
-  {name:'Squid',prep:'sliced',amount:200,unit:'g'},
+  {name:'Prawns',prep:'peeled',amount:250,unit:'g'},
+  {name:'Mussels',prep:'cleaned',amount:250,unit:'g'},
+  {name:'Squid',prep:'sliced',amount:250,unit:'g'},
   {name:'Parsley',prep:'chopped',amount:1,unit:'handful'},
 ],
 steps:[
@@ -304,7 +304,7 @@ steps:[
 
 {id:57,name:'Whole Baked Snapper with Lemon & Herbs',category:'Seafood',difficulty:'medium',serves:2,time:'35 min',calories:280,mainIngredient:'Snapper',
 ingredients:[
-  {name:'Whole snapper',prep:'cleaned and scaled',amount:1200,unit:'g'},
+  {name:'Whole snapper',prep:'cleaned and scaled',amount:800,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Garlic cloves',prep:'sliced',amount:2,unit:'cloves'},
   {name:'Lemon',prep:'sliced',amount:1,unit:'whole'},
@@ -319,7 +319,7 @@ steps:[
 
 {id:58,name:'Whole Roast Snapper with Red Miso Butter',category:'Seafood',difficulty:'medium',serves:2,time:'25 min',calories:310,mainIngredient:'Snapper',
 ingredients:[
-  {name:'Whole snapper',prep:'cleaned',amount:600,unit:'g'},
+  {name:'Whole snapper',prep:'cleaned',amount:500,unit:'g'},
   {name:'Olive oil',amount:15,unit:'ml'},
   {name:'Red miso butter',amount:150,unit:'g'},
   {name:'Fresh chives, snipped',amount:1,unit:'bunch'},
@@ -358,7 +358,7 @@ steps:[
 // ── MEAT & POULTRY ────────────────────────────────────────
 {id:60,name:'Buttermilk-Brined Roast Chicken',category:'Meat & Poultry',difficulty:'medium',serves:4,time:'1 hr 15 min + overnight',calories:520,mainIngredient:'Chicken',
 ingredients:[
-  {name:'Whole chicken',amount:1600,unit:'g'},
+  {name:'Whole chicken',amount:1100,unit:'g'},
   {name:'Buttermilk',amount:1000,unit:'ml'},
   {name:'Salt',amount:45,unit:'g'},
   {name:'Garlic cloves',prep:'crushed',amount:3,unit:'cloves'},
@@ -393,7 +393,7 @@ steps:[
 
 {id:62,name:'Beef Stew with Red Wine',category:'Meat & Poultry',difficulty:'medium',serves:4,time:'3 hr',calories:580,mainIngredient:'Beef',
 ingredients:[
-  {name:'Chuck steak, diced',amount:1000,unit:'g'},
+  {name:'Chuck steak, diced',amount:720,unit:'g'},
   {name:'Plain flour',amount:45,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Onion',prep:'chopped',amount:1,unit:'whole'},
@@ -415,7 +415,7 @@ steps:[
 
 {id:63,name:'Beef Stir-Fry with Ginger & Broccoli',category:'Meat & Poultry',difficulty:'easy',serves:4,time:'25 min',calories:380,mainIngredient:'Beef',
 ingredients:[
-  {name:'Beef rump',prep:'thinly sliced',amount:400,unit:'g'},
+  {name:'Beef rump',prep:'thinly sliced',amount:720,unit:'g'},
   {name:'Soy sauce',amount:30,unit:'ml'},
   {name:'Oyster sauce',amount:15,unit:'ml'},
   {name:'Sesame oil',amount:5,unit:'ml'},
@@ -434,7 +434,7 @@ steps:[
 
 {id:64,name:'Crispy Pork Belly with Five Spice',category:'Meat & Poultry',difficulty:'medium',serves:4,time:'2 hr',calories:620,mainIngredient:'Pork',
 ingredients:[
-  {name:'Pork belly',prep:'skin scored',amount:1500,unit:'g'},
+  {name:'Pork belly',prep:'skin scored',amount:720,unit:'g'},
   {name:'Chinese five spice',amount:15,unit:'g'},
   {name:'Sea salt',amount:15,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
@@ -448,7 +448,7 @@ steps:[
 
 {id:65,name:'Herby Lamb & Beans',category:'Meat & Poultry',difficulty:'medium',serves:4,time:'50 min',calories:480,mainIngredient:'Lamb',
 ingredients:[
-  {name:'Lamb mince',amount:500,unit:'g'},
+  {name:'Lamb mince',amount:720,unit:'g'},
   {name:'Fennel seeds',amount:5,unit:'g'},
   {name:'Ground cumin',amount:2,unit:'g'},
   {name:'Dried oregano',amount:2,unit:'g'},
@@ -475,7 +475,7 @@ steps:[
 
 {id:66,name:'Slow-Roast Lamb Shoulder with Anchovy, Garlic & Rosemary',category:'Meat & Poultry',difficulty:'medium',serves:4,time:'4 hr',calories:560,mainIngredient:'Lamb',
 ingredients:[
-  {name:'Lamb shoulder, bone-in',amount:1750,unit:'g'},
+  {name:'Lamb shoulder, bone-in',amount:1060,unit:'g'},
   {name:'Anchovy fillets',amount:6,unit:'whole'},
   {name:'Garlic cloves',amount:4,unit:'cloves'},
   {name:'Fresh rosemary sprigs',amount:2,unit:'sprigs'},
