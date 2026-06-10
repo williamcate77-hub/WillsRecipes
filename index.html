@@ -1217,7 +1217,7 @@ function renderShoppingTab(){
     </div>`).join('');
 }
 function toggleShopTab(idx){haptic(8);globalShopList[idx].checked=!globalShopList[idx].checked;saveGlobalShopList();renderShoppingTab();}
-function clearShoppingTab(){haptic(12);globalShopList=[];saveGlobalShopList();renderShoppingTab();toast('Shopping list cleared');}
+function clearShoppingTab(){if(!confirm('Clear entire shopping list? This cannot be undone.'))return;haptic(12);globalShopList=[];saveGlobalShopList();renderShoppingTab();toast('Shopping list cleared');}
 function copyShoppingTab(){
   haptic(12);if(!globalShopList.length){toast('List is empty');return;}
   const lines=globalShopList.filter(i=>!i.checked).map(i=>`• ${i.name}: ${i.amount}`);
