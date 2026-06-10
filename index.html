@@ -1195,7 +1195,7 @@ function renderCookingStep(){
 
   document.getElementById('ckRecipeName').textContent=cookingRecipe.name;
   document.getElementById('ckCounter').textContent=`${String(displayStep).padStart(2,'0')} / ${String(totalSteps).padStart(2,'0')}`;
-  document.getElementById('ckStepNum').textContent=isMiseEnPlace?'✓':'<span style="font-size:48px">'+String(displayStep).padStart(2,'0')+'</span>';
+  document.getElementById('ckStepNum').innerHTML=isMiseEnPlace?'✓':'<span style="font-size:48px">'+String(displayStep).padStart(2,'0')+'</span>';
 
   // Update progress bar
   const progressPercent=(displayStep/totalSteps)*100;
