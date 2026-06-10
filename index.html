@@ -303,8 +303,26 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 .shelf-card{flex-shrink:0;width:160px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);border-left:4px solid var(--category-color, var(--border));overflow:hidden;cursor:pointer;box-shadow:var(--shadow);transition:opacity .15s;active:opacity:.8}
 .shelf-card:active{opacity:.8}
 .shelf-card-body{padding:11px 12px 13px}
-.shelf-card-name{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.shelf-card-name{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:7px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .shelf-card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+/* Card size variants */
+.shelf-card-hero{width:100%;min-height:240px;margin:0 -20px;border-radius:0;border-bottom:1px solid var(--border);border-left:none}
+.shelf-card-hero .shelf-card-body{padding:16px 20px;height:100%;display:flex;flex-direction:column}
+.shelf-card-hero .shelf-card-name{font-size:18px;-webkit-line-clamp:3;margin-bottom:12px}
+.shelf-card-compact{width:120px;flex-shrink:0}
+.shelf-card-compact .shelf-card-name{font-size:12px;-webkit-line-clamp:1}
+/* Empty states */
+.empty-saved{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;text-align:center;color:var(--text2);padding:24px 20px}
+.empty-title{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px}
+.empty-subtitle{font-size:14px;margin-bottom:24px}
+.empty-suggestions{width:100%;display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:12px;padding:0}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:500px;text-align:center;color:var(--text2);padding:40px 20px}
+.empty-icon{font-size:48px;color:var(--text3);margin-bottom:16px;opacity:.6}
+.empty-icon .ms{font-size:48px}
+.empty .empty-title{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px}
+.empty-body{font-size:14px;margin-bottom:24px;max-width:280px}
+.empty-cta{background:var(--green);color:#fff;border:none;border-radius:var(--r);padding:14px 24px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-lg);transition:opacity .15s}
+.empty-cta:active{opacity:.85}
 /* Browse / back header */
 .browse-back-row{display:flex;align-items:center;gap:8px;padding:12px 20px 8px}
 .browse-back-btn{background:none;border:none;cursor:pointer;color:var(--green);font-size:14px;font-weight:600;display:flex;align-items:center;gap:2px;padding:0;flex-shrink:0}
@@ -836,6 +854,23 @@ function renderShelves(){
   ];
   let html='<div style="padding-bottom:24px">';
   sections.forEach(s=>{
+    // Handle "From your saved" specially as hero format
+    if(s.seeAll==='saved'){
+      if(!s.recipes.length){
+        html+=`<div class="shelf" style="margin:0 20px 12px">
+          <div class="empty-saved">
+            <p class="empty-title">No saved recipes yet</p>
+            <p class="empty-subtitle">Save recipes to cook them faster later</p>
+            <div class="empty-suggestions">${s.recipes.slice(0,3).map(r=>shelfCard(r)).join('')}</div>
+          </div>
+        </div>`;
+      } else {
+        const first=s.recipes[0];
+        const catColor=CAT_GRAD[first.category]?CAT_GRAD[first.category][0]:'#f2f2f0';
+        html+=`<div class="shelf-row hide-scrollbar" style="margin:0;padding:0">${s.recipes.slice(0,1).map(r=>`<div class="shelf-card-hero" style="--category-color:${catColor}" onclick="openRecipe(${r.id})"><div class="shelf-card-body"><div class="shelf-card-name">${r.name}</div><div class="shelf-card-meta"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span><span style="font-size:10px;color:var(--text3);margin-left:auto">${r.calories} kcal</span></div></div></div>`).join('')}</div>`;
+      }
+      return;
+    }
     if(!s.recipes.length)return;
     const shown=s.recipes.slice(0,s.cap);
     const key='sh'+(++_shelfN);
@@ -843,8 +878,6 @@ function renderShelves(){
     let btn='';
     if(s.seeAll==='shelf'&&s.recipes.length>s.cap)
       btn=`<button class="shelf-seeall" onclick="openShelfBrowse('${key}')">See all →</button>`;
-    else if(s.seeAll==='saved'&&s.recipes.length>s.cap)
-      btn=`<button class="shelf-seeall" onclick="switchTab('saved')">See all →</button>`;
     else if(s.seeAll==='cat')
       btn=`<button class="shelf-seeall" onclick="setChipFromShelf('${s.cat.replace(/'/g,"\\'")}')">See all →</button>`;
     html+=`<div class="shelf">
