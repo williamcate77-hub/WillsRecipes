@@ -12,8 +12,8 @@ ingredients:[
   {name:'Parsley',prep:'chopped',amount:5,unit:'g'},
   {name:'Lemon zest',amount:1,unit:'lemon'},
   {name:'Crème fraîche or cream',amount:245,unit:'g'},
-  {name:'Ling fillet',prep:'diced',amount:300,unit:'g'},
-  {name:'Ocean trout, diced',amount:300,unit:'g'},
+  {name:'Ling fillet',prep:'diced',amount:160,unit:'g'},
+  {name:'Ocean trout, diced',amount:160,unit:'g'},
   {name:'Peas',amount:140,unit:'g'},
   {name:'Puff pastry sheet',amount:1,unit:'sheet'},
   {name:'Egg yolk',amount:1,unit:'whole'},
@@ -48,7 +48,7 @@ steps:[
 
 {id:45,name:'Gochujang Fish & Brussels Sprouts Tray Bake',category:'Seafood',difficulty:'medium',serves:2,time:'30 min',calories:420,mainIngredient:'Fish',
 ingredients:[
-  {name:'Blue-eye trevalla or ling fillet',amount:650,unit:'g'},
+  {name:'Blue-eye trevalla or ling fillet',amount:320,unit:'g'},
   {name:'Brussels sprouts',prep:'halved',amount:500,unit:'g'},
   {name:'Onion, cut into wedges',amount:1,unit:'whole'},
   {name:'Broccolini',amount:1,unit:'bunch'},
@@ -80,7 +80,7 @@ ingredients:[
   {name:'Zucchinis',prep:'grated',amount:2,unit:'whole'},
   {name:'Mixed quinoa, rinsed',amount:200,unit:'g'},
   {name:'Vegetable stock',amount:625,unit:'ml'},
-  {name:'White fish fillet',amount:600,unit:'g'},
+  {name:'White fish fillet',amount:640,unit:'g'},
   {name:'Dairy-free pesto',amount:80,unit:'ml'},
   {name:'Frozen peas',amount:140,unit:'g'},
   {name:'Coriander',prep:'chopped',amount:1,unit:'handful'},
@@ -116,7 +116,7 @@ steps:[
 
 {id:48,name:'Grilled Prawns with Garlic & Chilli',category:'Seafood',difficulty:'easy',serves:4,time:'15 min',calories:180,mainIngredient:'Prawns',
 ingredients:[
-  {name:'Raw prawns',prep:'peeled and deveined',amount:500,unit:'g'},
+  {name:'Raw prawns',prep:'peeled and deveined',amount:640,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Garlic cloves',prep:'finely chopped',amount:3,unit:'cloves'},
   {name:'Red chilli',prep:'finely chopped',amount:1,unit:'whole'},
@@ -163,7 +163,7 @@ ingredients:[
   {name:'Vegetable stock',amount:500,unit:'ml'},
   {name:'Cannellini beans',prep:'rinsed',amount:800,unit:'g'},
   {name:'Parsley',prep:'chopped',amount:1,unit:'handful'},
-  {name:'Firm white fish fillet (trevalla)',amount:600,unit:'g'},
+  {name:'Firm white fish fillet (trevalla)',amount:640,unit:'g'},
 ],
 steps:[
   'Heat oven to 200°C. Heat 60 ml oil in a large ovenproof pan. Add leek, garlic, rosemary, anchovies and salt. Cook 3 minutes.',
@@ -211,7 +211,7 @@ steps:[
 
 {id:53,name:'Scallop, Chorizo & Beans',category:'Seafood',difficulty:'medium',serves:2,time:'20 min',calories:420,mainIngredient:'Scallops',
 ingredients:[
-  {name:'Scallops',prep:'patted dry',amount:400,unit:'g'},
+  {name:'Scallops',prep:'patted dry',amount:320,unit:'g'},
   {name:'Spanish chorizo',prep:'finely diced',amount:1,unit:'small'},
   {name:'Cannellini beans',prep:'rinsed',amount:400,unit:'g'},
   {name:'Garlic cloves',prep:'finely chopped',amount:2,unit:'cloves'},
@@ -262,7 +262,7 @@ ingredients:[
   {name:'Basmati rice',amount:200,unit:'g'},
   {name:'Crushed tomatoes',amount:400,unit:'g'},
   {name:'Vegetable or chicken stock',amount:800,unit:'ml'},
-  {name:'Ling fillet, skinless boneless',amount:500,unit:'g'},
+  {name:'Ling fillet, skinless boneless',amount:640,unit:'g'},
   {name:'Butter beans',prep:'rinsed',amount:400,unit:'g'},
   {name:'Parsley and mint',prep:'chopped',amount:1,unit:'handful'},
   {name:'Lemon juice',amount:30,unit:'ml'},
@@ -285,7 +285,7 @@ ingredients:[
   {name:'Vegetable stock',amount:400,unit:'ml'},
   {name:'Coconut milk',amount:310,unit:'ml'},
   {name:'Chickpeas',prep:'rinsed',amount:400,unit:'g'},
-  {name:'White fish',prep:'cubed',amount:500,unit:'g'},
+  {name:'White fish',prep:'cubed',amount:320,unit:'g'},
   {name:'Spinach',prep:'chopped',amount:1,unit:'bunch'},
   {name:'Coriander',prep:'chopped',amount:1,unit:'handful'},
   {name:'Lime juice',amount:30,unit:'ml'},
