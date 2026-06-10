@@ -549,7 +549,7 @@ steps:[
 ]},
 {id:148,name:'Mongolian Beef',category:'Meat & Poultry',difficulty:'medium',serves:4,time:'45 min',calories:560,mainIngredient:'Beef',
 ingredients:[
-  {name:'Steak',prep:'thinly sliced',amount:500,unit:'g'},
+  {name:'Steak',prep:'thinly sliced',amount:720,unit:'g'},
   {name:'Soy sauce',amount:60,unit:'ml'},
   {name:'Cornflour',amount:100,unit:'g'},
   {name:'MSG',amount:1,unit:'pinch'},
@@ -578,7 +578,7 @@ steps:[
 ]},
 {id:149,name:'San Choy Bow',category:'Meat & Poultry',difficulty:'easy',serves:4,time:'30 min',calories:380,mainIngredient:'Beef',
 ingredients:[
-  {name:'Beef mince',amount:500,unit:'g'},
+  {name:'Beef mince',amount:720,unit:'g'},
   {name:'Peanut oil',amount:1,unit:'tbsp'},
   {name:'Garlic cloves',prep:'minced',amount:2,unit:'clove'},
   {name:'Ginger',prep:'finely grated',amount:1,unit:'tbsp'},
