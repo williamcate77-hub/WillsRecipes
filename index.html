@@ -660,6 +660,65 @@ function parseMinutes(s){
   return m||999;
 }
 
+// ── RECIPE VALIDATION/LINTING
+function validateAllRecipes(){
+  const issues=[];
+  const allRecipes=ALL_RECIPES||[];
+
+  for(const r of allRecipes){
+    const rec_issues={id:r.id,name:r.name,errors:[],warnings:[]};
+
+    // Check 1: Units in SCALING_RULES
+    if(r.ingredients){
+      for(const ing of r.ingredients){
+        if(!SCALING_RULES[ing.unit?.toLowerCase()]){
+          rec_issues.warnings.push(`Unknown unit "${ing.unit}" in ${ing.name}`);
+        }
+      }
+    }
+
+    // Check 2: Water accounting mismatch (optional, only if steps exist)
+    if(r.ingredients && r.steps){
+      const waterIng=r.ingredients.find(i=>i.name.toLowerCase()==='water');
+      if(waterIng){
+        const waterMatch=r.steps.join(' ').match(/(\d+)(?:\.?\d+)?\s*m?l.*water/gi);
+        if(waterMatch){
+          const listedWater=waterIng.amount;
+          const stepsWater=waterMatch.reduce((sum,m)=>{
+            const num=parseFloat(m.match(/\d+\.?\d*/)[0]);
+            return sum+num;
+          },0);
+          if(Math.abs(listedWater-stepsWater)>50){
+            rec_issues.warnings.push(`Water accounting: ${listedWater}ml listed, ~${stepsWater}ml used in steps`);
+          }
+        }
+      }
+    }
+
+    if(rec_issues.errors.length||rec_issues.warnings.length){
+      issues.push(rec_issues);
+    }
+  }
+
+  if(issues.length>0){
+    console.warn(`Recipe validation: ${issues.length} recipes with warnings/errors`);
+    issues.forEach(i=>{
+      if(i.errors.length)console.error(`  ${i.name} (${i.id}):`,i.errors);
+      if(i.warnings.length)console.warn(`  ${i.name} (${i.id}):`,i.warnings);
+    });
+  }
+  return issues;
+}
+
+// Run validation on load (log only, no blocking)
+(function(){
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>validateAllRecipes());
+  }else{
+    validateAllRecipes();
+  }
+})();
+
 // ── SMART SEARCH (debounced 300ms)
 let _st=null;
 function onSearch(){
