@@ -322,7 +322,6 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
     <circle cx="22" cy="22" r="14" fill="#ffffff"/>
   </svg>
   <div class="hdr-title-block">
-    <p class="hdr-eyebrow">A recipe collection by</p>
     <h1 class="hdr-title">Cooking With Will</h1>
   </div>
   <div class="hdr-btns">
@@ -491,8 +490,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
       </div>
       <!-- Serving size -->
       <div class="serve-card">
-        <div class="serve-row"><span class="serve-lbl">Serves</span><div><span class="serve-num" id="portionVal">4</span><span class="serve-unit">people</span></div></div>
-        <input type="range" id="portionSlider" min="1" max="20" value="4" oninput="onPortion()">
+        <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()">
       </div>
       <h3 class="det-sec">Ingredients</h3>
       <div class="ing-list" id="ingList"></div>
@@ -913,11 +911,10 @@ function openRecipe(id){
   if(!shopChecked[id])shopChecked[id]=new Set();
   if(!stepsDone[id])stepsDone[id]=new Set();
   portionScale=1;
-  const def=Math.max(2,Math.min(6,currentRecipe.serves));
+  const def=2;
   const slider=document.getElementById('portionSlider');
   slider.value=def;slider.max=Math.max(20,currentRecipe.serves*4);
   portionScale=def/currentRecipe.serves;
-  document.getElementById('portionVal').textContent=def;
   renderDetailContent();
   document.querySelectorAll('.view').forEach(v=>{v.style.display='none';v.classList.remove('active')});
   const v=document.getElementById('view-detail');v.style.display='block';v.classList.add('active');
@@ -933,7 +930,7 @@ function renderDetailContent(){
   document.getElementById('detTitle').textContent=r.name;
   updateDetPin();
   const d=r.difficulty;
-  document.getElementById('detTags').innerHTML=`<span class="badge badge-${d} det-tag" style="padding:5px 12px;border-radius:20px">${cap(d)}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${r.calories} kcal/serve</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">Serves ${r.serves}</span>`;
+  document.getElementById('detTags').innerHTML=`<span class="badge badge-${d} det-tag" style="padding:5px 12px;border-radius:20px">${cap(d)}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${r.calories} kcal/serve</span>`;
   renderIngredients();renderSteps();renderShopList();
 }
 
@@ -1122,7 +1119,6 @@ function toggleIngDrawer(){
 }
 function renderCkIngList(){
   if(!cookingRecipe)return;
-  document.getElementById('ckServeNote').textContent=`Serves ${cookingRecipe.serves}`;
   document.getElementById('ckIngList').innerHTML=cookingRecipe.ingredients.map(ing=>{
     const display=fmtIng(ing.amount,ing.unit);
     return`<div class="ing-row"><div class="ing-dot"></div><span class="ing-name">${dispName(ing.name)}</span><span class="ing-amt">${display}</span></div>`;
@@ -1219,7 +1215,7 @@ function copyShoppingTab(){
 // ── SHARE
 function shareRecipe(){
   haptic(8);const r=currentRecipe;
-  const text=`${r.name}\n\nServes ${r.serves} | ${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
+  const text=`${r.name}\n\n${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
   if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
   else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied to clipboard'));
 }
