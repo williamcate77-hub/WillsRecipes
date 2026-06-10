@@ -5,9 +5,9 @@ const RECIPES3 = [
 ingredients:[
   {name:'Fresh corn cobs',amount:2,unit:'whole'},
   {name:'Olive oil',amount:15,unit:'ml'},
-  {name:'Feta, crumbled',amount:40,unit:'g'},
+  {name:'Feta',prep:'crumbled',amount:40,unit:'g'},
   {name:'Lime zest and juice',amount:1,unit:'lime'},
-  {name:'Coriander, chopped',amount:1,unit:'handful'},
+  {name:'Coriander',prep:'chopped',amount:1,unit:'handful'},
 ],
 steps:[
   'Heat a barbecue or grill pan until very hot.',
@@ -20,9 +20,9 @@ steps:[
 ingredients:[
   {name:'Corn cobs, kernels shaved (cobs reserved)',amount:6,unit:'whole'},
   {name:'Olive oil',amount:45,unit:'ml'},
-  {name:'Chillies, minced',amount:2,unit:'whole'},
-  {name:'Shallot, minced',amount:1,unit:'whole'},
-  {name:'Feta, crumbled',amount:70,unit:'g'},
+  {name:'Chillies',prep:'minced',amount:2,unit:'whole'},
+  {name:'Shallot',prep:'minced',amount:1,unit:'whole'},
+  {name:'Feta',prep:'crumbled',amount:70,unit:'g'},
   {name:'Lime juice',amount:30,unit:'ml'},
   {name:'Coriander leaves',amount:1,unit:'handful'},
 ],
@@ -35,9 +35,9 @@ steps:[
 
 {id:81,name:'Garlic Green Beans',category:'Sides',difficulty:'easy',serves:4,time:'10 min',calories:80,mainIngredient:'Green Beans',
 ingredients:[
-  {name:'Green beans, trimmed',amount:300,unit:'g'},
+  {name:'Green beans',prep:'trimmed',amount:300,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
-  {name:'Garlic cloves, thinly sliced',amount:2,unit:'cloves'},
+  {name:'Garlic cloves',prep:'thinly sliced',amount:2,unit:'cloves'},
 ],
 steps:[
   'Blanch beans in boiling salted water for 2 minutes. Drain.',
@@ -47,7 +47,7 @@ steps:[
 
 {id:82,name:'Honey-Glazed Carrots',category:'Sides',difficulty:'easy',serves:4,time:'30 min',calories:130,mainIngredient:'Carrots',
 ingredients:[
-  {name:'Carrots, peeled and halved lengthways',amount:500,unit:'g'},
+  {name:'Carrots',prep:'peeled and halved lengthways',amount:500,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Honey',amount:30,unit:'ml'},
 ],
@@ -59,9 +59,9 @@ steps:[
 
 {id:83,name:'Potato Gratin',category:'Sides',difficulty:'medium',serves:4,time:'65 min',calories:420,mainIngredient:'Potatoes',
 ingredients:[
-  {name:'Potatoes, thinly sliced',amount:1000,unit:'g'},
+  {name:'Potatoes',prep:'thinly sliced',amount:1000,unit:'g'},
   {name:'Cream',amount:300,unit:'ml'},
-  {name:'Garlic cloves, crushed',amount:2,unit:'cloves'},
+  {name:'Garlic cloves',prep:'crushed',amount:2,unit:'cloves'},
   {name:'Gruyère or cheddar, grated',amount:100,unit:'g'},
   {name:'Fresh thyme leaves (optional)',amount:5,unit:'g'},
 ],
@@ -74,8 +74,8 @@ steps:[
 
 {id:84,name:'Roasted Brussels Sprouts with Bacon',category:'Sides',difficulty:'easy',serves:4,time:'30 min',calories:160,mainIngredient:'Brussels Sprouts',
 ingredients:[
-  {name:'Brussels sprouts, halved',amount:400,unit:'g'},
-  {name:'Streaky bacon, chopped',amount:100,unit:'g'},
+  {name:'Brussels sprouts',prep:'halved',amount:400,unit:'g'},
+  {name:'Streaky bacon',prep:'chopped',amount:100,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
 ],
 steps:[
@@ -102,7 +102,7 @@ steps:[
 ingredients:[
   {name:'Medium sweet potatoes, halved',amount:2,unit:'whole'},
   {name:'Olive oil',amount:15,unit:'ml'},
-  {name:'Chickpeas, rinsed',amount:200,unit:'g'},
+  {name:'Chickpeas',prep:'rinsed',amount:200,unit:'g'},
   {name:'Ground cumin',amount:5,unit:'g'},
   {name:'Smoked paprika',amount:2,unit:'g'},
   {name:'Garlicky whipped tahini',amount:30,unit:'g'},
@@ -118,10 +118,10 @@ steps:[
 
 {id:87,name:'Charred Broccoli with Lemon & Almonds',category:'Sides',difficulty:'easy',serves:4,time:'15 min',calories:120,mainIngredient:'Broccoli',
 ingredients:[
-  {name:'Broccoli, cut into florets',amount:2,unit:'whole heads'},
+  {name:'Broccoli',prep:'cut into florets',amount:2,unit:'whole heads'},
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Lemon zest and juice',amount:1,unit:'lemon'},
-  {name:'Toasted almonds, chopped',amount:40,unit:'g'},
+  {name:'Toasted almonds',prep:'chopped',amount:40,unit:'g'},
 ],
 steps:[
   'Toss broccoli florets with olive oil, salt and pepper.',
@@ -163,10 +163,10 @@ steps:[
 
 {id:90,name:'Grilled Zucchini with Lemon, Dill & Feta',category:'Sides',difficulty:'easy',serves:2,time:'15 min',calories:150,mainIngredient:'Zucchini',
 ingredients:[
-  {name:'Zucchinis, sliced lengthways',amount:2,unit:'whole'},
+  {name:'Zucchinis',prep:'sliced lengthways',amount:2,unit:'whole'},
   {name:'Olive oil',amount:15,unit:'ml'},
-  {name:'Feta, crumbled',amount:50,unit:'g'},
-  {name:'Fresh dill, chopped',amount:1,unit:'handful'},
+  {name:'Feta',prep:'crumbled',amount:50,unit:'g'},
+  {name:'Fresh dill',prep:'chopped',amount:1,unit:'handful'},
   {name:'Lemon juice',amount:15,unit:'ml'},
 ],
 steps:[
@@ -177,10 +177,10 @@ steps:[
 
 {id:91,name:'Roasted Cauliflower with Garlic, Parsley & Vinegar',category:'Sides',difficulty:'easy',serves:4,time:'20 min',calories:120,mainIngredient:'Cauliflower',
 ingredients:[
-  {name:'Cauliflower, cut into large florets',amount:1,unit:'whole'},
+  {name:'Cauliflower',prep:'cut into large florets',amount:1,unit:'whole'},
   {name:'Garlic confit cloves',amount:3,unit:'cloves'},
   {name:'Olive oil',amount:75,unit:'ml'},
-  {name:'Parsley, chopped',amount:30,unit:'g'},
+  {name:'Parsley',prep:'chopped',amount:30,unit:'g'},
   {name:'Chilli flakes',amount:1,unit:'pinch'},
   {name:'Red wine vinegar',amount:30,unit:'ml'},
 ],
@@ -193,10 +193,10 @@ steps:[
 
 {id:92,name:'Grilled King Oyster Mushrooms with Tarragon Butter',category:'Sides',difficulty:'easy',serves:2,time:'15 min',calories:180,mainIngredient:'Mushrooms',
 ingredients:[
-  {name:'Unsalted butter, softened',amount:40,unit:'g'},
-  {name:'Tarragon, chopped',amount:15,unit:'g'},
-  {name:'Chives, snipped',amount:5,unit:'g'},
-  {name:'Garlic clove, minced',amount:1,unit:'clove'},
+  {name:'Unsalted butter',prep:'softened',amount:40,unit:'g'},
+  {name:'Tarragon',prep:'chopped',amount:15,unit:'g'},
+  {name:'Chives',prep:'snipped',amount:5,unit:'g'},
+  {name:'Garlic clove',prep:'minced',amount:1,unit:'clove'},
   {name:'Lemon zest',amount:5,unit:'g'},
   {name:'King oyster mushrooms, halved lengthways',amount:250,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
@@ -216,7 +216,7 @@ ingredients:[
   {name:'Olive oil',amount:75,unit:'ml'},
   {name:'Greek yoghurt',amount:240,unit:'g'},
   {name:'Shallot confit',amount:60,unit:'g'},
-  {name:'Mint, chopped',amount:60,unit:'g'},
+  {name:'Mint',prep:'chopped',amount:60,unit:'g'},
   {name:'Lemon juice',amount:37,unit:'ml'},
 ],
 steps:[
@@ -229,9 +229,9 @@ steps:[
 {id:94,name:'Crispy Brussels Sprouts with Tahini, Maple & Za\'atar',category:'Sides',difficulty:'medium',serves:2,time:'25 min',calories:320,mainIngredient:'Brussels Sprouts',
 ingredients:[
   {name:'Olive oil',amount:60,unit:'ml'},
-  {name:'Brussels sprouts, halved',amount:500,unit:'g'},
+  {name:'Brussels sprouts',prep:'halved',amount:500,unit:'g'},
   {name:'Crispy roast chickpeas',amount:180,unit:'g'},
-  {name:'Long red chilli, finely chopped',amount:0.5,unit:'whole'},
+  {name:'Long red chilli',prep:'finely chopped',amount:0.5,unit:'whole'},
   {name:'Maple syrup',amount:30,unit:'ml'},
   {name:'Lemon juice',amount:30,unit:'ml'},
   {name:'Garlicky whipped tahini',amount:140,unit:'g'},
@@ -247,7 +247,7 @@ steps:[
 
 {id:95,name:'Roasted Pumpkin with Whipped Feta & Dukkah',category:'Sides',difficulty:'medium',serves:2,time:'30 min',calories:320,mainIngredient:'Pumpkin',
 ingredients:[
-  {name:'Pumpkin, sliced',amount:600,unit:'g'},
+  {name:'Pumpkin',prep:'sliced',amount:600,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Cumin seeds',amount:5,unit:'g'},
   {name:'Soft feta',amount:150,unit:'g'},
@@ -265,11 +265,11 @@ steps:[
 {id:96,name:'Roasted Acorn Squash with Hazelnuts, Brown Butter & Rosemary',category:'Sides',difficulty:'medium',serves:4,time:'40 min',calories:260,mainIngredient:'Squash',
 ingredients:[
   {name:'Acorn squash, halved and seeded',amount:1,unit:'whole'},
-  {name:'Hazelnuts, chopped',amount:30,unit:'g'},
+  {name:'Hazelnuts',prep:'chopped',amount:30,unit:'g'},
   {name:'Butter',amount:55,unit:'g'},
   {name:'Water',amount:60,unit:'ml'},
   {name:'Brown sugar',amount:15,unit:'g'},
-  {name:'Rosemary, chopped',amount:5,unit:'g'},
+  {name:'Rosemary',prep:'chopped',amount:5,unit:'g'},
   {name:'Vegetable stock',amount:120,unit:'ml'},
   {name:'Lemon juice',amount:2,unit:'ml'},
 ],
@@ -282,7 +282,7 @@ steps:[
 
 {id:97,name:'Spicy Carrots with Maple, Pepitas, Yoghurt & Mint',category:'Sides',difficulty:'easy',serves:2,time:'35 min',calories:280,mainIngredient:'Carrots',
 ingredients:[
-  {name:'Carrots, roasted with spices',amount:500,unit:'g'},
+  {name:'Carrots',prep:'roasted with spices',amount:500,unit:'g'},
   {name:'Maple syrup',amount:30,unit:'ml'},
   {name:'Lemon zest',amount:1,unit:'lemon'},
   {name:'Mint and dill',amount:1,unit:'handful'},
@@ -317,13 +317,13 @@ steps:[
 
 {id:99,name:'Pea & Mint Fritters',category:'Sides',difficulty:'easy',serves:4,time:'20 min',calories:200,mainIngredient:'Peas',
 ingredients:[
-  {name:'Frozen peas, thawed',amount:300,unit:'g'},
-  {name:'Spring onions, chopped',amount:2,unit:'whole'},
+  {name:'Frozen peas',prep:'thawed',amount:300,unit:'g'},
+  {name:'Spring onions',prep:'chopped',amount:2,unit:'whole'},
   {name:'Eggs',amount:2,unit:'whole'},
   {name:'Self-raising flour',amount:100,unit:'g'},
   {name:'Baking powder',amount:2,unit:'g'},
   {name:'Fresh mint leaves, chopped',amount:1,unit:'handful'},
-  {name:'Feta, crumbled',amount:50,unit:'g'},
+  {name:'Feta',prep:'crumbled',amount:50,unit:'g'},
   {name:'Olive oil, for frying',amount:30,unit:'ml'},
 ],
 steps:[
@@ -335,9 +335,9 @@ steps:[
 {id:100,name:'Homemade Baked Beans',category:'Sides',difficulty:'easy',serves:4,time:'40 min',calories:280,mainIngredient:'Beans',
 ingredients:[
   {name:'Olive oil',amount:30,unit:'ml'},
-  {name:'Onion, finely chopped',amount:1,unit:'whole'},
-  {name:'Garlic cloves, chopped',amount:2,unit:'cloves'},
-  {name:'Cannellini beans, drained',amount:800,unit:'g'},
+  {name:'Onion',prep:'finely chopped',amount:1,unit:'whole'},
+  {name:'Garlic cloves',prep:'chopped',amount:2,unit:'cloves'},
+  {name:'Cannellini beans',prep:'drained',amount:800,unit:'g'},
   {name:'Tinned chopped tomatoes',amount:400,unit:'g'},
   {name:'Tomato paste',amount:30,unit:'g'},
   {name:'Brown sugar',amount:15,unit:'g'},
@@ -353,13 +353,13 @@ steps:[
 
 {id:101,name:'Lemony Crushed Butter Beans',category:'Sides',difficulty:'easy',serves:4,time:'10 min',calories:240,mainIngredient:'Butter Beans',
 ingredients:[
-  {name:'Butter beans, rinsed',amount:800,unit:'g'},
+  {name:'Butter beans',prep:'rinsed',amount:800,unit:'g'},
   {name:'Olive oil',amount:80,unit:'ml'},
-  {name:'Garlic cloves, grated',amount:2,unit:'cloves'},
+  {name:'Garlic cloves',prep:'grated',amount:2,unit:'cloves'},
   {name:'Lemon juice',amount:30,unit:'ml'},
   {name:'Fennel bulb, finely chopped (fronds reserved)',amount:0.5,unit:'small'},
-  {name:'Spring onion, sliced',amount:15,unit:'g'},
-  {name:'Parsley, chopped',amount:5,unit:'g'},
+  {name:'Spring onion',prep:'sliced',amount:15,unit:'g'},
+  {name:'Parsley',prep:'chopped',amount:5,unit:'g'},
   {name:'Chilli in oil (optional)',amount:30,unit:'ml'},
 ],
 steps:[
@@ -371,7 +371,7 @@ steps:[
 {id:102,name:'Brown Rice & Herb Pilaf with Toasted Almonds',category:'Sides',difficulty:'easy',serves:2,time:'40 min',calories:340,mainIngredient:'Brown Rice',
 ingredients:[
   {name:'Brown rice',amount:150,unit:'g'},
-  {name:'Onion, finely chopped',amount:1,unit:'whole'},
+  {name:'Onion',prep:'finely chopped',amount:1,unit:'whole'},
   {name:'Olive oil',amount:15,unit:'ml'},
   {name:'Vegetable stock',amount:400,unit:'ml'},
   {name:'Parsley and dill',amount:1,unit:'handful'},
@@ -406,7 +406,7 @@ steps:[
 
 {id:104,name:'Potato Flatbreads',category:'Bread & Bakes',difficulty:'easy',serves:8,time:'45 min',calories:180,mainIngredient:'Potato',
 ingredients:[
-  {name:'Potatoes, peeled and diced',amount:500,unit:'g'},
+  {name:'Potatoes',prep:'peeled and diced',amount:500,unit:'g'},
   {name:'Plain flour, plus extra',amount:250,unit:'g'},
   {name:'Baking powder',amount:5,unit:'g'},
   {name:'Salt',amount:5,unit:'g'},
@@ -426,10 +426,10 @@ ingredients:[
   {name:'Caster sugar',amount:5,unit:'g'},
   {name:'Warm water',amount:300,unit:'ml'},
   {name:'Olive oil',amount:30,unit:'ml'},
-  {name:'Baby spinach, wilted and squeezed dry',amount:300,unit:'g'},
-  {name:'Feta, crumbled',amount:200,unit:'g'},
-  {name:'Red onion, finely chopped',amount:1,unit:'small'},
-  {name:'Flat-leaf parsley, chopped',amount:1,unit:'handful'},
+  {name:'Baby spinach',prep:'wilted and squeezed dry',amount:300,unit:'g'},
+  {name:'Feta',prep:'crumbled',amount:200,unit:'g'},
+  {name:'Red onion',prep:'finely chopped',amount:1,unit:'small'},
+  {name:'Flat-leaf parsley',prep:'chopped',amount:1,unit:'handful'},
 ],
 steps:[
   'Combine flour, yeast, sugar and salt. Add warm water and oil, mix to a dough. Knead 10 minutes. Rise 1 hour.',
@@ -442,14 +442,14 @@ steps:[
 {id:106,name:'Spinach & Feta Pie',category:'Bread & Bakes',difficulty:'medium',serves:4,time:'60 min',calories:360,mainIngredient:'Spinach',
 ingredients:[
   {name:'Olive oil',amount:30,unit:'ml'},
-  {name:'Onion, finely chopped',amount:1,unit:'whole'},
-  {name:'Garlic cloves, chopped',amount:2,unit:'cloves'},
-  {name:'Spinach, washed and chopped',amount:500,unit:'g'},
-  {name:'Feta cheese, crumbled',amount:200,unit:'g'},
-  {name:'Eggs, lightly beaten',amount:2,unit:'whole'},
-  {name:'Dill, chopped',amount:30,unit:'g'},
+  {name:'Onion',prep:'finely chopped',amount:1,unit:'whole'},
+  {name:'Garlic cloves',prep:'chopped',amount:2,unit:'cloves'},
+  {name:'Spinach',prep:'washed and chopped',amount:500,unit:'g'},
+  {name:'Feta cheese',prep:'crumbled',amount:200,unit:'g'},
+  {name:'Eggs',prep:'lightly beaten',amount:2,unit:'whole'},
+  {name:'Dill',prep:'chopped',amount:30,unit:'g'},
   {name:'Filo pastry sheets',amount:10,unit:'sheets'},
-  {name:'Butter, melted',amount:100,unit:'g'},
+  {name:'Butter',prep:'melted',amount:100,unit:'g'},
 ],
 steps:[
   'Fry onion and garlic in oil. Add spinach and cook until wilted. Cool slightly.',
@@ -461,12 +461,12 @@ steps:[
 {id:107,name:'Tomato & Ricotta Galette',category:'Bread & Bakes',difficulty:'medium',serves:4,time:'60 min',calories:320,mainIngredient:'Tomatoes',
 ingredients:[
   {name:'Plain flour',amount:200,unit:'g'},
-  {name:'Cold butter, cubed',amount:100,unit:'g'},
+  {name:'Cold butter',prep:'cubed',amount:100,unit:'g'},
   {name:'Cold water',amount:45,unit:'ml'},
   {name:'Ricotta',amount:250,unit:'g'},
   {name:'Egg',amount:1,unit:'whole'},
   {name:'Olive oil',amount:15,unit:'ml'},
-  {name:'Ripe tomatoes, sliced',amount:500,unit:'g'},
+  {name:'Ripe tomatoes',prep:'sliced',amount:500,unit:'g'},
   {name:'Fresh basil leaves',amount:1,unit:'handful'},
 ],
 steps:[
@@ -479,12 +479,12 @@ steps:[
 
 {id:108,name:'Zucchini Slice',category:'Bread & Bakes',difficulty:'easy',serves:6,time:'50 min',calories:280,mainIngredient:'Zucchini',
 ingredients:[
-  {name:'Zucchini, grated',amount:2,unit:'medium'},
-  {name:'Onion, finely chopped',amount:1,unit:'whole'},
+  {name:'Zucchini',prep:'grated',amount:2,unit:'medium'},
+  {name:'Onion',prep:'finely chopped',amount:1,unit:'whole'},
   {name:'Self-raising flour',amount:150,unit:'g'},
   {name:'Grated cheddar cheese',amount:150,unit:'g'},
   {name:'Olive oil',amount:120,unit:'ml'},
-  {name:'Eggs, lightly beaten',amount:5,unit:'whole'},
+  {name:'Eggs',prep:'lightly beaten',amount:5,unit:'whole'},
 ],
 steps:[
   'Heat oven to 180°C. Grease and line a 20×30 cm slice tin.',
@@ -496,11 +496,11 @@ steps:[
 {id:109,name:'Quiche Lorraine',category:'Bread & Bakes',difficulty:'medium',serves:6,time:'75 min',calories:420,mainIngredient:'Eggs',
 ingredients:[
   {name:'Plain flour',amount:200,unit:'g'},
-  {name:'Cold butter, cubed',amount:100,unit:'g'},
+  {name:'Cold butter',prep:'cubed',amount:100,unit:'g'},
   {name:'Egg yolk',amount:1,unit:'whole'},
   {name:'Cold water',amount:30,unit:'ml'},
-  {name:'Bacon, chopped',amount:200,unit:'g'},
-  {name:'Onion, finely chopped',amount:1,unit:'whole'},
+  {name:'Bacon',prep:'chopped',amount:200,unit:'g'},
+  {name:'Onion',prep:'finely chopped',amount:1,unit:'whole'},
   {name:'Eggs',amount:3,unit:'whole'},
   {name:'Cream',amount:200,unit:'ml'},
   {name:'Milk',amount:100,unit:'ml'},
@@ -536,9 +536,9 @@ steps:[
 ingredients:[
   {name:'Tahini',amount:135,unit:'g'},
   {name:'Lemon juice',amount:30,unit:'ml'},
-  {name:'Garlic cloves, crushed',amount:2,unit:'cloves'},
-  {name:'Parsley, chopped',amount:1,unit:'handful'},
-  {name:'Coriander, chopped',amount:1,unit:'handful'},
+  {name:'Garlic cloves',prep:'crushed',amount:2,unit:'cloves'},
+  {name:'Parsley',prep:'chopped',amount:1,unit:'handful'},
+  {name:'Coriander',prep:'chopped',amount:1,unit:'handful'},
   {name:'Water',amount:170,unit:'ml'},
 ],
 steps:[
@@ -550,7 +550,7 @@ steps:[
 ingredients:[
   {name:'Tahini',amount:135,unit:'g'},
   {name:'Lemon juice',amount:30,unit:'ml'},
-  {name:'Garlic cloves, crushed',amount:2,unit:'cloves'},
+  {name:'Garlic cloves',prep:'crushed',amount:2,unit:'cloves'},
   {name:'Water',amount:170,unit:'ml'},
 ],
 steps:[
@@ -561,7 +561,7 @@ steps:[
 {id:113,name:'Sumac Yoghurt',category:'Sauces',difficulty:'easy',serves:6,time:'5 min',calories:80,mainIngredient:'Yoghurt',
 ingredients:[
   {name:'Greek yoghurt',amount:390,unit:'g'},
-  {name:'Garlic cloves, crushed',amount:2,unit:'cloves'},
+  {name:'Garlic cloves',prep:'crushed',amount:2,unit:'cloves'},
   {name:'Ground sumac',amount:15,unit:'g'},
   {name:'Lemon juice',amount:30,unit:'ml'},
   {name:'Olive oil',amount:30,unit:'ml'},
@@ -575,8 +575,8 @@ steps:[
 ingredients:[
   {name:'Greek yoghurt',amount:200,unit:'g'},
   {name:'Lemon juice and zest',amount:1,unit:'lemon'},
-  {name:'Garlic clove, crushed',amount:1,unit:'clove'},
-  {name:'Parsley and mint, chopped',amount:1,unit:'handful'},
+  {name:'Garlic clove',prep:'crushed',amount:1,unit:'clove'},
+  {name:'Parsley and mint',prep:'chopped',amount:1,unit:'handful'},
 ],
 steps:[
   'Mix yoghurt, lemon juice, lemon zest, garlic and herbs together.',
@@ -585,17 +585,17 @@ steps:[
 
 {id:115,name:'Roast Tomato & White Bean Raita',category:'Sauces',difficulty:'medium',serves:2,time:'50 min',calories:280,mainIngredient:'Tomatoes',
 ingredients:[
-  {name:'Tomatoes, halved',amount:3,unit:'whole'},
+  {name:'Tomatoes',prep:'halved',amount:3,unit:'whole'},
   {name:'Olive oil',amount:60,unit:'ml'},
   {name:'Greek yoghurt',amount:780,unit:'g'},
-  {name:'Garlic clove, crushed',amount:1,unit:'clove'},
+  {name:'Garlic clove',prep:'crushed',amount:1,unit:'clove'},
   {name:'Kalamata olives, chopped',amount:40,unit:'g'},
-  {name:'Coriander, chopped',amount:1,unit:'handful'},
+  {name:'Coriander',prep:'chopped',amount:1,unit:'handful'},
   {name:'Mustard seeds',amount:5,unit:'g'},
   {name:'Cumin seeds',amount:5,unit:'g'},
-  {name:'Butter beans, rinsed',amount:400,unit:'g'},
+  {name:'Butter beans',prep:'rinsed',amount:400,unit:'g'},
   {name:'Zhoug or pesto',amount:30,unit:'ml'},
-  {name:'Mint leaves, chopped',amount:1,unit:'handful'},
+  {name:'Mint leaves',prep:'chopped',amount:1,unit:'handful'},
   {name:'Lemon juice',amount:30,unit:'ml'},
 ],
 steps:[
@@ -608,7 +608,7 @@ steps:[
 
 {id:116,name:'Salmoriglio',category:'Sauces',difficulty:'easy',serves:6,time:'5 min',calories:130,mainIngredient:'Herbs',
 ingredients:[
-  {name:'Garlic cloves, crushed',amount:2,unit:'cloves'},
+  {name:'Garlic cloves',prep:'crushed',amount:2,unit:'cloves'},
   {name:'Fresh oregano, leaves picked',amount:1,unit:'bunch'},
   {name:'Parsley leaves',amount:1,unit:'handful'},
   {name:'Lemon juice',amount:60,unit:'ml'},
@@ -624,7 +624,7 @@ steps:[
 ingredients:[
   {name:'Coriander (stalks included)',amount:0.5,unit:'bunch'},
   {name:'Parsley (stalks included)',amount:0.5,unit:'bunch'},
-  {name:'Long red chilli, sliced',amount:1,unit:'whole'},
+  {name:'Long red chilli',prep:'sliced',amount:1,unit:'whole'},
   {name:'Ground cumin',amount:10,unit:'g'},
   {name:'Ground coriander',amount:5,unit:'g'},
   {name:'Ground cinnamon',amount:2,unit:'g'},
@@ -639,7 +639,7 @@ steps:[
 
 {id:118,name:'Pickled Red Onions (Zuni Cafe)',category:'Sauces',difficulty:'easy',serves:8,time:'30 min',calories:60,mainIngredient:'Onions',
 ingredients:[
-  {name:'Red onions, cut into rings',amount:450,unit:'g'},
+  {name:'Red onions',prep:'cut into rings',amount:450,unit:'g'},
   {name:'White vinegar',amount:750,unit:'ml'},
   {name:'Sugar',amount:300,unit:'g'},
   {name:'Cinnamon stick',amount:1,unit:'whole'},
@@ -658,7 +658,7 @@ steps:[
 {id:119,name:'Lemon Tart',category:'Desserts',difficulty:'medium',serves:6,time:'75 min',calories:380,mainIngredient:'Lemon',
 ingredients:[
   {name:'Plain flour',amount:200,unit:'g'},
-  {name:'Cold butter, cubed',amount:100,unit:'g'},
+  {name:'Cold butter',prep:'cubed',amount:100,unit:'g'},
   {name:'Icing sugar',amount:30,unit:'g'},
   {name:'Egg yolk',amount:1,unit:'whole'},
   {name:'Cold water',amount:30,unit:'ml'},
@@ -681,7 +681,7 @@ ingredients:[
   {name:'Caster sugar (caramel)',amount:150,unit:'g'},
   {name:'Water',amount:45,unit:'ml'},
   {name:'Full-cream milk',amount:600,unit:'ml'},
-  {name:'Vanilla bean, split',amount:1,unit:'whole'},
+  {name:'Vanilla bean',prep:'split',amount:1,unit:'whole'},
   {name:'Eggs',amount:4,unit:'whole'},
   {name:'Egg yolks',amount:2,unit:'yolks'},
   {name:'Caster sugar (custard)',amount:100,unit:'g'},
@@ -699,7 +699,7 @@ ingredients:[
   {name:'Mascarpone',amount:250,unit:'g'},
   {name:'Eggs, separated',amount:3,unit:'whole'},
   {name:'Caster sugar',amount:100,unit:'g'},
-  {name:'Strong coffee, cooled',amount:200,unit:'ml'},
+  {name:'Strong coffee',prep:'cooled',amount:200,unit:'ml'},
   {name:'Marsala or brandy',amount:30,unit:'ml'},
   {name:'Savoiardi biscuits',amount:200,unit:'g'},
   {name:'Cocoa powder, for dusting',amount:1,unit:'to serve'},
@@ -714,7 +714,7 @@ steps:[
 
 {id:122,name:'Grilled Peaches with Honey & Mascarpone',category:'Desserts',difficulty:'easy',serves:4,time:'15 min',calories:260,mainIngredient:'Peaches',
 ingredients:[
-  {name:'Ripe peaches, halved and pitted',amount:4,unit:'whole'},
+  {name:'Ripe peaches',prep:'halved and pitted',amount:4,unit:'whole'},
   {name:'Olive oil',amount:15,unit:'ml'},
   {name:'Mascarpone',amount:200,unit:'g'},
   {name:'Honey',amount:30,unit:'ml'},
@@ -728,11 +728,11 @@ steps:[
 
 {id:123,name:'Fresh Fruit Salad with Citrus Syrup',category:'Desserts',difficulty:'easy',serves:4,time:'15 min',calories:180,mainIngredient:'Fruit',
 ingredients:[
-  {name:'Pineapple, peeled and chopped',amount:1,unit:'whole'},
+  {name:'Pineapple',prep:'peeled and chopped',amount:1,unit:'whole'},
   {name:'Mangos, peeled and chopped',amount:2,unit:'whole'},
   {name:'Kiwifruit, sliced',amount:2,unit:'whole'},
-  {name:'Strawberries, halved',amount:1,unit:'punnet'},
-  {name:'Oranges, segmented',amount:2,unit:'whole'},
+  {name:'Strawberries',prep:'halved',amount:1,unit:'punnet'},
+  {name:'Oranges',prep:'segmented',amount:2,unit:'whole'},
   {name:'Mint leaves',amount:1,unit:'handful'},
   {name:'Orange juice',amount:60,unit:'ml'},
   {name:'Lime juice',amount:30,unit:'ml'},
