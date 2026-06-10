@@ -60,10 +60,10 @@ steps:[
 
 {id:127,name:'Spicy Onion Salad',category:'Salads',difficulty:'easy',serves:4,time:'15 min',calories:60,mainIngredient:'Red Onion',
 ingredients:[
-  {name:'Red onions, thinly sliced',amount:2,unit:'whole'},
-  {name:'Tomato, finely chopped',amount:1,unit:'whole'},
-  {name:'Green chilli, finely chopped',amount:1,unit:'whole'},
-  {name:'Fresh coriander, chopped',amount:2,unit:'tbsp'},
+  {name:'Red onions',amount:2,unit:'whole',prep:'thinly sliced'},
+  {name:'Tomato',amount:1,unit:'whole',prep:'finely chopped'},
+  {name:'Green chilli',amount:1,unit:'whole',prep:'finely chopped'},
+  {name:'Fresh coriander',amount:2,unit:'tbsp',prep:'chopped'},
   {name:'Lemon juice',amount:1,unit:'tbsp'},
   {name:'Salt',amount:1,unit:'tsp'},
   {name:'Chilli powder',amount:0.5,unit:'tsp'},

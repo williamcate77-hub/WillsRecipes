@@ -252,12 +252,12 @@ steps:[
 
 {id:13,name:'Greek Salad',category:'Salads',difficulty:'easy',serves:4,time:'10 min',calories:230,mainIngredient:'Tomatoes',
 ingredients:[
-  {name:'Tomatoes, chopped',amount:4,unit:'whole'},
-  {name:'Cucumber, chopped',amount:1,unit:'whole'},
-  {name:'Red onion, sliced',amount:1,unit:'whole'},
-  {name:'Green capsicum, chopped',amount:1,unit:'whole'},
+  {name:'Tomatoes',amount:4,unit:'whole',prep:'chopped'},
+  {name:'Cucumber',amount:1,unit:'whole',prep:'chopped'},
+  {name:'Red onion',amount:1,unit:'whole',prep:'sliced'},
+  {name:'Green capsicum',amount:1,unit:'whole',prep:'chopped'},
   {name:'Kalamata olives',amount:100,unit:'g'},
-  {name:'Feta cheese, cubed',amount:150,unit:'g'},
+  {name:'Feta cheese',amount:150,unit:'g',prep:'cubed'},
   {name:'Olive oil',amount:45,unit:'ml'},
   {name:'Red wine vinegar',amount:15,unit:'ml'},
   {name:'Dried oregano',amount:5,unit:'g'},
