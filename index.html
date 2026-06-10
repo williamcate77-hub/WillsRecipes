@@ -491,6 +491,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
       <!-- Serving size -->
       <div class="serve-card">
         <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()">
+        <div style="text-align:center;margin-top:8px;font-size:14px;color:var(--text2)"><span id="portionVal">2</span> servings</div>
       </div>
       <h3 class="det-sec">Ingredients</h3>
       <div class="ing-list" id="ingList"></div>
@@ -915,6 +916,7 @@ function openRecipe(id){
   const slider=document.getElementById('portionSlider');
   slider.value=def;slider.max=Math.max(20,currentRecipe.serves*4);
   portionScale=def/currentRecipe.serves;
+  document.getElementById('portionVal').textContent=def;
   renderDetailContent();
   document.querySelectorAll('.view').forEach(v=>{v.style.display='none';v.classList.remove('active')});
   const v=document.getElementById('view-detail');v.style.display='block';v.classList.add('active');
