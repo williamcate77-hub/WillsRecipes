@@ -562,6 +562,31 @@ const AISLES=[
 ];
 function getAisle(n){const lc=n.toLowerCase();for(const a of AISLES){if(a.kw.some(k=>lc.includes(k)))return a.name;}return'🛒 Other';}
 
+// ── SCALING RULES (how units scale with portion size)
+const SCALING_RULES={
+  'pinch':{type:'fixed'},'handful':{type:'fixed'},'bunch':{type:'fixed'},'bunches':{type:'fixed'},
+  'sprigs':{type:'fixed'},'sprig':{type:'fixed'},'to taste':{type:'fixed'},'to serve':{type:'fixed'},
+  'clove':{type:'stepped',steps:[0.5,1,2,3,4,6,8]},'cloves':{type:'stepped',steps:[0.5,1,2,3,4,6,8]},
+  'whole':{type:'stepped',steps:[0.5,1,2,3,4,6,8]},'fillet':{type:'stepped',steps:[1,2,3,4,6,8]},
+  'fillets':{type:'stepped',steps:[1,2,3,4,6,8]},'leaf':{type:'stepped',steps:[1,2,4,6,8,10]},
+  'leaves':{type:'stepped',steps:[1,2,4,6,8,10]},'rasher':{type:'stepped',steps:[1,2,3,4,6,8]},
+  'rashers':{type:'stepped',steps:[1,2,3,4,6,8]},'sheet':{type:'stepped',steps:[1,2,3,4]},
+  'sheets':{type:'stepped',steps:[1,2,3,4]},'yolk':{type:'stepped',steps:[1,2,3,4,6,8]},
+  'yolks':{type:'stepped',steps:[1,2,3,4,6,8]},'cup':{type:'linear'},'cups':{type:'linear'},
+  'g':{type:'linear'},'ml':{type:'linear'},'tbsp':{type:'linear'},'tsp':{type:'linear'},
+  'l':{type:'linear'},'slice':{type:'stepped',steps:[1,2,3,4,6,8]},'slices':{type:'stepped',steps:[1,2,3,4,6,8]},
+  'piece':{type:'stepped',steps:[1,2,3,4,6]},'pieces':{type:'stepped',steps:[1,2,3,4,6]},
+};
+function scaleAmount(amount,unit,scale){
+  const rule=SCALING_RULES[unit.toLowerCase()]||{type:'linear'};
+  if(rule.type==='fixed')return amount;
+  if(rule.type==='stepped'){
+    const scaled=amount*scale;
+    return rule.steps.reduce((a,b)=>Math.abs(a-scaled)<Math.abs(b-scaled)?a:b);
+  }
+  return amount*scale;
+}
+
 // ── STATE
 function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
 let currentTab='home',currentRecipe=null,prevTab='home',isDark=false;
@@ -914,7 +939,8 @@ function renderDetailContent(){
 
 function renderIngredients(){
   document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
-    const display=fmtIng(ing.amount*portionScale,ing.unit);
+    const scaled=scaleAmount(ing.amount,ing.unit,portionScale);
+    const display=fmtIng(scaled,ing.unit);
     return`<div class="ing-row${i<arr.length-1?'':' last'}"><div class="ing-dot"></div><span class="ing-name">${dispName(ing.name)}</span><span class="ing-amt">${display}</span></div>`;
   }).join('');
 }
@@ -983,8 +1009,12 @@ function normaliseIngName(name){return name.split(',')[0].trim().toLowerCase();}
 function mergeIntoShopList(ingredients,recipeName,scale){
   let added=0;
   ingredients.forEach(ing=>{
+    // Skip water and ingredients with water in the name
+    if(/^water\b|^water\s*\(/i.test(ing.name))return;
+
     const norm=normaliseIngName(ing.name);
-    const amt=fmtIng(ing.amount*scale,ing.unit);
+    const scaled=scaleAmount(ing.amount,ing.unit,scale);
+    const amt=fmtIng(scaled,ing.unit);
     const existing=globalShopList.find(x=>normaliseIngName(x.name)===norm);
     if(existing){
       // Update to latest amount from this recipe
@@ -1231,15 +1261,15 @@ function fmtIng(amount,unit){
   if(u==='g'){n=roundShoppable(n,'g');return Math.round(n)+'g';}
   if(u==='ml'){
     n=roundShoppable(n,'ml');
-    if(n<=90){
-      const tbsp=n/15,tbspR=Math.round(tbsp*2)/2;
-      if(Math.abs(tbspR-tbsp)<.09&&tbspR>=1)return`${fracStr(tbspR)} tbsp (${Math.round(tbspR*15)}ml)`;
+    if(n<=120){
+      const tbsp=n/20,tbspR=Math.round(tbsp*2)/2;
+      if(Math.abs(tbspR-tbsp)<.09&&tbspR>=1)return`${fracStr(tbspR)} tbsp (${Math.round(tbspR*20)}ml)`;
       const tsp=n/5,tspR=Math.round(tsp*4)/4;
       if(Math.abs(tspR-tsp)<.09&&tspR>=.25)return`${fracStr(tspR)} tsp (${Math.round(tspR*5)}ml)`;
     }
     return Math.round(n)+'ml';
   }
-  if(u==='tbsp')return`${fracStr(n)} tbsp (${Math.round(n*15)}ml)`;
+  if(u==='tbsp')return`${fracStr(n)} tbsp (${Math.round(n*20)}ml)`;
   if(u==='tsp') return`${fracStr(n)} tsp (${Math.round(n*5)}ml)`;
   const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets','stalk','stalks','piece','pieces','slice','slices','leaf','leaves','lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
   if(cnt.some(c=>u.includes(c))){const pu=pluralUnit(n,u);return(n%1===0?n.toString():fracStr(n))+' '+pu;}
@@ -1252,7 +1282,22 @@ function toast(msg){
 }
 function hardRefresh(){haptic(8);location.reload(true);}
 
+// ── RECIPE VALIDATION
+function validateRecipes(){
+  const warnings=[];
+  ALL_RECIPES.forEach(recipe=>{
+    // Check for prep descriptors in ingredient names (should use new prep field instead)
+    recipe.ingredients.forEach(ing=>{
+      if(/soaked|chopped|diced|minced|sliced|grated|peeled|roughly|finely|coarsely/.test(ing.name)&&!ing.prep){
+        warnings.push(`${recipe.name}: ingredient "${ing.name}" has prep in name; use prep field instead`);
+      }
+    });
+  });
+  if(warnings.length){console.warn('Recipe lint warnings:',warnings);}
+}
+
 // ── INIT
+validateRecipes();
 updateShopBadge();
 renderHome();
 </script>

@@ -31,7 +31,9 @@
       "Read(//opt/homebrew/bin/**)",
       "Read(//usr/bin/**)",
       "Bash(ruby -e \"require 'webrick'; puts 'webrick ok'\")",
-      "Bash(perl -e \"use HTTP::Server::Simple; print 'ok'\")"
+      "Bash(perl -e \"use HTTP::Server::Simple; print 'ok'\")",
+      "Bash(python3 -c \"from PIL import Image, ImageDraw; print\\('PIL ok'\\)\")",
+      "Bash(git commit -m 'Halve oil in Sambal recipe \\(900ml → 450ml\\) *)"
     ]
   }
 }
