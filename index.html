@@ -1039,15 +1039,10 @@ function renderDetailContent(){
   const r=currentRecipe;
   const hero=document.getElementById('detHero');
   hero.style.background=cardGrad(r.category);
-  // Populate hero with ingredient icons and quick facts
-  const ingredientIcons=r.ingredients.slice(0,4).map(ing=>{
-    const emoji=ing.name.match(/[A-Z]/)?ing.name[0]:'🔪';
-    return`<div class="ingredient-icon" title="${ing.name}">${emoji}</div>`;
-  }).join('');
+  // Populate hero with quick facts
   const heroContent=`
     <div class="det-back" onclick="closeDetail()"><span class="ms">arrow_back</span></div>
     <div class="det-hero-content">
-      <div class="det-hero-illustration">${ingredientIcons}</div>
       <div class="det-hero-facts">
         <div class="hero-fact">${cap(r.difficulty)}</div>
         <div class="hero-fact">${r.time}</div>
