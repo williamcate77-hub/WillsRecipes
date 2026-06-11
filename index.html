@@ -120,7 +120,7 @@ main::-webkit-scrollbar{display:none}
 .feed-card-add-btn{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.92);backdrop-filter:blur(4px);border:none;border-radius:20px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--green);cursor:pointer;box-shadow:var(--shadow);transition:all .2s;white-space:nowrap}
 .feed-card-add-btn:active{background:var(--green);color:#fff}
 .feed-card-add-btn .ms{font-size:14px}
-.feed-card-body{padding:14px 16px 16px}
+.feed-card-body{padding:14px 16px 42px;position:relative}
 .feed-card-title{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--text);line-height:1.25;margin-bottom:6px}
 .feed-card-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .feed-meta-chip{font-size:12px;color:var(--text2)}
@@ -133,6 +133,10 @@ main::-webkit-scrollbar{display:none}
 html.dark .badge-easy{background:#4caf50;color:#fff;font-weight:600}
 html.dark .badge-medium{background:#ff9800;color:#fff;font-weight:600}
 html.dark .badge-hard{background:#f44336;color:#fff;font-weight:600}
+.feed-card-difficulty{position:absolute;bottom:14px;left:16px}
+.shelf-card-difficulty{position:absolute;bottom:11px;left:12px}
+.shelf-card-hero .shelf-card-difficulty{bottom:16px;left:20px}
+.rcrd-difficulty{position:absolute;bottom:0;left:0}
 .time-chip{font-size:11px;color:#fff;background:rgba(0,0,0,.25);padding:3px 8px;border-radius:4px;white-space:nowrap}
 
 /* Saved/Latest cards */
@@ -142,7 +146,7 @@ html.dark .badge-hard{background:#f44336;color:#fff;font-weight:600}
 .rcrd-inner{display:flex;align-items:center;gap:14px;padding:15px;flex:1;cursor:pointer;transition:background .1s}
 .rcrd-inner:active{background:var(--surface)}
 .rcrd-icon{width:46px;height:46px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px}
-.rcrd-text{flex:1;min-width:0}
+.rcrd-text{flex:1;min-width:0;position:relative;padding-bottom:24px}
 .rcrd-name{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text);line-height:1.25;margin-bottom:5px}
 .rcrd-cat{font-size:12px;color:var(--text2);margin-bottom:5px}
 .rcrd-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
@@ -324,7 +328,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 .shelf-row::-webkit-scrollbar{display:none}
 .shelf-card{flex-shrink:0;width:160px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);border-left:4px solid var(--category-color, var(--border));overflow:hidden;cursor:pointer;box-shadow:var(--shadow);transition:opacity .15s;active:opacity:.8}
 .shelf-card:active{opacity:.8}
-.shelf-card-body{padding:11px 12px 13px}
+.shelf-card-body{padding:11px 12px 34px;position:relative}
 .shelf-card-name{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:7px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .shelf-card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 /* Card size variants */
@@ -881,8 +885,7 @@ function renderFeed(){
       <div class="feed-card-body" onclick="openRecipe(${r.id})">
         <div class="feed-card-title">${r.name}</div>
         <div class="feed-card-meta">
-          <span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span>
-          <span class="feed-meta-chip" style="color:${col};font-size:11px;font-weight:600;margin-left:4px">${r.category}</span>
+          <span class="feed-meta-chip" style="color:${col};font-size:11px;font-weight:600">${r.category}</span>
           <span class="feed-meta-chip">·</span>
           <span class="feed-meta-chip">${r.calories} kcal</span>
           <button class="feed-card-add-btn" style="margin-left:auto" onclick="event.stopPropagation();addAllFromCard(${r.id})">
@@ -892,6 +895,7 @@ function renderFeed(){
         <div class="feed-card-meta" style="margin-top:2px">
           <span class="feed-meta-chip" style="margin-left:auto;color:var(--${ip?'green':'text3'});cursor:pointer;font-weight:${ip?'700':'400'}" onclick="event.stopPropagation();togglePin(${r.id})">${ip?'✓ Saved':'Save'}</span>
         </div>
+        <div class="feed-card-difficulty"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span></div>
       </div>
     </div>`;
   }).join('');
@@ -928,9 +932,9 @@ function shelfCard(r){
     <div class="shelf-card-body">
       <div class="shelf-card-name">${r.name}</div>
       <div class="shelf-card-meta">
-        <span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span>
         <span style="font-size:10px;color:var(--text3)">${r.calories} kcal</span>
       </div>
+      <div class="shelf-card-difficulty"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span></div>
     </div>
   </div>`;
 }
@@ -970,7 +974,7 @@ function renderShelves(){
       } else {
         const first=s.recipes[0];
         const catColor=CAT_GRAD[first.category]?CAT_GRAD[first.category][0]:'#f2f2f0';
-        html+=`<div class="shelf-row hide-scrollbar" style="margin:0;padding:0">${s.recipes.slice(0,1).map(r=>`<div class="shelf-card-hero" style="--category-color:${catColor}" onclick="openRecipe(${r.id})"><div class="shelf-card-body"><div class="shelf-card-name">${r.name}</div><div class="shelf-card-meta"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span><span style="font-size:10px;color:var(--text3);margin-left:auto">${r.calories} kcal</span></div></div></div>`).join('')}</div>`;
+        html+=`<div class="shelf-row hide-scrollbar" style="margin:0;padding:0">${s.recipes.slice(0,1).map(r=>`<div class="shelf-card-hero" style="--category-color:${catColor}" onclick="openRecipe(${r.id})"><div class="shelf-card-body"><div class="shelf-card-name">${r.name}</div><div class="shelf-card-meta"><span style="font-size:10px;color:var(--text3)">${r.calories} kcal</span></div><div class="shelf-card-difficulty"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span></div></div></div>`).join('')}</div>`;
       }
       return;
     }
@@ -1006,7 +1010,8 @@ function recipeCard(r,showSave=true){
       <div class="rcrd-text">
         <div class="rcrd-name">${r.name}</div>
         <div class="rcrd-cat">${r.category}</div>
-        <div class="rcrd-meta"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span><span class="badge" style="background:var(--surface);color:var(--text2)">${r.calories} kcal</span></div>
+        <div class="rcrd-meta"><span class="badge" style="background:var(--surface);color:var(--text2)">${r.calories} kcal</span></div>
+        <div class="rcrd-difficulty"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span></div>
       </div>
     </div>
     ${showSave?`<button class="rcrd-save${ip?' saved':''}" id="rsb-${r.id}" onclick="togglePin(${r.id})"><span class="ms">bookmark</span><span class="slbl">${ip?'Saved':'Save'}</span></button>`:''}
