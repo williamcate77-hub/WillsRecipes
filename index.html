@@ -1192,6 +1192,14 @@ function onPortion(){
   setTimeout(()=>{portionScale=n/currentRecipe.serves;el.textContent=n;el.classList.remove('fade');renderIngredients();renderShopList();},140);
 }
 
+function adjustPortion(delta){
+  haptic(6);const slider=document.getElementById('portionSlider');
+  let n=parseInt(slider.value)+delta;
+  n=Math.max(1,Math.min(20,n));
+  slider.value=n;
+  onPortion();
+}
+
 // ── COOKING MODE
 function startCooking(){
   if(!currentRecipe)return;haptic(12);
