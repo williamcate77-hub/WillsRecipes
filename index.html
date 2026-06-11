@@ -531,8 +531,18 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
       </div>
       <!-- Serving size -->
       <div class="serve-card">
-        <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()">
-        <div style="text-align:center;margin-top:8px;font-size:14px;color:var(--text2)"><span id="portionVal">2</span> servings</div>
+        <div class="serve-row">
+          <div class="serve-lbl">Servings</div>
+          <div class="serve-info">
+            <span class="serve-num" id="portionVal">2</span>
+            <span class="serve-unit">Serves</span>
+          </div>
+          <div class="serve-btns">
+            <button class="serve-adjust-btn" onclick="adjustPortion(-1)">−</button>
+            <button class="serve-adjust-btn" onclick="adjustPortion(1)">+</button>
+          </div>
+        </div>
+        <input type="range" id="portionSlider" min="1" max="20" value="2" oninput="onPortion()" style="width:100%">
       </div>
       <h3 class="det-sec">Ingredients</h3>
       <div class="ing-list" id="ingList"></div>
