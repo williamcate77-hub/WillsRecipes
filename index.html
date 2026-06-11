@@ -1104,9 +1104,9 @@ function renderIngredients(){
     const display=fmtIng(scaled,ing.unit);
     const{name:baseName,prep}=extractPrepAndName(ing.name);
     const cat=getIngCategory(baseName);
-    const catColor=cat?{Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'}[cat]:'#ccc':'';
+    const catColor=cat?{Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'}[cat]||'var(--green)':'var(--green)';
     const catLabel=cat?.split('/')[0]||'';
-    return`<div class="ing-row${i<arr.length-1?'':' last'}"><div class="ing-dot" style="background:${catColor}||'var(--green)'"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
+    return`<div class="ing-row${i<arr.length-1?'':' last'}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
   }).join('');
 }
 
