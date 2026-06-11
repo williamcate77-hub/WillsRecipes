@@ -33,7 +33,18 @@
       "Bash(ruby -e \"require 'webrick'; puts 'webrick ok'\")",
       "Bash(perl -e \"use HTTP::Server::Simple; print 'ok'\")",
       "Bash(python3 -c \"from PIL import Image, ImageDraw; print\\('PIL ok'\\)\")",
-      "Bash(git commit -m 'Halve oil in Sambal recipe \\(900ml → 450ml\\) *)"
+      "Bash(git commit -m 'Halve oil in Sambal recipe \\(900ml → 450ml\\) *)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__navigate",
+      "mcp__Claude_in_Chrome__get_page_text",
+      "Bash(curl -s http://localhost:8000/index.html)",
+      "Bash(python3 -m http.server 8000)",
+      "Bash(cat /tmp/wills_server.log && echo \"---\" && pwd && ls index.html)",
+      "Bash(awk '{print $2}')",
+      "Bash(xargs kill -9)",
+      "mcp__Claude_in_Chrome__read_page",
+      "mcp__Claude_in_Chrome__browser_batch",
+      "mcp__Claude_in_Chrome__javascript_tool"
     ]
   }
 }

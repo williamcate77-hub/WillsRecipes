@@ -1,0 +1,155 @@
+WILLS RECIPES - INGREDIENT FREQUENCY LIST
+Sorted by frequency (largest to smallest)
+For illustration system design brief
+
+===== TOP PRIORITY (15+ appearances) =====
+1. Olive oil - 115
+2. Garlic cloves - 55
+3. Lemon juice - 49
+4. Parsley - 25
+5. Onion - 23
+6. Salt - 19
+7. Greek yoghurt - 19
+
+===== HIGH PRIORITY (10-14 appearances) =====
+8. Lemon zest - 11
+9. Fennel bulb - 11
+10. Water - 10
+11. Vegetable stock - 10
+12. Spring onions - 10
+13. Smoked paprika - 10
+14. Cucumber - 10
+15. Coriander - 10
+
+===== MEDIUM-HIGH PRIORITY (7-9 appearances) =====
+16. Za'atar - 9
+17. Sesame oil - 9
+18. Red onion - 9
+19. Red chilli - 9
+20. Ground cumin - 9
+21. Eggs - 9
+22. Carrots - 9
+23. Capers - 9
+24. Honey - 14
+25. Butter - 12
+26. Dill - 8
+27. Caster sugar - 8
+28. White wine - 7
+29. Tinned chopped tomatoes - 7
+30. Sugar - 7
+31. Soy sauce - 7
+32. Plain flour - 7
+33. Mint leaves - 7
+34. Fresh basil leaves - 7
+35. Fish sauce - 7
+36. Feta - 7
+37. Extra virgin olive oil - 7
+38. Cannellini beans - 7
+
+===== MEDIUM PRIORITY (5-6 appearances) =====
+39. Vegetable oil - 6
+40. Tomatoes - 6
+41. Tomato paste - 6
+42. Tahini - 6
+43. Mint - 6
+44. Lime juice - 6
+45. Fresh ginger - 6
+46. Dried oregano - 6
+47. Chickpeas - 6
+48. Butter beans - 6
+49. Zucchinis - 5
+50. Spring onion - 5
+51. Red capsicum - 5
+52. Radishes - 5
+53. Potatoes - 5
+54. Pomegranate molasses - 5
+55. Parsley leaves - 5
+56. Orange juice - 5
+57. Fresh parsley - 5
+58. Coconut milk - 5
+59. Chicken stock - 5
+60. Anchovy fillets - 5
+
+===== LOWER PRIORITY (3-4 appearances) =====
+61. White wine vinegar - 4
+62. Walnuts - 4
+63. Rice vinegar - 4
+64. Pomegranate seeds - 4
+65. Pepper - 4
+66. Peas - 4
+67. Oyster sauce - 4
+68. Leek - 4
+69. Ground coriander - 4
+70. Ginger - 4
+71. Fresh mint leaves - 4
+72. Fresh dill - 4
+73. Fish stock - 4
+74. Fennel seeds - 4
+75. Egg yolk - 4
+76. Dijon mustard - 4
+77. Cumin - 4
+78. Celery sticks - 4
+79. Brown onion - 4
+80. Black pepper - 4
+81. Balsamic vinegar - 4
+82. Asparagus - 4
+83. Zucchini - 3
+84. White miso paste - 3
+85. Unsalted butter - 3
+86. Toasted almonds - 3
+87. Sumac - 3
+88. Spaghetti - 3
+89. Shallot - 3
+90. Ricotta - 3
+91. Pumpkin - 3
+92. Prawns - 3
+93. Parmesan - 3
+94. Oranges - 3
+95. Mussels - 3
+96. Mirin - 3
+97. Long red chilli - 3
+98. Light soy sauce - 3
+99. Kalamata olives - 3
+100. Hazelnuts - 3
+101. Frozen peas - 3
+102. Fresh thyme - 3
+103. Flat-leaf parsley - 3
+104. Cumin seeds - 3
+105. Cucumbers - 3
+106. Cream - 3
+107. Coconut cream - 3
+108. Chilli powder - 3
+109. Chilli flakes - 3
+110. Cherry tomatoes - 3
+111. Cavolo nero - 3
+112. Buttermilk - 3
+113. Brussels sprouts - 3
+114. Broccolini - 3
+115. Broccoli - 3
+116. Bread - 3
+117. Beetroot - 3
+118. Bay leaves - 3
+119. Avocados - 3
+
+===== NOTES =====
+- Total unique ingredients: ~350+
+- Olive oil dominates (115 uses - nearly every dish)
+- Top 10 ingredients appear in >40% of recipes
+- Consider these core illustrations:
+  * Oils/fats: olive oil, sesame oil, vegetable oil, butter
+  * Aromatics: garlic, onions (red/brown/spring), leek, shallot
+  * Citrus: lemon, lime, orange
+  * Herbs: parsley, coriander, dill, mint, basil, thyme
+  * Vegetables: carrot, tomato, cucumber, zucchini, potato, capsicum
+  * Proteins: chicken, fish/seafood, eggs
+  * Pantry: salt, sugar, flour, stock, vinegars
+  * Spices: paprika, cumin, oregano, za'atar, sumac
+  * Dairy: feta, greek yoghurt, ricotta, butter
+  * Beans: chickpeas, cannellini beans, butter beans
+
+===== ILLUSTRATION STRATEGY =====
+Phase 1 (20 core): olive oil, garlic, lemon, parsley, onion, salt, honey, butter, coriander, eggs, carrots, capers, cumin, dill, tomato, basil, fish, feta, stock, sugar
+
+Phase 2 (30 supporting): citrus, herbs, vegetables, proteins, spices, dairy, legumes
+
+Phase 3 (20+ specialty): Less frequent but distinctive ingredients by category

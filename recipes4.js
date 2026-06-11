@@ -968,4 +968,25 @@ steps:[
   'Flip the tart out of the pan onto a plate. If it sticks, warm the pan gently on low heat.',
   'Top with crumbled feta cheese, fresh thyme, a drizzle of olive oil, and a sprinkle of flaky sea salt. Serve.',
 ]},
+
+{id:167,name:'Vegemite and Cheese Cabbage',category:'Sides',difficulty:'easy',serves:2,time:'45 min',calories:250,mainIngredient:'Cabbage',
+ingredients:[
+  {name:'Cabbage',amount:1,unit:'whole'},
+  {name:'Butter',amount:60,unit:'g'},
+  {name:'Vegemite',amount:0.5,unit:'tsp'},
+  {name:'Chicken or vegetable stock',amount:90,unit:'ml'},
+  {name:'Parmesan',amount:20,unit:'g'},
+  {name:'Salt',amount:1,unit:'to taste'},
+  {name:'Black pepper',amount:1,unit:'to taste'},
+],
+steps:[
+  'Quarter the cabbage and trim away some of the core.',
+  'Combine the softened butter and Vegemite and mix well.',
+  'Place the cabbage in an air fryer cake pan.',
+  'Smear the butter mixture over the cabbage, add the stock to the pan, and season with salt and pepper.',
+  'Cover with foil and cook for 30 minutes at 200°C.',
+  'Remove the foil, spoon the cooking juices over the cabbage, and cook at 200°C for a further 5 minutes.',
+  'Baste again and cook for another 2 minutes, or until caramelised.',
+  'Remove the cabbage from the air fryer, baste with the cooking juices, and sprinkle over the Parmesan.',
+]},
 ];
