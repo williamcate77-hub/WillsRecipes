@@ -456,6 +456,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
         <span class="browse-page-title" id="feedHdrTitle"></span>
         <span class="browse-page-count" id="feedHdrCount"></span>
       </div>
+      <div class="filter-chips" id="filterChips"></div>
       <div class="feed" id="homeFeed" style="padding-top:4px"></div>
       <div class="empty" id="homeEmpty" style="display:none">
         <div class="empty-icon"><span class="ms">search_off</span></div>
@@ -849,10 +850,22 @@ function renderFeed(){
   const recipes=getFiltered();
   const feed=document.getElementById('homeFeed');
   const empty=document.getElementById('homeEmpty');
+  const filterChips=document.getElementById('filterChips');
   document.getElementById('feedHdrTitle').textContent=
     activeSearch?`Results for "${activeSearch}"`:activeChip;
   document.getElementById('feedHdrCount').textContent=
     `${recipes.length} recipe${recipes.length===1?'':'s'}`;
+
+  // Render active filter chips
+  let chipsHtml='';
+  if(activeSearch){
+    chipsHtml+=`<div class="filter-chip">"${activeSearch}"<button class="filter-chip-clear" onclick="activeSearch='';renderFeed();renderChips()">✕</button></div>`;
+  }
+  if(activeChip&&activeChip!=='All'){
+    chipsHtml+=`<div class="filter-chip">${activeChip}<button class="filter-chip-clear" onclick="clearFilters()">✕</button></div>`;
+  }
+  filterChips.innerHTML=chipsHtml;
+
   if(!recipes.length){feed.innerHTML='';empty.style.display='flex';return;}
   empty.style.display='none';
   feed.innerHTML=recipes.map(r=>{
