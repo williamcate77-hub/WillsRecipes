@@ -73,6 +73,13 @@ main::-webkit-scrollbar{display:none}
 .chip.active{background:var(--green);border-color:var(--green);color:#fff}
 .chip:active{opacity:.8}
 
+/* Filter chips / Result feedback */
+.filter-chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 12px;align-items:center}
+.filter-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:16px;background:var(--green-dim);border:1px solid var(--green);color:var(--text);font-size:12px;font-weight:600}
+.filter-chip-clear{background:none;border:none;color:var(--text2);cursor:pointer;font-size:14px;padding:0;display:flex;align-items:center;justify-content:center;width:16px;height:16px;transition:color .15s}
+.filter-chip-clear:active{color:var(--text)}
+.result-count{font-size:12px;color:var(--text3);margin-left:auto}
+
 /* Continue cooking banner */
 .continue-banner{margin:0 20px 12px;background:var(--green);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:var(--shadow-lg)}
 .continue-banner:active{opacity:.9}
@@ -214,11 +221,15 @@ html.dark .badge-hard{background:rgba(244,67,54,.14);color:#ef9a9a}
 
 /* Serving */
 .serve-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:24px;box-shadow:var(--shadow)}
-.serve-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.serve-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;gap:12px}
 .serve-lbl{font-size:14px;color:var(--text2)}
+.serve-info{display:flex;align-items:baseline;gap:4px}
 .serve-num{font-family:var(--serif);font-size:40px;font-weight:700;color:var(--green);line-height:1;transition:opacity .15s}
 .serve-num.fade{opacity:.3}
-.serve-unit{font-size:12px;color:var(--text3);margin-left:4px}
+.serve-unit{font-size:14px;color:var(--text2)}
+.serve-btns{display:flex;gap:8px;margin-left:auto}
+.serve-adjust-btn{width:32px;height:32px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text2);font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.serve-adjust-btn:active{background:var(--green);color:#fff;border-color:var(--green)}
 input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--surface2);border-radius:2px;outline:none;border:none}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:8px;background:var(--green);cursor:pointer;border:2px solid var(--card);box-shadow:0 2px 8px rgba(0,0,0,.15);transition:transform .1s}
 input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2)}
@@ -229,8 +240,10 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2)}
 .ing-list{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:24px;box-shadow:var(--shadow)}
 .ing-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:12px}
 .ing-row:last-child{border-bottom:none}
-.ing-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
-.ing-name{flex:1;font-size:15px;color:var(--text)}
+.ing-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.ing-cat{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:4px;background:var(--surface);color:var(--text3);flex-shrink:0;margin-right:4px}
+.ing-name{flex:1;font-size:15px;color:var(--text);display:flex;align-items:center;gap:8px}
+.ing-prep{font-size:13px;color:var(--text3);font-style:italic}
 .ing-amt{font-size:14px;font-weight:700;color:var(--green);white-space:nowrap}
 /* Steps (compact, in detail) */
 .steps-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
@@ -909,9 +922,6 @@ function renderShelves(){
     },{
       title:'Recently added',sub:null,seeAll:'shelf',cap:8,
       recipes:[...ALL_RECIPES].sort((a,b)=>b.id-a.id)
-    },{
-      title:'From your saved',sub:null,seeAll:'saved',cap:5,
-      recipes:ALL_RECIPES.filter(r=>pinned.includes(r.id))
     },
     ...CATEGORIES.map(cat=>({
       title:cat,sub:null,seeAll:'cat',cap:8,cat,
@@ -1065,7 +1075,11 @@ function renderIngredients(){
   document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
     const scaled=scaleAmount(ing.amount,ing.unit,portionScale);
     const display=fmtIng(scaled,ing.unit);
-    return`<div class="ing-row${i<arr.length-1?'':' last'}"><div class="ing-dot"></div><span class="ing-name">${dispName(ing.name)}</span><span class="ing-amt">${display}</span></div>`;
+    const{name:baseName,prep}=extractPrepAndName(ing.name);
+    const cat=getIngCategory(baseName);
+    const catColor=cat?{Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'}[cat]:'#ccc':'';
+    const catLabel=cat?.split('/')[0]||'';
+    return`<div class="ing-row${i<arr.length-1?'':' last'}"><div class="ing-dot" style="background:${catColor}||'var(--green)'"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
   }).join('');
 }
 
@@ -1400,6 +1414,26 @@ function dispName(name){
   const n=name.toLowerCase();
   if(n.includes('stock')||n.includes('broth'))return'Stock (Chicken or Vege)';
   return name;
+}
+// ── INGREDIENT HELPERS
+function extractPrepAndName(name){
+  const parts=name.split(',').map(p=>p.trim());
+  return{name:parts[0],prep:parts.slice(1).join(', ')||null};
+}
+function getIngCategory(name){
+  const n=name.toLowerCase();
+  const cats={
+    'Produce':['tomato','lettuce','carrot','onion','garlic','broccoli','zucchini','capsicum','cucumber','avocado','potato','mushroom','spinach','kale','celery','leek','asparagus','bean','pea','corn','squash','pumpkin','beetroot','radish'],
+    'Dairy':['milk','cheese','yogurt','butter','cream','feta','ricotta','mozzarella','parmesan','cheddar','greek yoghurt'],
+    'Meat':['chicken','beef','pork','lamb','fish','salmon','tuna','prawn','cod','steak'],
+    'Pantry':['flour','sugar','salt','oil','olive','rice','pasta','bread','stock','sauce','vinegar','honey','jam','spice','herb','seasoning'],
+    'Frozen':['frozen','ice cream','peas'],
+    'Dairy/Alt':['milk','tofu','tempeh']
+  };
+  for(const[cat,items] of Object.entries(cats)){
+    if(items.some(item=>n.includes(item)))return cat;
+  }
+  return null;
 }
 function fracStr(n){const w=Math.floor(n),f=n-w;const fr=[[.25,'¼'],[.33,'⅓'],[.5,'½'],[.67,'⅔'],[.75,'¾']];const m=fr.find(([v])=>Math.abs(f-v)<.09);if(!m)return parseFloat(n.toFixed(1)).toString();return w?`${w}${m[1]}`:m[1];}
 // Plural unit grammar (data hygiene)
