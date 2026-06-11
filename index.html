@@ -26,9 +26,13 @@
 html.dark {
   --bg:#181818; --card:#242424; --surface:#202020; --surface2:#2c2c2c; --border:#333;
   --text:#f0f0f0; --text2:#999; --text3:#555;
-  --green:#4caf50; --green-bg:rgba(76,175,80,.16); --green-text:#a5d6a7; --green-dim:rgba(76,175,80,.10);
-  --warm:#e8b896; --warm-bg:rgba(232,184,150,.10);
+  --green:#4caf50; --green-bg:rgba(76,175,80,.16); --green-text:#a5d6a7; --green-dim:rgba(76,175,80,.12);
+  --warm:#e8b896; --warm-bg:rgba(232,184,150,.12);
 }
+html.dark .ing-cat{background:var(--surface2);color:var(--text3)}
+html.dark .filter-chip{background:var(--green-dim);border-color:var(--green);color:var(--text)}
+html.dark .serve-adjust-btn{border-color:var(--border);background:var(--surface)}
+html.dark .serve-adjust-btn:active{background:var(--green);border-color:var(--green);color:#fff}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;overflow:hidden;height:100dvh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 button,select,input{font-family:var(--sans);color:inherit;font-size:inherit}
@@ -123,12 +127,12 @@ main::-webkit-scrollbar{display:none}
 
 /* Badges */
 .badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
-.badge-easy{background:rgba(45,127,62,.12);color:#1a5c28}
-.badge-medium{background:rgba(180,100,0,.1);color:#7a4400}
-.badge-hard{background:rgba(186,26,26,.1);color:#8b0000}
-html.dark .badge-easy{background:rgba(76,175,80,.18);color:#a5d6a7}
-html.dark .badge-medium{background:rgba(255,152,0,.15);color:#ffcc80}
-html.dark .badge-hard{background:rgba(244,67,54,.14);color:#ef9a9a}
+.badge-easy{background:#2d7f3e;color:#fff;font-weight:600}
+.badge-medium{background:#c9813a;color:#fff;font-weight:600}
+.badge-hard{background:#ba1a1a;color:#fff;font-weight:600}
+html.dark .badge-easy{background:#4caf50;color:#fff;font-weight:600}
+html.dark .badge-medium{background:#ff9800;color:#fff;font-weight:600}
+html.dark .badge-hard{background:#f44336;color:#fff;font-weight:600}
 .time-chip{font-size:11px;color:#fff;background:rgba(0,0,0,.25);padding:3px 8px;border-radius:4px;white-space:nowrap}
 
 /* Saved/Latest cards */
