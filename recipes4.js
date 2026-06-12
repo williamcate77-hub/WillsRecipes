@@ -1593,7 +1593,6 @@ steps:[
   'Brush the top with eggwash and curry butter. Bake for 35 to 45 minutes until golden and cooked through, then rest before slicing.',
   'For the fennel salad, combine olive oil and lemon juice, then toss with fennel, onion and herbs and season to taste. Serve alongside the pie.',
 ]},
-,
 {id:191,name:'Thai Green Curry of Pink Ling, Prawns and Eggplant',category:'Seafood',difficulty:'medium',serves:4,time:'80 min',calories:550,mainIngredient:'Ling',ingredients:[
   {name:'Grapeseed oil',amount:60,unit:'ml'},
   {name:'Coconut cream',amount:400,unit:'ml'},
