@@ -1478,35 +1478,6 @@ steps:[
 ]},
 
 // ── SEAFOOD ──────────────────────────────────────────────
-{id:186,name:'Thai Green Curry of Pink Ling, Prawns and Eggplant',category:'Seafood',difficulty:'hard',serves:4,time:'90 min',calories:420,mainIngredient:'Pink Ling',
-ingredients:[
-  {name:'Grapeseed oil',amount:60,unit:'ml'},
-  {name:'Skinless pink ling fillet',amount:800,unit:'g'},
-  {name:'Chicken bone broth',amount:200,unit:'ml'},
-  {name:'Coconut milk',amount:250,unit:'ml'},
-  {name:'Green beans, trimmed and halved',amount:200,unit:'g'},
-  {name:'Green birdseye chillies',amount:12,unit:'whole'},
-  {name:'Spring onions',amount:5,unit:'whole'},
-  {name:'Garlic cloves',amount:3,unit:'whole'},
-  {name:'Lemongrass stalk',amount:1,unit:'whole'},
-  {name:'Galangal (peeled)',amount:10,unit:'g'},
-  {name:'Fresh turmeric (peeled)',amount:10,unit:'g'},
-  {name:'Thai shrimp paste (Kapi)',amount:1,unit:'tsp'},
-  {name:'Rice wine vinegar',amount:125,unit:'ml'},
-  {name:'Caster sugar',amount:55,unit:'g'},
-  {name:'Star anise',amount:2,unit:'whole'},
-  {name:'Red shallots',amount:3,unit:'whole'},
-],
-steps:[
-  'For the green curry paste, dry-roast coriander and cumin seeds in a small frying pan over medium heat until fragrant. Transfer to a spice grinder and grind to a fine powder, then blend in a high-speed blender with the remaining paste ingredients and 3/4 tsp fine salt until smooth. Set aside.',
-  'For the pickled shallots, stir vinegar, 1/4 tsp fine salt and 800 ml water in a small saucepan over medium-high heat until sugar dissolves. Remove from heat, add shallots and stand.',
-  'Heat 2 tbsp oil in a large saucepan over medium heat. Add curry paste and the head of coconut cream and cook until fragrant and oil separates.',
-  'Add eggplant and beans, bring to a simmer over medium heat and cook covered for 5 minutes.',
-  'Add prawns and simmer covered for a further 5 minutes.',
-  'Add ling and cook for 3 to 5 minutes. Stir in lime juice.',
-  'Remove from heat and add remaining coconut cream. Discard lime leaves.',
-  'Divide steamed rice and curry among bowls and serve topped with pickled shallots and Thai basil.',
-]},
 
 {id:187,name:'Stir-fried King Prawns with Chilli Black Bean Paste',category:'Seafood',difficulty:'hard',serves:4,time:'45 min',calories:280,mainIngredient:'King Prawns',
 ingredients:[
