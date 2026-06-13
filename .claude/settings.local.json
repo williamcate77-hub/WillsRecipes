@@ -44,7 +44,27 @@
       "Bash(xargs kill -9)",
       "mcp__Claude_in_Chrome__read_page",
       "mcp__Claude_in_Chrome__browser_batch",
-      "mcp__Claude_in_Chrome__javascript_tool"
+      "mcp__Claude_in_Chrome__javascript_tool",
+      "Bash(grep -n \"^,$\" /Users/willcate/Documents/GitHub/WillsRecipes/recipes4.js)",
+      "Bash(node --input-type=module)",
+      "Bash(node -e \"require\\('fs'\\).readFileSync\\('/Users/willcate/Documents/GitHub/WillsRecipes/recipes4.js','utf8'\\)\")",
+      "Bash(node --check /Users/willcate/Documents/GitHub/WillsRecipes/index.html)",
+      "Bash(/usr/local/bin/node --version)",
+      "Bash(/opt/homebrew/bin/node --version)",
+      "Bash(node --check /Users/willcate/Documents/GitHub/WillsRecipes/recipes4.js)",
+      "Bash(/usr/local/bin/node --check /Users/willcate/Documents/GitHub/WillsRecipes/recipes4.js)",
+      "Bash(npx --yes node --check /Users/willcate/Documents/GitHub/WillsRecipes/recipes4.js)",
+      "Bash(ls /usr/local/bin/node /opt/homebrew/bin/node /usr/bin/node ~/.nvm/versions/node/*/bin/node 2>/dev/null | head -5)",
+      "Bash(find /usr /opt /Users/willcate -name \"node\" -type f 2>/dev/null | head -5)",
+      "Bash(osascript -e 'do shell script \"which node\"')",
+      "Bash(osascript -e 'do shell script \"source ~/.zshrc 2>/dev/null; which node\"')",
+      "Bash(osascript -e 'do shell script \"ls /usr/local/bin/ | grep node\"')",
+      "Bash(osascript -e 'do shell script \"ls /opt/homebrew/bin/ | grep node\"')",
+      "Bash(osascript -e 'do shell script \"/usr/local/bin/node --version || /opt/homebrew/bin/node --version || ~/.volta/bin/node --version\" with administrator privileges')",
+      "Read(//Users/willcate/.volta/bin/**)",
+      "Read(//Users/willcate/**)",
+      "Bash(rm -f /Users/willcate/Documents/GitHub/WillsRecipes/.git/HEAD.lock /Users/willcate/Documents/GitHub/WillsRecipes/.git/index.lock && echo \"Locks cleared\")",
+      "Bash(osascript -e 'do shell script \"git add .claude/settings.local.json index.html && git commit -m \\\\\"Latest updates\\\\\" && git push\"')"
     ]
   }
 }

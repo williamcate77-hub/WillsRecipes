@@ -250,6 +250,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2)}
 .ing-row:last-child{border-bottom:none}
 .ing-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 .ing-cat{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:4px;background:var(--surface);color:var(--text3);flex-shrink:0;margin-right:4px}
+.ing-section{padding:8px 16px 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);border-bottom:1px solid var(--border);background:var(--surface)}
 .ing-name{flex:1;font-size:15px;color:var(--text);display:flex;align-items:center;gap:8px}
 .ing-prep{font-size:13px;color:var(--text3);font-style:italic}
 .ing-amt{font-size:14px;font-weight:700;color:var(--green);white-space:nowrap}
@@ -703,6 +704,7 @@ function validateAllRecipes(){
     // Check 1: Units in SCALING_RULES
     if(r.ingredients){
       for(const ing of r.ingredients){
+        if(ing.section)continue;
         if(!SCALING_RULES[ing.unit?.toLowerCase()]){
           rec_issues.warnings.push(`Unknown unit "${ing.unit}" in ${ing.name}`);
         }
@@ -711,7 +713,7 @@ function validateAllRecipes(){
 
     // Check 2: Water accounting mismatch (optional, only if steps exist)
     if(r.ingredients && r.steps){
-      const waterIng=r.ingredients.find(i=>i.name.toLowerCase()==='water');
+      const waterIng=r.ingredients.find(i=>i.name&&i.name.toLowerCase()==='water');
       if(waterIng){
         const waterMatch=r.steps.join(' ').match(/(\d+)(?:\.?\d+)?\s*m?l.*water/gi);
         if(waterMatch){
@@ -810,7 +812,7 @@ function getFiltered(){
   let list=ALL_RECIPES;
   if(activeSearch){
     const q=activeSearch;
-    list=list.filter(r=>r.name.toLowerCase().includes(q)||r.category.toLowerCase().includes(q)||r.mainIngredient.toLowerCase().includes(q)||(r.ingredients&&r.ingredients.some(i=>ingMatchesQuery(i.name,q))));
+    list=list.filter(r=>r.name.toLowerCase().includes(q)||r.category.toLowerCase().includes(q)||r.mainIngredient.toLowerCase().includes(q)||(r.ingredients&&r.ingredients.some(i=>i.name&&ingMatchesQuery(i.name,q))));
   } else if(activeChip&&activeChip!=='All'){
     list=list.filter(r=>r.category===activeChip);
   }
@@ -1105,6 +1107,7 @@ function renderDetailContent(){
 
 function renderIngredients(){
   document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
+    if(ing.section)return`<div class="ing-section">${ing.section}</div>`;
     const scaled=scaleAmount(ing.amount,ing.unit,portionScale);
     const display=fmtIng(scaled,ing.unit);
     const{name:baseName,prep}=extractPrepAndName(ing.name);
@@ -1142,6 +1145,7 @@ function toggleStep(i){
 function renderShopList(){
   const c=shopChecked[currentRecipe.id];
   document.getElementById('shopList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
+    if(ing.section)return'';
     const display=fmtIng(ing.amount*portionScale,ing.unit);const checked=c.has(i);
     return`<div class="shop-row${checked?' done':''}" onclick="toggleShop(${i})"><div class="shop-chk"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div style="flex:1"><div class="shop-iname">${dispName(ing.name)}</div></div><span class="shop-amt">${display}</span></div>`;
   }).join('');
@@ -1179,6 +1183,7 @@ function normaliseIngName(name){return name.split(',')[0].trim().toLowerCase();}
 function mergeIntoShopList(ingredients,recipeName,scale){
   let added=0;
   ingredients.forEach(ing=>{
+    if(ing.section)return;
     // Skip water and ingredients with water in the name
     if(/^water\b|^water\s*\(/i.test(ing.name))return;
 
@@ -1258,6 +1263,7 @@ function renderCookingStep(){
   // Render step content
   if(isMiseEnPlace){
     const ingList=cookingRecipe.ingredients.map(ing=>{
+      if(ing.section)return`<div style="padding:6px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3)">${ing.section}</div>`;
       const scaled=scaleAmount(ing.amount,ing.unit,portionScale);
       const amt=fmtIng(scaled,ing.unit);
       return`<div style="padding:8px 12px;margin:2px 0;background:var(--surface);border-radius:6px;display:flex;align-items:center"><input type="checkbox" style="margin-right:8px"> <span>${dispName(ing.name)}: ${amt}</span></div>`;
@@ -1337,6 +1343,7 @@ function toggleIngDrawer(){
 function renderCkIngList(){
   if(!cookingRecipe)return;
   document.getElementById('ckIngList').innerHTML=cookingRecipe.ingredients.map(ing=>{
+    if(ing.section)return`<div class="ing-section">${ing.section}</div>`;
     const display=fmtIng(ing.amount,ing.unit);
     return`<div class="ing-row"><div class="ing-dot"></div><span class="ing-name">${dispName(ing.name)}</span><span class="ing-amt">${display}</span></div>`;
   }).join('');
@@ -1432,7 +1439,7 @@ function copyShoppingTab(){
 // ── SHARE
 function shareRecipe(){
   haptic(8);const r=currentRecipe;
-  const text=`${r.name}\n\n${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
+  const text=`${r.name}\n\n${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.filter(i=>!i.section).map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
   if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
   else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied to clipboard'));
 }
@@ -1524,6 +1531,7 @@ function validateRecipes(){
   ALL_RECIPES.forEach(recipe=>{
     // Check for prep descriptors in ingredient names (should use new prep field instead)
     recipe.ingredients.forEach(ing=>{
+      if(ing.section)return;
       if(/soaked|chopped|diced|minced|sliced|grated|peeled|roughly|finely|coarsely/.test(ing.name)&&!ing.prep){
         warnings.push(`${recipe.name}: ingredient "${ing.name}" has prep in name; use prep field instead`);
       }
