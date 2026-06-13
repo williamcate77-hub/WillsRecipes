@@ -63,10 +63,12 @@ steps:[
 
 {id:127,name:'Spicy Onion Salad',category:'Salads',difficulty:'easy',serves:4,time:'15 min',calories:60,mainIngredient:'Red Onion',
 ingredients:[
+  {section:'SALAD'},
   {name:'Red onions',amount:2,unit:'whole',prep:'thinly sliced'},
   {name:'Tomato',amount:1,unit:'whole',prep:'finely chopped'},
   {name:'Green chilli',amount:1,unit:'whole',prep:'finely chopped'},
   {name:'Fresh coriander',amount:2,unit:'tbsp',prep:'chopped'},
+  {section:'DRESSING'},
   {name:'Lemon juice',amount:1,unit:'tbsp'},
   {name:'Salt',amount:1,unit:'tsp'},
   {name:'Chilli powder',amount:0.5,unit:'tsp'},
@@ -314,13 +316,16 @@ steps:[
 // ── PASTA & RICE ─────────────────────────────────────────
 {id:137,name:'Mussel and \'Nduja Pasta',category:'Pasta & Rice',difficulty:'medium',serves:4,time:'35 min',calories:520,mainIngredient:'Mussels',
 ingredients:[
-  {name:'Fresh mussels',amount:1,unit:'kg'},
-  {name:'\'Nduja sausage',amount:100,unit:'g'},
+  {section:'PASTA'},
   {name:'Pasta of choice',amount:400,unit:'g'},
+  {section:'SAUCE'},
   {name:'Olive oil',amount:2,unit:'tbsp'},
   {name:'Garlic cloves',prep:'chopped',amount:3,unit:'cloves'},
+  {name:'\'Nduja sausage',amount:100,unit:'g'},
   {name:'White wine',amount:100,unit:'ml'},
   {name:'Cherry tomatoes',amount:200,unit:'g'},
+  {name:'Fresh mussels',amount:1,unit:'kg'},
+  {section:'TO FINISH'},
   {name:'Fresh parsley',amount:1,unit:'handful'},
   {name:'Salt and pepper',amount:1,unit:'to taste'},
 ],
@@ -826,11 +831,13 @@ steps:[
 ]},
 {id:158,name:'Quick Mayonnaise',category:'Sauces',difficulty:'easy',serves:8,time:'5 min',calories:180,mainIngredient:'Egg',
 ingredients:[
+  {section:'EMULSION BASE'},
   {name:'Egg yolks',amount:2,unit:'whole'},
   {name:'Dijon mustard',amount:1,unit:'tbsp'},
   {name:'Lemon, juice of',amount:1,unit:'whole'},
-  {name:'Neutral flavoured oil',amount:450,unit:'ml'},
   {name:'Salt',amount:1,unit:'tsp'},
+  {section:'OIL'},
+  {name:'Neutral flavoured oil',amount:450,unit:'ml'},
 ],
 steps:[
   'Add everything to a tall jug, then put a stick blender to the bottom.',
@@ -1276,14 +1283,17 @@ steps:[
 
 {id:168,name:'Fettuccine with Sardines, Cabbage, Garlic, Chilli and Lemon',category:'Pasta & Rice',difficulty:'easy',serves:2,time:'20 min',calories:550,mainIngredient:'Sardines',
 ingredients:[
+  {section:'PASTA'},
   {name:'Fettuccine',amount:200,unit:'g'},
+  {section:'SAUCE'},
   {name:'Garlic cloves',amount:3,unit:'clove'},
   {name:'Red chilli',amount:1,unit:'whole'},
   {name:'White cabbage',amount:200,unit:'g',prep:'thinly sliced'},
   {name:'Dry white wine',amount:120,unit:'ml'},
   {name:'Sardines in extra virgin olive oil',amount:2,unit:'tin',prep:'chopped'},
-  {name:'Lemon',amount:1,unit:'whole',prep:'zested and juiced'},
   {name:'Butter',amount:20,unit:'g'},
+  {section:'TO FINISH'},
+  {name:'Lemon',amount:1,unit:'whole',prep:'zested and juiced'},
   {name:'Fresh parsley',amount:1,unit:'handful',prep:'chopped'},
 ],
 steps:[
@@ -1330,14 +1340,16 @@ steps:[
 
 {id:170,name:'High-Protein Chocolate Date Mousse',category:'Desserts',difficulty:'easy',serves:4,time:'15 min',calories:280,mainIngredient:'Dates',
 ingredients:[
+  {section:'BLENDED BASE'},
   {name:'Dates',amount:150,unit:'g'},
-  {name:'Chia seeds',amount:60,unit:'g'},
   {name:'Cocoa powder',amount:30,unit:'g'},
   {name:'Greek yoghurt',amount:400,unit:'g'},
   {name:'Milk',amount:150,unit:'ml'},
   {name:'Whey protein powder',amount:1,unit:'scoop'},
   {name:'Vanilla extract',amount:5,unit:'g'},
   {name:'Salt',amount:1,unit:'pinch'},
+  {section:'TO STIR IN'},
+  {name:'Chia seeds',amount:60,unit:'g'},
 ],
 steps:[
   'Combine everything except the chia seeds into a blender and blend until smooth.',
