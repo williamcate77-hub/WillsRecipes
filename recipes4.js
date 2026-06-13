@@ -2492,8 +2492,6 @@ steps:[
   'Slice and serve with pool of lemon caramel and dollop of sour cream whipped to soft peaks.',
 ]},
 
-];
-}
 // ── DIPS & STARTERS ──────────────────────────────────────
 {id:213,name:'Creamy Homemade Tzatziki',category:'Dips & Starters',difficulty:'easy',serves:6,time:'40 min',calories:120,mainIngredient:'Greek Yoghurt',ingredients:[
   {section:'CUCUMBER'},
@@ -2732,4 +2730,5 @@ steps:[
   'Stir in the chia seeds.',
   'Refrigerate for at least 2 hours until set.',
 ]},
+
 ];
