@@ -370,6 +370,85 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 /* Toast */
 .toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(12px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:var(--r);font-size:14px;font-weight:600;opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── FONT SIZE INCREASE ── */
+body{font-size:17px}
+.hdr-eyebrow{font-size:10px}
+.hdr-title{font-size:25px}
+.hbtn .lbl{font-size:9px}
+.search-input{font-size:17px}
+.chip{font-size:14px}
+.filter-chip{font-size:13px}
+.result-count{font-size:13px}
+.continue-banner-label{font-size:11px}
+.continue-banner-title{font-size:17px}
+.continue-banner-step{font-size:13px}
+.rv-title{font-size:12px}
+.rv-name{font-size:12px}
+.feed-section-hdr h3{font-size:19px}
+.feed-section-count{font-size:13px}
+.feed-card-title{font-size:19px}
+.feed-card-add-btn{font-size:13px}
+.feed-meta-chip{font-size:13px}
+.badge{font-size:11px}
+.time-chip{font-size:12px}
+.rcrd-name{font-size:17px}
+.rcrd-cat{font-size:13px}
+.rcrd-save .slbl{font-size:9px}
+.empty-title,.empty .empty-title,.empty-saved .empty-title{font-size:23px}
+.empty-body{font-size:16px}
+.empty-cta{font-size:16px}
+.empty-subtitle{font-size:15px}
+.sort-btn{font-size:14px}
+.btn-primary{font-size:16px}
+.btn-secondary{font-size:15px}
+.shop-sec-name{font-size:16px}
+.shop-sec-count{font-size:12px}
+.shop-iname{font-size:16px}
+.shop-sub{font-size:12px}
+.shop-amt{font-size:15px}
+.hero-fact{font-size:13px}
+.det-title{font-size:30px}
+.det-tag{font-size:13px}
+.cook-btn{font-size:16px}
+.add-all-det{font-size:14px}
+.serve-lbl,.serve-unit{font-size:15px}
+.serve-num{font-size:42px}
+.serve-adjust-btn{font-size:15px}
+.det-sec{font-size:21px}
+.ing-cat{font-size:10px}
+.ing-section{font-size:11px}
+.ing-name{font-size:16px}
+.ing-prep{font-size:14px}
+.ing-amt{font-size:15px}
+.step-lbl{font-size:12px}
+.step-text{font-size:16px}
+.shop-block-title{font-size:20px}
+.shop-block-sub{font-size:14px}
+.www-card-cat{font-size:11px}
+.www-card-name{font-size:13px}
+.www-card-meta{font-size:11px}
+.ck-exit{font-size:15px}
+.ck-counter{font-size:17px}
+.ck-ing-btn{font-size:14px}
+.ck-recipe-name{font-size:13px}
+.ck-step-text{font-size:20px}
+.ck-timer-start{font-size:15px}
+.ck-prev,.ck-next,.ck-done-btn{font-size:16px}
+.ck-ing-sheet-title{font-size:21px}
+.ck-serve-note{font-size:13px}
+.tab{font-size:13px}
+.tab-badge{font-size:10px}
+.shelf-title{font-size:20px}
+.shelf-sub{font-size:13px}
+.shelf-seeall{font-size:14px}
+.shelf-card-name{font-size:15px}
+.shelf-card-hero .shelf-card-name{font-size:19px}
+.shelf-card-compact .shelf-card-name{font-size:13px}
+.browse-back-btn{font-size:15px}
+.browse-page-title{font-size:19px}
+.browse-page-count{font-size:13px}
+.toast{font-size:15px}
 </style>
 </head>
 <body>
@@ -489,7 +568,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
   <!-- SAVED -->
   <div class="view" id="view-saved">
     <div style="padding:24px 20px 16px">
-      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Saved Recipes</h2>
+      <h2 style="font-family:var(--serif);font-size:30px;font-weight:700;color:var(--text);margin-bottom:4px">Saved Recipes</h2>
       <p style="font-size:14px;color:var(--text2)">Your personal cookbook</p>
     </div>
     <div class="card-list" id="savedList"></div>
@@ -504,7 +583,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
   <!-- LATEST -->
   <div class="view" id="view-latest">
     <div style="padding:24px 20px 16px">
-      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Latest</h2>
+      <h2 style="font-family:var(--serif);font-size:30px;font-weight:700;color:var(--text);margin-bottom:4px">Latest</h2>
       <p style="font-size:14px;color:var(--text2)">Most recently added to the collection</p>
     </div>
     <div class="card-list" id="latestList"></div>
@@ -513,7 +592,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
   <!-- SHOPPING -->
   <div class="view" id="view-shoplist">
     <div style="padding:24px 20px 16px">
-      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Shopping List</h2>
+      <h2 style="font-family:var(--serif);font-size:30px;font-weight:700;color:var(--text);margin-bottom:4px">Shopping List</h2>
       <p style="font-size:14px;color:var(--text2)" id="shopSubtitle">Items to pick up</p>
     </div>
     <div class="sort-bar">
