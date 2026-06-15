@@ -74,7 +74,8 @@
       "Bash(node -e \"const fs=require\\('fs'\\); eval\\(fs.readFileSync\\('recipes4.js','utf8'\\).replace\\('const RECIPES4','var RECIPES4'\\)\\); console.log\\('OK:', RECIPES4.length, 'recipes'\\)\")",
       "Bash(/opt/homebrew/bin/node -e \"const fs=require\\('fs'\\); eval\\(fs.readFileSync\\('recipes4.js','utf8'\\).replace\\('const RECIPES4','var RECIPES4'\\)\\); console.log\\('OK:', RECIPES4.length, 'recipes'\\)\")",
       "Bash(/usr/local/bin/node -e \"const fs=require\\('fs'\\); eval\\(fs.readFileSync\\('recipes4.js','utf8'\\).replace\\('const RECIPES4','var RECIPES4'\\)\\); console.log\\('OK:', RECIPES4.length, 'recipes'\\)\")",
-      "mcp__scheduled-tasks__list_scheduled_tasks"
+      "mcp__scheduled-tasks__list_scheduled_tasks",
+      "Bash(sort -t: -k2 -n)"
     ]
   }
 }
