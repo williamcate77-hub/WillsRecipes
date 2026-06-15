@@ -272,6 +272,17 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 .shop-block-sub{font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.45}
 .shop-inner{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow)}
 
+/* Works well with */
+.www-row{display:flex;gap:10px;overflow-x:auto;padding:0 0 4px;scrollbar-width:none}
+.www-row::-webkit-scrollbar{display:none}
+.www-card{flex-shrink:0;width:150px;cursor:pointer;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);transition:opacity .15s}
+.www-card:active{opacity:.85}
+.www-card-img{height:68px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.www-card-body{padding:8px 10px 10px}
+.www-card-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:3px}
+.www-card-name{font-family:var(--serif);font-size:12px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.www-card-meta{font-size:10px;color:var(--text2)}
+
 /* ── COOKING MODE ── */
 .cooking-view{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
 .cooking-view.hidden{display:none}
@@ -565,6 +576,11 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
         <div class="shop-inner" id="shopList"></div>
         <button class="btn-primary" onclick="addToShoppingListFiltered()" style="margin-top:2px"><span class="ms">add_shopping_cart</span>Add these to your list</button>
       </div>
+      <!-- Works well with -->
+      <div id="worksWellWith">
+        <h3 class="det-sec">Works well with</h3>
+        <div class="www-row" id="wwwRow"></div>
+      </div>
     </div>
   </div>
 
@@ -598,6 +614,85 @@ const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3,...RECIPES4];
 
 // ── SEAFOOD GROUP
 const SEAFOOD=new Set(['Clams','Dover Sole','Fish','Mackerel','Mussels','Oysters','Prawns','Salmon','Sardines','Scallops','Seafood','Smoked Trout','Snapper','Tuna']);
+
+// ── PROTEIN PAIRING DATA
+const MAIN_CATS=new Set(['Meat & Poultry','Seafood']);
+const SIDE_CATS=new Set(['Sides','Salads']);
+const PROTEIN_GROUPS={
+  chicken:['Chicken'],
+  beef:['Beef','Steak'],
+  lamb:['Lamb'],
+  pork:['Pork','Sausages'],
+  fish:['Fish','Mackerel','Sardines','Snapper','Dover Sole','Ling','Kingfish'],
+  prawns:['Prawns','Shrimp'],
+  salmon:['Salmon','Smoked Trout'],
+  shellfish:['Scallops','Pipis','Shellfish','Clams','Mussels','Oysters','Seafood'],
+};
+// Keywords found in side/salad ingredients that indicate a good match for each protein
+const PROTEIN_SIDE_AFFINITY={
+  chicken:['broccoli','bean','potato','sweet potato','kale','zucchini','corn','cauliflower','pumpkin','carrot','mushroom','pea','rice','greens'],
+  beef:['potato','brussels','mushroom','broccoli','kale','bean','corn','cauliflower','squash'],
+  lamb:['eggplant','pumpkin','cauliflower','pea','bean','carrot','zucchini','squash','kale'],
+  pork:['corn','brussels','greens','cabbage','squash','pumpkin','bean'],
+  fish:['bean','zucchini','asparagus','broccoli','cauliflower','greens','pea','potato','rice'],
+  prawns:['corn','greens','zucchini','bean','broccoli','rice'],
+  salmon:['sweet potato','kale','bean','broccoli','potato','asparagus'],
+  shellfish:['corn','greens','bean','broccoli','cauliflower','rice'],
+};
+const PROTEIN_SALAD_AFFINITY={
+  chicken:['lettuce','tomato','feta','kale','asparagus','chickpea','pumpkin','carrot','quinoa'],
+  beef:['lettuce','tomato','bread','horseradish','beetroot','kale','farro'],
+  lamb:['beetroot','lentil','feta','pomegranate','pumpkin','kale','farro','buckwheat'],
+  pork:['kale','watermelon','fennel','carrot','bread'],
+  fish:['butter bean','asparagus','trout','horseradish','lettuce','quinoa','wild rice'],
+  prawns:['watermelon','asparagus','tomato','chickpea'],
+  salmon:['butter bean','kale','asparagus','dill','horseradish','lentil'],
+  shellfish:['lemon','herb','tomato','chickpea','wild rice'],
+};
+// For sides/salads: which protein groups pair with each main ingredient
+const SIDE_PROTEIN_PAIRINGS={
+  'Potatoes':['chicken','beef','lamb','pork'],
+  'Potato':['chicken','beef','lamb','pork'],
+  'Sweet Potato':['chicken','salmon','fish'],
+  'Brussels Sprouts':['beef','pork','chicken'],
+  'Corn':['chicken','prawns','pork'],
+  'Broccoli':['beef','chicken','fish'],
+  'Eggplant':['lamb','chicken'],
+  'Cauliflower':['chicken','fish','lamb'],
+  'Kale':['chicken','salmon','fish'],
+  'Zucchini':['fish','chicken','prawns'],
+  'Green Beans':['chicken','fish','lamb'],
+  'Pumpkin':['chicken','lamb','beef'],
+  'Carrots':['lamb','chicken','beef'],
+  'Mushrooms':['beef','chicken'],
+  'Peas':['lamb','chicken','fish'],
+  'Brown Rice':['chicken','fish','prawns'],
+  'Beans':['fish','chicken','lamb'],
+  'Butter Beans':['fish','chicken'],
+  'Greens':['chicken','fish','prawns','shellfish'],
+  'Squash':['chicken','lamb','beef'],
+  'Cabbage':['pork','beef','chicken'],
+  'Asparagus':['fish','salmon','chicken','prawns'],
+};
+const SALAD_PROTEIN_PAIRINGS={
+  'Lettuce':['chicken','beef','fish'],
+  'Tomatoes':['chicken','beef','lamb','fish'],
+  'Chickpeas':['chicken','lamb'],
+  'Kale':['chicken','salmon','fish'],
+  'Lentils':['lamb','chicken'],
+  'Beetroot':['lamb','beef','chicken'],
+  'Pumpkin':['chicken','lamb'],
+  'Asparagus':['fish','salmon','prawns','chicken'],
+  'Smoked Trout':['salmon','fish'],
+  'Watermelon':['prawns','pork'],
+  'Quinoa':['chicken','fish'],
+  'Farro':['chicken','lamb','beef'],
+  'Wild Rice':['chicken','fish','prawns'],
+  'Carrots':['chicken','lamb','beef'],
+  'Buckwheat':['chicken','lamb'],
+  'Flatbread':['chicken','lamb','beef'],
+  'Butter Beans':['fish','chicken'],
+};
 
 // ── CATEGORY METADATA
 const CAT_COLOR={'Dips & Starters':'#4CAF50','Salads':'#00ACC1','Soups':'#9C27B0','Seafood':'#0097A7','Meat & Poultry':'#E53935','Vegetarian':'#7CB342','Pasta & Rice':'#FB8C00','Sides':'#6D4C41','Bread & Bakes':'#FFB300','Sauces':'#E91E63','Desserts':'#FF5722'};
@@ -1102,7 +1197,7 @@ function renderDetailContent(){
   updateDetPin();
   const d=r.difficulty;
   document.getElementById('detTags').innerHTML=`<span class="badge badge-${d} det-tag" style="padding:5px 12px;border-radius:20px">${cap(d)}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${r.calories} kcal/serve</span>`;
-  renderIngredients();renderSteps();renderShopList();
+  renderIngredients();renderSteps();renderShopList();renderWorksWellWith();
 }
 
 function renderIngredients(){
@@ -1151,6 +1246,74 @@ function renderShopList(){
   }).join('');
 }
 function toggleShop(i){haptic(8);const c=shopChecked[currentRecipe.id];if(c.has(i))c.delete(i);else c.add(i);renderShopList();}
+
+// ── PROTEIN PAIRING
+function getProteinGroup(mainIngredient){
+  if(!mainIngredient)return null;
+  const mi=mainIngredient.toLowerCase();
+  for(const[group,ingredients]of Object.entries(PROTEIN_GROUPS)){
+    if(ingredients.some(i=>mi.includes(i.toLowerCase())))return group;
+  }
+  return null;
+}
+
+function getWorksWellWith(recipe){
+  const isMain=MAIN_CATS.has(recipe.category);
+  const isSide=SIDE_CATS.has(recipe.category);
+  if(!isMain&&!isSide)return[];
+  if(isMain){
+    const pg=getProteinGroup(recipe.mainIngredient);
+    if(!pg)return[];
+    const sideKws=PROTEIN_SIDE_AFFINITY[pg]||[];
+    const saladKws=PROTEIN_SALAD_AFFINITY[pg]||[];
+    const scored=ALL_RECIPES
+      .filter(r=>r.id!==recipe.id&&SIDE_CATS.has(r.category))
+      .map(r=>{
+        const kws=r.category==='Sides'?sideKws:saladKws;
+        const text=[r.mainIngredient||'',...r.ingredients.map(i=>i.name||'')].join(' ').toLowerCase();
+        const score=kws.reduce((s,kw)=>s+(text.includes(kw)?1:0),0);
+        return{r,score};
+      })
+      .filter(({score})=>score>0)
+      .sort((a,b)=>b.score-a.score);
+    const sides=scored.filter(({r})=>r.category==='Sides');
+    const salads=scored.filter(({r})=>r.category==='Salads');
+    const result=[];
+    if(sides.length&&salads.length){
+      result.push(sides[0].r,salads[0].r);
+      if(sides.length>1)result.push(sides[1].r);
+      else if(salads.length>1)result.push(salads[1].r);
+    }else{
+      result.push(...scored.slice(0,3).map(({r})=>r));
+    }
+    return result.slice(0,3);
+  }else{
+    const affinityTable=recipe.category==='Sides'?SIDE_PROTEIN_PAIRINGS:SALAD_PROTEIN_PAIRINGS;
+    const compatibleProteins=affinityTable[recipe.mainIngredient]||[];
+    if(!compatibleProteins.length)return[];
+    const scored=ALL_RECIPES
+      .filter(r=>MAIN_CATS.has(r.category)&&r.id!==recipe.id)
+      .map(r=>{
+        const pg=getProteinGroup(r.mainIngredient);
+        const pos=compatibleProteins.indexOf(pg);
+        return{r,score:pos>=0?compatibleProteins.length-pos:0,pg};
+      })
+      .filter(({score})=>score>0)
+      .sort((a,b)=>b.score-a.score);
+    const seen=new Set();const result=[];
+    for(const{r,pg}of scored){if(!seen.has(pg)){seen.add(pg);result.push(r);}if(result.length>=3)break;}
+    return result;
+  }
+}
+
+function renderWorksWellWith(){
+  const recs=getWorksWellWith(currentRecipe);
+  const container=document.getElementById('worksWellWith');
+  if(!container)return;
+  container.style.display=recs.length?'':'none';
+  if(!recs.length)return;
+  document.getElementById('wwwRow').innerHTML=recs.map(r=>`<div class="www-card" onclick="openRecipe(${r.id})"><div class="www-card-img" style="background:${cardGrad(r.category)}">${CAT_EMOJI[r.category]||'🍽️'}</div><div class="www-card-body"><div class="www-card-cat">${r.category}</div><div class="www-card-name">${r.name}</div><div class="www-card-meta">${r.time}&nbsp;·&nbsp;${cap(r.difficulty)}</div></div></div>`).join('');
+}
 
 // ── ONE-TAP ADD (from card, no pre-audit)
 function addAllFromCard(id){
