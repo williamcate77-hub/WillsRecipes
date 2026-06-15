@@ -314,6 +314,13 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 .ck-ing-sheet-title{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--text)}
 .ck-ing-close{background:none;border:none;font-size:24px;color:var(--text3);cursor:pointer;padding:4px;line-height:1}
 .ck-serve-note{font-size:12px;color:var(--text3);margin-bottom:12px}
+/* Wake lock bar */
+.ck-wake-bar{width:100%;display:flex;align-items:center;gap:10px;padding:11px 20px;background:#fef9e7;border:none;border-bottom:2px solid #f6d860;color:#7c5d0a;font-size:13px;font-weight:700;cursor:pointer;text-align:left;flex-shrink:0;transition:background .2s,border-color .2s}
+.ck-wake-bar .ms{font-size:20px;color:#e6a800;flex-shrink:0}
+.ck-wake-pill{margin-left:auto;background:#e6a800;color:#fff;border-radius:20px;padding:3px 11px;font-size:11px;font-weight:800;letter-spacing:.06em;flex-shrink:0;transition:background .2s}
+.ck-wake-bar.off{background:var(--surface);border-color:var(--border);color:var(--text3)}
+.ck-wake-bar.off .ms{color:var(--text3)}
+.ck-wake-bar.off .ck-wake-pill{background:var(--surface2);color:var(--text3)}
 
 /* Tab bar */
 .tab-bar{height:var(--tab-h);background:var(--card);border-top:1px solid var(--border);display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom,0)}
@@ -399,6 +406,11 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
     <button class="ck-ing-btn" onclick="toggleIngDrawer()"><span class="ms">list</span>Ingredients</button>
   </div>
   <div class="ck-recipe-name" id="ckRecipeName"></div>
+  <button class="ck-wake-bar" id="ckWakeBtn" onclick="toggleWakeLock()">
+    <span class="ms">brightness_high</span>
+    <span id="ckWakeLabel">Screen staying on</span>
+    <span class="ck-wake-pill" id="ckWakePill">ON</span>
+  </button>
   <div class="ck-step" id="ckStep">
     <div class="ck-step-num" id="ckStepNum">01</div>
     <p class="ck-step-text" id="ckStepText"></p>
@@ -1251,7 +1263,9 @@ function openCookingMode(recipe,step){
   document.getElementById('appHdr').style.display='none';
   document.getElementById('tabBar').style.display='none';
   // Wake lock auto-on
-  navigator.wakeLock&&navigator.wakeLock.request('screen').then(w=>{wakeLock=w;}).catch(()=>{});
+  if(navigator.wakeLock){
+    navigator.wakeLock.request('screen').then(w=>{wakeLock=w;updateWakeLockUI(true);w.addEventListener('release',()=>{wakeLock=null;updateWakeLockUI(false);});}).catch(()=>{updateWakeLockUI(false);});
+  } else {updateWakeLockUI(false);}
   renderCookingStep();
 }
 function renderCookingStep(){
@@ -1337,7 +1351,7 @@ function finishCooking(){haptic(12);clearCookingState();exitCooking();toast('Gre
 function exitCooking(){
   stopCookingTimer();
   document.getElementById('cookingView').classList.add('hidden');
-  if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null;document.getElementById('wakeBtn').classList.remove('on');}
+  if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null;updateWakeLockUI(false);}
   // Return to recipe detail (header stays hidden — detail handles its own chrome)
   // If no recipe is open, go back to home
   if(currentRecipe){
@@ -1457,13 +1471,33 @@ function shareRecipe(){
 }
 
 // ── WAKE LOCK
+function updateWakeLockUI(isOn){
+  const hBtn=document.getElementById('wakeBtn');
+  const ckBtn=document.getElementById('ckWakeBtn');
+  const pill=document.getElementById('ckWakePill');
+  const lbl=document.getElementById('ckWakeLabel');
+  if(hBtn)hBtn.classList.toggle('on',isOn);
+  if(ckBtn)ckBtn.classList.toggle('off',!isOn);
+  if(pill)pill.textContent=isOn?'ON':'OFF';
+  if(lbl)lbl.textContent=isOn?'Screen staying on':'Screen can sleep — tap to lock';
+}
 async function toggleWakeLock(){
-  haptic(8);const btn=document.getElementById('wakeBtn');
-  if(wakeLock){await wakeLock.release();wakeLock=null;btn.classList.remove('on');toast('Screen sleep restored');}
-  else{try{wakeLock=await navigator.wakeLock.request('screen');btn.classList.add('on');toast('Screen will stay on');wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('on');});}catch(e){toast('Wake lock not available');}}
+  haptic(8);
+  if(wakeLock){
+    await wakeLock.release();wakeLock=null;
+    updateWakeLockUI(false);toast('Screen sleep restored');
+  } else {
+    try{
+      wakeLock=await navigator.wakeLock.request('screen');
+      updateWakeLockUI(true);toast('Screen will stay on');
+      wakeLock.addEventListener('release',()=>{wakeLock=null;updateWakeLockUI(false);});
+    }catch(e){toast('Wake lock not available on this device');}
+  }
 }
 document.addEventListener('visibilitychange',async()=>{
-  if(document.getElementById('wakeBtn').classList.contains('on')&&document.visibilityState==='visible'){try{wakeLock=await navigator.wakeLock.request('screen');}catch(e){}}
+  if(document.getElementById('wakeBtn').classList.contains('on')&&document.visibilityState==='visible'){
+    try{wakeLock=await navigator.wakeLock.request('screen');updateWakeLockUI(true);}catch(e){}
+  }
 });
 
 // ── HELPERS
