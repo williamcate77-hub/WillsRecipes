@@ -13,6 +13,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 <style>
 :root {
   --bg:#fafaf8; --card:#fff; --surface:#f2f2f0; --surface2:#e8e8e6; --border:#e2e2e0;
@@ -1044,6 +1052,7 @@ function togglePin(id){
   if(currentTab==='home')renderFeed();
   if(currentTab==='saved')renderSaved();
   if(currentTab==='latest')renderLatest();
+  if(is){const r=ALL_RECIPES.find(x=>x.id===id);if(r)gtag('event','save_recipe',{recipe_name:r.name,recipe_category:r.category});}
   toast(is?'Saved to your collection ✓':'Removed from saved');
 }
 function togglePinDetail(){if(!currentRecipe)return;haptic(12);togglePin(currentRecipe.id);updateDetPin();}
@@ -1057,6 +1066,7 @@ function openRecipe(id){
   haptic(8);
   currentRecipe=ALL_RECIPES.find(r=>r.id===id);prevTab=currentTab;
   addToRecentlyViewed(id);
+  gtag('event','view_recipe',{recipe_name:currentRecipe.name,recipe_category:currentRecipe.category,recipe_difficulty:currentRecipe.difficulty});
   if(!shopChecked[id])shopChecked[id]=new Set();
   if(!stepsDone[id])stepsDone[id]=new Set();
   portionScale=1;
@@ -1175,6 +1185,7 @@ function addToShoppingListFiltered(){
   if(!toBuy.length){toast('Nothing to add — everything is ticked!');return;}
   const added=mergeIntoShopList(toBuy,currentRecipe.name,portionScale);
   saveGlobalShopList();updateShopBadge();
+  gtag('event','add_to_shoplist',{recipe_name:currentRecipe.name,recipe_category:currentRecipe.category,items_added:added});
   toast(`Added ${added} item${added===1?'':'s'} to your list`);
 }
 
@@ -1230,6 +1241,7 @@ function adjustPortion(delta){
 // ── COOKING MODE
 function startCooking(){
   if(!currentRecipe)return;haptic(12);
+  gtag('event','start_cooking',{recipe_name:currentRecipe.name,recipe_category:currentRecipe.category});
   cookingRecipe=currentRecipe;cookingStep=0;
   openCookingMode(cookingRecipe,0);
 }
