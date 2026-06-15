@@ -64,7 +64,17 @@
       "Read(//Users/willcate/.volta/bin/**)",
       "Read(//Users/willcate/**)",
       "Bash(rm -f /Users/willcate/Documents/GitHub/WillsRecipes/.git/HEAD.lock /Users/willcate/Documents/GitHub/WillsRecipes/.git/index.lock && echo \"Locks cleared\")",
-      "Bash(osascript -e 'do shell script \"git add .claude/settings.local.json index.html && git commit -m \\\\\"Latest updates\\\\\" && git push\"')"
+      "Bash(osascript -e 'do shell script \"git add .claude/settings.local.json index.html && git commit -m \\\\\"Latest updates\\\\\" && git push\"')",
+      "Bash(node --check recipes4.js)",
+      "Bash(/usr/local/bin/node --check recipes4.js)",
+      "Bash(npx --yes node --version)",
+      "Bash(node -e ' *)",
+      "Bash(brew list *)",
+      "Bash(find /usr /opt /Users/willcate -name \"node\" -type f 2>/dev/null | head -10)",
+      "Bash(node -e \"const fs=require\\('fs'\\); eval\\(fs.readFileSync\\('recipes4.js','utf8'\\).replace\\('const RECIPES4','var RECIPES4'\\)\\); console.log\\('OK:', RECIPES4.length, 'recipes'\\)\")",
+      "Bash(/opt/homebrew/bin/node -e \"const fs=require\\('fs'\\); eval\\(fs.readFileSync\\('recipes4.js','utf8'\\).replace\\('const RECIPES4','var RECIPES4'\\)\\); console.log\\('OK:', RECIPES4.length, 'recipes'\\)\")",
+      "Bash(/usr/local/bin/node -e \"const fs=require\\('fs'\\); eval\\(fs.readFileSync\\('recipes4.js','utf8'\\).replace\\('const RECIPES4','var RECIPES4'\\)\\); console.log\\('OK:', RECIPES4.length, 'recipes'\\)\")",
+      "mcp__scheduled-tasks__list_scheduled_tasks"
     ]
   }
 }
