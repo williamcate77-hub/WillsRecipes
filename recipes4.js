@@ -329,7 +329,7 @@ steps:[
 // ── SIDES ─────────────────────────────────────────────────
 
 // ── SAUCES ────────────────────────────────────────────────
-{id:140,name:'Copy Cat Lori-Jayne AP Sauce',category:'Sauces',difficulty:'hard',serves:8,time:'75 min',calories:180,mainIngredient:'Cream',
+{id:140,name:'Copy Cat Lori-Jayne AP Sauce',category:'Sauces & Condiments',difficulty:'hard',serves:8,time:'75 min',calories:180,mainIngredient:'Cream',
 ingredients:[
   {section:'SAUCE BASE'},
   {name:'Butter',amount:4,unit:'tbsp'},
@@ -727,7 +727,7 @@ steps:[
   'Roast in the oven until the edges are crispy and the insides are tender, basting occasionally with the pan juices.',
   'Serve hot as a flavourful side dish.',
 ]},
-{id:157,name:'Chilli Sauce with Roasted Shrimp Paste',category:'Sauces',difficulty:'medium',serves:8,time:'30 min',calories:60,mainIngredient:'Chilli',
+{id:157,name:'Chilli Sauce with Roasted Shrimp Paste',category:'Sauces & Condiments',difficulty:'medium',serves:8,time:'30 min',calories:60,mainIngredient:'Chilli',
 ingredients:[
   {section:'CHILLI BASE'},
   {name:'Fresh long red chillis, seeds removed, coarsely chopped',amount:300,unit:'g'},
@@ -748,7 +748,7 @@ steps:[
   'Seal with a lid and place in the fridge. The sauce will last up to 3 months, but it likely will be eaten long before that.',
   'Enjoy with BBQ chicken or by dipping a cheese toastie into a generous dollop of kewpie topped with the chilli sauce.',
 ]},
-{id:158,name:'Quick Mayonnaise',category:'Sauces',difficulty:'easy',serves:8,time:'5 min',calories:180,mainIngredient:'Egg',
+{id:158,name:'Quick Mayonnaise',category:'Sauces & Condiments',difficulty:'easy',serves:8,time:'5 min',calories:180,mainIngredient:'Egg',
 ingredients:[
   {section:'EMULSION BASE'},
   {name:'Egg yolks',amount:2,unit:'whole'},
@@ -763,7 +763,7 @@ steps:[
   'Turn the stick blender on and after a few seconds start moving the stick blender to the top of the jug until a smooth sauce forms.',
   'If it is too thick, simply add a small amount of room temperature water and mix again until you reach the desired consistency.',
 ]},
-{id:159,name:'Sambal',category:'Sauces',difficulty:'medium',serves:8,time:'45 min',calories:90,mainIngredient:'Ginger',
+{id:159,name:'Sambal',category:'Sauces & Condiments',difficulty:'medium',serves:8,time:'45 min',calories:90,mainIngredient:'Ginger',
 ingredients:[
   {section:'GINGER BASE'},
   {name:'Ginger',prep:'chopped into thin pieces',amount:1,unit:'kg'},
@@ -786,7 +786,7 @@ steps:[
   'Cover with cling film and allow to rest for 24 hours in the cool room.',
   'Get the kitchen supervisor to check the sambal before usage. This recipe feeds a lot of people. One person serving would be 100 g of ginger and the portion from there.',
 ]},
-{id:160,name:'Bok Choy Dressing',category:'Sauces',difficulty:'easy',serves:8,time:'5 min',calories:70,mainIngredient:'Soy sauce',
+{id:160,name:'Bok Choy Dressing',category:'Sauces & Condiments',difficulty:'easy',serves:8,time:'5 min',calories:70,mainIngredient:'Soy sauce',
 ingredients:[
   {name:'Light soy sauce',amount:500,unit:'ml'},
   {name:'Sweet soy ABC kecap manis',amount:250,unit:'ml'},
@@ -1999,6 +1999,78 @@ steps:[
   'Add the wine to the pan, reduce by half, then add the stock, jalapeños, and pickle juices. Reduce this by half, then nestle the chicken back in, spoon over some sauce, and place the pan into the oven to cook the chicken, uncovered, until done.',
   'Remove the chicken to a plate, finish the sauce with the parsley, and season to taste.',
   'Serve the chicken on a large platter, spooning over the sauce and all its bits to finish.',
+]},
+
+{id:228,name:'Ranch Dressing',category:'Sauces & Condiments',difficulty:'easy',serves:8,time:'5 min',calories:130,mainIngredient:'Mayonnaise',
+ingredients:[
+  {name:'Mayonnaise',amount:120,unit:'g'},
+  {name:'Sour cream',amount:120,unit:'g'},
+  {name:'Buttermilk',amount:60,unit:'ml'},
+  {name:'Dried dill',amount:1,unit:'tsp'},
+  {name:'Garlic powder',amount:0.5,unit:'tsp'},
+  {name:'Onion powder',amount:0.5,unit:'tsp'},
+  {name:'Fresh chives',prep:'finely chopped',amount:2,unit:'tbsp'},
+  {name:'Fresh parsley',prep:'finely chopped',amount:2,unit:'tbsp'},
+  {name:'Lemon juice',amount:15,unit:'ml'},
+  {name:'Salt and black pepper',amount:1,unit:'to taste'},
+],
+steps:[
+  'Whisk together the mayonnaise, sour cream and buttermilk until smooth.',
+  'Stir in the dried dill, garlic powder, onion powder, chives and parsley.',
+  'Add lemon juice and season generously with salt and black pepper.',
+  'Taste and adjust — it should be tangy, herby and creamy. Thin with a little extra buttermilk if needed.',
+  'Refrigerate for at least 15 minutes before serving to allow the flavours to develop. Keeps for up to a week in a sealed jar.',
+]},
+
+{id:229,name:'Tzatziki',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'15 min + 30 min drain',calories:70,mainIngredient:'Yoghurt',
+ingredients:[
+  {name:'Greek yoghurt',amount:500,unit:'g'},
+  {name:'Lebanese cucumbers',amount:2,unit:'whole'},
+  {name:'Garlic cloves',prep:'crushed',amount:2,unit:'cloves'},
+  {name:'Lemon juice',amount:30,unit:'ml'},
+  {name:'Olive oil',amount:30,unit:'ml'},
+  {name:'Fresh dill',prep:'chopped',amount:2,unit:'tbsp'},
+  {name:'Salt and white pepper',amount:1,unit:'to taste'},
+],
+steps:[
+  'Grate the cucumbers on the coarse side of a box grater. Sprinkle with a pinch of salt and let sit in a colander for 30 minutes, then squeeze firmly to remove as much liquid as possible.',
+  'Combine the yoghurt, drained cucumber, garlic and lemon juice in a bowl. Mix well.',
+  'Season with salt and white pepper. Drizzle with olive oil and scatter over the dill.',
+  'Taste and adjust — it should be cool, creamy, garlicky and bright. Refrigerate until serving.',
+]},
+
+{id:230,name:'Chipotle Mayo',category:'Sauces & Condiments',difficulty:'easy',serves:8,time:'5 min',calories:120,mainIngredient:'Mayonnaise',
+ingredients:[
+  {name:'Mayonnaise',amount:200,unit:'g'},
+  {name:'Chipotle peppers in adobo sauce',amount:2,unit:'whole'},
+  {name:'Lime juice',amount:15,unit:'ml'},
+  {name:'Garlic clove',prep:'crushed',amount:1,unit:'clove'},
+  {name:'Smoked paprika',amount:0.5,unit:'tsp'},
+  {name:'Salt',amount:1,unit:'to taste'},
+],
+steps:[
+  'Finely chop the chipotle peppers and add to a bowl along with a teaspoon of the adobo sauce from the tin.',
+  'Mix in the mayonnaise, lime juice, garlic and smoked paprika.',
+  'Season with salt, then taste — add more chipotle for extra heat, more lime for brightness.',
+  'Keeps in the fridge for up to a week. Great as a dipping sauce, burger spread or dressing.',
+]},
+
+{id:231,name:'Quick Pickled Cucumbers',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'10 min + 1 hr pickle',calories:30,mainIngredient:'Cucumber',
+ingredients:[
+  {name:'Lebanese cucumbers, thinly sliced',amount:3,unit:'whole'},
+  {name:'White wine vinegar',amount:120,unit:'ml'},
+  {name:'Water',amount:120,unit:'ml'},
+  {name:'Caster sugar',amount:2,unit:'tbsp'},
+  {name:'Salt',amount:1,unit:'tsp'},
+  {name:'Garlic clove, thinly sliced',amount:1,unit:'clove'},
+  {name:'Fresh dill sprigs',amount:3,unit:'whole'},
+  {name:'Black peppercorns',amount:0.5,unit:'tsp'},
+],
+steps:[
+  'Combine the vinegar, water, sugar and salt in a small saucepan over medium heat. Stir until the sugar and salt dissolve, then remove from heat and cool for 5 minutes.',
+  'Pack the sliced cucumber into a clean jar along with the garlic, dill and peppercorns.',
+  'Pour the warm brine over the cucumbers, ensuring they are fully submerged.',
+  'Leave to cool to room temperature, then seal and refrigerate for at least 1 hour before serving. Best after overnight. Keeps for 2 weeks.',
 ]},
 
 {id:227,name:'Loaded Sweet Potatoes with Spiced Mushrooms, Herbed Yoghurt and Pickles',category:'Vegetarian',difficulty:'medium',serves:4,time:'1 hr 15 min',calories:380,mainIngredient:'Sweet Potatoes',

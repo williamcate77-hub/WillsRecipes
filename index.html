@@ -774,10 +774,10 @@ const SALAD_PROTEIN_PAIRINGS={
 };
 
 // ── CATEGORY METADATA
-const CAT_COLOR={'Dips & Starters':'#4CAF50','Salads':'#00ACC1','Soups':'#9C27B0','Seafood':'#0097A7','Meat & Poultry':'#E53935','Vegetarian':'#7CB342','Pasta & Rice':'#FB8C00','Sides':'#6D4C41','Bread & Bakes':'#FFB300','Sauces':'#E91E63','Desserts':'#FF5722'};
-const CAT_EMOJI={'Dips & Starters':'🫙','Salads':'🥗','Soups':'🍲','Seafood':'🦐','Meat & Poultry':'🥩','Vegetarian':'🥦','Pasta & Rice':'🍝','Sides':'🥔','Bread & Bakes':'🍞','Sauces':'🫕','Desserts':'🍰'};
-const CAT_GRAD={'Dips & Starters':['#e8f5e9','#c8e6c9'],'Salads':['#e0f7fa','#b2ebf2'],'Soups':['#ede7f6','#d1c4e9'],'Seafood':['#e3f2fd','#b3e5fc'],'Meat & Poultry':['#fce4ec','#f8bbd0'],'Vegetarian':['#f1f8e9','#dcedc8'],'Pasta & Rice':['#fff8e1','#ffecb3'],'Sides':['#efebe9','#d7ccc8'],'Bread & Bakes':['#fff3e0','#ffe0b2'],'Sauces':['#fce4ec','#f48fb1'],'Desserts':['#fde8e8','#ffccbc']};
-const CAT_GRAD_DK={'Dips & Starters':['#1b3a20','#102414'],'Salads':['#0d2e33','#071e22'],'Soups':['#1e1030','#140820'],'Seafood':['#0d2030','#071522'],'Meat & Poultry':['#3a0d14','#280910'],'Vegetarian':['#1a2e0d','#101e08'],'Pasta & Rice':['#302010','#20150a'],'Sides':['#1e1814','#14100c'],'Bread & Bakes':['#302010','#20140a'],'Sauces':['#3a0d1e','#280912'],'Desserts':['#3a1010','#280a0a']};
+const CAT_COLOR={'Dips & Starters':'#4CAF50','Salads':'#00ACC1','Soups':'#9C27B0','Seafood':'#0097A7','Meat & Poultry':'#E53935','Vegetarian':'#7CB342','Pasta & Rice':'#FB8C00','Sides':'#6D4C41','Bread & Bakes':'#FFB300','Sauces & Condiments':'#E91E63','Desserts':'#FF5722'};
+const CAT_EMOJI={'Dips & Starters':'🫙','Salads':'🥗','Soups':'🍲','Seafood':'🦐','Meat & Poultry':'🥩','Vegetarian':'🥦','Pasta & Rice':'🍝','Sides':'🥔','Bread & Bakes':'🍞','Sauces & Condiments':'🫕','Desserts':'🍰'};
+const CAT_GRAD={'Dips & Starters':['#e8f5e9','#c8e6c9'],'Salads':['#e0f7fa','#b2ebf2'],'Soups':['#ede7f6','#d1c4e9'],'Seafood':['#e3f2fd','#b3e5fc'],'Meat & Poultry':['#fce4ec','#f8bbd0'],'Vegetarian':['#f1f8e9','#dcedc8'],'Pasta & Rice':['#fff8e1','#ffecb3'],'Sides':['#efebe9','#d7ccc8'],'Bread & Bakes':['#fff3e0','#ffe0b2'],'Sauces & Condiments':['#fce4ec','#f48fb1'],'Desserts':['#fde8e8','#ffccbc']};
+const CAT_GRAD_DK={'Dips & Starters':['#1b3a20','#102414'],'Salads':['#0d2e33','#071e22'],'Soups':['#1e1030','#140820'],'Seafood':['#0d2030','#071522'],'Meat & Poultry':['#3a0d14','#280910'],'Vegetarian':['#1a2e0d','#101e08'],'Pasta & Rice':['#302010','#20150a'],'Sides':['#1e1814','#14100c'],'Bread & Bakes':['#302010','#20140a'],'Sauces & Condiments':['#3a0d1e','#280912'],'Desserts':['#3a1010','#280a0a']};
 function cardGrad(cat){
   const g=isDark?CAT_GRAD_DK[cat]:CAT_GRAD[cat];
   return g?`linear-gradient(135deg,${g[0]},${g[1]})`:'linear-gradient(135deg,#f0ece8,#e8e4e0)';
