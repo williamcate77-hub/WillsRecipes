@@ -80,6 +80,7 @@ main::-webkit-scrollbar{display:none}
 /* Filter chips / Result feedback */
 .filter-chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 12px;align-items:center}
 .filter-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:16px;background:var(--green-dim);border:1px solid var(--green);color:var(--text);font-size:12px;font-weight:600}
+.filter-chip.active{background:var(--green);border-color:var(--green);color:#fff}
 .filter-chip-clear{background:none;border:none;color:var(--text2);cursor:pointer;font-size:14px;padding:0;display:flex;align-items:center;justify-content:center;width:16px;height:16px;transition:color .15s}
 .filter-chip-clear:active{color:var(--text)}
 .result-count{font-size:12px;color:var(--text3);margin-left:auto}
@@ -449,6 +450,7 @@ body{font-size:17px}
 .browse-page-title{font-size:19px}
 .browse-page-count{font-size:13px}
 .toast{font-size:15px}
+main.no-tab-bar{padding-bottom:env(safe-area-inset-bottom,0px) !important}
 </style>
 </head>
 <body>
@@ -571,6 +573,7 @@ body{font-size:17px}
       <h2 style="font-family:var(--serif);font-size:30px;font-weight:700;color:var(--text);margin-bottom:4px">Saved Recipes</h2>
       <p style="font-size:14px;color:var(--text2)">Your personal cookbook</p>
     </div>
+    <div class="chips-row" id="savedChipsRow" style="display:none"></div>
     <div class="card-list" id="savedList"></div>
     <div class="empty" id="savedEmpty" style="display:none">
       <div class="empty-icon"><span class="ms">bookmark</span></div>
@@ -832,6 +835,7 @@ let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
 let recentlyViewed=JSON.parse(localStorage.getItem('recentlyViewed')||'[]')
   .map(x=>typeof x==='number'?{id:x,ts:0}:x).filter(x=>x&&x.id);
 let browseMode=null; // null | {title, recipes}
+let savedCategoryFilter=null;
 
 // ── COOKING STATE
 let cookingRecipe=null,cookingStep=0,ckTimerSecs=0,ckTimerInterval=null,ckTimerRunning=false;
@@ -1193,11 +1197,28 @@ function recipeCard(r,showSave=true){
     ${showSave?`<button class="rcrd-save${ip?' saved':''}" id="rsb-${r.id}" onclick="togglePin(${r.id})"><span class="ms">bookmark</span><span class="slbl">${ip?'Saved':'Save'}</span></button>`:''}
   </div>`;
 }
+function setSavedFilter(cat){
+  savedCategoryFilter=cat;
+  renderSaved();
+}
 function renderSaved(){
   const list=document.getElementById('savedList');const empty=document.getElementById('savedEmpty');
+  const chipsRow=document.getElementById('savedChipsRow');
   const pr=[...ALL_RECIPES].filter(r=>pinned.includes(r.id)).sort((a,b)=>b.id-a.id);
-  if(!pr.length){list.innerHTML='';empty.style.display='flex';return;}
-  empty.style.display='none';list.innerHTML=pr.map(r=>recipeCard(r)).join('');
+  if(!pr.length){list.innerHTML='';chipsRow.style.display='none';empty.style.display='flex';return;}
+  const cats=[...new Set(pr.map(r=>r.category))].sort();
+  if(cats.length>1){
+    chipsRow.style.display='';
+    chipsRow.innerHTML=['All',...cats].map(c=>{
+      const active=savedCategoryFilter===null&&c==='All'||savedCategoryFilter===c;
+      return `<button class="filter-chip${active?' active':''}" onclick="setSavedFilter(${c==='All'?'null':`'${c}'`})">${c}</button>`;
+    }).join('');
+  } else {
+    chipsRow.style.display='none';
+    savedCategoryFilter=null;
+  }
+  const filtered=savedCategoryFilter?pr.filter(r=>r.category===savedCategoryFilter):pr;
+  empty.style.display='none';list.innerHTML=filtered.map(r=>recipeCard(r)).join('');
 }
 function renderLatest(){
   document.getElementById('latestList').innerHTML=[...ALL_RECIPES].sort((a,b)=>b.id-a.id).map(r=>recipeCard(r)).join('');
@@ -1249,6 +1270,7 @@ function openRecipe(id){
   const v=document.getElementById('view-detail');v.style.display='block';v.classList.add('active');
   document.getElementById('appHdr').style.display='none';
   document.getElementById('tabBar').style.display='none';
+  document.getElementById('main').classList.add('no-tab-bar');
   currentTab='detail';
   document.getElementById('main').scrollTop=0;
 }
@@ -1431,15 +1453,17 @@ function mergeIntoShopList(ingredients,recipeName,scale){
 
     const norm=normaliseIngName(ing.name);
     const scaled=scaleAmount(ing.amount,ing.unit,scale);
-    const amt=fmtIng(scaled,ing.unit);
     const existing=globalShopList.find(x=>normaliseIngName(x.name)===norm);
     if(existing){
-      // Update to latest amount from this recipe
+      if(typeof existing.rawAmount==='number'&&existing.unit===ing.unit&&typeof scaled==='number'){
+        existing.rawAmount+=scaled;
+        existing.amount=fmtIng(existing.rawAmount,existing.unit);
+      }
       existing.recipes=existing.recipes||[existing.recipe];
       if(!existing.recipes.includes(recipeName))existing.recipes.push(recipeName);
       existing.recipe=existing.recipes.join(', ');
     } else {
-      globalShopList.push({name:ing.name,amount:amt,recipe:recipeName,aisle:getAisle(ing.name),checked:false});
+      globalShopList.push({name:ing.name,amount:fmtIng(scaled,ing.unit),rawAmount:typeof scaled==='number'?scaled:null,unit:ing.unit,recipe:recipeName,aisle:getAisle(ing.name),checked:false});
       added++;
     }
   });
@@ -1451,6 +1475,7 @@ function closeDetail(dh=true){
   currentRecipe=null;
   document.getElementById('appHdr').style.display='';
   document.getElementById('tabBar').style.display='';
+  document.getElementById('main').classList.remove('no-tab-bar');
   const target=prevTab==='detail'?'home':prevTab;
   showTab(target);
 }
@@ -1621,6 +1646,7 @@ function showTab(tab){
   currentTab=tab;
   document.getElementById('appHdr').style.display='';
   document.getElementById('tabBar').style.display='';
+  document.getElementById('main').classList.remove('no-tab-bar');
   if(tab==='home')renderHome();
   if(tab==='saved')renderSaved();
   if(tab==='latest')renderLatest();
