@@ -515,7 +515,7 @@ steps:[
 ]},
 
 // ── SAUCES & CONDIMENTS ────────────────────────────────────
-{id:110,name:'3-Minute Romesco Sauce',category:'Sauces',difficulty:'easy',serves:8,time:'5 min',calories:120,mainIngredient:'Capsicum',
+{id:110,name:'3-Minute Romesco Sauce',category:'Sauces & Condiments',difficulty:'easy',serves:8,time:'5 min',calories:120,mainIngredient:'Capsicum',
 ingredients:[
   {name:'Roasted capsicum',amount:200,unit:'g'},
   {name:'Garlic cloves',amount:2,unit:'cloves'},
@@ -532,7 +532,7 @@ steps:[
   'Taste and adjust with salt, pepper or extra vinegar.',
 ]},
 
-{id:111,name:'Green Goddess Tahini Sauce',category:'Sauces',difficulty:'easy',serves:6,time:'5 min',calories:90,mainIngredient:'Tahini',
+{id:111,name:'Green Goddess Tahini Sauce',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'5 min',calories:90,mainIngredient:'Tahini',
 ingredients:[
   {name:'Tahini',amount:135,unit:'g'},
   {name:'Lemon juice',amount:30,unit:'ml'},
@@ -546,7 +546,7 @@ steps:[
   'Adjust with more water for a pourable consistency or more lemon for brightness. Season.',
 ]},
 
-{id:112,name:'Garlicky Whipped Tahini',category:'Sauces',difficulty:'easy',serves:6,time:'5 min',calories:110,mainIngredient:'Tahini',
+{id:112,name:'Garlicky Whipped Tahini',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'5 min',calories:110,mainIngredient:'Tahini',
 ingredients:[
   {name:'Tahini',amount:135,unit:'g'},
   {name:'Lemon juice',amount:30,unit:'ml'},
@@ -558,7 +558,7 @@ steps:[
   'Add more water for a thinner consistency, more lemon for brightness. Season with salt.',
 ]},
 
-{id:113,name:'Sumac Yoghurt',category:'Sauces',difficulty:'easy',serves:6,time:'5 min',calories:80,mainIngredient:'Yoghurt',
+{id:113,name:'Sumac Yoghurt',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'5 min',calories:80,mainIngredient:'Yoghurt',
 ingredients:[
   {name:'Greek yoghurt',amount:390,unit:'g'},
   {name:'Garlic cloves',prep:'crushed',amount:2,unit:'cloves'},
@@ -571,7 +571,7 @@ steps:[
   'Season with salt and black pepper. Taste and adjust.',
 ]},
 
-{id:114,name:'Herbed Yoghurt with Lemon & Garlic',category:'Sauces',difficulty:'easy',serves:4,time:'5 min',calories:60,mainIngredient:'Yoghurt',
+{id:114,name:'Herbed Yoghurt with Lemon & Garlic',category:'Sauces & Condiments',difficulty:'easy',serves:4,time:'5 min',calories:60,mainIngredient:'Yoghurt',
 ingredients:[
   {name:'Greek yoghurt',amount:200,unit:'g'},
   {name:'Lemon juice and zest',amount:1,unit:'lemon'},
@@ -583,7 +583,7 @@ steps:[
   'Season with salt and pepper to taste.',
 ]},
 
-{id:115,name:'Roast Tomato & White Bean Raita',category:'Sauces',difficulty:'medium',serves:2,time:'50 min',calories:280,mainIngredient:'Tomatoes',
+{id:115,name:'Roast Tomato & White Bean Raita',category:'Sauces & Condiments',difficulty:'medium',serves:2,time:'50 min',calories:280,mainIngredient:'Tomatoes',
 ingredients:[
   {name:'Tomatoes',prep:'halved',amount:3,unit:'whole'},
   {name:'Olive oil',amount:60,unit:'ml'},
@@ -606,7 +606,7 @@ steps:[
   'Spread yoghurt on a plate, top with dressed beans and drizzle with oil.',
 ]},
 
-{id:116,name:'Salmoriglio',category:'Sauces',difficulty:'easy',serves:6,time:'5 min',calories:130,mainIngredient:'Herbs',
+{id:116,name:'Salmoriglio',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'5 min',calories:130,mainIngredient:'Herbs',
 ingredients:[
   {name:'Garlic cloves',prep:'crushed',amount:2,unit:'cloves'},
   {name:'Fresh oregano, leaves picked',amount:1,unit:'bunch'},
@@ -620,7 +620,7 @@ steps:[
   'Season well. Keeps a week in the fridge.',
 ]},
 
-{id:117,name:'Zhoug',category:'Sauces',difficulty:'easy',serves:6,time:'5 min',calories:110,mainIngredient:'Herbs',
+{id:117,name:'Zhoug',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'5 min',calories:110,mainIngredient:'Herbs',
 ingredients:[
   {name:'Coriander',amount:0.5,unit:'bunch'},
   {name:'Parsley',amount:0.5,unit:'bunch'},
@@ -637,7 +637,7 @@ steps:[
   'Add remaining oil and blitz again. Season to taste.',
 ]},
 
-{id:118,name:'Pickled Red Onions (Zuni Cafe)',category:'Sauces',difficulty:'easy',serves:8,time:'30 min',calories:60,mainIngredient:'Onions',
+{id:118,name:'Pickled Red Onions (Zuni Cafe)',category:'Sauces & Condiments',difficulty:'easy',serves:8,time:'30 min',calories:60,mainIngredient:'Onions',
 ingredients:[
   {name:'Red onions',prep:'cut into rings',amount:450,unit:'g'},
   {name:'White vinegar',amount:750,unit:'ml'},
