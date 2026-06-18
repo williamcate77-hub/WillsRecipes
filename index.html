@@ -983,7 +983,7 @@ function ingMatchesQuery(ingName,q){
 
 // ── FEED FILTERING (single query state)
 function getFiltered(){
-  let list=ALL_RECIPES;
+  let list=[...ALL_RECIPES].sort((a,b)=>b.id-a.id);
   if(activeSearch){
     const q=activeSearch;
     list=list.filter(r=>r.name.toLowerCase().includes(q)||r.category.toLowerCase().includes(q)||r.mainIngredient.toLowerCase().includes(q)||(r.ingredients&&r.ingredients.some(i=>i.name&&ingMatchesQuery(i.name,q))));
@@ -1125,14 +1125,14 @@ function renderShelves(){
         .map(x=>ALL_RECIPES.find(r=>r.id===x.id)).filter(Boolean)
     },{
       title:'Quick tonight',sub:'Under 30 minutes',seeAll:'shelf',cap:8,
-      recipes:ALL_RECIPES.filter(r=>parseMinutes(r.time)<=30)
+      recipes:[...ALL_RECIPES].filter(r=>parseMinutes(r.time)<=30).sort((a,b)=>b.id-a.id)
     },{
       title:'Recently added',sub:null,seeAll:'shelf',cap:8,
       recipes:[...ALL_RECIPES].sort((a,b)=>b.id-a.id)
     },
     ...CATEGORIES.map(cat=>({
       title:cat,sub:null,seeAll:'cat',cap:8,cat,
-      recipes:ALL_RECIPES.filter(r=>r.category===cat)
+      recipes:[...ALL_RECIPES].filter(r=>r.category===cat).sort((a,b)=>b.id-a.id)
     }))
   ];
   let html='<div style="padding-bottom:24px">';
@@ -1195,7 +1195,7 @@ function recipeCard(r,showSave=true){
 }
 function renderSaved(){
   const list=document.getElementById('savedList');const empty=document.getElementById('savedEmpty');
-  const pr=ALL_RECIPES.filter(r=>pinned.includes(r.id));
+  const pr=[...ALL_RECIPES].filter(r=>pinned.includes(r.id)).sort((a,b)=>b.id-a.id);
   if(!pr.length){list.innerHTML='';empty.style.display='flex';return;}
   empty.style.display='none';list.innerHTML=pr.map(r=>recipeCard(r)).join('');
 }
