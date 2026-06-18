@@ -1,4 +1,4 @@
-const CATEGORIES = ['Dips & Starters','Salads','Soups','Seafood','Meat & Poultry','Vegetarian','Pasta & Rice','Sides','Bread & Bakes','Sauces','Desserts'];
+const CATEGORIES = ['Dips & Starters','Salads','Soups','Seafood','Meat & Poultry','Vegetarian','Pasta & Rice','Sides','Bread & Bakes','Sauces & Condiments','Desserts'];
 
 const SW = {
   'Dips & Starters':'sw-entrees',

@@ -11,7 +11,7 @@
 <link rel="manifest" href="/public/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -20,7 +20,7 @@
   --green:#2d7f3e; --green-bg:#c5eab4; --green-text:#1a5c28; --green-dim:rgba(45,127,62,.09);
   --warm:#c9813a; --warm-bg:rgba(201,129,58,.11);
   --error:#ba1a1a; --tab-h:80px; --r:10px;
-  --serif:'Playfair Display',Georgia,serif; --sans:'Inter',-apple-system,sans-serif;
+  --serif:'Inter',-apple-system,sans-serif; --sans:'Inter',-apple-system,sans-serif;
   --shadow:0 2px 12px rgba(0,0,0,.06); --shadow-lg:0 8px 32px rgba(0,0,0,.10);
 }
 html.dark {
@@ -272,6 +272,17 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 .shop-block-sub{font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.45}
 .shop-inner{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow)}
 
+/* Works well with */
+.www-row{display:flex;gap:10px;overflow-x:auto;padding:0 0 4px;scrollbar-width:none}
+.www-row::-webkit-scrollbar{display:none}
+.www-card{flex-shrink:0;width:150px;cursor:pointer;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);transition:opacity .15s}
+.www-card:active{opacity:.85}
+.www-card-img{height:68px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.www-card-body{padding:8px 10px 10px}
+.www-card-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:3px}
+.www-card-name{font-family:var(--serif);font-size:12px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.www-card-meta{font-size:10px;color:var(--text2)}
+
 /* ── COOKING MODE ── */
 .cooking-view{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
 .cooking-view.hidden{display:none}
@@ -359,6 +370,85 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 /* Toast */
 .toast{position:fixed;bottom:calc(var(--tab-h) + 16px);left:50%;transform:translateX(-50%) translateY(12px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:var(--r);font-size:14px;font-weight:600;opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── FONT SIZE INCREASE ── */
+body{font-size:17px}
+.hdr-eyebrow{font-size:10px}
+.hdr-title{font-size:25px}
+.hbtn .lbl{font-size:9px}
+.search-input{font-size:17px}
+.chip{font-size:14px}
+.filter-chip{font-size:13px}
+.result-count{font-size:13px}
+.continue-banner-label{font-size:11px}
+.continue-banner-title{font-size:17px}
+.continue-banner-step{font-size:13px}
+.rv-title{font-size:12px}
+.rv-name{font-size:12px}
+.feed-section-hdr h3{font-size:19px}
+.feed-section-count{font-size:13px}
+.feed-card-title{font-size:19px}
+.feed-card-add-btn{font-size:13px}
+.feed-meta-chip{font-size:13px}
+.badge{font-size:11px}
+.time-chip{font-size:12px}
+.rcrd-name{font-size:17px}
+.rcrd-cat{font-size:13px}
+.rcrd-save .slbl{font-size:9px}
+.empty-title,.empty .empty-title,.empty-saved .empty-title{font-size:23px}
+.empty-body{font-size:16px}
+.empty-cta{font-size:16px}
+.empty-subtitle{font-size:15px}
+.sort-btn{font-size:14px}
+.btn-primary{font-size:16px}
+.btn-secondary{font-size:15px}
+.shop-sec-name{font-size:16px}
+.shop-sec-count{font-size:12px}
+.shop-iname{font-size:16px}
+.shop-sub{font-size:12px}
+.shop-amt{font-size:15px}
+.hero-fact{font-size:13px}
+.det-title{font-size:30px}
+.det-tag{font-size:13px}
+.cook-btn{font-size:16px}
+.add-all-det{font-size:14px}
+.serve-lbl,.serve-unit{font-size:15px}
+.serve-num{font-size:42px}
+.serve-adjust-btn{font-size:15px}
+.det-sec{font-size:21px}
+.ing-cat{font-size:10px}
+.ing-section{font-size:11px}
+.ing-name{font-size:16px}
+.ing-prep{font-size:14px}
+.ing-amt{font-size:15px}
+.step-lbl{font-size:12px}
+.step-text{font-size:16px}
+.shop-block-title{font-size:20px}
+.shop-block-sub{font-size:14px}
+.www-card-cat{font-size:11px}
+.www-card-name{font-size:13px}
+.www-card-meta{font-size:11px}
+.ck-exit{font-size:15px}
+.ck-counter{font-size:17px}
+.ck-ing-btn{font-size:14px}
+.ck-recipe-name{font-size:13px}
+.ck-step-text{font-size:20px}
+.ck-timer-start{font-size:15px}
+.ck-prev,.ck-next,.ck-done-btn{font-size:16px}
+.ck-ing-sheet-title{font-size:21px}
+.ck-serve-note{font-size:13px}
+.tab{font-size:13px}
+.tab-badge{font-size:10px}
+.shelf-title{font-size:20px}
+.shelf-sub{font-size:13px}
+.shelf-seeall{font-size:14px}
+.shelf-card-name{font-size:15px}
+.shelf-card-hero .shelf-card-name{font-size:19px}
+.shelf-card-compact .shelf-card-name{font-size:13px}
+.browse-back-btn{font-size:15px}
+.browse-page-title{font-size:19px}
+.browse-page-count{font-size:13px}
+.toast{font-size:15px}
 </style>
 </head>
 <body>
@@ -478,7 +568,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
   <!-- SAVED -->
   <div class="view" id="view-saved">
     <div style="padding:24px 20px 16px">
-      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Saved Recipes</h2>
+      <h2 style="font-family:var(--serif);font-size:30px;font-weight:700;color:var(--text);margin-bottom:4px">Saved Recipes</h2>
       <p style="font-size:14px;color:var(--text2)">Your personal cookbook</p>
     </div>
     <div class="card-list" id="savedList"></div>
@@ -493,7 +583,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
   <!-- LATEST -->
   <div class="view" id="view-latest">
     <div style="padding:24px 20px 16px">
-      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Latest</h2>
+      <h2 style="font-family:var(--serif);font-size:30px;font-weight:700;color:var(--text);margin-bottom:4px">Latest</h2>
       <p style="font-size:14px;color:var(--text2)">Most recently added to the collection</p>
     </div>
     <div class="card-list" id="latestList"></div>
@@ -502,7 +592,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
   <!-- SHOPPING -->
   <div class="view" id="view-shoplist">
     <div style="padding:24px 20px 16px">
-      <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px">Shopping List</h2>
+      <h2 style="font-family:var(--serif);font-size:30px;font-weight:700;color:var(--text);margin-bottom:4px">Shopping List</h2>
       <p style="font-size:14px;color:var(--text2)" id="shopSubtitle">Items to pick up</p>
     </div>
     <div class="sort-bar">
@@ -565,6 +655,11 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
         <div class="shop-inner" id="shopList"></div>
         <button class="btn-primary" onclick="addToShoppingListFiltered()" style="margin-top:2px"><span class="ms">add_shopping_cart</span>Add these to your list</button>
       </div>
+      <!-- Works well with -->
+      <div id="worksWellWith">
+        <h3 class="det-sec">Works well with</h3>
+        <div class="www-row" id="wwwRow"></div>
+      </div>
     </div>
   </div>
 
@@ -599,11 +694,90 @@ const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3,...RECIPES4];
 // ── SEAFOOD GROUP
 const SEAFOOD=new Set(['Clams','Dover Sole','Fish','Mackerel','Mussels','Oysters','Prawns','Salmon','Sardines','Scallops','Seafood','Smoked Trout','Snapper','Tuna']);
 
+// ── PROTEIN PAIRING DATA
+const MAIN_CATS=new Set(['Meat & Poultry','Seafood']);
+const SIDE_CATS=new Set(['Sides','Salads']);
+const PROTEIN_GROUPS={
+  chicken:['Chicken'],
+  beef:['Beef','Steak'],
+  lamb:['Lamb'],
+  pork:['Pork','Sausages'],
+  fish:['Fish','Mackerel','Sardines','Snapper','Dover Sole','Ling','Kingfish'],
+  prawns:['Prawns','Shrimp'],
+  salmon:['Salmon','Smoked Trout'],
+  shellfish:['Scallops','Pipis','Shellfish','Clams','Mussels','Oysters','Seafood'],
+};
+// Keywords found in side/salad ingredients that indicate a good match for each protein
+const PROTEIN_SIDE_AFFINITY={
+  chicken:['broccoli','bean','potato','sweet potato','kale','zucchini','corn','cauliflower','pumpkin','carrot','mushroom','pea','rice','greens'],
+  beef:['potato','brussels','mushroom','broccoli','kale','bean','corn','cauliflower','squash'],
+  lamb:['eggplant','pumpkin','cauliflower','pea','bean','carrot','zucchini','squash','kale'],
+  pork:['corn','brussels','greens','cabbage','squash','pumpkin','bean'],
+  fish:['bean','zucchini','asparagus','broccoli','cauliflower','greens','pea','potato','rice'],
+  prawns:['corn','greens','zucchini','bean','broccoli','rice'],
+  salmon:['sweet potato','kale','bean','broccoli','potato','asparagus'],
+  shellfish:['corn','greens','bean','broccoli','cauliflower','rice'],
+};
+const PROTEIN_SALAD_AFFINITY={
+  chicken:['lettuce','tomato','feta','kale','asparagus','chickpea','pumpkin','carrot','quinoa'],
+  beef:['lettuce','tomato','bread','horseradish','beetroot','kale','farro'],
+  lamb:['beetroot','lentil','feta','pomegranate','pumpkin','kale','farro','buckwheat'],
+  pork:['kale','watermelon','fennel','carrot','bread'],
+  fish:['butter bean','asparagus','trout','horseradish','lettuce','quinoa','wild rice'],
+  prawns:['watermelon','asparagus','tomato','chickpea'],
+  salmon:['butter bean','kale','asparagus','dill','horseradish','lentil'],
+  shellfish:['lemon','herb','tomato','chickpea','wild rice'],
+};
+// For sides/salads: which protein groups pair with each main ingredient
+const SIDE_PROTEIN_PAIRINGS={
+  'Potatoes':['chicken','beef','lamb','pork'],
+  'Potato':['chicken','beef','lamb','pork'],
+  'Sweet Potato':['chicken','salmon','fish'],
+  'Brussels Sprouts':['beef','pork','chicken'],
+  'Corn':['chicken','prawns','pork'],
+  'Broccoli':['beef','chicken','fish'],
+  'Eggplant':['lamb','chicken'],
+  'Cauliflower':['chicken','fish','lamb'],
+  'Kale':['chicken','salmon','fish'],
+  'Zucchini':['fish','chicken','prawns'],
+  'Green Beans':['chicken','fish','lamb'],
+  'Pumpkin':['chicken','lamb','beef'],
+  'Carrots':['lamb','chicken','beef'],
+  'Mushrooms':['beef','chicken'],
+  'Peas':['lamb','chicken','fish'],
+  'Brown Rice':['chicken','fish','prawns'],
+  'Beans':['fish','chicken','lamb'],
+  'Butter Beans':['fish','chicken'],
+  'Greens':['chicken','fish','prawns','shellfish'],
+  'Squash':['chicken','lamb','beef'],
+  'Cabbage':['pork','beef','chicken'],
+  'Asparagus':['fish','salmon','chicken','prawns'],
+};
+const SALAD_PROTEIN_PAIRINGS={
+  'Lettuce':['chicken','beef','fish'],
+  'Tomatoes':['chicken','beef','lamb','fish'],
+  'Chickpeas':['chicken','lamb'],
+  'Kale':['chicken','salmon','fish'],
+  'Lentils':['lamb','chicken'],
+  'Beetroot':['lamb','beef','chicken'],
+  'Pumpkin':['chicken','lamb'],
+  'Asparagus':['fish','salmon','prawns','chicken'],
+  'Smoked Trout':['salmon','fish'],
+  'Watermelon':['prawns','pork'],
+  'Quinoa':['chicken','fish'],
+  'Farro':['chicken','lamb','beef'],
+  'Wild Rice':['chicken','fish','prawns'],
+  'Carrots':['chicken','lamb','beef'],
+  'Buckwheat':['chicken','lamb'],
+  'Flatbread':['chicken','lamb','beef'],
+  'Butter Beans':['fish','chicken'],
+};
+
 // ── CATEGORY METADATA
-const CAT_COLOR={'Dips & Starters':'#4CAF50','Salads':'#00ACC1','Soups':'#9C27B0','Seafood':'#0097A7','Meat & Poultry':'#E53935','Vegetarian':'#7CB342','Pasta & Rice':'#FB8C00','Sides':'#6D4C41','Bread & Bakes':'#FFB300','Sauces':'#E91E63','Desserts':'#FF5722'};
-const CAT_EMOJI={'Dips & Starters':'🫙','Salads':'🥗','Soups':'🍲','Seafood':'🦐','Meat & Poultry':'🥩','Vegetarian':'🥦','Pasta & Rice':'🍝','Sides':'🥔','Bread & Bakes':'🍞','Sauces':'🫕','Desserts':'🍰'};
-const CAT_GRAD={'Dips & Starters':['#e8f5e9','#c8e6c9'],'Salads':['#e0f7fa','#b2ebf2'],'Soups':['#ede7f6','#d1c4e9'],'Seafood':['#e3f2fd','#b3e5fc'],'Meat & Poultry':['#fce4ec','#f8bbd0'],'Vegetarian':['#f1f8e9','#dcedc8'],'Pasta & Rice':['#fff8e1','#ffecb3'],'Sides':['#efebe9','#d7ccc8'],'Bread & Bakes':['#fff3e0','#ffe0b2'],'Sauces':['#fce4ec','#f48fb1'],'Desserts':['#fde8e8','#ffccbc']};
-const CAT_GRAD_DK={'Dips & Starters':['#1b3a20','#102414'],'Salads':['#0d2e33','#071e22'],'Soups':['#1e1030','#140820'],'Seafood':['#0d2030','#071522'],'Meat & Poultry':['#3a0d14','#280910'],'Vegetarian':['#1a2e0d','#101e08'],'Pasta & Rice':['#302010','#20150a'],'Sides':['#1e1814','#14100c'],'Bread & Bakes':['#302010','#20140a'],'Sauces':['#3a0d1e','#280912'],'Desserts':['#3a1010','#280a0a']};
+const CAT_COLOR={'Dips & Starters':'#4CAF50','Salads':'#00ACC1','Soups':'#9C27B0','Seafood':'#0097A7','Meat & Poultry':'#E53935','Vegetarian':'#7CB342','Pasta & Rice':'#FB8C00','Sides':'#6D4C41','Bread & Bakes':'#FFB300','Sauces & Condiments':'#E91E63','Desserts':'#FF5722'};
+const CAT_EMOJI={'Dips & Starters':'🫙','Salads':'🥗','Soups':'🍲','Seafood':'🦐','Meat & Poultry':'🥩','Vegetarian':'🥦','Pasta & Rice':'🍝','Sides':'🥔','Bread & Bakes':'🍞','Sauces & Condiments':'🫕','Desserts':'🍰'};
+const CAT_GRAD={'Dips & Starters':['#e8f5e9','#c8e6c9'],'Salads':['#e0f7fa','#b2ebf2'],'Soups':['#ede7f6','#d1c4e9'],'Seafood':['#e3f2fd','#b3e5fc'],'Meat & Poultry':['#fce4ec','#f8bbd0'],'Vegetarian':['#f1f8e9','#dcedc8'],'Pasta & Rice':['#fff8e1','#ffecb3'],'Sides':['#efebe9','#d7ccc8'],'Bread & Bakes':['#fff3e0','#ffe0b2'],'Sauces & Condiments':['#fce4ec','#f48fb1'],'Desserts':['#fde8e8','#ffccbc']};
+const CAT_GRAD_DK={'Dips & Starters':['#1b3a20','#102414'],'Salads':['#0d2e33','#071e22'],'Soups':['#1e1030','#140820'],'Seafood':['#0d2030','#071522'],'Meat & Poultry':['#3a0d14','#280910'],'Vegetarian':['#1a2e0d','#101e08'],'Pasta & Rice':['#302010','#20150a'],'Sides':['#1e1814','#14100c'],'Bread & Bakes':['#302010','#20140a'],'Sauces & Condiments':['#3a0d1e','#280912'],'Desserts':['#3a1010','#280a0a']};
 function cardGrad(cat){
   const g=isDark?CAT_GRAD_DK[cat]:CAT_GRAD[cat];
   return g?`linear-gradient(135deg,${g[0]},${g[1]})`:'linear-gradient(135deg,#f0ece8,#e8e4e0)';
@@ -1102,7 +1276,7 @@ function renderDetailContent(){
   updateDetPin();
   const d=r.difficulty;
   document.getElementById('detTags').innerHTML=`<span class="badge badge-${d} det-tag" style="padding:5px 12px;border-radius:20px">${cap(d)}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${r.calories} kcal/serve</span>`;
-  renderIngredients();renderSteps();renderShopList();
+  renderIngredients();renderSteps();renderShopList();renderWorksWellWith();
 }
 
 function renderIngredients(){
@@ -1151,6 +1325,74 @@ function renderShopList(){
   }).join('');
 }
 function toggleShop(i){haptic(8);const c=shopChecked[currentRecipe.id];if(c.has(i))c.delete(i);else c.add(i);renderShopList();}
+
+// ── PROTEIN PAIRING
+function getProteinGroup(mainIngredient){
+  if(!mainIngredient)return null;
+  const mi=mainIngredient.toLowerCase();
+  for(const[group,ingredients]of Object.entries(PROTEIN_GROUPS)){
+    if(ingredients.some(i=>mi.includes(i.toLowerCase())))return group;
+  }
+  return null;
+}
+
+function getWorksWellWith(recipe){
+  const isMain=MAIN_CATS.has(recipe.category);
+  const isSide=SIDE_CATS.has(recipe.category);
+  if(!isMain&&!isSide)return[];
+  if(isMain){
+    const pg=getProteinGroup(recipe.mainIngredient);
+    if(!pg)return[];
+    const sideKws=PROTEIN_SIDE_AFFINITY[pg]||[];
+    const saladKws=PROTEIN_SALAD_AFFINITY[pg]||[];
+    const scored=ALL_RECIPES
+      .filter(r=>r.id!==recipe.id&&SIDE_CATS.has(r.category))
+      .map(r=>{
+        const kws=r.category==='Sides'?sideKws:saladKws;
+        const text=[r.mainIngredient||'',...r.ingredients.map(i=>i.name||'')].join(' ').toLowerCase();
+        const score=kws.reduce((s,kw)=>s+(text.includes(kw)?1:0),0);
+        return{r,score};
+      })
+      .filter(({score})=>score>0)
+      .sort((a,b)=>b.score-a.score);
+    const sides=scored.filter(({r})=>r.category==='Sides');
+    const salads=scored.filter(({r})=>r.category==='Salads');
+    const result=[];
+    if(sides.length&&salads.length){
+      result.push(sides[0].r,salads[0].r);
+      if(sides.length>1)result.push(sides[1].r);
+      else if(salads.length>1)result.push(salads[1].r);
+    }else{
+      result.push(...scored.slice(0,3).map(({r})=>r));
+    }
+    return result.slice(0,3);
+  }else{
+    const affinityTable=recipe.category==='Sides'?SIDE_PROTEIN_PAIRINGS:SALAD_PROTEIN_PAIRINGS;
+    const compatibleProteins=affinityTable[recipe.mainIngredient]||[];
+    if(!compatibleProteins.length)return[];
+    const scored=ALL_RECIPES
+      .filter(r=>MAIN_CATS.has(r.category)&&r.id!==recipe.id)
+      .map(r=>{
+        const pg=getProteinGroup(r.mainIngredient);
+        const pos=compatibleProteins.indexOf(pg);
+        return{r,score:pos>=0?compatibleProteins.length-pos:0,pg};
+      })
+      .filter(({score})=>score>0)
+      .sort((a,b)=>b.score-a.score);
+    const seen=new Set();const result=[];
+    for(const{r,pg}of scored){if(!seen.has(pg)){seen.add(pg);result.push(r);}if(result.length>=3)break;}
+    return result;
+  }
+}
+
+function renderWorksWellWith(){
+  const recs=getWorksWellWith(currentRecipe);
+  const container=document.getElementById('worksWellWith');
+  if(!container)return;
+  container.style.display=recs.length?'':'none';
+  if(!recs.length)return;
+  document.getElementById('wwwRow').innerHTML=recs.map(r=>`<div class="www-card" onclick="openRecipe(${r.id})"><div class="www-card-img" style="background:${cardGrad(r.category)}">${CAT_EMOJI[r.category]||'🍽️'}</div><div class="www-card-body"><div class="www-card-cat">${r.category}</div><div class="www-card-name">${r.name}</div><div class="www-card-meta">${r.time}&nbsp;·&nbsp;${cap(r.difficulty)}</div></div></div>`).join('');
+}
 
 // ── ONE-TAP ADD (from card, no pre-audit)
 function addAllFromCard(id){
