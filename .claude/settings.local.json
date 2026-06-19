@@ -75,7 +75,18 @@
       "Bash(/opt/homebrew/bin/node -e \"const fs=require\\('fs'\\); eval\\(fs.readFileSync\\('recipes4.js','utf8'\\).replace\\('const RECIPES4','var RECIPES4'\\)\\); console.log\\('OK:', RECIPES4.length, 'recipes'\\)\")",
       "Bash(/usr/local/bin/node -e \"const fs=require\\('fs'\\); eval\\(fs.readFileSync\\('recipes4.js','utf8'\\).replace\\('const RECIPES4','var RECIPES4'\\)\\); console.log\\('OK:', RECIPES4.length, 'recipes'\\)\")",
       "mcp__scheduled-tasks__list_scheduled_tasks",
-      "Bash(sort -t: -k2 -n)"
+      "Bash(sort -t: -k2 -n)",
+      "Bash(git commit *)",
+      "Bash(rm /Users/willcate/Documents/GitHub/WillsRecipes/.git/HEAD.lock && git add recipes4.js && git commit -m \"Add ingredient sections to latest 50 recipes\")",
+      "Bash(node -c recipes.js)",
+      "Bash(node -c recipes2.js)",
+      "Bash(node -c recipes3.js)",
+      "Bash(node -c recipes4.js)",
+      "Bash(git stash *)",
+      "Bash(git pull *)",
+      "Bash(git reset *)",
+      "Bash(git cherry-pick *)",
+      "Bash(gh api *)"
     ]
   }
 }
