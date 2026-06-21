@@ -86,7 +86,8 @@
       "Bash(git pull *)",
       "Bash(git reset *)",
       "Bash(git cherry-pick *)",
-      "Bash(gh api *)"
+      "Bash(gh api *)",
+      "mcp__Claude_in_Chrome__read_console_messages"
     ]
   }
 }
