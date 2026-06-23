@@ -974,7 +974,7 @@ function renderShelves(){
       recipes:ALL_RECIPES.filter(r=>parseMinutes(r.time)<=30)
     },{
       title:'Recently added',sub:null,seeAll:'shelf',cap:8,
-      recipes:[...ALL_RECIPES].sort((a,b)=>b.id-a.id)
+      recipes:[...ALL_RECIPES].reverse()
     },
     ...CATEGORIES.map(cat=>({
       title:cat,sub:null,seeAll:'cat',cap:8,cat,
@@ -1046,7 +1046,7 @@ function renderSaved(){
   empty.style.display='none';list.innerHTML=pr.map(r=>recipeCard(r)).join('');
 }
 function renderLatest(){
-  document.getElementById('latestList').innerHTML=[...ALL_RECIPES].sort((a,b)=>b.id-a.id).map(r=>recipeCard(r)).join('');
+  document.getElementById('latestList').innerHTML=[...ALL_RECIPES].reverse().map(r=>recipeCard(r)).join('');
 }
 
 // ── PIN / SAVE
