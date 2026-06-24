@@ -322,6 +322,47 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 .ck-wake-bar.off .ms{color:var(--text3)}
 .ck-wake-bar.off .ck-wake-pill{background:var(--surface2);color:var(--text3)}
 
+/* ── RATIOS VIEW ─────────────────────────────────────────── */
+.ratios-hdr{padding:24px 20px 0;background:var(--card);border-bottom:1px solid var(--border)}
+.ratios-hdr h2{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px}
+.ratios-hdr p{font-size:14px;color:var(--text2);margin-bottom:16px}
+.ratios-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:16px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.ratios-chips::-webkit-scrollbar{display:none}
+.ratio-chip{flex-shrink:0;padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
+.ratio-chip.active{background:var(--text);color:var(--card);border-color:var(--text)}
+.ratios-list{padding:16px 16px 24px;display:flex;flex-direction:column;gap:16px}
+/* Ratio card */
+.ratio-card{background:var(--card);border-radius:16px;padding:20px;border:1.5px solid var(--border)}
+.rc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rc-type{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);background:var(--surface);padding:4px 10px;border-radius:20px}
+.rc-save{background:none;border:none;cursor:pointer;color:var(--text3);padding:4px;display:flex;align-items:center;line-height:1}
+.rc-save.saved{color:var(--green)}
+.rc-save .ms{font-size:22px}
+.rc-name{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--text);margin:0 0 20px}
+/* Formula */
+.rc-formula{display:flex;align-items:center;gap:2px;overflow-x:auto;padding-bottom:8px;margin-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rc-formula::-webkit-scrollbar{display:none}
+.rc-fi{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding:0 6px;min-width:48px}
+.rc-sep{font-size:28px;font-weight:300;color:var(--border);flex-shrink:0;padding:0 2px;margin-bottom:18px}
+.rc-pnum{font-family:var(--serif);font-weight:700;color:var(--text);line-height:1}
+.rc-mnum{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--text);line-height:1}
+.rc-munit{font-size:12px;font-weight:600;color:var(--text2)}
+.rc-flabel{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-top:5px;text-align:center;word-break:break-word;max-width:64px;line-height:1.3}
+/* Toggle + scale */
+.rc-controls{margin-bottom:16px}
+.rc-toggle{display:flex;background:var(--surface);border-radius:10px;padding:3px;gap:3px;margin-bottom:10px}
+.rc-vbtn{flex:1;padding:8px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.rc-vbtn.on{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.rc-scale{display:flex;align-items:center;gap:10px}
+.rc-scale-lbl{font-size:13px;color:var(--text2);white-space:nowrap}
+.rc-scale-val{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text);min-width:36px;text-align:center}
+.rc-sbtn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:18px;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .1s}
+.rc-sbtn:active{background:var(--surface2)}
+/* Technique + swaps */
+.rc-technique{padding:14px;background:var(--surface);border-radius:10px;margin-bottom:10px;font-size:14px;line-height:1.65;color:var(--text)}
+.rc-swaps{display:flex;gap:8px;align-items:flex-start;padding:10px 14px;background:var(--green-dim);border-radius:10px;font-size:13px;color:var(--green-text);line-height:1.55}
+.rc-swaps .ms{font-size:16px;color:var(--green);flex-shrink:0;margin-top:1px}
+
 /* Tab bar */
 .tab-bar{height:var(--tab-h);background:var(--card);border-top:1px solid var(--border);display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom,0)}
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:none;background:none;color:var(--text3);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding-bottom:4px;position:relative;transition:color .18s}
@@ -588,6 +629,16 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
     </div>
   </div>
 
+  <!-- RATIOS -->
+  <div class="view" id="view-ratios">
+    <div class="ratios-hdr">
+      <h2>Cooking Ratios</h2>
+      <p>The formula behind the dish — cook from memory, not a recipe</p>
+      <div class="ratios-chips" id="ratioCategoryChips"></div>
+    </div>
+    <div class="ratios-list" id="ratiosList"></div>
+  </div>
+
 </main>
 
 <!-- TAB BAR -->
@@ -605,6 +656,9 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
     <div class="tab-pill"><span class="ms">shopping_bag</span><span>Shopping</span></div>
     <span class="tab-badge" id="shopBadge"></span>
   </button>
+  <button class="tab" id="tab-ratios" onclick="switchTab('ratios')">
+    <div class="tab-pill"><span class="ms">calculate</span><span>Ratios</span></div>
+  </button>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -613,6 +667,7 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 <script src="recipes2.js"></script>
 <script src="recipes3.js"></script>
 <script src="recipes4.js"></script>
+<script src="ratios.js"></script>
 <script>
 const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3,...RECIPES4];
 
@@ -1409,6 +1464,7 @@ function showTab(tab){
   if(tab==='saved')renderSaved();
   if(tab==='latest')renderLatest();
   if(tab==='shoplist'){setShopSort(shopSort);updateShopBadge();}
+  if(tab==='ratios')renderRatios();
 }
 function switchTab(tab){
   haptic(8);
@@ -1468,6 +1524,110 @@ function shareRecipe(){
   const text=`${r.name}\n\n${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.filter(i=>!i.section).map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
   if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
   else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied to clipboard'));
+}
+
+// ── RATIOS ────────────────────────────────────────────────────────────────
+let savedRatios=JSON.parse(localStorage.getItem('savedRatios')||'[]');
+let ratioViewMode={},ratioScale={},activeCatFilter='All';
+const RATIO_CATS=['All',...[...new Set((typeof RATIOS!=='undefined'?RATIOS:[]).map(r=>r.category))]];
+const SCALE_STEPS=[0.5,1,1.5,2,3,4];
+
+function renderRatios(){
+  // Category chips
+  document.getElementById('ratioCategoryChips').innerHTML=RATIO_CATS.map(c=>`<button class="ratio-chip${activeCatFilter===c?' active':''}" onclick="setRatioFilter('${c}')">${c}</button>`).join('');
+  // Cards
+  const list=activeCatFilter==='All'?RATIOS:RATIOS.filter(r=>r.category===activeCatFilter);
+  document.getElementById('ratiosList').innerHTML=list.map(r=>ratioCardHtml(r)).join('');
+}
+
+function setRatioFilter(cat){haptic(8);activeCatFilter=cat;renderRatios();}
+
+function ratioCardHtml(r){
+  const id=r.id;
+  const isSaved=savedRatios.includes(id);
+  const mode=ratioViewMode[id]||'parts';
+  const scale=ratioScale[id]||1;
+  const isMetric=mode==='metric';
+  // Font size scales down for many-part formulas
+  const pSize=r.formula.length<=2?56:r.formula.length<=4?46:36;
+
+  const formulaHtml=r.formula.map((f,i)=>{
+    const sep=i>0?'<span class="rc-sep">:</span>':'';
+    let val;
+    if(!isMetric){
+      const num=f.partsLabel||(f.parts===Math.floor(f.parts)?f.parts:f.parts.toFixed(1));
+      val=`<span class="rc-pnum" style="font-size:${pSize}px">${num}</span>`;
+    } else {
+      const raw=f.metricVal*scale;
+      let display;
+      if(f.metricUnit==='whole'){
+        display=`<span class="rc-mnum">${Math.max(1,Math.round(raw))}</span><span class="rc-munit"> ea</span>`;
+      } else {
+        const rounded=raw>=100?Math.round(raw/5)*5:raw>=10?Math.round(raw):Math.round(raw*2)/2;
+        display=`<span class="rc-mnum">${rounded}</span><span class="rc-munit">${f.metricUnit}</span>`;
+      }
+      val=display;
+    }
+    return `${sep}<div class="rc-fi">${val}<span class="rc-flabel">${f.label}</span></div>`;
+  }).join('');
+
+  const scaleDisplay=scale%1===0?scale+'×':scale.toFixed(1)+'×';
+  const scaleHtml=isMetric?`
+    <div class="rc-scale">
+      <span class="rc-scale-lbl">Scale</span>
+      <button class="rc-sbtn" onclick="stepRatioScale('${id}',-1)">−</button>
+      <span class="rc-scale-val">${scaleDisplay}</span>
+      <button class="rc-sbtn" onclick="stepRatioScale('${id}',1)">+</button>
+    </div>`:'';
+
+  const swapsHtml=r.swaps?`<div class="rc-swaps"><span class="ms">swap_horiz</span>${r.swaps}</div>`:'';
+
+  return `<div class="ratio-card" id="rcard-${id}">
+    <div class="rc-hdr">
+      <span class="rc-type">${r.type}</span>
+      <button class="rc-save${isSaved?' saved':''}" onclick="toggleRatioSave('${id}')"><span class="ms">${isSaved?'bookmark':'bookmark_border'}</span></button>
+    </div>
+    <h3 class="rc-name">${r.name}</h3>
+    <div class="rc-formula">${formulaHtml}</div>
+    <div class="rc-controls">
+      <div class="rc-toggle">
+        <button class="rc-vbtn${!isMetric?' on':''}" onclick="setRatioView('${id}','parts')">Parts</button>
+        <button class="rc-vbtn${isMetric?' on':''}" onclick="setRatioView('${id}','metric')">Metric</button>
+      </div>
+      ${scaleHtml}
+    </div>
+    ${r.technique?`<div class="rc-technique">${r.technique}</div>`:''}
+    ${swapsHtml}
+  </div>`;
+}
+
+function reRenderRatioCard(id){
+  const r=RATIOS.find(x=>x.id===id);
+  const el=document.getElementById('rcard-'+id);
+  if(!el||!r)return;
+  const tmp=document.createElement('div');
+  tmp.innerHTML=ratioCardHtml(r);
+  el.replaceWith(tmp.firstElementChild);
+}
+
+function setRatioView(id,mode){haptic(8);ratioViewMode[id]=mode;reRenderRatioCard(id);}
+
+function stepRatioScale(id,dir){
+  haptic(8);
+  const cur=ratioScale[id]||1;
+  const idx=SCALE_STEPS.indexOf(cur);
+  const next=Math.max(0,Math.min(SCALE_STEPS.length-1,idx+dir));
+  ratioScale[id]=SCALE_STEPS[next];
+  reRenderRatioCard(id);
+}
+
+function toggleRatioSave(id){
+  haptic(12);
+  const i=savedRatios.indexOf(id);
+  if(i>=0)savedRatios.splice(i,1);else savedRatios.push(id);
+  localStorage.setItem('savedRatios',JSON.stringify(savedRatios));
+  reRenderRatioCard(id);
+  toast(savedRatios.includes(id)?'Ratio saved ✓':'Removed from saved');
 }
 
 // ── WAKE LOCK
