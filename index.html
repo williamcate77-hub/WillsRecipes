@@ -1354,48 +1354,53 @@ function autoGroupIngredients(ings,steps){
   const flat=ings.filter(i=>!i.section);
   const used=new Set();
   const groups=[];
-  // iterate steps — collect every ingredient first mentioned in this step
   for(let si=0;si<steps.length;si++){
     const st=steps[si].toLowerCase();
     const matched=flat.filter((_,idx)=>!used.has(idx)&&wordsOf(flat[idx].name).some(w=>st.includes(w)));
     if(matched.length){matched.forEach(ing=>used.add(flat.indexOf(ing)));groups.push({step:si+1,ings:matched});}
   }
-  // anything not matched goes at the top as general prep
   const remaining=flat.filter((_,idx)=>!used.has(idx));
   if(remaining.length)groups.unshift({step:0,ings:remaining});
   return groups;
+}
+
+const CAT_COLORS={Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'};
+const CAT_ORDER=['Produce','Meat','Dairy/Alt','Dairy','Pantry','Frozen'];
+
+function ingRowHtml(ing,portionScaleVal,isLast){
+  const scaled=scaleAmount(ing.amount,ing.unit,portionScaleVal);
+  const display=fmtIng(scaled,ing.unit);
+  const{name:baseName,prep}=extractPrepAndName(ing.name);
+  const cat=getIngCategory(baseName);
+  const catColor=CAT_COLORS[cat]||'var(--green)';
+  const catLabel=cat?.split('/')[0]||'';
+  return`<div class="ing-row${isLast?' last':''}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
 }
 
 function renderIngredients(){
   const r=currentRecipe;
   const hasSections=r.ingredients.some(i=>i.section);
   if(hasSections){
-    // recipes with manual sections: render as before
     document.getElementById('ingList').innerHTML=r.ingredients.map((ing,i,arr)=>{
       if(ing.section)return`<div class="ing-section">${ing.section}</div>`;
-      const scaled=scaleAmount(ing.amount,ing.unit,portionScale);const display=fmtIng(scaled,ing.unit);
-      const{name:baseName,prep}=extractPrepAndName(ing.name);const cat=getIngCategory(baseName);
-      const catColor=cat?{Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'}[cat]||'var(--green)':'var(--green)';
-      const catLabel=cat?.split('/')[0]||'';
-      return`<div class="ing-row${i<arr.length-1?'':' last'}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
+      return ingRowHtml(ing,portionScale,i===arr.length-1);
     }).join('');
     return;
   }
-  const groups=autoGroupIngredients(r.ingredients,r.steps||[]);
-  const totalIngs=r.ingredients.filter(i=>!i.section).length;
-  let ingIdx=0;
-  document.getElementById('ingList').innerHTML=groups.map(g=>{
-    const label=g.step===0?'Prep':`Step ${g.step}`;
-    const rowsHtml=g.ings.map(ing=>{
-      const scaled=scaleAmount(ing.amount,ing.unit,portionScale);const display=fmtIng(scaled,ing.unit);
-      const{name:baseName,prep}=extractPrepAndName(ing.name);const cat=getIngCategory(baseName);
-      const catColor=cat?{Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'}[cat]||'var(--green)':'var(--green)';
-      const catLabel=cat?.split('/')[0]||'';
-      const isLast=(++ingIdx===totalIngs);
-      return`<div class="ing-row${isLast?' last':''}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
-    }).join('');
-    if(g.ings.length>=2)return`<div class="ing-group"><div class="ing-group-lbl">${label}</div>${rowsHtml}</div>`;
-    return`<div class="ing-group-single"><div class="ing-group-lbl">${label}</div>${rowsHtml}</div>`;
+  // Group flat list by pantry category
+  const flat=r.ingredients.filter(i=>!i.section);
+  const catMap={};
+  flat.forEach(ing=>{
+    const{name:baseName}=extractPrepAndName(ing.name);
+    const cat=getIngCategory(baseName)||'Other';
+    if(!catMap[cat])catMap[cat]=[];
+    catMap[cat].push(ing);
+  });
+  const cats=[...CAT_ORDER.filter(c=>catMap[c]),...Object.keys(catMap).filter(c=>!CAT_ORDER.includes(c)&&catMap[c])];
+  let rendered=0;const total=flat.length;
+  document.getElementById('ingList').innerHTML=cats.map(cat=>{
+    const rows=catMap[cat].map(ing=>ingRowHtml(ing,portionScale,++rendered===total)).join('');
+    return`<div class="ing-section">${cat==='Other'?'Pantry & Spices':cat}</div>${rows}`;
   }).join('');
 }
 
@@ -1695,10 +1700,19 @@ function toggleIngDrawer(){
 }
 function renderCkIngList(){
   if(!cookingRecipe)return;
-  document.getElementById('ckIngList').innerHTML=cookingRecipe.ingredients.map(ing=>{
-    if(ing.section)return`<div class="ing-section">${ing.section}</div>`;
-    const display=fmtIng(ing.amount,ing.unit);
-    return`<div class="ing-row"><div class="ing-dot"></div><span class="ing-name">${dispName(ing.name)}</span><span class="ing-amt">${display}</span></div>`;
+  const groups=autoGroupIngredients(cookingRecipe.ingredients,cookingRecipe.steps||[]);
+  document.getElementById('ckIngList').innerHTML=groups.map(g=>{
+    const label=g.step===0?'Prep first':`Step ${g.step}`;
+    const rows=g.ings.map(ing=>{
+      const display=fmtIng(ing.amount,ing.unit);
+      const{name:baseName,prep}=extractPrepAndName(ing.name);
+      const cat=getIngCategory(baseName);
+      const catColor=CAT_COLORS[cat]||'var(--green)';
+      const catLabel=cat?.split('/')[0]||'';
+      return`<div class="ing-row"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
+    }).join('');
+    if(g.ings.length>=2)return`<div class="ing-group"><div class="ing-group-lbl">${label}</div>${rows}</div>`;
+    return`<div class="ing-group-single"><div class="ing-group-lbl">${label}</div>${rows}</div>`;
   }).join('');
 }
 // Cooking mode timer
