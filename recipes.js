@@ -1,4 +1,4 @@
-const CATEGORIES = ['Dips & Starters','Salads','Soups','Seafood','Meat & Poultry','Vegetarian','Pasta & Rice','Sides','Bread & Bakes','Sauces','Desserts'];
+const CATEGORIES = ['Dips & Starters','Salads','Soups','Seafood','Meat & Poultry','Vegetarian','Pasta & Rice','Sides','Bread & Bakes','Sauces & Condiments','Desserts'];
 
 const SW = {
   'Dips & Starters':'sw-entrees',
@@ -55,7 +55,7 @@ steps:[
 
 {id:3,name:'Edamame Dip',category:'Dips & Starters',difficulty:'easy',serves:4,time:'10 min',calories:120,mainIngredient:'Edamame',
 ingredients:[
-  {name:'Edamame',prep:'ready to eat',amount:500,unit:'g'},
+  {name:'boiled and ready Edamame',prep:'ready to eat',amount:500,unit:'g'},
   {name:'White soy sauce',amount:30,unit:'ml'},
   {name:'Yoghurt',amount:30,unit:'ml'},
   {name:'Mirin',amount:15,unit:'ml'},
