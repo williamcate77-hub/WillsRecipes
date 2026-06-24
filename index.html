@@ -2015,7 +2015,7 @@ validateRecipes();
 updateShopBadge();
 renderHome();
 // Deep link: auto-open recipe from URL hash e.g. #recipe-42
-(function(){const h=location.hash;if(!h.startsWith('#recipe-'))return;const id=parseInt(h.slice(8));if(!isNaN(id)){const r=ALL_RECIPES.find(x=>x.id===id);if(r)openRecipe(r);}})();
+(function(){const h=location.hash;if(!h.startsWith('#recipe-'))return;const id=parseInt(h.slice(8));if(!isNaN(id)&&ALL_RECIPES.find(x=>x.id===id))openRecipe(id);})();
 </script>
 </body>
 </html>
