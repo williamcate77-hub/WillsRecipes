@@ -1348,14 +1348,13 @@ function renderDetailContent(){
 }
 
 function autoGroupIngredients(ings,steps){
-  const skip=new Set(['and','or','the','a','an','of','with','fresh','dried','ground','whole','large','small','medium','extra','finely','thinly','roughly','light','dark','coarsely']);
-  function matchWord(name){const words=name.toLowerCase().split(',')[0].split(/\s+/);return words.find(w=>w.length>2&&!skip.has(w))||words[0];}
-  const stepIdx=ings.map(ing=>{
-    if(ing.section)return null;
-    const kw=matchWord(ing.name);
-    for(let si=0;si<steps.length;si++){if(steps[si].toLowerCase().includes(kw))return si;}
+  const skip=new Set(['and','or','the','a','an','of','with','fresh','dried','ground','whole','large','small','medium','extra','finely','thinly','roughly','light','dark','coarsely','white','black','red','green','plain','pure','hot','cold']);
+  function findStep(name){
+    const words=name.toLowerCase().split(',')[0].split(/\s+/).filter(w=>w.length>2&&!skip.has(w));
+    for(let si=0;si<steps.length;si++){const s=steps[si].toLowerCase();if(words.some(w=>s.includes(w)))return si;}
     return -1;
-  });
+  }
+  const stepIdx=ings.map(ing=>ing.section?null:findStep(ing.name));
   const groups=[];let i=0;
   while(i<ings.length){
     const ing=ings[i];
@@ -1375,7 +1374,8 @@ function renderIngredients(){
   let ingIdx=0;
   document.getElementById('ingList').innerHTML=groups.map(g=>{
     if(g.type==='section')return`<div class="ing-section">${g.label}</div>`;
-    const showGroup=!hasSections&&g.ings.length>=2&&g.step>=0;
+    const showGroup=!hasSections&&g.ings.length>=2;
+    const groupLabel=g.step>=0?`Step ${g.step+1}`:'Prep together';
     const rowsHtml=g.ings.map(ing=>{
       const scaled=scaleAmount(ing.amount,ing.unit,portionScale);
       const display=fmtIng(scaled,ing.unit);
@@ -1386,7 +1386,7 @@ function renderIngredients(){
       const isLast=(++ingIdx===totalIngs);
       return`<div class="ing-row${isLast?' last':''}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
     }).join('');
-    if(showGroup)return`<div class="ing-group"><div class="ing-group-lbl">Step ${g.step+1}</div>${rowsHtml}</div>`;
+    if(showGroup)return`<div class="ing-group"><div class="ing-group-lbl">${groupLabel}</div>${rowsHtml}</div>`;
     return rowsHtml;
   }).join('');
 }
