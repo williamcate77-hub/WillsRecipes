@@ -66,6 +66,20 @@ const RATIOS=[
 
 // ── PHASE 2 — STOCKS & BASES ──────────────────────────────────────────────
 {
+  id:'salt-conversion',name:'Salt Conversion',category:'Stocks & Bases',phase:1,type:'CONVERSION',
+  formula:[
+    {parts:1,label:'TABLE',metricVal:6,metricUnit:'g'},
+    {parts:1,label:'SEA FINE',metricVal:6,metricUnit:'g'},
+    {parts:1,partsLabel:'~1',label:'MORTON',metricVal:5,metricUnit:'g'},
+    {parts:1.5,partsLabel:'1–2',label:'SEA COARSE',metricVal:4.5,metricUnit:'g'},
+    {parts:2,label:'D. CRYSTAL',metricVal:3,metricUnit:'g'},
+    {parts:3,label:'SEA FLAKEY',metricVal:2,metricUnit:'g'},
+  ],
+  technique:'Parts show tablespoons needed to replace 1 tbsp of table salt. All salts deliver equal saltiness — the difference is density. Diamond Crystal and flakey salts are much lighter, so you need more by volume. Use grams when precision matters.',
+  swaps:'Always season by taste, not volume. You can\'t unsalt a dish — start with less and adjust.',
+  recipeIds:[],
+},
+{
   id:'white-stock',name:'White Stock',category:'Stocks & Bases',phase:2,type:'STOCK',
   formula:[
     {parts:3,label:'WATER',metricVal:1500,metricUnit:'ml'},
