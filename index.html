@@ -259,6 +259,9 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2)}
 .ing-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 .ing-cat{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:4px;background:var(--surface);color:var(--text3);flex-shrink:0;margin-right:4px}
 .ing-section{padding:8px 16px 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);border-bottom:1px solid var(--border);background:var(--surface)}
+.ing-group{background:var(--surface);border-radius:12px;margin:6px 0;overflow:hidden;border:1px solid var(--border)}
+.ing-group-lbl{padding:7px 16px 4px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+.ing-group .ing-row:last-child{border-bottom:none}
 .ing-name{flex:1;font-size:15px;color:var(--text);display:flex;align-items:center;gap:8px}
 .ing-prep{font-size:13px;color:var(--text3);font-style:italic}
 .ing-amt{font-size:14px;font-weight:700;color:var(--green);white-space:nowrap}
@@ -1344,16 +1347,47 @@ function renderDetailContent(){
   renderIngredients();renderSteps();renderShopList();renderWorksWellWith();
 }
 
+function autoGroupIngredients(ings,steps){
+  const skip=new Set(['and','or','the','a','an','of','with','fresh','dried','ground','whole','large','small','medium','extra','finely','thinly','roughly','light','dark','coarsely']);
+  function matchWord(name){const words=name.toLowerCase().split(',')[0].split(/\s+/);return words.find(w=>w.length>2&&!skip.has(w))||words[0];}
+  const stepIdx=ings.map(ing=>{
+    if(ing.section)return null;
+    const kw=matchWord(ing.name);
+    for(let si=0;si<steps.length;si++){if(steps[si].toLowerCase().includes(kw))return si;}
+    return -1;
+  });
+  const groups=[];let i=0;
+  while(i<ings.length){
+    const ing=ings[i];
+    if(ing.section){groups.push({type:'section',label:ing.section});i++;continue;}
+    const step=stepIdx[i];const g={type:'ings',step,ings:[ing]};let j=i+1;
+    while(j<ings.length&&!ings[j].section&&stepIdx[j]===step){g.ings.push(ings[j]);j++;}
+    groups.push(g);i=j;
+  }
+  return groups;
+}
+
 function renderIngredients(){
-  document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
-    if(ing.section)return`<div class="ing-section">${ing.section}</div>`;
-    const scaled=scaleAmount(ing.amount,ing.unit,portionScale);
-    const display=fmtIng(scaled,ing.unit);
-    const{name:baseName,prep}=extractPrepAndName(ing.name);
-    const cat=getIngCategory(baseName);
-    const catColor=cat?{Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'}[cat]||'var(--green)':'var(--green)';
-    const catLabel=cat?.split('/')[0]||'';
-    return`<div class="ing-row${i<arr.length-1?'':' last'}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
+  const r=currentRecipe;
+  const groups=autoGroupIngredients(r.ingredients,r.steps||[]);
+  const hasSections=r.ingredients.some(i=>i.section);
+  const totalIngs=r.ingredients.filter(i=>!i.section).length;
+  let ingIdx=0;
+  document.getElementById('ingList').innerHTML=groups.map(g=>{
+    if(g.type==='section')return`<div class="ing-section">${g.label}</div>`;
+    const showGroup=!hasSections&&g.ings.length>=2&&g.step>=0;
+    const rowsHtml=g.ings.map(ing=>{
+      const scaled=scaleAmount(ing.amount,ing.unit,portionScale);
+      const display=fmtIng(scaled,ing.unit);
+      const{name:baseName,prep}=extractPrepAndName(ing.name);
+      const cat=getIngCategory(baseName);
+      const catColor=cat?{Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'}[cat]||'var(--green)':'var(--green)';
+      const catLabel=cat?.split('/')[0]||'';
+      const isLast=(++ingIdx===totalIngs);
+      return`<div class="ing-row${isLast?' last':''}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
+    }).join('');
+    if(showGroup)return`<div class="ing-group"><div class="ing-group-lbl">Step ${g.step+1}</div>${rowsHtml}</div>`;
+    return rowsHtml;
   }).join('');
 }
 
@@ -1751,9 +1785,9 @@ function copyShoppingTab(){
 // ── SHARE
 function shareRecipe(){
   haptic(8);const r=currentRecipe;
-  const text=`${r.name}\n\n${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.filter(i=>!i.section).map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
-  if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
-  else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied to clipboard'));
+  const url=`${location.origin}${location.pathname}#recipe-${r.id}`;
+  if(navigator.share)navigator.share({title:r.name,text:`${r.name} — ${r.time} | ${cap(r.difficulty)}`,url}).catch(()=>{});
+  else navigator.clipboard.writeText(url).then(()=>toast('Link copied!'));
 }
 
 // ── RATIOS ────────────────────────────────────────────────────────────────
@@ -1980,6 +2014,8 @@ function validateRecipes(){
 validateRecipes();
 updateShopBadge();
 renderHome();
+// Deep link: auto-open recipe from URL hash e.g. #recipe-42
+(function(){const h=location.hash;if(!h.startsWith('#recipe-'))return;const id=parseInt(h.slice(8));if(!isNaN(id)){const r=ALL_RECIPES.find(x=>x.id===id);if(r)openRecipe(r);}})();
 </script>
 </body>
 </html>
