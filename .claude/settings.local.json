@@ -87,7 +87,16 @@
       "Bash(git reset *)",
       "Bash(git cherry-pick *)",
       "Bash(gh api *)",
-      "mcp__Claude_in_Chrome__read_console_messages"
+      "mcp__Claude_in_Chrome__read_console_messages",
+      "Bash(python3 -c \"import re; content=open\\('/Users/willcate/Documents/GitHub/WillsRecipes/recipes4.js'\\).read\\(\\); ids=re.findall\\(r'\\\\{id:\\(\\\\d+\\),', content\\); print\\(f'{len\\(ids\\)} recipes, IDs: {sorted\\([int\\(i\\) for i in ids]\\)[-10:]}'\\)\")",
+      "Bash(rm /Users/willcate/Documents/GitHub/WillsRecipes/.git/HEAD.lock *)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(n\\) for n in d.get\\('processed',[]\\) if 'sauce' in n.lower\\(\\) or 'parmesan' in n.lower\\(\\) or 'pepper' in n.lower\\(\\)]\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(osascript -e 'tell application \"Notes\" to activate')",
+      "Bash(osascript)",
+      "Bash(osascript -e 'do shell script \"git add index.html && git commit -m \\\\\"Load recipes4.js in app\\\\\" && git push\"')",
+      "Bash(awk '$1 > 1')",
+      "Bash(python3 find_duplicates.py)"
     ]
   }
 }
