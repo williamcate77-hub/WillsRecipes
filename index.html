@@ -834,6 +834,7 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
       <div class="rte-state-icon"><span class="ms">travel_explore</span></div>
       <h3>Search our database</h3>
       <p>Search for recipes and add anything you find to your app with one tap.</p>
+      <button onclick="rteClearAdded()" style="font-size:11px;color:var(--text3);background:none;border:none;padding:4px 0;cursor:pointer;text-decoration:underline">Clear previously added recipes</button>
     </div>
 
     <!-- Loading -->
@@ -2112,7 +2113,7 @@ function fmtIng(amount,unit){
   if(u==='tsp') return`${fracStr(n)} tsp (${Math.round(n*5)}ml)`;
   const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets','stalk','stalks','piece','pieces','slice','slices','leaf','leaves','lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf'];
   if(cnt.some(c=>u.includes(c))){const pu=pluralUnit(n,u);return(n%1===0?n.toString():fracStr(n))+' '+pu;}
-  return(n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString())+' '+unit;
+  return(n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString())+(unit?' '+unit:'');
 }
 
 function toast(msg){
@@ -2353,15 +2354,54 @@ function rteFormatForApp(r) {
 
   // Parse ingredient strings into {name, amount, unit}
   const ingredients = (r.ingredients || []).map(ing => {
-    const m = String(ing).match(/^([\d¼½¾⅓⅔⅛⅜⅝⅞\/\.\s]+)\s*([a-zA-Z]+)?\s+(.+)/);
+    let s = String(ing).trim();
+
+    // Skip empty or pure-prep entries like "( finely diced)"
+    if (!s || /^\(/.test(s)) return null;
+
+    // Strip parenthetical notes: "(Note 1)", "(drained or 2 cups...)", etc.
+    s = s.replace(/\([^)]*\)/g, '').trim();
+
+    // Take first option when slash alternatives exist in the amount: "400g/14oz" → "400g"
+    // Only do this for the leading portion (amount/unit), not ingredient names with slashes
+    s = s.replace(/^([\d\s¼½¾⅓⅔⅛⅜⅝⅞]+\s*[a-zA-Z]+)\s*\/\s*[\d\s¼½¾⅓⅔⅛⅜⅝⅞]+\s*[a-zA-Z]+/, '$1');
+
+    // Strip leading dashes/hyphens
+    s = s.replace(/^[\-–—]+\s*/, '').trim();
+
+    // Clean up double spaces
+    s = s.replace(/\s+/g, ' ').trim();
+
+    if (!s) return null;
+
+    // Try to parse: leading number + optional unit + name
+    // e.g. "2 tbsp soy sauce", "400g chicken", "1 cup rice"
+    const m = s.match(/^([\d¼½¾⅓⅔⅛⅜⅝⅞\/\.\s]+)\s+([a-zA-Z]+)\s+(.+)/);
     if (m) {
-      const amount = parseFloat(m[1]) || null;
-      const unit = m[2] || '';
-      const name = m[3].trim();
-      return {name, amount, unit};
+      const rawAmt = m[1].trim();
+      // Handle fraction strings like "1/2"
+      let amount = null;
+      if (rawAmt.includes('/')) {
+        const parts = rawAmt.split('/');
+        amount = parseFloat(parts[0]) / parseFloat(parts[1]);
+      } else {
+        amount = parseFloat(rawAmt) || null;
+      }
+      const candidateUnit = m[2].toLowerCase();
+      const knownUnits = ['g','kg','ml','l','tbsp','tsp','cup','cups','clove','cloves','whole',
+        'bunch','pinch','handful','slice','slices','fillet','fillets','rasher','rashers',
+        'piece','pieces','sheet','sheets','head','stalk','stalks','sprig','sprigs','yolk',
+        'yolks','lemon','lime','orange','punnet','loaf','can','cans','packet','packets'];
+      if (knownUnits.includes(candidateUnit)) {
+        return {name: m[3].trim(), amount, unit: m[2]};
+      }
+      // unit candidate isn't a known unit — treat whole thing after number as name
+      return {name: (m[2] + ' ' + m[3]).trim(), amount, unit: ''};
     }
-    return {name: String(ing).trim(), amount: null, unit: ''};
-  });
+
+    // No leading number — just a name
+    return {name: s, amount: null, unit: ''};
+  }).filter(Boolean); // remove nulls from skipped entries
 
   // Guess category from title + ingredients
   const text = (r.title + ' ' + (r.ingredients || []).join(' ')).toLowerCase();
@@ -2419,6 +2459,15 @@ function rteAddToApp() {
   } catch(e) {
     toast('Could not save recipe');
   }
+}
+
+function rteClearAdded() {
+  if (!confirm('Remove all recipes you added from Search? (Your main recipes are unaffected)')) return;
+  localStorage.removeItem('userAddedRecipes');
+  // Remove them from live ALL_RECIPES too
+  ALL_RECIPES.splice(0, ALL_RECIPES.length, ...ALL_RECIPES.filter(r => r.source !== 'search'));
+  renderHome();
+  toast('Added recipes cleared');
 }
 
 function escHtml(str) {
