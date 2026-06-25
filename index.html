@@ -102,15 +102,6 @@ main::-webkit-scrollbar{display:none}
 .continue-banner-step{font-size:12px;color:rgba(255,255,255,.8)}
 .continue-banner-arrow{color:#fff;flex-shrink:0;display:flex;align-items:center}
 
-/* Recently viewed row */
-.rv-section{margin-bottom:4px}
-.rv-title{padding:4px 20px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--text3)}
-.rv-row{display:flex;gap:10px;overflow-x:auto;padding:0 20px 4px;scrollbar-width:none}
-.rv-row::-webkit-scrollbar{display:none}
-.rv-card{flex-shrink:0;width:110px;cursor:pointer;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow)}
-.rv-card:active{opacity:.85}
-.rv-img{height:72px;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative}
-.rv-name{padding:7px 8px;font-family:var(--serif);font-size:11px;font-weight:700;color:var(--text);line-height:1.3}
 
 /* Feed section header */
 .feed-section-hdr{padding:12px 20px 10px;display:flex;align-items:center;justify-content:space-between}
@@ -443,8 +434,6 @@ body{font-size:17px}
 .continue-banner-label{font-size:11px}
 .continue-banner-title{font-size:17px}
 .continue-banner-step{font-size:13px}
-.rv-title{font-size:12px}
-.rv-name{font-size:12px}
 .feed-section-hdr h3{font-size:19px}
 .feed-section-count{font-size:13px}
 .feed-card-title{font-size:19px}
@@ -1050,9 +1039,6 @@ let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
 let activeChip='All',activeSearch='',shopChecked={},stepsDone={},portionScale=1;
 let wakeLock=null,shopSort='aisle';
 let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
-// recentlyViewed: [{id, ts}] — migrate from old [id] format
-let recentlyViewed=JSON.parse(localStorage.getItem('recentlyViewed')||'[]')
-  .map(x=>typeof x==='number'?{id:x,ts:0}:x).filter(x=>x&&x.id);
 let browseMode=null; // null | {title, recipes}
 
 // ── COOKING STATE
@@ -1299,12 +1285,6 @@ function renderFeed(){
   }).join('');
 }
 
-// ── RECENTLY VIEWED (timestamped, deduped, capped at 20) ──
-function addToRecentlyViewed(id){
-  recentlyViewed=[{id,ts:Date.now()},...recentlyViewed.filter(x=>x.id!==id)].slice(0,20);
-  localStorage.setItem('recentlyViewed',JSON.stringify(recentlyViewed));
-}
-
 // ── CONTINUE COOKING ──────────────────────────────────────
 function renderContinueBanner(){
   const state=getCookingState();const banner=document.getElementById('continueBanner');
@@ -1342,13 +1322,6 @@ function renderShelves(){
   const el=document.getElementById('homeShelves');if(!el)return;
   const sections=[
     {
-      title:'Recently viewed',sub:null,seeAll:false,cap:5,
-      recipes:recentlyViewed.slice().sort((a,b)=>b.ts-a.ts).slice(0,5)
-        .map(x=>ALL_RECIPES.find(r=>r.id===x.id)).filter(Boolean)
-    },{
-      title:'Quick tonight',sub:'Under 30 minutes',seeAll:'shelf',cap:8,
-      recipes:[...ALL_RECIPES].filter(r=>parseMinutes(r.time)<=30).sort((a,b)=>b.id-a.id)
-    },{
       title:'Recently added',sub:null,seeAll:'shelf',cap:8,
       recipes:[...ALL_RECIPES].reverse()
     },
@@ -1453,7 +1426,6 @@ function updateDetPin(){
 function openRecipe(id){
   haptic(8);
   currentRecipe=ALL_RECIPES.find(r=>r.id===id);prevTab=currentTab;
-  addToRecentlyViewed(id);
   gtag('event','view_recipe',{recipe_name:currentRecipe.name,recipe_category:currentRecipe.category,recipe_difficulty:currentRecipe.difficulty});
   if(!shopChecked[id])shopChecked[id]=new Set();
   if(!stepsDone[id])stepsDone[id]=new Set();
