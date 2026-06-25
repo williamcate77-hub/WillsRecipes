@@ -869,30 +869,7 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
   </div>
 </div>
 
-<!-- ── ADD TO APP MODAL ── -->
-<div class="rte-overlay hidden" id="rteOverlay" onclick="if(event.target===this)closeRteModal()">
-  <div class="rte-modal">
-    <div class="rte-modal-hdr">
-      <span class="rte-modal-title">Add to My App</span>
-      <button class="rte-modal-x" onclick="closeRteModal()">✕</button>
-    </div>
-    <div class="rte-modal-body">
-      <div class="rte-how-to">
-        <strong>How to add this recipe:</strong>
-        1. Copy the text below<br>
-        2. Open <strong>Apple Notes</strong> → your "Recipes" folder → create a new note<br>
-        3. Paste the text and save<br>
-        4. Run your sync agents from Cowork to import it
-      </div>
-      <textarea class="rte-note-ta" id="rteNoteText" readonly></textarea>
-    </div>
-    <div class="rte-modal-footer">
-      <button class="rte-copy-btn" onclick="rteCopyNote()">
-        <span class="ms">content_copy</span>Copy recipe text
-      </button>
-    </div>
-  </div>
-</div>
+<!-- ADD TO APP MODAL removed — recipes now save directly to localStorage -->
 
 <script src="recipes.js"></script>
 <script src="recipes2.js"></script>
@@ -2345,7 +2322,7 @@ async function rteOpenDetail(idx) {
           </div>`).join('')}
       </div>
       ${stepsHtml}
-      <button class="rte-add-btn" onclick="rteShowModal()">
+      <button class="rte-add-btn" onclick="rteAddToApp()">
         <span class="ms">note_add</span>Add to My App
       </button>
       <a class="rte-ext-link" href="${result.url}" target="_blank" rel="noopener">View recipe ↗</a>
@@ -2361,58 +2338,86 @@ async function rteOpenDetail(idx) {
   }
 }
 
-function rteShowModal() {
-  if (!rteCurrentRecipe) return;
-  haptic(8);
-  document.getElementById('rteNoteText').value = rteFormatNote(rteCurrentRecipe);
-  document.getElementById('rteOverlay').classList.remove('hidden');
-}
-
-function closeRteModal() {
-  haptic(8);
-  document.getElementById('rteOverlay').classList.add('hidden');
-}
-
-function rteFormatNote(recipe) {
-  const lines = [];
-  lines.push(recipe.title);
-  lines.push('');
-  if (recipe.servings) {
-    lines.push('Serves: ' + recipe.servings);
-    lines.push('');
-  }
-  lines.push('Ingredients:');
-  recipe.ingredients.forEach(ing => lines.push('- ' + ing));
-  lines.push('');
-  if (recipe.steps && recipe.steps.length) {
-    lines.push('Method:');
-    let n = 0;
-    recipe.steps.forEach(s => {
-      if (/^──/.test(s)) {
-        lines.push('\n' + s.replace(/^──\s*|\s*──$/g, '').trim() + ':');
-      } else {
-        n++;
-        lines.push(n + '. ' + s);
-      }
-    });
-    lines.push('');
-  }
-  lines.push('Source: ' + recipe.url);
-  return lines.join('\n');
-}
-
-async function rteCopyNote() {
-  haptic(12);
-  const text = document.getElementById('rteNoteText').value;
+function rteFormatForApp(r) {
+  // Determine next ID above max of both existing and stored
+  const maxId = ALL_RECIPES.reduce((m, x) => Math.max(m, x.id || 0), 0);
+  let maxUserID = 0;
   try {
-    await navigator.clipboard.writeText(text);
-    toast('Recipe text copied to clipboard ✓');
-  } catch (e) {
-    // Fallback: select all text in textarea so user can copy manually
-    const ta = document.getElementById('rteNoteText');
-    ta.select();
-    try { document.execCommand('copy'); toast('Recipe text copied ✓'); }
-    catch (e2) { toast('Select and copy the text above'); }
+    const stored = localStorage.getItem('userAddedRecipes');
+    if (stored) {
+      const userRecipes = JSON.parse(stored);
+      maxUserID = userRecipes.reduce((m, x) => Math.max(m, x.id || 0), 0);
+    }
+  } catch(e) {}
+  const newId = Math.max(maxId, maxUserID) + 1;
+
+  // Parse ingredient strings into {name, amount, unit}
+  const ingredients = (r.ingredients || []).map(ing => {
+    const m = String(ing).match(/^([\d¼½¾⅓⅔⅛⅜⅝⅞\/\.\s]+)\s*([a-zA-Z]+)?\s+(.+)/);
+    if (m) {
+      const amount = parseFloat(m[1]) || null;
+      const unit = m[2] || null;
+      const name = m[3].trim();
+      return {name, amount, unit};
+    }
+    return {name: String(ing).trim(), amount: null, unit: null};
+  });
+
+  // Guess category from title + ingredients
+  const text = (r.title + ' ' + (r.ingredients || []).join(' ')).toLowerCase();
+  let category = 'Other';
+  const catMap = [
+    ['chicken','Chicken'],['beef','Beef'],['pork','Pork'],['lamb','Lamb'],
+    ['fish','Fish & Seafood'],['salmon','Fish & Seafood'],['prawn','Fish & Seafood'],
+    ['shrimp','Fish & Seafood'],['pasta','Pasta'],['noodle','Pasta'],
+    ['rice','Rice & Grains'],['salad','Salads'],['soup','Soups & Stews'],
+    ['stew','Soups & Stews'],['curry','Curries'],['bread','Bread & Bakes'],
+    ['cake','Bread & Bakes'],['egg','Eggs'],['tofu','Vegetarian'],
+    ['vegetable','Vegetarian'],['sauce','Sauces'],['dip','Sauces'],
+  ];
+  for (const [kw, cat] of catMap) {
+    if (text.includes(kw)) { category = cat; break; }
+  }
+
+  const mainIngredient = ingredients[0]?.name || r.title;
+  const serves = parseInt(r.servings) || 4;
+
+  return {
+    id: newId,
+    name: r.title,
+    category,
+    difficulty: 'medium',
+    serves,
+    time: '30 min',
+    calories: 400,
+    mainIngredient,
+    ingredients,
+    steps: r.steps || [],
+    source: 'search'
+  };
+}
+
+function rteAddToApp() {
+  if (!rteCurrentRecipe) return;
+  haptic(12);
+
+  const recipe = rteFormatForApp(rteCurrentRecipe);
+
+  try {
+    const stored = localStorage.getItem('userAddedRecipes');
+    const userRecipes = stored ? JSON.parse(stored) : [];
+    // Avoid duplicate by name
+    if (!userRecipes.find(r => r.name === recipe.name)) {
+      userRecipes.push(recipe);
+      localStorage.setItem('userAddedRecipes', JSON.stringify(userRecipes));
+      // Also add to live ALL_RECIPES
+      ALL_RECIPES.push(recipe);
+    }
+    toast('Recipe added to your app ✓');
+    closeRtePanel();
+    renderHome();
+  } catch(e) {
+    toast('Could not save recipe');
   }
 }
 
@@ -2425,6 +2430,23 @@ function escHtml(str) {
 }
 
 // ── INIT
+
+// Load user-added recipes from localStorage before rendering
+(function() {
+  try {
+    const stored = localStorage.getItem('userAddedRecipes');
+    if (stored) {
+      const userRecipes = JSON.parse(stored);
+      if (Array.isArray(userRecipes) && userRecipes.length) {
+        const existingIds = new Set(ALL_RECIPES.map(r => r.id));
+        userRecipes.forEach(r => {
+          if (!existingIds.has(r.id)) ALL_RECIPES.push(r);
+        });
+      }
+    }
+  } catch(e) {}
+})();
+
 validateRecipes();
 updateShopBadge();
 renderHome();
