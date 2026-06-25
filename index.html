@@ -587,7 +587,7 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
   </div>
   <div class="hdr-btns">
     <button class="hbtn" id="findBtn" onclick="openRtePanel()">
-      <span class="ms">travel_explore</span><span class="lbl">Discover</span>
+      <span class="ms">travel_explore</span><span class="lbl">Search</span>
     </button>
     <button class="hbtn" id="wakeBtn" onclick="toggleWakeLock()">
       <span class="ms">light_mode</span><span class="lbl">Screen</span>
@@ -820,10 +820,10 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
 <div class="rte-panel hidden" id="rtePanel">
   <div class="rte-top">
     <button class="rte-back" onclick="closeRtePanel()"><span class="ms">arrow_back</span></button>
-    <span class="rte-panel-title">Find New Recipes</span>
+    <span class="rte-panel-title">Search our database</span>
   </div>
   <div class="rte-search-row">
-    <input class="rte-input" id="rteInput" type="text" placeholder="Search RecipeTin Eats…"
+    <input class="rte-input" id="rteInput" type="text" placeholder="Search by ingredient…"
       onkeydown="if(event.key==='Enter')rteDoSearch()" autocomplete="off" autocorrect="off" spellcheck="false">
     <button class="rte-search-btn" onclick="rteDoSearch()">Search</button>
   </div>
@@ -832,14 +832,14 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
     <!-- Intro -->
     <div class="rte-state" id="rteIntro">
       <div class="rte-state-icon"><span class="ms">travel_explore</span></div>
-      <h3>Discover new recipes</h3>
-      <p>Search RecipeTin Eats and add anything you find to your app with one tap.</p>
+      <h3>Search our database</h3>
+      <p>Search for recipes and add anything you find to your app with one tap.</p>
     </div>
 
     <!-- Loading -->
     <div class="rte-loading" id="rteLoading" style="display:none">
       <div class="rte-spinner"></div>
-      <span class="rte-loading-text">Searching RecipeTin Eats…</span>
+      <span class="rte-loading-text">Searching…</span>
     </div>
 
     <!-- Results list -->
@@ -858,7 +858,7 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
     <div class="rte-state" id="rteError" style="display:none">
       <div class="rte-state-icon" style="background:rgba(186,26,26,.1)"><span class="ms" style="color:var(--error)">error_outline</span></div>
       <h3>Something went wrong</h3>
-      <p id="rteErrorMsg">Could not reach RecipeTin Eats. Please try again.</p>
+      <p id="rteErrorMsg">Could not connect. Please try again.</p>
     </div>
 
     <!-- Recipe detail -->
@@ -2196,6 +2196,58 @@ function rteShow(state) {
   document.getElementById('rteBody').scrollTop = 0;
 }
 
+function parseRteSearchResults(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const articles = doc.querySelectorAll('article');
+  const results = [];
+  articles.forEach(art => {
+    const titleEl = art.querySelector('.entry-title a, h2 a, h3 a');
+    if (!titleEl) return;
+    const title = titleEl.textContent.trim();
+    const url = titleEl.href;
+    const imgEl = art.querySelector('img');
+    const thumbnail = imgEl ? (imgEl.dataset.src || imgEl.getAttribute('src')) : null;
+    const excerptEl = art.querySelector('.entry-summary p, .entry-content p');
+    const excerpt = excerptEl ? excerptEl.textContent.trim() : '';
+    if (title && url) results.push({ title, url, thumbnail, excerpt });
+  });
+  return results;
+}
+
+function parseRteRecipe(html, fallbackTitle) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
+  for (const s of scripts) {
+    try {
+      let data = JSON.parse(s.textContent);
+      if (data['@graph']) {
+        data = data['@graph'].find(n => {
+          const t = n['@type'];
+          return t === 'Recipe' || (Array.isArray(t) && t.includes('Recipe'));
+        }) || {};
+      }
+      const t = data['@type'];
+      if (t === 'Recipe' || (Array.isArray(t) && t.includes('Recipe'))) {
+        const ingredients = data.recipeIngredient || [];
+        const steps = (data.recipeInstructions || []).flatMap(s => {
+          if (typeof s === 'string') return [s];
+          if (s['@type'] === 'HowToSection') return (s.itemListElement || []).map(e => e.text || String(e));
+          return [s.text || String(s)];
+        }).filter(Boolean);
+        return {
+          title: data.name || fallbackTitle,
+          servings: data.recipeYield ? String(Array.isArray(data.recipeYield) ? data.recipeYield[0] : data.recipeYield) : null,
+          ingredients,
+          steps,
+        };
+      }
+    } catch(e) {}
+  }
+  return null;
+}
+
 async function rteDoSearch() {
   const q = (document.getElementById('rteInput').value || '').trim();
   if (!q) return;
@@ -2203,11 +2255,13 @@ async function rteDoSearch() {
   rteShow('loading');
 
   try {
-    const resp = await fetch('/api/rte-search?q=' + encodeURIComponent(q));
+    const searchUrl = 'https://www.recipetineats.com/?s=' + encodeURIComponent(q);
+    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(searchUrl);
+    const resp = await fetch(proxyUrl);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const data = await resp.json();
+    const html = await resp.text();
 
-    rteAllResults = data.results || [];
+    rteAllResults = parseRteSearchResults(html);
 
     if (!rteAllResults.length) {
       rteShow('empty');
@@ -2227,7 +2281,7 @@ async function rteDoSearch() {
         <div class="rte-card-body">
           <div class="rte-card-title">${escHtml(r.title)}</div>
           ${r.excerpt ? `<div class="rte-card-excerpt">${escHtml(r.excerpt)}</div>` : ''}
-          <div class="rte-card-source">recipetineats.com ↗</div>
+          <div class="rte-card-source">External recipe ↗</div>
         </div>
       </div>`;
     }).join('');
@@ -2252,11 +2306,11 @@ async function rteOpenDetail(idx) {
   `;
 
   try {
-    const resp = await fetch('/api/rte-recipe?url=' + encodeURIComponent(result.url));
+    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(result.url);
+    const resp = await fetch(proxyUrl);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const data = await resp.json();
-    if (data.error) throw new Error(data.error);
-    const r = data.recipe;
+    const html = await resp.text();
+    const r = parseRteRecipe(html, result.title);
     if (!r) throw new Error('No recipe data found');
 
     rteCurrentRecipe = r;
@@ -2296,7 +2350,7 @@ async function rteOpenDetail(idx) {
       <button class="rte-add-btn" onclick="rteShowModal()">
         <span class="ms">note_add</span>Add to My App
       </button>
-      <a class="rte-ext-link" href="${result.url}" target="_blank" rel="noopener">View on RecipeTin Eats ↗</a>
+      <a class="rte-ext-link" href="${result.url}" target="_blank" rel="noopener">View recipe ↗</a>
     `;
   } catch (e) {
     const backBtn = `<button class="rte-det-back" onclick="rteShow('results')"><span class="ms">arrow_back</span>Back to results</button>`;
@@ -2304,7 +2358,7 @@ async function rteOpenDetail(idx) {
       ${backBtn}
       <h2 class="rte-det-title">${escHtml(result.title)}</h2>
       <div class="rte-det-err">Could not load recipe details: ${escHtml(e.message)}</div>
-      <a class="rte-ext-link" href="${result.url}" target="_blank" rel="noopener">Open on RecipeTin Eats ↗</a>
+      <a class="rte-ext-link" href="${result.url}" target="_blank" rel="noopener">View recipe ↗</a>
     `;
   }
 }
