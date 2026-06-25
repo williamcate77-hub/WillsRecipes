@@ -2256,10 +2256,11 @@ async function rteDoSearch() {
 
   try {
     const searchUrl = 'https://www.recipetineats.com/?s=' + encodeURIComponent(q);
-    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(searchUrl);
+    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(searchUrl);
     const resp = await fetch(proxyUrl);
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const html = await resp.text();
+    const data = await resp.json();
+    if (!data.contents) throw new Error('No content returned');
+    const html = data.contents;
 
     rteAllResults = parseRteSearchResults(html);
 
@@ -2306,10 +2307,11 @@ async function rteOpenDetail(idx) {
   `;
 
   try {
-    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(result.url);
+    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(result.url);
     const resp = await fetch(proxyUrl);
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const html = await resp.text();
+    const data = await resp.json();
+    if (!data.contents) throw new Error('No content returned');
+    const html = data.contents;
     const r = parseRteRecipe(html, result.title);
     if (!r) throw new Error('No recipe data found');
 
