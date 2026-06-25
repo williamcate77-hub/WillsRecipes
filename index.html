@@ -1000,7 +1000,7 @@ const SCALING_RULES={
   'piece':{type:'stepped',steps:[1,2,3,4,6]},'pieces':{type:'stepped',steps:[1,2,3,4,6]},
 };
 function scaleAmount(amount,unit,scale){
-  const rule=SCALING_RULES[unit.toLowerCase()]||{type:'linear'};
+  const rule=SCALING_RULES[(unit||'').toLowerCase()]||{type:'linear'};
   if(rule.type==='fixed')return amount;
   if(rule.type==='stepped'){
     const scaled=amount*scale;
@@ -2081,7 +2081,7 @@ function getIngCategory(name){
 function fracStr(n){const w=Math.floor(n),f=n-w;const fr=[[.25,'¼'],[.33,'⅓'],[.5,'½'],[.67,'⅔'],[.75,'¾']];const m=fr.find(([v])=>Math.abs(f-v)<.09);if(!m)return parseFloat(n.toFixed(1)).toString();return w?`${w}${m[1]}`:m[1];}
 // Plural unit grammar (data hygiene)
 function pluralUnit(n,unit){
-  const u=unit.toLowerCase().trim();
+  const u=(unit||'').toLowerCase().trim();
   if(Math.round(n*4)/4===1){const sg={'cloves':'clove','cups':'cup','fillets':'fillet','rashers':'rasher','sheets':'sheet','leaves':'leaf','sprigs':'sprig'};return sg[u]||u;}
   else{const pl={'clove':'cloves','cup':'cups','fillet':'fillets','rasher':'rashers','sheet':'sheets','leaf':'leaves','sprig':'sprigs'};return pl[u]||u;}
 }
@@ -2093,7 +2093,7 @@ function roundShoppable(n,u){
 }
 function fmtIng(amount,unit){
   if(!amount||isNaN(amount))return'';
-  const u=unit.toLowerCase().trim();
+  const u=(unit||'').toLowerCase().trim();
   let n=amount;
   const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs'];
   if(desc.some(d=>u.includes(d)))return unit;
@@ -2356,11 +2356,11 @@ function rteFormatForApp(r) {
     const m = String(ing).match(/^([\d¼½¾⅓⅔⅛⅜⅝⅞\/\.\s]+)\s*([a-zA-Z]+)?\s+(.+)/);
     if (m) {
       const amount = parseFloat(m[1]) || null;
-      const unit = m[2] || null;
+      const unit = m[2] || '';
       const name = m[3].trim();
       return {name, amount, unit};
     }
-    return {name: String(ing).trim(), amount: null, unit: null};
+    return {name: String(ing).trim(), amount: null, unit: ''};
   });
 
   // Guess category from title + ingredients
