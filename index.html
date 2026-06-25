@@ -7,12 +7,20 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Cooking With Will</title>
 <link rel="apple-touch-icon" href="/public/apple-touch-icon.png">
-<link rel="icon" type="image/png" href="/public/icon-192.png">
+<link rel="icon" type="image/png" href="/public/icon-192.png"
 <link rel="manifest" href="/public/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 — Cooking With Will -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-98Y9XV980E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-98Y9XV980E');
+</script>
 <style>
 :root {
   --bg:#fafaf8; --card:#fff; --surface:#f2f2f0; --surface2:#e8e8e6; --border:#e2e2e0;
@@ -251,6 +259,10 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2)}
 .ing-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 .ing-cat{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:4px;background:var(--surface);color:var(--text3);flex-shrink:0;margin-right:4px}
 .ing-section{padding:8px 16px 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);border-bottom:1px solid var(--border);background:var(--surface)}
+.ing-group{background:var(--surface);border-radius:12px;margin:6px 0;overflow:hidden;border:1px solid var(--border)}
+.ing-group-single{margin:0}
+.ing-group-lbl{padding:7px 16px 4px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+.ing-group .ing-row:last-child,.ing-group-single .ing-row:last-child{border-bottom:none}
 .ing-name{flex:1;font-size:15px;color:var(--text);display:flex;align-items:center;gap:8px}
 .ing-prep{font-size:13px;color:var(--text3);font-style:italic}
 .ing-amt{font-size:14px;font-weight:700;color:var(--green);white-space:nowrap}
@@ -317,6 +329,54 @@ html.dark .step-num{color:rgba(76,175,80,.2)}
 .ck-ing-sheet-title{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--text)}
 .ck-ing-close{background:none;border:none;font-size:24px;color:var(--text3);cursor:pointer;padding:4px;line-height:1}
 .ck-serve-note{font-size:12px;color:var(--text3);margin-bottom:12px}
+/* Wake lock bar */
+.ck-wake-bar{width:100%;display:flex;align-items:center;gap:10px;padding:11px 20px;background:#fef9e7;border:none;border-bottom:2px solid #f6d860;color:#7c5d0a;font-size:13px;font-weight:700;cursor:pointer;text-align:left;flex-shrink:0;transition:background .2s,border-color .2s}
+.ck-wake-bar .ms{font-size:20px;color:#e6a800;flex-shrink:0}
+.ck-wake-pill{margin-left:auto;background:#e6a800;color:#fff;border-radius:20px;padding:3px 11px;font-size:11px;font-weight:800;letter-spacing:.06em;flex-shrink:0;transition:background .2s}
+.ck-wake-bar.off{background:var(--surface);border-color:var(--border);color:var(--text3)}
+.ck-wake-bar.off .ms{color:var(--text3)}
+.ck-wake-bar.off .ck-wake-pill{background:var(--surface2);color:var(--text3)}
+
+/* ── RATIOS VIEW ─────────────────────────────────────────── */
+.ratios-hdr{padding:24px 20px 0;background:var(--card);border-bottom:1px solid var(--border)}
+.ratios-hdr h2{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px}
+.ratios-hdr p{font-size:14px;color:var(--text2);margin-bottom:16px}
+.ratios-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:16px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.ratios-chips::-webkit-scrollbar{display:none}
+.ratio-chip{flex-shrink:0;padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
+.ratio-chip.active{background:var(--text);color:var(--card);border-color:var(--text)}
+.ratios-list{padding:16px 16px 24px;display:flex;flex-direction:column;gap:16px}
+/* Ratio card */
+.ratio-card{background:var(--card);border-radius:16px;padding:20px;border:1.5px solid var(--border)}
+.rc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rc-type{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);background:var(--surface);padding:4px 10px;border-radius:20px}
+.rc-save{background:none;border:none;cursor:pointer;color:var(--text3);padding:4px;display:flex;align-items:center;line-height:1}
+.rc-save.saved{color:var(--green)}
+.rc-save .ms{font-size:22px}
+.rc-name{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--text);margin:0 0 20px}
+/* Formula */
+.rc-formula{display:flex;align-items:center;gap:2px;overflow-x:auto;padding-bottom:8px;margin-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rc-formula::-webkit-scrollbar{display:none}
+.rc-fi{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding:0 6px;min-width:48px}
+.rc-sep{font-size:28px;font-weight:300;color:var(--border);flex-shrink:0;padding:0 2px;margin-bottom:18px}
+.rc-pnum{font-family:var(--serif);font-weight:700;color:var(--text);line-height:1}
+.rc-mnum{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--text);line-height:1}
+.rc-munit{font-size:12px;font-weight:600;color:var(--text2)}
+.rc-flabel{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-top:5px;text-align:center;word-break:break-word;max-width:64px;line-height:1.3}
+/* Toggle + scale */
+.rc-controls{margin-bottom:16px}
+.rc-toggle{display:flex;background:var(--surface);border-radius:10px;padding:3px;gap:3px;margin-bottom:10px}
+.rc-vbtn{flex:1;padding:8px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.rc-vbtn.on{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.rc-scale{display:flex;align-items:center;gap:10px}
+.rc-scale-lbl{font-size:13px;color:var(--text2);white-space:nowrap}
+.rc-scale-val{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text);min-width:36px;text-align:center}
+.rc-sbtn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:18px;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .1s}
+.rc-sbtn:active{background:var(--surface2)}
+/* Technique + swaps */
+.rc-technique{padding:14px;background:var(--surface);border-radius:10px;margin-bottom:10px;font-size:14px;line-height:1.65;color:var(--text)}
+.rc-swaps{display:flex;gap:8px;align-items:flex-start;padding:10px 14px;background:var(--green-dim);border-radius:10px;font-size:13px;color:var(--green-text);line-height:1.55}
+.rc-swaps .ms{font-size:16px;color:var(--green);flex-shrink:0;margin-top:1px}
 
 /* Tab bar */
 .tab-bar{height:var(--tab-h);background:var(--card);border-top:1px solid var(--border);display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom,0)}
@@ -558,6 +618,11 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
     <button class="ck-ing-btn" onclick="toggleIngDrawer()"><span class="ms">list</span>Ingredients</button>
   </div>
   <div class="ck-recipe-name" id="ckRecipeName"></div>
+  <button class="ck-wake-bar" id="ckWakeBtn" onclick="toggleWakeLock()">
+    <span class="ms">brightness_high</span>
+    <span id="ckWakeLabel">Screen staying on</span>
+    <span class="ck-wake-pill" id="ckWakePill">ON</span>
+  </button>
   <div class="ck-step" id="ckStep">
     <div class="ck-step-num" id="ckStepNum">01</div>
     <p class="ck-step-text" id="ckStepText"></p>
@@ -657,15 +722,6 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
     </div>
   </div>
 
-  <!-- LATEST -->
-  <div class="view" id="view-latest">
-    <div style="padding:24px 20px 16px">
-      <h2 style="font-family:var(--serif);font-size:30px;font-weight:700;color:var(--text);margin-bottom:4px">Latest</h2>
-      <p style="font-size:14px;color:var(--text2)">Most recently added to the collection</p>
-    </div>
-    <div class="card-list" id="latestList"></div>
-  </div>
-
   <!-- SHOPPING -->
   <div class="view" id="view-shoplist">
     <div style="padding:24px 20px 16px">
@@ -740,6 +796,16 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
     </div>
   </div>
 
+  <!-- RATIOS -->
+  <div class="view" id="view-ratios">
+    <div class="ratios-hdr">
+      <h2>Cooking Ratios</h2>
+      <p>The formula behind the dish — cook from memory, not a recipe</p>
+      <div class="ratios-chips" id="ratioCategoryChips"></div>
+    </div>
+    <div class="ratios-list" id="ratiosList"></div>
+  </div>
+
 </main>
 
 <!-- TAB BAR -->
@@ -750,8 +816,8 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
   <button class="tab" id="tab-saved" onclick="switchTab('saved')">
     <div class="tab-pill"><span class="ms">bookmark</span><span>Saved</span></div>
   </button>
-  <button class="tab" id="tab-latest" onclick="switchTab('latest')">
-    <div class="tab-pill"><span class="ms">auto_awesome</span><span>Latest</span></div>
+  <button class="tab" id="tab-ratios" onclick="switchTab('ratios')">
+    <div class="tab-pill"><span class="ms">calculate</span><span>Ratios</span></div>
   </button>
   <button class="tab" id="tab-shoplist" onclick="switchTab('shoplist')">
     <div class="tab-pill"><span class="ms">shopping_bag</span><span>Shopping</span></div>
@@ -843,6 +909,7 @@ html.dark .rte-step-n{color:rgba(76,175,80,.2)}
 <script src="recipes2.js"></script>
 <script src="recipes3.js"></script>
 <script src="recipes4.js"></script>
+<script src="ratios.js"></script>
 <script>
 const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3,...RECIPES4];
 
@@ -1283,7 +1350,7 @@ function renderShelves(){
       recipes:[...ALL_RECIPES].filter(r=>parseMinutes(r.time)<=30).sort((a,b)=>b.id-a.id)
     },{
       title:'Recently added',sub:null,seeAll:'shelf',cap:8,
-      recipes:[...ALL_RECIPES].sort((a,b)=>b.id-a.id)
+      recipes:[...ALL_RECIPES].reverse()
     },
     ...CATEGORIES.map(cat=>({
       title:cat,sub:null,seeAll:'cat',cap:8,cat,
@@ -1355,7 +1422,7 @@ function renderSaved(){
   empty.style.display='none';list.innerHTML=pr.map(r=>recipeCard(r)).join('');
 }
 function renderLatest(){
-  document.getElementById('latestList').innerHTML=[...ALL_RECIPES].sort((a,b)=>b.id-a.id).map(r=>recipeCard(r)).join('');
+  document.getElementById('latestList').innerHTML=[...ALL_RECIPES].reverse().map(r=>recipeCard(r)).join('');
 }
 
 // ── PIN / SAVE
@@ -1373,6 +1440,7 @@ function togglePin(id){
   if(currentTab==='home')renderFeed();
   if(currentTab==='saved')renderSaved();
   if(currentTab==='latest')renderLatest();
+  if(is){const r=ALL_RECIPES.find(x=>x.id===id);if(r)gtag('event','save_recipe',{recipe_name:r.name,recipe_category:r.category});}
   toast(is?'Saved to your collection ✓':'Removed from saved');
 }
 function togglePinDetail(){if(!currentRecipe)return;haptic(12);togglePin(currentRecipe.id);updateDetPin();}
@@ -1386,6 +1454,7 @@ function openRecipe(id){
   haptic(8);
   currentRecipe=ALL_RECIPES.find(r=>r.id===id);prevTab=currentTab;
   addToRecentlyViewed(id);
+  gtag('event','view_recipe',{recipe_name:currentRecipe.name,recipe_category:currentRecipe.category,recipe_difficulty:currentRecipe.difficulty});
   if(!shopChecked[id])shopChecked[id]=new Set();
   if(!stepsDone[id])stepsDone[id]=new Set();
   portionScale=1;
@@ -1434,16 +1503,59 @@ function renderDetailContent(){
   renderIngredients();renderSteps();renderShopList();renderWorksWellWith();
 }
 
+function autoGroupIngredients(ings,steps){
+  const skip=new Set(['and','or','the','a','an','of','with','fresh','dried','ground','whole','large','small','medium','extra','finely','thinly','roughly','light','dark','coarsely','white','black','red','green','plain','pure','hot','cold']);
+  function wordsOf(name){return name.toLowerCase().split(',')[0].split(/\s+/).filter(w=>w.length>2&&!skip.has(w));}
+  const flat=ings.filter(i=>!i.section);
+  const used=new Set();
+  const groups=[];
+  for(let si=0;si<steps.length;si++){
+    const st=steps[si].toLowerCase();
+    const matched=flat.filter((_,idx)=>!used.has(idx)&&wordsOf(flat[idx].name).some(w=>st.includes(w)));
+    if(matched.length){matched.forEach(ing=>used.add(flat.indexOf(ing)));groups.push({step:si+1,ings:matched});}
+  }
+  const remaining=flat.filter((_,idx)=>!used.has(idx));
+  if(remaining.length)groups.unshift({step:0,ings:remaining});
+  return groups;
+}
+
+const CAT_COLORS={Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'};
+const CAT_ORDER=['Produce','Meat','Dairy/Alt','Dairy','Pantry','Frozen'];
+
+function ingRowHtml(ing,portionScaleVal,isLast){
+  const scaled=scaleAmount(ing.amount,ing.unit,portionScaleVal);
+  const display=fmtIng(scaled,ing.unit);
+  const{name:baseName,prep}=extractPrepAndName(ing.name);
+  const cat=getIngCategory(baseName);
+  const catColor=CAT_COLORS[cat]||'var(--green)';
+  const catLabel=cat?.split('/')[0]||'';
+  return`<div class="ing-row${isLast?' last':''}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
+}
+
 function renderIngredients(){
-  document.getElementById('ingList').innerHTML=currentRecipe.ingredients.map((ing,i,arr)=>{
-    if(ing.section)return`<div class="ing-section">${ing.section}</div>`;
-    const scaled=scaleAmount(ing.amount,ing.unit,portionScale);
-    const display=fmtIng(scaled,ing.unit);
-    const{name:baseName,prep}=extractPrepAndName(ing.name);
-    const cat=getIngCategory(baseName);
-    const catColor=cat?{Produce:'#4CAF50',Dairy:'#2196F3',Meat:'#FF6B6B',Pantry:'#FF9800',Frozen:'#00BCD4','Dairy/Alt':'#2196F3'}[cat]||'var(--green)':'var(--green)';
-    const catLabel=cat?.split('/')[0]||'';
-    return`<div class="ing-row${i<arr.length-1?'':' last'}"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
+  const r=currentRecipe;
+  const hasSections=r.ingredients.some(i=>i.section);
+  if(hasSections){
+    document.getElementById('ingList').innerHTML=r.ingredients.map((ing,i,arr)=>{
+      if(ing.section)return`<div class="ing-section">${ing.section}</div>`;
+      return ingRowHtml(ing,portionScale,i===arr.length-1);
+    }).join('');
+    return;
+  }
+  // Group flat list by pantry category
+  const flat=r.ingredients.filter(i=>!i.section);
+  const catMap={};
+  flat.forEach(ing=>{
+    const{name:baseName}=extractPrepAndName(ing.name);
+    const cat=getIngCategory(baseName)||'Other';
+    if(!catMap[cat])catMap[cat]=[];
+    catMap[cat].push(ing);
+  });
+  const cats=[...CAT_ORDER.filter(c=>catMap[c]),...Object.keys(catMap).filter(c=>!CAT_ORDER.includes(c)&&catMap[c])];
+  let rendered=0;const total=flat.length;
+  document.getElementById('ingList').innerHTML=cats.map(cat=>{
+    const rows=catMap[cat].map(ing=>ingRowHtml(ing,portionScale,++rendered===total)).join('');
+    return`<div class="ing-section">${cat==='Other'?'Pantry & Spices':cat}</div>${rows}`;
   }).join('');
 }
 
@@ -1572,6 +1684,7 @@ function addToShoppingListFiltered(){
   if(!toBuy.length){toast('Nothing to add — everything is ticked!');return;}
   const added=mergeIntoShopList(toBuy,currentRecipe.name,portionScale);
   saveGlobalShopList();updateShopBadge();
+  gtag('event','add_to_shoplist',{recipe_name:currentRecipe.name,recipe_category:currentRecipe.category,items_added:added});
   toast(`Added ${added} item${added===1?'':'s'} to your list`);
 }
 
@@ -1627,6 +1740,7 @@ function adjustPortion(delta){
 // ── COOKING MODE
 function startCooking(){
   if(!currentRecipe)return;haptic(12);
+  gtag('event','start_cooking',{recipe_name:currentRecipe.name,recipe_category:currentRecipe.category});
   cookingRecipe=currentRecipe;cookingStep=0;
   openCookingMode(cookingRecipe,0);
 }
@@ -1636,7 +1750,9 @@ function openCookingMode(recipe,step){
   document.getElementById('appHdr').style.display='none';
   document.getElementById('tabBar').style.display='none';
   // Wake lock auto-on
-  navigator.wakeLock&&navigator.wakeLock.request('screen').then(w=>{wakeLock=w;}).catch(()=>{});
+  if(navigator.wakeLock){
+    navigator.wakeLock.request('screen').then(w=>{wakeLock=w;updateWakeLockUI(true);w.addEventListener('release',()=>{wakeLock=null;updateWakeLockUI(false);});}).catch(()=>{updateWakeLockUI(false);});
+  } else {updateWakeLockUI(false);}
   renderCookingStep();
 }
 function renderCookingStep(){
@@ -1722,7 +1838,7 @@ function finishCooking(){haptic(12);clearCookingState();exitCooking();toast('Gre
 function exitCooking(){
   stopCookingTimer();
   document.getElementById('cookingView').classList.add('hidden');
-  if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null;document.getElementById('wakeBtn').classList.remove('on');}
+  if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null;updateWakeLockUI(false);}
   // Return to recipe detail (header stays hidden — detail handles its own chrome)
   // If no recipe is open, go back to home
   if(currentRecipe){
@@ -1739,10 +1855,19 @@ function toggleIngDrawer(){
 }
 function renderCkIngList(){
   if(!cookingRecipe)return;
-  document.getElementById('ckIngList').innerHTML=cookingRecipe.ingredients.map(ing=>{
-    if(ing.section)return`<div class="ing-section">${ing.section}</div>`;
-    const display=fmtIng(ing.amount,ing.unit);
-    return`<div class="ing-row"><div class="ing-dot"></div><span class="ing-name">${dispName(ing.name)}</span><span class="ing-amt">${display}</span></div>`;
+  const groups=autoGroupIngredients(cookingRecipe.ingredients,cookingRecipe.steps||[]);
+  document.getElementById('ckIngList').innerHTML=groups.map(g=>{
+    const label=g.step===0?'Prep first':`Step ${g.step}`;
+    const rows=g.ings.map(ing=>{
+      const display=fmtIng(ing.amount,ing.unit);
+      const{name:baseName,prep}=extractPrepAndName(ing.name);
+      const cat=getIngCategory(baseName);
+      const catColor=CAT_COLORS[cat]||'var(--green)';
+      const catLabel=cat?.split('/')[0]||'';
+      return`<div class="ing-row"><div class="ing-dot" style="background:${catColor}"></div><span class="ing-name"><span class="ing-cat">${catLabel}</span><span>${dispName(baseName)}</span>${prep?`<span class="ing-prep">${prep}</span>`:''}</span><span class="ing-amt">${display}</span></div>`;
+    }).join('');
+    if(g.ings.length>=2)return`<div class="ing-group"><div class="ing-group-lbl">${label}</div>${rows}</div>`;
+    return`<div class="ing-group-single"><div class="ing-group-lbl">${label}</div>${rows}</div>`;
   }).join('');
 }
 // Cooking mode timer
@@ -1780,6 +1905,7 @@ function showTab(tab){
   if(tab==='saved')renderSaved();
   if(tab==='latest')renderLatest();
   if(tab==='shoplist'){setShopSort(shopSort);updateShopBadge();}
+  if(tab==='ratios')renderRatios();
 }
 function switchTab(tab){
   haptic(8);
@@ -1836,19 +1962,143 @@ function copyShoppingTab(){
 // ── SHARE
 function shareRecipe(){
   haptic(8);const r=currentRecipe;
-  const text=`${r.name}\n\n${cap(r.difficulty)} | ${r.time} | ${r.calories} kcal\n\nIngredients:\n${r.ingredients.filter(i=>!i.section).map(i=>`• ${i.name}: ${i.amount} ${i.unit}`).join('\n')}\n\nMethod:\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
-  if(navigator.share)navigator.share({title:r.name,text}).catch(()=>{});
-  else navigator.clipboard.writeText(text).then(()=>toast('Recipe copied to clipboard'));
+  const url=`${location.origin}${location.pathname}#recipe-${r.id}`;
+  if(navigator.share)navigator.share({title:r.name,text:`${r.name} — ${r.time} | ${cap(r.difficulty)}`,url}).catch(()=>{});
+  else navigator.clipboard.writeText(url).then(()=>toast('Link copied!'));
+}
+
+// ── RATIOS ────────────────────────────────────────────────────────────────
+let savedRatios=JSON.parse(localStorage.getItem('savedRatios')||'[]');
+let ratioViewMode={},ratioScale={},activeCatFilter='All';
+const RATIO_CATS=['All',...[...new Set((typeof RATIOS!=='undefined'?RATIOS:[]).map(r=>r.category))]];
+const SCALE_STEPS=[0.5,1,1.5,2,3,4];
+
+function renderRatios(){
+  // Category chips
+  document.getElementById('ratioCategoryChips').innerHTML=RATIO_CATS.map(c=>`<button class="ratio-chip${activeCatFilter===c?' active':''}" onclick="setRatioFilter('${c}')">${c}</button>`).join('');
+  // Cards
+  const list=activeCatFilter==='All'?RATIOS:RATIOS.filter(r=>r.category===activeCatFilter);
+  document.getElementById('ratiosList').innerHTML=list.map(r=>ratioCardHtml(r)).join('');
+}
+
+function setRatioFilter(cat){haptic(8);activeCatFilter=cat;renderRatios();}
+
+function ratioCardHtml(r){
+  const id=r.id;
+  const isSaved=savedRatios.includes(id);
+  const mode=ratioViewMode[id]||'parts';
+  const scale=ratioScale[id]||1;
+  const isMetric=mode==='metric';
+  // Font size scales down for many-part formulas
+  const pSize=r.formula.length<=2?56:r.formula.length<=4?46:36;
+
+  const formulaHtml=r.formula.map((f,i)=>{
+    const sep=i>0?'<span class="rc-sep">:</span>':'';
+    let val;
+    if(!isMetric){
+      const num=f.partsLabel||(f.parts===Math.floor(f.parts)?f.parts:f.parts.toFixed(1));
+      val=`<span class="rc-pnum" style="font-size:${pSize}px">${num}</span>`;
+    } else {
+      const raw=f.metricVal*scale;
+      let display;
+      if(f.metricUnit==='whole'){
+        display=`<span class="rc-mnum">${Math.max(1,Math.round(raw))}</span><span class="rc-munit"> ea</span>`;
+      } else {
+        const rounded=raw>=100?Math.round(raw/5)*5:raw>=10?Math.round(raw):Math.round(raw*2)/2;
+        display=`<span class="rc-mnum">${rounded}</span><span class="rc-munit">${f.metricUnit}</span>`;
+      }
+      val=display;
+    }
+    return `${sep}<div class="rc-fi">${val}<span class="rc-flabel">${f.label}</span></div>`;
+  }).join('');
+
+  const scaleDisplay=scale%1===0?scale+'×':scale.toFixed(1)+'×';
+  const scaleHtml=isMetric?`
+    <div class="rc-scale">
+      <span class="rc-scale-lbl">Scale</span>
+      <button class="rc-sbtn" onclick="stepRatioScale('${id}',-1)">−</button>
+      <span class="rc-scale-val">${scaleDisplay}</span>
+      <button class="rc-sbtn" onclick="stepRatioScale('${id}',1)">+</button>
+    </div>`:'';
+
+  const swapsHtml=r.swaps?`<div class="rc-swaps"><span class="ms">swap_horiz</span>${r.swaps}</div>`:'';
+
+  return `<div class="ratio-card" id="rcard-${id}">
+    <div class="rc-hdr">
+      <span class="rc-type">${r.type}</span>
+      <button class="rc-save${isSaved?' saved':''}" onclick="toggleRatioSave('${id}')"><span class="ms">${isSaved?'bookmark':'bookmark_border'}</span></button>
+    </div>
+    <h3 class="rc-name">${r.name}</h3>
+    <div class="rc-formula">${formulaHtml}</div>
+    <div class="rc-controls">
+      <div class="rc-toggle">
+        <button class="rc-vbtn${!isMetric?' on':''}" onclick="setRatioView('${id}','parts')">Parts</button>
+        <button class="rc-vbtn${isMetric?' on':''}" onclick="setRatioView('${id}','metric')">Metric</button>
+      </div>
+      ${scaleHtml}
+    </div>
+    ${r.technique?`<div class="rc-technique">${r.technique}</div>`:''}
+    ${swapsHtml}
+  </div>`;
+}
+
+function reRenderRatioCard(id){
+  const r=RATIOS.find(x=>x.id===id);
+  const el=document.getElementById('rcard-'+id);
+  if(!el||!r)return;
+  const tmp=document.createElement('div');
+  tmp.innerHTML=ratioCardHtml(r);
+  el.replaceWith(tmp.firstElementChild);
+}
+
+function setRatioView(id,mode){haptic(8);ratioViewMode[id]=mode;reRenderRatioCard(id);}
+
+function stepRatioScale(id,dir){
+  haptic(8);
+  const cur=ratioScale[id]||1;
+  const idx=SCALE_STEPS.indexOf(cur);
+  const next=Math.max(0,Math.min(SCALE_STEPS.length-1,idx+dir));
+  ratioScale[id]=SCALE_STEPS[next];
+  reRenderRatioCard(id);
+}
+
+function toggleRatioSave(id){
+  haptic(12);
+  const i=savedRatios.indexOf(id);
+  if(i>=0)savedRatios.splice(i,1);else savedRatios.push(id);
+  localStorage.setItem('savedRatios',JSON.stringify(savedRatios));
+  reRenderRatioCard(id);
+  toast(savedRatios.includes(id)?'Ratio saved ✓':'Removed from saved');
 }
 
 // ── WAKE LOCK
+function updateWakeLockUI(isOn){
+  const hBtn=document.getElementById('wakeBtn');
+  const ckBtn=document.getElementById('ckWakeBtn');
+  const pill=document.getElementById('ckWakePill');
+  const lbl=document.getElementById('ckWakeLabel');
+  if(hBtn)hBtn.classList.toggle('on',isOn);
+  if(ckBtn)ckBtn.classList.toggle('off',!isOn);
+  if(pill)pill.textContent=isOn?'ON':'OFF';
+  if(lbl)lbl.textContent=isOn?'Screen staying on':'Screen can sleep — tap to lock';
+}
 async function toggleWakeLock(){
-  haptic(8);const btn=document.getElementById('wakeBtn');
-  if(wakeLock){await wakeLock.release();wakeLock=null;btn.classList.remove('on');toast('Screen sleep restored');}
-  else{try{wakeLock=await navigator.wakeLock.request('screen');btn.classList.add('on');toast('Screen will stay on');wakeLock.addEventListener('release',()=>{wakeLock=null;btn.classList.remove('on');});}catch(e){toast('Wake lock not available');}}
+  haptic(8);
+  if(wakeLock){
+    await wakeLock.release();wakeLock=null;
+    updateWakeLockUI(false);toast('Screen sleep restored');
+  } else {
+    try{
+      wakeLock=await navigator.wakeLock.request('screen');
+      updateWakeLockUI(true);toast('Screen will stay on');
+      wakeLock.addEventListener('release',()=>{wakeLock=null;updateWakeLockUI(false);});
+    }catch(e){toast('Wake lock not available on this device');}
+  }
 }
 document.addEventListener('visibilitychange',async()=>{
-  if(document.getElementById('wakeBtn').classList.contains('on')&&document.visibilityState==='visible'){try{wakeLock=await navigator.wakeLock.request('screen');}catch(e){}}
+  if(document.getElementById('wakeBtn').classList.contains('on')&&document.visibilityState==='visible'){
+    try{wakeLock=await navigator.wakeLock.request('screen');updateWakeLockUI(true);}catch(e){}
+  }
 });
 
 // ── HELPERS
@@ -2154,6 +2404,8 @@ function escHtml(str) {
 validateRecipes();
 updateShopBadge();
 renderHome();
+// Deep link: auto-open recipe from URL hash e.g. #recipe-42
+(function(){const h=location.hash;if(!h.startsWith('#recipe-'))return;const id=parseInt(h.slice(8));if(!isNaN(id)&&ALL_RECIPES.find(x=>x.id===id))openRecipe(id);})();
 </script>
 </body>
 </html>
