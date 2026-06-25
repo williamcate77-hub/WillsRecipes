@@ -2255,14 +2255,12 @@ async function rteDoSearch() {
   rteShow('loading');
 
   try {
-    const searchUrl = 'https://www.recipetineats.com/?s=' + encodeURIComponent(q);
-    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(searchUrl);
-    const resp = await fetch(proxyUrl);
+    const resp = await fetch('/api/rte-search?q=' + encodeURIComponent(q));
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
-    if (!data.contents) throw new Error('No content returned');
-    const html = data.contents;
+    const results = data.results || [];
 
-    rteAllResults = parseRteSearchResults(html);
+    rteAllResults = results;
 
     if (!rteAllResults.length) {
       rteShow('empty');
@@ -2307,12 +2305,10 @@ async function rteOpenDetail(idx) {
   `;
 
   try {
-    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(result.url);
-    const resp = await fetch(proxyUrl);
+    const resp = await fetch('/api/rte-recipe?url=' + encodeURIComponent(result.url));
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
-    if (!data.contents) throw new Error('No content returned');
-    const html = data.contents;
-    const r = parseRteRecipe(html, result.title);
+    const r = data.recipe ? { ...data.recipe, title: data.recipe.title || result.title } : null;
     if (!r) throw new Error('No recipe data found');
 
     rteCurrentRecipe = r;
