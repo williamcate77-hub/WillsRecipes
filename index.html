@@ -2401,7 +2401,15 @@ function rteFormatForApp(r) {
 
     // No leading number — just a name
     return {name: s, amount: null, unit: ''};
-  }).filter(Boolean); // remove nulls from skipped entries
+  // Strip any remaining note references from ingredient names
+  }).map(ing => ({
+    ...ing,
+    name: ing.name
+      .replace(/\(Note[s]?\s*\d*[^)]*\)/gi, '')
+      .replace(/\bNote[s]?\s*\d+\b/gi, '')
+      .replace(/\s{2,}/g, ' ')
+      .trim()
+  })).filter(Boolean); // remove nulls from skipped entries
 
   // Guess category from title + ingredients
   const text = (r.title + ' ' + (r.ingredients || []).join(' ')).toLowerCase();
@@ -2432,7 +2440,16 @@ function rteFormatForApp(r) {
     calories: 400,
     mainIngredient,
     ingredients,
-    steps: r.steps || [],
+    steps: (r.steps || []).map(s => {
+      // Remove note references: "(Note 1)", "(Note: ...)", "Note 1:", "– See note 2", etc.
+      return s
+        .replace(/\(Note[s]?\s*\d*[^)]*\)/gi, '')
+        .replace(/\bNote[s]?\s*\d+[:\s][^.;]*/gi, '')
+        .replace(/\s*–\s*[Ss]ee [Nn]ote[s]?\s*\d*/g, '')
+        .replace(/\s*\([Ss]ee [Nn]ote[s]?\s*\d*[^)]*\)/gi, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+    }).filter(s => s.length > 0),
     source: 'search'
   };
 }
