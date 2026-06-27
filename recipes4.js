@@ -2199,4 +2199,5 @@ steps:[
   'Toss chicken through sauce quickly.',
   'Serve over rice with green onion and sesame seeds.',
 ]},
+{id:285,name:'Peri Peri Garlic Yogurt Sauce',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'5 min',calories:80,mainIngredient:'Yogurt',ingredients:[{name:'Greek yogurt',amount:120,unit:'ml'},{name:'Peri peri seasoning',amount:1,unit:'tsp'},{name:'Salt',amount:1,unit:'pinch'},{name:'Lemon juice',amount:1,unit:'tsp'},{name:'Garlic cloves',amount:2,unit:'whole'},{name:'Honey',amount:1,unit:'tsp'},{name:'Water',amount:1,unit:'tbsp'},{name:'Paprika',amount:0.5,unit:'tsp'}],steps:['Crush the garlic cloves finely and combine with Greek yogurt.','Add peri peri seasoning, paprika, lemon juice, honey and water.','Whisk until smooth and well combined.','Season with salt, adjust spice level to taste and serve chilled with grilled chicken or vegetables.']},
 ];
