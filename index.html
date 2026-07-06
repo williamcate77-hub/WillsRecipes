@@ -6,8 +6,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Cooking With Will</title>
+<meta name="theme-color" content="#faf7f2">
 <link rel="apple-touch-icon" href="/public/apple-touch-icon.png">
-<link rel="icon" type="image/png" href="/public/icon-192.png"
+<link rel="icon" type="image/svg+xml" href="/public/icon.svg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="manifest" href="/public/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2022,6 +2024,11 @@ function validateRecipes(){
     });
   });
   if(warnings.length){console.warn('Recipe lint warnings:',warnings);}
+}
+
+// ── SERVICE WORKER (offline support)
+if('serviceWorker'in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 }
 
 // ── INIT

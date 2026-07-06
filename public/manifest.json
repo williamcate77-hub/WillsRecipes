@@ -1,14 +1,17 @@
 {
   "name": "Cooking With Will",
-  "short_name": "Cooking With Will",
-  "description": "Will's recipe collection",
-  "theme_color": "#0d0d16",
-  "background_color": "#0d0d16",
+  "short_name": "Will's Recipes",
+  "description": "Will's recipe collection — 200+ recipes that work offline",
+  "id": "/",
+  "scope": "/",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "start_url": "/",
+  "theme_color": "#faf7f2",
+  "background_color": "#faf7f2",
   "icons": [
-    { "src": "/public/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/public/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/public/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/public/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/public/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
