@@ -35,13 +35,10 @@ git config --global core.safecrlf true
 ### 1. Validate Recipe Files
 ```bash
 # Run the test suite
-node test-recipes.js
+npm run validate
 
 # OR check individual files
 node -c recipes.js
-node -c recipes2.js
-node -c recipes3.js
-node -c recipes4.js
 ```
 
 ### 2. Check Formatting
@@ -54,7 +51,7 @@ node -c recipes4.js
 All recipes must have:
 - ✅ Unique ID
 - ✅ Name, category, difficulty
-- ✅ Serves, time, calories, mainIngredient
+- ✅ Serves, time, caloriesPerServe, mainIngredient
 - ✅ Ingredients array (non-empty)
 - ✅ Steps array (non-empty)
 
@@ -62,9 +59,6 @@ All recipes must have:
 
 1. Choose the appropriate file based on current recipe count:
    - `recipes.js`: Recipes 1-85
-   - `recipes2.js`: Recipes 86-170
-   - `recipes3.js`: Recipes 171-249
-   - `recipes4.js`: Recipes 250+ (currently disabled)
 
 2. Use the next available ID number
 
@@ -74,7 +68,7 @@ All recipes must have:
 
 5. Run tests before committing:
    ```bash
-   node test-recipes.js
+   npm run validate
    ```
 
 ## Merging Changes
@@ -86,7 +80,7 @@ When merging recipe changes (especially from conflicting branches):
 3. **Check formatting** isn't minified
 4. **Run full validation**:
    ```bash
-   node test-recipes.js
+   npm run validate
    ```
 
 ## Recipe Format
@@ -137,7 +131,7 @@ All tests must pass before merging.
 - Update ID and all references
 
 ### "Missing required fields"
-- Recipe is missing one of: id, name, category, difficulty, serves, time, calories, mainIngredient, ingredients, steps
+- Recipe is missing one of: id, name, category, difficulty, serves, time, caloriesPerServe, mainIngredient, ingredients, steps
 - See RECIPE_FORMAT.md for complete structure
 
 ### Pre-commit hook not working
@@ -149,6 +143,6 @@ All tests must pass before merging.
 
 Refer to:
 - `RECIPE_FORMAT.md` - Recipe structure and standards
-- `test-recipes.js` - What validation tests check
+- `scripts/validate.js` - What validation tests check
 - `.git/hooks/pre-commit` - What the pre-commit hook validates
 - `.github/workflows/validate-recipes.yml` - CI/CD checks

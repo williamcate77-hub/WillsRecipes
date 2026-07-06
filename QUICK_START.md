@@ -17,7 +17,7 @@ chmod +x setup-dev.sh
 
 ```bash
 # Validate recipes
-node test-recipes.js
+npm run validate
 
 # If all tests pass, commit normally
 git commit -m "Add new recipe"
@@ -28,8 +28,6 @@ git commit -m "Add new recipe"
 
 1. Open the appropriate recipe file:
    - `recipes.js` → recipes 1-85
-   - `recipes2.js` → recipes 86-170
-   - `recipes3.js` → recipes 171-249
 
 2. Copy a similar recipe as a template
 
@@ -38,13 +36,13 @@ git commit -m "Add new recipe"
    - `name`: recipe name
    - `category`: see `RECIPE_FORMAT.md`
    - `difficulty`: easy|medium|hard
-   - `serves`, `time`, `calories`, `mainIngredient`
+   - `serves`, `time`, `caloriesPerServe`, `mainIngredient`
    - `ingredients`: array of ingredient objects
    - `steps`: array of step strings
 
 4. Validate:
    ```bash
-   node test-recipes.js
+   npm run validate
    ```
 
 5. Commit:
@@ -57,7 +55,7 @@ git commit -m "Add new recipe"
 
 | Task | Command |
 |------|---------|
-| Validate recipes | `node test-recipes.js` |
+| Validate recipes | `npm run validate` |
 | Check single file | `node -c recipes.js` |
 | View format standards | See `RECIPE_FORMAT.md` |
 | Get help | See `CONTRIBUTING.md` |
@@ -73,7 +71,7 @@ node -c recipes.js  # Find the exact line
 
 **Test failed?**
 ```bash
-node test-recipes.js  # See detailed error
+npm run validate  # See detailed error
 # Fix issues per error message
 ```
 
