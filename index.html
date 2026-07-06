@@ -742,12 +742,25 @@ body{font-size:17px}
 
 
 <script src="recipes.js"></script>
-<script src="recipes2.js"></script>
-<script src="recipes3.js"></script>
-<script src="recipes4.js"></script>
 <script src="ratios.js"></script>
 <script>
-const ALL_RECIPES=[...RECIPES,...RECIPES2,...RECIPES3,...RECIPES4];
+const ALL_RECIPES=[...RECIPES];
+
+// Saved-recipe ids for duplicates removed in the v2 data clean-up → surviving copy
+const DUPLICATE_ID_MAP={251:192,253:194,237:198,236:199,221:257,222:269,223:271,224:272,225:268,226:267,227:270};
+(function migratePinnedIds(){
+  try{
+    const raw=JSON.parse(localStorage.getItem('pinned')||'[]');
+    const migrated=[...new Set(raw.map(id=>DUPLICATE_ID_MAP[id]||id).filter(id=>id!==266))];
+    if(JSON.stringify(migrated)!==JSON.stringify(raw))localStorage.setItem('pinned',JSON.stringify(migrated));
+  }catch(e){}
+})();
+
+// kJ-led energy display (AU audience): "1,000 kJ / 240 cal"
+function fmtEnergy(cal){
+  const kj=Math.round(cal*4.184/10)*10;
+  return`${kj.toLocaleString()} kJ / ${cal} cal`;
+}
 
 // ── SEAFOOD GROUP
 const SEAFOOD=new Set(['Clams','Dover Sole','Fish','Mackerel','Mussels','Oysters','Prawns','Salmon','Sardines','Scallops','Seafood','Smoked Trout','Snapper','Tuna']);
@@ -929,6 +942,11 @@ function validateAllRecipes(){
 
   for(const r of allRecipes){
     const rec_issues={id:r.id,name:r.name,errors:[],warnings:[]};
+
+    // Guard: a recipe outside the defined categories is invisible in filters
+    if(!CATEGORIES.includes(r.category)){
+      rec_issues.errors.push(`Category "${r.category}" is not in CATEGORIES`);
+    }
 
     // Check 1: Units in SCALING_RULES
     if(r.ingredients){
@@ -1118,7 +1136,7 @@ function renderFeed(){
         <div class="feed-card-meta">
           <span class="feed-meta-chip" style="color:${col};font-size:11px;font-weight:600">${r.category}</span>
           <span class="feed-meta-chip">·</span>
-          <span class="feed-meta-chip">${r.calories} kcal</span>
+          <span class="feed-meta-chip">${fmtEnergy(r.caloriesPerServe)}</span>
           <button class="feed-card-add-btn" style="margin-left:auto" onclick="event.stopPropagation();addAllFromCard(${r.id})">
             <span class="ms" style="font-size:14px">add_shopping_cart</span>Add to list
           </button>
@@ -1157,7 +1175,7 @@ function shelfCard(r){
     <div class="shelf-card-body">
       <div class="shelf-card-name">${r.name}</div>
       <div class="shelf-card-meta">
-        <span style="font-size:10px;color:var(--text3)">${r.calories} kcal</span>
+        <span style="font-size:10px;color:var(--text3)">${fmtEnergy(r.caloriesPerServe)}</span>
       </div>
       <div class="shelf-card-difficulty"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span></div>
     </div>
@@ -1192,7 +1210,7 @@ function renderShelves(){
       } else {
         const first=s.recipes[0];
         const catColor=CAT_GRAD[first.category]?CAT_GRAD[first.category][0]:'#f2f2f0';
-        html+=`<div class="shelf-row hide-scrollbar" style="margin:0;padding:0">${s.recipes.slice(0,1).map(r=>`<div class="shelf-card-hero" style="--category-color:${catColor}" onclick="openRecipe(${r.id})"><div class="shelf-card-body"><div class="shelf-card-name">${r.name}</div><div class="shelf-card-meta"><span style="font-size:10px;color:var(--text3)">${r.calories} kcal</span></div><div class="shelf-card-difficulty"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span></div></div></div>`).join('')}</div>`;
+        html+=`<div class="shelf-row hide-scrollbar" style="margin:0;padding:0">${s.recipes.slice(0,1).map(r=>`<div class="shelf-card-hero" style="--category-color:${catColor}" onclick="openRecipe(${r.id})"><div class="shelf-card-body"><div class="shelf-card-name">${r.name}</div><div class="shelf-card-meta"><span style="font-size:10px;color:var(--text3)">${fmtEnergy(r.caloriesPerServe)}</span></div><div class="shelf-card-difficulty"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span></div></div></div>`).join('')}</div>`;
       }
       return;
     }
@@ -1228,7 +1246,7 @@ function recipeCard(r,showSave=true){
       <div class="rcrd-text">
         <div class="rcrd-name">${r.name}</div>
         <div class="rcrd-cat">${r.category}</div>
-        <div class="rcrd-meta"><span class="badge" style="background:var(--surface);color:var(--text2)">${r.calories} kcal</span></div>
+        <div class="rcrd-meta"><span class="badge" style="background:var(--surface);color:var(--text2)">${fmtEnergy(r.caloriesPerServe)}</span></div>
         <div class="rcrd-difficulty"><span class="badge badge-${r.difficulty}">${cap(r.difficulty)}</span></div>
       </div>
     </div>
@@ -1307,7 +1325,7 @@ function renderDetailContent(){
       <div class="det-hero-facts">
         <div class="hero-fact">${cap(r.difficulty)}</div>
         <div class="hero-fact">${r.time}</div>
-        <div class="hero-fact">${r.calories} kcal</div>
+        <div class="hero-fact">${fmtEnergy(r.caloriesPerServe)}</div>
       </div>
     </div>
     <div class="det-actions">
@@ -1318,7 +1336,7 @@ function renderDetailContent(){
   document.getElementById('detTitle').textContent=r.name;
   updateDetPin();
   const d=r.difficulty;
-  document.getElementById('detTags').innerHTML=`<span class="badge badge-${d} det-tag" style="padding:5px 12px;border-radius:20px">${cap(d)}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${r.calories} kcal/serve</span>`;
+  document.getElementById('detTags').innerHTML=`<span class="badge badge-${d} det-tag" style="padding:5px 12px;border-radius:20px">${cap(d)}</span><span class="det-tag" style="font-size:12px;padding:5px 12px;border-radius:20px;background:var(--surface);color:var(--text2)">${fmtEnergy(r.caloriesPerServe)} per serve</span>`;
   renderIngredients();renderSteps();renderShopList();renderWorksWellWith();
 }
 
