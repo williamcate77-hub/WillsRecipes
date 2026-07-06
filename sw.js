@@ -3,11 +3,13 @@
 // from cache; the network is only touched to fill the cache. Bump VERSION on
 // every deploy that changes any precached file, so clients pick up the update.
 
-const VERSION = 'cww-v1';
+const VERSION = 'cww-v2';
 
 const PRECACHE = [
   '/',
   '/index.html',
+  '/styles.css',
+  '/app.js',
   '/recipes.js',
   '/ratios.js',
   '/public/manifest.json',
