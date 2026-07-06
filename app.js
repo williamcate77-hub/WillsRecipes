@@ -17,14 +17,60 @@ function guarded(fn,containerId){
   }
 }
 
+// ── STORAGE: hardened wrapper around localStorage.
+// All keys are namespaced cww:*; reads/writes never throw (private browsing,
+// quota, corrupted JSON all degrade gracefully).
+const store={
+  get(key,fallback){
+    try{const v=localStorage.getItem(key);return v==null?fallback:JSON.parse(v);}
+    catch(e){console.warn('store.get failed for',key,e);return fallback;}
+  },
+  set(key,val){
+    try{localStorage.setItem(key,JSON.stringify(val));return true;}
+    catch(e){
+      console.warn('store.set failed for',key,e);
+      if(e&&(e.name==='QuotaExceededError'||e.code===22))toast('Storage is full — changes may not be kept');
+      return false;
+    }
+  },
+  remove(key){try{localStorage.removeItem(key);}catch(e){}},
+};
+const K={saved:'cww:saved',list:'cww:list',prefs:'cww:prefs',recent:'cww:recent',notes:'cww:notes',cooking:'cww:cooking',dark:'cww:dark',ratios:'cww:ratios',migrated:'cww:migrated'};
+
 // ── DUPLICATE-ID MIGRATION (v2 data clean-up removed duplicate recipes)
 const DUPLICATE_ID_MAP={251:192,253:194,237:198,236:199,221:257,222:269,223:271,224:272,225:268,226:267,227:270};
-(function migratePinnedIds(){
+const mapId=id=>DUPLICATE_ID_MAP[id]||id;
+
+// ── ONE-TIME MIGRATION from the un-namespaced keys used before v2.
+// Nobody loses their saved recipes, shopping list or theme on update.
+(function migrateLegacyKeys(){
+  if(store.get(K.migrated,false))return;
   try{
-    const raw=JSON.parse(localStorage.getItem('pinned')||'[]');
-    const migrated=[...new Set(raw.map(id=>DUPLICATE_ID_MAP[id]||id).filter(id=>id!==266))];
-    if(JSON.stringify(migrated)!==JSON.stringify(raw))localStorage.setItem('pinned',JSON.stringify(migrated));
-  }catch(e){}
+    // saved recipes: was an array of ids; becomes [{id,ts}] so we can sort by recency
+    const legacyPinned=store.get('pinned',null);
+    if(legacyPinned&&!localStorage.getItem(K.saved)){
+      const seen=new Set();
+      const migrated=legacyPinned.map(mapId).filter(id=>id!==266&&!seen.has(id)&&seen.add(id))
+        .map((id,i)=>({id,ts:i}));
+      store.set(K.saved,migrated);
+    }
+    const legacyList=store.get('globalShopList',null);
+    if(legacyList&&!localStorage.getItem(K.list))store.set(K.list,legacyList);
+    if(localStorage.getItem('darkMode')!=null&&!localStorage.getItem(K.dark))store.set(K.dark,localStorage.getItem('darkMode')==='1');
+    const legacyRatios=store.get('savedRatios',null);
+    if(legacyRatios&&!localStorage.getItem(K.ratios))store.set(K.ratios,legacyRatios);
+    const legacyCk=store.get('cookingState',null);
+    if(legacyCk&&!localStorage.getItem(K.cooking)){legacyCk.id=mapId(legacyCk.id);store.set(K.cooking,legacyCk);}
+    ['pinned','globalShopList','darkMode','savedRatios','cookingState'].forEach(k=>store.remove(k));
+  }catch(e){console.warn('legacy migration failed',e);}
+  store.set(K.migrated,true);
+})();
+// saved entries may predate the duplicate clean-up
+(function migrateSavedIds(){
+  const cur=store.get(K.saved,[]);
+  const seen=new Set();
+  const fixed=cur.map(e=>({...e,id:mapId(e.id)})).filter(e=>e.id!==266&&!seen.has(e.id)&&seen.add(e.id));
+  if(JSON.stringify(fixed)!==JSON.stringify(cur))store.set(K.saved,fixed);
 })();
 
 // ── ENERGY DISPLAY (kJ leads for the AU audience)
@@ -176,11 +222,17 @@ function scaleAmount(amount,unit,scale){
 // ── STATE
 function haptic(ms=8){if(navigator.vibrate)navigator.vibrate(ms)}
 let currentTab='home',currentRecipe=null,prevTab='home',isDark=false;
-let pinned=JSON.parse(localStorage.getItem('pinned')||'[]');
+let saved=store.get(K.saved,[]); // [{id,ts}] most-recent has highest ts
+let prefs=store.get(K.prefs,{});
+let notes=store.get(K.notes,{});
+let recentIds=store.get(K.recent,[]);
 let activeChip='All',activeSearch='',shopChecked={},stepsDone={},portionScale=1;
 let wakeLock=null,shopSort='aisle';
-let globalShopList=JSON.parse(localStorage.getItem('globalShopList')||'[]');
+let globalShopList=store.get(K.list,[]);
 let activeCategory=null; // null = category grid, string = open category view
+const APP_VERSION='2.0';
+function isSaved(id){return saved.some(e=>e.id===id);}
+function saveSaved(){store.set(K.saved,saved);}
 // migrate aisle names stored by the previous version (emoji prefixes)
 (function migrateAisleNames(){
   let changed=false;
@@ -193,29 +245,27 @@ let activeCategory=null; // null = category grid, string = open category view
 
 // ── COOKING STATE
 let cookingRecipe=null,cookingStep=0,ckTimerSecs=0,ckTimerInterval=null,ckTimerRunning=false;
-const CK_KEY='cookingState';
 function saveCookingState(){
   if(!cookingRecipe)return;
-  localStorage.setItem(CK_KEY,JSON.stringify({id:cookingRecipe.id,step:cookingStep,ts:Date.now()}));
+  store.set(K.cooking,{id:cookingRecipe.id,step:cookingStep,ts:Date.now()});
 }
 function getCookingState(){
-  let s=null;
-  try{s=JSON.parse(localStorage.getItem(CK_KEY)||'null');}catch(e){}
+  const s=store.get(K.cooking,null);
   if(!s)return null;
-  if(Date.now()-s.ts>24*3600*1000){localStorage.removeItem(CK_KEY);return null;}
+  if(Date.now()-s.ts>24*3600*1000){store.remove(K.cooking);return null;}
   return s;
 }
-function clearCookingState(){localStorage.removeItem(CK_KEY);cookingRecipe=null;cookingStep=0;}
+function clearCookingState(){store.remove(K.cooking);cookingRecipe=null;cookingStep=0;}
 
 // ── DARK MODE
 function toggleMode(){
   haptic(8);isDark=!isDark;
   document.documentElement.classList.toggle('dark',isDark);
   document.getElementById('modeIcon').textContent=isDark?'light_mode':'dark_mode';
-  localStorage.setItem('darkMode',isDark?'1':'0');
+  store.set(K.dark,isDark);
 }
 (function(){
-  if(localStorage.getItem('darkMode')==='1'){isDark=true;document.documentElement.classList.add('dark');document.getElementById('modeIcon').textContent='light_mode';}
+  if(store.get(K.dark,false)){isDark=true;document.documentElement.classList.add('dark');document.getElementById('modeIcon').textContent='light_mode';}
 })();
 
 // ── RECIPE VALIDATION (runtime guard, dev aid)
@@ -300,7 +350,7 @@ function renderHomeMode(){
   if(banner)banner.style.display='none';
   if(searching){guarded(renderChips,'chipsRow');guarded(renderFeed,'homeFeed');}
   else if(activeCategory){guarded(renderCategoryView,'homeCategory');}
-  else{guarded(renderContinueBanner,'view-home');guarded(renderHomeGrid,'homeRoot');}
+  else{guarded(renderContinueBanner,'view-home');guarded(renderJumpBack,'homeRoot');guarded(renderHomeGrid,'homeRoot');}
 }
 function renderHome(){renderHomeMode();}
 
@@ -381,7 +431,7 @@ function metaRow(r){
   </div>`;
 }
 function recipeCard(r,showSave=true){
-  const ip=pinned.includes(r.id);
+  const ip=isSaved(r.id);
   return`<div class="rcrd" style="${catStyle(r.category)}">
     <div class="rcrd-inner" onclick="openRecipe(${r.id})">
       <div class="rcrd-name">${esc(r.name)}</div>
@@ -391,33 +441,80 @@ function recipeCard(r,showSave=true){
   </div>`;
 }
 
-// ── SAVED VIEW
+// ── SAVED VIEW (most recently saved first, personalised header)
+function possessive(name){return/s$/i.test(name)?name+"'":name+"'s";}
 function renderSaved(){
+  const hdr=document.getElementById('savedHdrTitle');
+  if(hdr)hdr.textContent=prefs.name?`${possessive(prefs.name)} cookbook`:'Saved Recipes';
   const list=document.getElementById('savedList');const empty=document.getElementById('savedEmpty');
-  const pr=[...ALL_RECIPES].filter(r=>pinned.includes(r.id)).sort((a,b)=>b.id-a.id);
+  const byRecency=[...saved].sort((a,b)=>(b.ts||0)-(a.ts||0));
+  const pr=byRecency.map(e=>ALL_RECIPES.find(r=>r.id===e.id)).filter(Boolean);
+  const settings=document.getElementById('savedSettings');
+  if(settings)settings.style.display='';
   if(!pr.length){list.innerHTML='';empty.style.display='flex';return;}
   empty.style.display='none';list.innerHTML=pr.map(r=>recipeCard(r)).join('');
 }
 
-// ── PIN / SAVE
+// ── PIN / SAVE (with count badge + press feedback)
+function updateSavedBadge(){
+  const b=document.getElementById('savedBadge');
+  if(b){b.textContent=saved.length||'';b.classList.toggle('show',saved.length>0);}
+}
 function togglePin(id){
   haptic(12);
-  const was=pinned.includes(id);
-  if(was)pinned=pinned.filter(p=>p!==id);else pinned.push(id);
-  localStorage.setItem('pinned',JSON.stringify(pinned));
-  const is=pinned.includes(id);
+  const was=isSaved(id);
+  if(was)saved=saved.filter(e=>e.id!==id);else saved.push({id,ts:Date.now()});
+  saveSaved();updateSavedBadge();
+  const is=isSaved(id);
   ['rsb-','savebtn-'].forEach(prefix=>{
     const btn=document.getElementById(prefix+id);
     if(btn){btn.classList.toggle('saved',is);const lbl=btn.querySelector('.slbl');if(lbl)lbl.textContent=is?'Saved':'Save';btn.classList.add('pop');setTimeout(()=>btn.classList.remove('pop'),300);}
   });
   if(currentTab==='saved')renderSaved();
+  if(currentTab==='detail')renderNoteSection();
   if(is){const r=ALL_RECIPES.find(x=>x.id===id);if(r)gtag('event','save_recipe',{recipe_name:r.name,recipe_category:r.category});}
   toast(is?'Saved to your collection':'Removed from saved');
 }
 function togglePinDetail(){if(!currentRecipe)return;haptic(12);togglePin(currentRecipe.id);updateDetPin();}
 function updateDetPin(){
-  const ip=pinned.includes(currentRecipe.id);
+  const ip=isSaved(currentRecipe.id);
   const btn=document.getElementById('detPinBtn');if(btn)btn.classList.toggle('saved',ip);
+}
+
+// ── PRIVATE NOTES on saved recipes
+let _noteTimer=null;
+function renderNoteSection(){
+  const sec=document.getElementById('noteSec');if(!sec||!currentRecipe)return;
+  const show=isSaved(currentRecipe.id);
+  sec.style.display=show?'':'none';
+  if(show)document.getElementById('noteBox').value=notes[currentRecipe.id]||'';
+}
+function onNoteInput(){
+  if(!currentRecipe)return;
+  clearTimeout(_noteTimer);
+  const id=currentRecipe.id;
+  _noteTimer=setTimeout(()=>{
+    const v=document.getElementById('noteBox').value.trim();
+    if(v)notes[id]=v;else delete notes[id];
+    store.set(K.notes,notes);
+  },500);
+}
+
+// ── RECENTLY VIEWED ("Jump back in")
+function trackRecent(id){
+  recentIds=[id,...recentIds.filter(x=>x!==id)].slice(0,5);
+  store.set(K.recent,recentIds);
+}
+function renderJumpBack(){
+  const row=document.getElementById('jumpRow');const lbl=document.getElementById('jumpLbl');
+  if(!row)return;
+  const recs=recentIds.map(id=>ALL_RECIPES.find(r=>r.id===id)).filter(Boolean);
+  row.style.display=recs.length?'':'none';
+  lbl.style.display=recs.length?'':'none';
+  row.innerHTML=recs.map(r=>`<div class="jump-card" style="${catStyle(r.category)}" onclick="openRecipe(${r.id})">
+    <div class="jump-card-name">${esc(r.name)}</div>
+    <div class="jump-card-meta"><span class="ms">schedule</span>${esc(r.time)}</div>
+  </div>`).join('');
 }
 
 // ── RECIPE DETAIL
@@ -426,6 +523,7 @@ function openRecipe(id){
   const r=ALL_RECIPES.find(x=>x.id===id);
   if(!r)return;
   currentRecipe=r;prevTab=currentTab==='detail'?prevTab:currentTab;
+  trackRecent(id);
   gtag('event','view_recipe',{recipe_name:r.name,recipe_category:r.category,recipe_difficulty:r.difficulty});
   if(!shopChecked[id])shopChecked[id]=new Set();
   if(!stepsDone[id])stepsDone[id]=new Set();
@@ -451,7 +549,7 @@ function renderDetailContent(){
     <div class="det-hero-top">
       <button class="det-btn" onclick="closeDetail()" aria-label="Back"><span class="ms">arrow_back</span></button>
       <div class="det-actions">
-        <button class="det-btn${pinned.includes(r.id)?' saved':''}" id="detPinBtn" onclick="togglePinDetail()" aria-label="Save"><span class="ms">bookmark</span></button>
+        <button class="det-btn${isSaved(r.id)?' saved':''}" id="detPinBtn" onclick="togglePinDetail()" aria-label="Save"><span class="ms">bookmark</span></button>
         <button class="det-btn" onclick="shareRecipe()" aria-label="Share"><span class="ms">ios_share</span></button>
       </div>
     </div>
@@ -463,7 +561,7 @@ function renderDetailContent(){
       <span class="meta-bit"><span class="ms">bolt</span>${fmtEnergy(r.caloriesPerServe)} / serve</span>
     </div>`;
   document.getElementById('detBody').style.cssText=catStyle(r.category);
-  renderIngredients();renderSteps();renderShopList();renderWorksWellWith();
+  renderIngredients();renderSteps();renderShopList();renderWorksWellWith();renderNoteSection();
 }
 
 // merge the structured prep field with any prep embedded after a comma in the name
@@ -817,7 +915,7 @@ function switchTab(tab){
 }
 
 // ── SHOPPING TAB
-function saveGlobalShopList(){localStorage.setItem('globalShopList',JSON.stringify(globalShopList));}
+function saveGlobalShopList(){store.set(K.list,globalShopList);}
 function updateShopBadge(){
   const n=globalShopList.filter(i=>!i.checked).length;
   const b=document.getElementById('shopBadge');if(b){b.textContent=n||'';b.classList.toggle('show',n>0);}
@@ -868,7 +966,7 @@ function shareRecipe(){
 }
 
 // ── RATIOS
-let savedRatios=JSON.parse(localStorage.getItem('savedRatios')||'[]');
+let savedRatios=store.get(K.ratios,[]);
 let ratioViewMode={},ratioScale={},activeCatFilter='All';
 const RATIO_CATS=['All',...[...new Set((typeof RATIOS!=='undefined'?RATIOS:[]).map(r=>r.category))]];
 const SCALE_STEPS=[0.5,1,1.5,2,3,4];
@@ -950,7 +1048,7 @@ function toggleRatioSave(id){
   haptic(12);
   const i=savedRatios.indexOf(id);
   if(i>=0)savedRatios.splice(i,1);else savedRatios.push(id);
-  localStorage.setItem('savedRatios',JSON.stringify(savedRatios));
+  store.set(K.ratios,savedRatios);
   reRenderRatioCard(id);
   toast(savedRatios.includes(id)?'Ratio saved':'Removed from saved');
 }
@@ -1047,9 +1145,107 @@ if('serviceWorker'in navigator){
   window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 }
 
+// ── PROFILE (one input, one key, skippable)
+function maybeAskName(){
+  if(prefs.name||prefs.askedName)return;
+  document.getElementById('nameSheet').classList.remove('hidden');
+}
+function submitName(){
+  const v=document.getElementById('nameInput').value.trim();
+  prefs.askedName=true;
+  if(v)prefs.name=v.slice(0,30);
+  store.set(K.prefs,prefs);
+  document.getElementById('nameSheet').classList.add('hidden');
+  if(v)toast(`G'day ${prefs.name}!`);
+}
+function skipName(){
+  prefs.askedName=true;store.set(K.prefs,prefs);
+  document.getElementById('nameSheet').classList.add('hidden');
+}
+
+// ── BACKUP & RESTORE (clipboard JSON, entirely local)
+function exportBackup(){
+  haptic(8);
+  const payload={app:'cooking-with-will',version:APP_VERSION,exported:new Date().toISOString(),
+    saved,notes,prefs,recent:recentIds,list:globalShopList,ratios:savedRatios};
+  const json=JSON.stringify(payload);
+  const done=()=>toast('Backup copied — paste it somewhere safe');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(json).then(done).catch(()=>showBackupText(json));
+  }else showBackupText(json);
+}
+function showBackupText(json){
+  const sheet=document.getElementById('restoreSheet');
+  sheet.classList.remove('hidden');
+  document.getElementById('restoreTitle').textContent='Your backup';
+  document.getElementById('restoreSub').textContent='Copy this text and keep it somewhere safe.';
+  document.getElementById('restoreBox').value=json;
+  document.getElementById('restoreConfirm').style.display='none';
+}
+function openRestore(){
+  haptic(8);
+  const sheet=document.getElementById('restoreSheet');
+  sheet.classList.remove('hidden');
+  document.getElementById('restoreTitle').textContent='Restore a backup';
+  document.getElementById('restoreSub').textContent='Paste the backup text you copied earlier, then tap Restore.';
+  document.getElementById('restoreBox').value='';
+  document.getElementById('restoreConfirm').style.display='';
+}
+function closeRestore(){document.getElementById('restoreSheet').classList.add('hidden');}
+function confirmRestore(){
+  let data=null;
+  try{data=JSON.parse(document.getElementById('restoreBox').value.trim());}catch(e){}
+  if(!data||data.app!=='cooking-with-will'){toast('That does not look like a backup');return;}
+  if(Array.isArray(data.saved))saved=data.saved.filter(e=>e&&typeof e.id==='number');
+  if(data.notes&&typeof data.notes==='object')notes=data.notes;
+  if(data.prefs&&typeof data.prefs==='object')prefs=data.prefs;
+  if(Array.isArray(data.recent))recentIds=data.recent.filter(x=>typeof x==='number').slice(0,5);
+  if(Array.isArray(data.list))globalShopList=data.list;
+  if(Array.isArray(data.ratios))savedRatios=data.ratios;
+  saveSaved();store.set(K.notes,notes);store.set(K.prefs,prefs);store.set(K.recent,recentIds);
+  saveGlobalShopList();store.set(K.ratios,savedRatios);
+  updateSavedBadge();updateShopBadge();closeRestore();
+  if(currentTab==='saved')renderSaved();
+  renderHomeMode();
+  toast('Backup restored');
+}
+
+// ── REQUEST A RECIPE (mailto: — no backend, no email service)
+const AUTHOR_EMAIL='iamgoodwill@icloud.com';
+function openRequestSheet(prefillDish){
+  haptic(8);
+  document.getElementById('requestSheet').classList.remove('hidden');
+  document.getElementById('reqDish').value=prefillDish||'';
+  document.getElementById('reqName').value=prefs.name||'';
+  document.getElementById('reqFallback').style.display='none';
+}
+function closeRequestSheet(){document.getElementById('requestSheet').classList.add('hidden');}
+function sendRequest(){
+  const dish=document.getElementById('reqDish').value.trim();
+  if(!dish){toast('What dish should Will cook?');document.getElementById('reqDish').focus();return;}
+  const note=document.getElementById('reqNote').value.trim();
+  const who=document.getElementById('reqName').value.trim();
+  const subject=`Recipe request: ${dish}`;
+  const body=[note,who?`— ${who}`:'',`(sent from Cooking With Will v${APP_VERSION})`].filter(Boolean).join('\n\n');
+  const href=`mailto:${AUTHOR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  gtag('event','request_recipe',{dish});
+  window.location.href=href;
+  // if no mail handler picks it up, offer the address to copy
+  setTimeout(()=>{
+    if(document.visibilityState==='visible'){
+      document.getElementById('reqFallback').style.display='';
+    }else closeRequestSheet();
+  },1200);
+}
+function copyAuthorEmail(){
+  navigator.clipboard.writeText(AUTHOR_EMAIL).then(()=>toast('Email address copied'));
+}
+
 // ── INIT
 validateAllRecipes();
 updateShopBadge();
+updateSavedBadge();
 renderHome();
+maybeAskName();
 // Deep link: auto-open recipe from URL hash e.g. #recipe-42
 (function(){const h=location.hash;if(!h.startsWith('#recipe-'))return;const raw=parseInt(h.slice(8));const id=DUPLICATE_ID_MAP[raw]||raw;if(!isNaN(id)&&ALL_RECIPES.find(x=>x.id===id))openRecipe(id);})();

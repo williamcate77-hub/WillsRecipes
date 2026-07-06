@@ -110,8 +110,15 @@
         </div>
         <div class="continue-banner-arrow"><span class="ms">arrow_forward</span></div>
       </div>
+      <div class="home-sec-lbl" id="jumpLbl" style="display:none"><h3>Jump back in</h3></div>
+      <div class="jump-row" id="jumpRow" style="display:none"></div>
       <div class="home-sec-lbl"><h3>Browse the kitchen</h3><span class="cnt" id="catGridCount"></span></div>
       <div class="cat-grid" id="catGrid"></div>
+      <div class="request-card" onclick="openRequestSheet()" role="button" tabindex="0">
+        <span class="ms">outgoing_mail</span>
+        <div class="request-card-title">Request a recipe</div>
+        <div class="request-card-sub">Missing a family favourite? Ask Will to add it.</div>
+      </div>
     </div>
 
     <!-- CATEGORY VIEW -->
@@ -130,7 +137,8 @@
       <div class="empty" id="homeEmpty" style="display:none">
         <div class="empty-icon"><span class="ms">search_off</span></div>
         <h3 class="empty-title">No recipes found</h3>
-        <p class="empty-body">Try a different search or category</p>
+        <p class="empty-body">Cannot find it? Ask Will.</p>
+        <button class="empty-cta" onclick="openRequestSheet(document.getElementById('searchInput').value.trim())">Request this recipe</button>
       </div>
     </div>
   </div>
@@ -147,6 +155,16 @@
       <h3 class="empty-title">Nothing saved yet</h3>
       <p class="empty-body">You haven't saved any recipes yet. Find something that speaks to you.</p>
       <button class="empty-cta" onclick="switchTab('home')">Browse recipes</button>
+    </div>
+    <div class="settings-card" id="savedSettings">
+      <button class="settings-row" onclick="exportBackup()">
+        <span class="ms">content_copy</span>
+        <span style="flex:1">Back up my saves<div class="sub">Copies your saves, notes and list to the clipboard</div></span>
+      </button>
+      <button class="settings-row" onclick="openRestore()">
+        <span class="ms">settings_backup_restore</span>
+        <span style="flex:1">Restore from backup<div class="sub">Paste a backup to bring everything back</div></span>
+      </button>
     </div>
   </div>
 
@@ -206,6 +224,10 @@
         <div class="shop-inner" id="shopList"></div>
         <button class="btn-primary" onclick="addToShoppingListFiltered()" style="margin-top:2px"><span class="ms">add_shopping_cart</span>Add these to your list</button>
       </div>
+      <div id="noteSec" style="display:none">
+        <h3 class="det-sec">My notes</h3>
+        <textarea class="note-box" id="noteBox" placeholder="Private notes — only on this phone. e.g. Oliver liked this, less chilli next time." oninput="onNoteInput()"></textarea>
+      </div>
       <div id="worksWellWith">
         <h3 class="det-sec">Works well with</h3>
         <div class="www-row" id="wwwRow"></div>
@@ -232,6 +254,7 @@
   </button>
   <button class="tab" id="tab-saved" onclick="switchTab('saved')">
     <div class="tab-pill"><span class="ms">bookmark</span><span>Saved</span></div>
+    <span class="tab-badge" id="savedBadge"></span>
   </button>
   <button class="tab" id="tab-ratios" onclick="switchTab('ratios')">
     <div class="tab-pill"><span class="ms">calculate</span><span>Ratios</span></div>
@@ -241,6 +264,52 @@
     <span class="tab-badge" id="shopBadge"></span>
   </button>
 </nav>
+
+<!-- ── SHEETS ── -->
+<div class="sheet hidden" id="nameSheet">
+  <div class="sheet-overlay" onclick="skipName()"></div>
+  <div class="sheet-panel">
+    <div class="sheet-title">Welcome to the kitchen</div>
+    <div class="sheet-sub">What's your first name? It personalises your cookbook — nothing leaves this phone.</div>
+    <input class="sheet-input" id="nameInput" type="text" maxlength="30" placeholder="First name" autocomplete="given-name">
+    <div class="sheet-actions">
+      <button class="btn-primary" onclick="submitName()">Done</button>
+      <button class="sheet-skip" onclick="skipName()">Skip</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet hidden" id="requestSheet">
+  <div class="sheet-overlay" onclick="closeRequestSheet()"></div>
+  <div class="sheet-panel">
+    <div class="sheet-title">Request a recipe</div>
+    <div class="sheet-sub">This opens your mail app with everything filled in — just hit send.</div>
+    <input class="sheet-input" id="reqDish" type="text" maxlength="80" placeholder="Dish name (required)">
+    <textarea class="sheet-input" id="reqNote" maxlength="400" placeholder="Anything Will should know? (optional)"></textarea>
+    <input class="sheet-input" id="reqName" type="text" maxlength="30" placeholder="Your name">
+    <div class="sheet-actions">
+      <button class="btn-primary" onclick="sendRequest()"><span class="ms">outgoing_mail</span>Open mail app</button>
+      <button class="sheet-skip" onclick="closeRequestSheet()">Cancel</button>
+    </div>
+    <div id="reqFallback" style="display:none;margin-top:14px">
+      <div class="sheet-sub" style="margin-bottom:10px">No mail app? Copy the address and send it your own way:</div>
+      <button class="btn-secondary" style="width:100%" onclick="copyAuthorEmail()">Copy iamgoodwill@icloud.com</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet hidden" id="restoreSheet">
+  <div class="sheet-overlay" onclick="closeRestore()"></div>
+  <div class="sheet-panel">
+    <div class="sheet-title" id="restoreTitle">Restore a backup</div>
+    <div class="sheet-sub" id="restoreSub"></div>
+    <textarea class="sheet-input" id="restoreBox" style="min-height:120px;font-size:12px"></textarea>
+    <div class="sheet-actions">
+      <button class="btn-primary" id="restoreConfirm" onclick="confirmRestore()">Restore</button>
+      <button class="sheet-skip" onclick="closeRestore()">Close</button>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
