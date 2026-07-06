@@ -208,6 +208,15 @@ const SCALING_RULES={
   'piece':{type:'stepped',steps:[1,2,3,4,6]},'pieces':{type:'stepped',steps:[1,2,3,4,6]},
   'small':{type:'stepped',steps:[0.5,1,2,3,4,6]},'medium':{type:'stepped',steps:[0.5,1,2,3,4,6]},
   'large':{type:'stepped',steps:[0.5,1,2,3,4,6]},
+  'lemon':{type:'stepped',steps:[0.5,1,2,3,4]},'lemons':{type:'stepped',steps:[0.5,1,2,3,4]},
+  'lime':{type:'stepped',steps:[0.5,1,2,3,4]},'orange':{type:'stepped',steps:[0.5,1,2,3,4]},
+  'pomegranate':{type:'stepped',steps:[0.5,1,2,3]},'punnet':{type:'stepped',steps:[0.5,1,2,3]},
+  'stalk':{type:'stepped',steps:[1,2,3,4,6]},'stalks':{type:'stepped',steps:[1,2,3,4,6]},
+  'tin':{type:'stepped',steps:[1,2,3,4]},'tins':{type:'stepped',steps:[1,2,3,4]},
+  'loaf':{type:'stepped',steps:[0.5,1,2]},'scoop':{type:'stepped',steps:[1,2,3,4]},
+  'head':{type:'stepped',steps:[0.5,1,2,3]},'small head':{type:'stepped',steps:[0.5,1,2,3]},
+  'whole head':{type:'stepped',steps:[0.5,1,2,3]},'whole heads':{type:'stepped',steps:[0.5,1,2,3]},
+  'splash':{type:'fixed'},'thumb':{type:'fixed'},
 };
 function scaleAmount(amount,unit,scale){
   const rule=SCALING_RULES[(unit||'').toLowerCase()]||{type:'linear'};
@@ -1140,9 +1149,27 @@ function toast(msg){
   clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);
 }
 
-// ── SERVICE WORKER
+// ── SERVICE WORKER with self-applying updates.
+// sw.js uses skipWaiting + clients.claim, so a deployed version bump takes
+// over immediately; we then reload once so every phone runs the latest
+// version without anyone having to clear caches or reinstall.
 if('serviceWorker'in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').then(reg=>{
+      // re-check for a new deploy whenever the app returns to the foreground
+      document.addEventListener('visibilitychange',()=>{
+        if(document.visibilityState==='visible')reg.update().catch(()=>{});
+      });
+    }).catch(()=>{});
+    let hadController=!!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{
+      if(!hadController){hadController=true;return;} // first install: page is already fresh
+      // don't yank the screen away mid-cook — apply on next launch instead
+      const cooking=!document.getElementById('cookingView').classList.contains('hidden');
+      if(cooking){toast('Update ready — it will apply next time you open the app');return;}
+      location.reload();
+    });
+  });
 }
 
 // ── PROFILE (one input, one key, skippable)
