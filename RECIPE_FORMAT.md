@@ -4,11 +4,8 @@ This document defines the format and standards for recipe files in this project.
 
 ## File Structure
 
-Recipe data is split across multiple files:
-- `recipes.js` - RECIPES (recipes 1-~85)
-- `recipes2.js` - RECIPES2 (recipes ~86-~170)
-- `recipes3.js` - RECIPES3 (recipes ~171-~249)
-- `recipes4.js` - RECIPES4 (recipes ~250-~275, currently disabled)
+All recipe data lives in a single file, `recipes.js`, which defines
+`CATEGORIES` and one `RECIPES` array (the single source of truth).
 
 ## Required Format
 
@@ -33,8 +30,8 @@ Each recipe must have this structure:
   category: 'Category Name',
   difficulty: 'easy' | 'medium' | 'hard',
   serves: 4,
-  time: '30 min',
-  calories: 250,
+  time: '30 min',              // "N min" / "N hr" / "N hr N min", optional "+ note"
+  caloriesPerServe: 250,       // kcal per serve; the UI renders kJ first
   mainIngredient: 'Primary Ingredient',
   ingredients: [
     { name: 'Ingredient 1', amount: 100, unit: 'g' },
@@ -80,8 +77,6 @@ Sides
 Bread & Bakes
 Sauces & Condiments
 Desserts
-Cocktails
-Poultry
 ```
 
 ## Recipe ID Rules
@@ -95,8 +90,8 @@ Poultry
 Before committing recipe changes:
 
 1. **Syntax Check**: `node -c recipes.js`
-2. **Load Test**: `node test-recipes.js`
-3. **ID Check**: Ensure no duplicates across all files
+2. **Load Test**: `npm run validate`
+3. **ID Check**: `npm run validate` asserts unique ids and flags likely duplicates
 4. **Format Check**: Verify proper spacing and indentation
 
 The pre-commit hook will automatically validate syntax before accepting commits.
@@ -104,7 +99,7 @@ The pre-commit hook will automatically validate syntax before accepting commits.
 ## Example Recipe
 
 ```javascript
-{id:1,name:'Avocado Tzatziki',category:'Dips & Starters',difficulty:'easy',serves:3,time:'15 min',calories:180,mainIngredient:'Avocado',
+{id:1,name:'Avocado Tzatziki',category:'Dips & Starters',difficulty:'easy',serves:3,time:'15 min',caloriesPerServe:180,mainIngredient:'Avocado',
 ingredients:[
   {name:'Avocados',amount:2,unit:'whole'},
   {name:'Greek yoghurt',amount:260,unit:'g'},
@@ -129,12 +124,12 @@ steps:[
 When merging recipe changes:
 1. **Resolve conflicts carefully** - don't accidentally create duplicates
 2. **Verify syntax** after resolving: `node -c recipes.js`
-3. **Run tests**: `node test-recipes.js`
-4. **Check IDs** for uniqueness across all files
+3. **Run tests**: `npm run validate`
+4. **Check IDs** for uniqueness
 
 ## Adding New Recipes
 
-1. Choose the appropriate file (recipes.js, recipes2.js, etc.)
+1. Add the recipe to `recipes.js`
 2. Use the next available ID
 3. Ensure proper formatting with spacing
 4. Add to the appropriate category

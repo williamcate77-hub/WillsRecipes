@@ -1,6 +1,6 @@
 # Prevention Measures - Recipe Data Corruption
 
-This document summarizes the measures put in place to prevent recipe file corruption (like the minified recipes4.js incident).
+This document summarizes the measures put in place to prevent recipe file corruption (like the minified recipes4.js incident). Since the v2 clean-up, all recipe data lives in a single generated `recipes.js` validated by `npm run validate`.
 
 ## What Happened
 
@@ -34,12 +34,12 @@ $ git commit -m "Add recipe"
 ```
 
 ### Layer 2: Test Suite 🧪
-**File**: `test-recipes.js`
+**File**: `scripts/validate.js`
 
 Comprehensive validation that can be run manually or in CI:
 
 ```bash
-node test-recipes.js
+npm run validate
 ```
 
 Tests:
@@ -102,7 +102,7 @@ GitHub Actions automatically validates on every push and pull request:
 
 2. **Before each commit**:
    ```bash
-   node test-recipes.js
+   npm run validate
    ```
 
 3. **Commit** (pre-commit hook runs automatically):
@@ -152,7 +152,7 @@ If an issue slips through:
 
 If you need to change recipe format:
 1. Update `RECIPE_FORMAT.md`
-2. Update validation in `test-recipes.js`
+2. Update validation in `scripts/validate.js`
 3. Update pre-commit hook if needed
 4. Update GitHub Actions workflow
 5. Document changes in `CONTRIBUTING.md`
@@ -160,7 +160,7 @@ If you need to change recipe format:
 ### Adding New Categories
 
 1. Add to valid list in `RECIPE_FORMAT.md`
-2. Add to validation in `test-recipes.js`
+2. Add to validation in `scripts/validate.js`
 3. Update GitHub Actions workflow
 4. Create migration for existing recipes if needed
 

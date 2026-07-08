@@ -43,11 +43,11 @@ echo "  ✅ Git line-ending safety enabled"
 echo ""
 echo "🧪 Running recipe validation tests..."
 if command -v node &> /dev/null; then
-  if node test-recipes.js; then
+  if npm run validate; then
     echo "  ✅ All validation tests passed"
   else
     echo "  ❌ Some tests failed"
-    echo "  Fix the issues shown above and run: node test-recipes.js"
+    echo "  Fix the issues shown above and run: npm run validate"
   fi
 else
   echo "  ⚠️  Node.js not available, skipping tests"
@@ -64,7 +64,7 @@ echo "  - CONTRIBUTING.md - How to contribute"
 echo "  - RECIPE_FORMAT.md - Recipe structure and standards"
 echo ""
 echo "🧪 Before committing, run:"
-echo "  node test-recipes.js"
+echo "  npm run validate"
 echo ""
 echo "💡 Tips:"
 echo "  - Pre-commit hook runs automatically on 'git commit'"
