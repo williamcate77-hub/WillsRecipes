@@ -96,7 +96,21 @@
       "Bash(osascript)",
       "Bash(osascript -e 'do shell script \"git add index.html && git commit -m \\\\\"Load recipes4.js in app\\\\\" && git push\"')",
       "Bash(awk '$1 > 1')",
-      "Bash(python3 find_duplicates.py)"
+      "Bash(python3 find_duplicates.py)",
+      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes log --oneline -5 -- recipes.js)",
+      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes show 575aa44 --stat)",
+      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes show 575aa44 -- recipes.js)",
+      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes show 86eda36 -- recipes.js)",
+      "Bash(grep -n \"^{id:289,\\\\|^{id:29[7-9],\\\\|^{id:30[0-7],\\\\|^{id:296,\\\\|^];\" /Users/willcate/Documents/GitHub/WillsRecipes/recipes.js)",
+      "Bash(python3 -)",
+      "Bash(/bin/sh -c \"cd '/private/tmp/claude-501/-Users-willcate-Documents-GitHub-WillsRecipes/8b4bbf42-dc67-4987-8be3-e19ba81784c5/scratchpad/site' && /usr/bin/python3 -m http.server 3457 --bind 127.0.0.1\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:3457/index.html)",
+      "Bash(kill %1)",
+      "Bash(bash -n sync-recipes.sh)",
+      "Bash(python3 -c \"import json; json.load\\(open\\('vercel.json'\\)\\); json.load\\(open\\('.claude/launch.json'\\)\\); print\\('JSON OK'\\)\")",
+      "Bash(mkdir -p /private/tmp/wills-recipes-preview)",
+      "Bash(cp -R index.html app.js recipes.js ratios.js styles.css sw.js favicon.ico public /private/tmp/wills-recipes-preview/)",
+      "Read(//private/tmp/**)"
     ]
   }
 }

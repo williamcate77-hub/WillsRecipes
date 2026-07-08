@@ -33,6 +33,7 @@
   --cat-bread:#a97b2f;     /* butter pastry */
   --cat-sauces:#a83254;    /* berry */
   --cat-desserts:#6d3b6e;  /* aubergine */
+  --cat-new:#2d7f3e;       /* brand green — "New recipes" shelf */
   /* ink drawn on top of a category-coloured block */
   --on-cat:#fffdf9;
 }
@@ -54,10 +55,12 @@ html.dark {
   --cat-bread:#c8a05b;
   --cat-sauces:#c96684;
   --cat-desserts:#9d6b9e;
+  --cat-new:#4caf50;
   --on-cat:#171512;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+/* touch-action:manipulation kills double-tap-to-zoom (pinch zoom + scroll still work) */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:var(--fs-3);line-height:1.5;overflow:hidden;height:100dvh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 button,select,input,textarea{font-family:var(--sans);color:inherit;font-size:inherit}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:2px}

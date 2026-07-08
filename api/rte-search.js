@@ -1,11 +1,13 @@
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') return res.status(200).end();
-  const q = ((req.query && req.query.q) || '').trim();
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+  const q = ((req.query && req.query.q) || '').trim().slice(0, 100);
   if (!q) return res.status(400).json({ error: 'Missing ?q=' });
   try {
     const url = `https://www.recipetineats.com/?s=${encodeURIComponent(q)}`;
     const resp = await fetch(url, {
+      signal: AbortSignal.timeout(10000),
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml',
@@ -16,7 +18,8 @@ module.exports = async function handler(req, res) {
     const results = parseResults(html);
     res.status(200).json({ results });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error('rte-search failed:', e);
+    res.status(502).json({ error: 'Search is unavailable right now' });
   }
 };
 

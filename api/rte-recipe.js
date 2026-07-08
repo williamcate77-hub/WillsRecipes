@@ -1,20 +1,35 @@
+const ALLOWED_HOSTS = new Set(['recipetineats.com', 'www.recipetineats.com']);
+
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') return res.status(200).end();
-  const url = ((req.query && req.query.url) || '').trim();
-  if (!url || !url.includes('recipetineats.com')) return res.status(400).json({ error: 'Missing or invalid ?url=' });
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+  const raw = ((req.query && req.query.url) || '').trim().slice(0, 500);
+  // Strict allowlist: parse the URL and check the exact hostname, so
+  // lookalikes (recipetineats.com.evil.com, evil.com/?recipetineats.com) are rejected.
+  let target;
+  try { target = new URL(raw); } catch { return res.status(400).json({ error: 'Missing or invalid ?url=' }); }
+  if (target.protocol !== 'https:' || !ALLOWED_HOSTS.has(target.hostname)) {
+    return res.status(400).json({ error: 'Missing or invalid ?url=' });
+  }
   try {
-    const resp = await fetch(url, {
+    const resp = await fetch(target.href, {
+      signal: AbortSignal.timeout(10000),
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml',
       }
     });
+    // redirects are followed (the site 301s non-trailing-slash URLs) but must land on an allowed host
+    if (!ALLOWED_HOSTS.has(new URL(resp.url).hostname)) {
+      return res.status(400).json({ error: 'Missing or invalid ?url=' });
+    }
     const html = await resp.text();
-    const recipe = parseRecipe(html, url);
+    const recipe = parseRecipe(html, target.href);
     res.status(200).json({ recipe });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error('rte-recipe failed:', e);
+    res.status(502).json({ error: 'Could not fetch that recipe' });
   }
 };
 

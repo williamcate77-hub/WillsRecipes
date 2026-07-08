@@ -2,6 +2,16 @@
 // Framework-free, build-free: recipes.js + ratios.js provide the data,
 // styles.css provides the design system, this file renders everything.
 
+// Fail soft if a data file didn't load (flaky network mid-deploy): the app
+// boots with what it has instead of dying on a ReferenceError.
+if(typeof RECIPES==='undefined'||typeof CATEGORIES==='undefined'){
+  console.error('recipes.js failed to load');
+  window.RECIPES=window.RECIPES||[];window.CATEGORIES=window.CATEGORIES||[];
+  document.addEventListener('DOMContentLoaded',()=>{
+    const grid=document.getElementById('catGrid');
+    if(grid)grid.innerHTML=`<div class="error-card" style="grid-column:1/-1"><span class="ms">skillet</span><h3>Recipes didn't load</h3><p>Check your connection and reload.</p><button class="empty-cta" onclick="location.reload()">Reload the app</button></div>`;
+  });
+}
 const ALL_RECIPES=[...RECIPES];
 
 // ── SAFE HTML HELPERS (all recipe strings pass through these before innerHTML)
@@ -37,8 +47,10 @@ const store={
 };
 const K={saved:'cww:saved',list:'cww:list',prefs:'cww:prefs',recent:'cww:recent',notes:'cww:notes',cooking:'cww:cooking',dark:'cww:dark',ratios:'cww:ratios',migrated:'cww:migrated'};
 
-// ── DUPLICATE-ID MIGRATION (v2 data clean-up removed duplicate recipes)
-const DUPLICATE_ID_MAP={251:192,253:194,237:198,236:199,221:257,222:269,223:271,224:272,225:268,226:267,227:270};
+// ── DUPLICATE-ID MIGRATION (data clean-ups removed duplicate recipes)
+// 289 + 297–307 were double-imports of 204 / 286–296 (July 2026 sync)
+const DUPLICATE_ID_MAP={251:192,253:194,237:198,236:199,221:257,222:269,223:271,224:272,225:268,226:267,227:270,
+  289:204,297:287,298:286,299:288,300:204,301:290,302:291,303:292,304:293,305:294,306:295,307:296};
 const mapId=id=>DUPLICATE_ID_MAP[id]||id;
 
 // ── ONE-TIME MIGRATION from the un-namespaced keys used before v2.
@@ -94,7 +106,15 @@ const CAT_META={
   'Bread & Bakes':{v:'--cat-bread',icon:'bakery_dining'},
   'Sauces & Condiments':{v:'--cat-sauces',icon:'water_drop'},
   'Desserts':{v:'--cat-desserts',icon:'cake'},
+  'New recipes':{v:'--cat-new',icon:'new_releases'},
 };
+// Pseudo-category: every recipe, newest first (ids are assigned in import order)
+const NEW_RECIPES_CAT='New recipes';
+function recipesForCategory(cat){
+  return cat===NEW_RECIPES_CAT
+    ?[...ALL_RECIPES].sort((a,b)=>b.id-a.id)
+    :ALL_RECIPES.filter(r=>r.category===cat).sort((a,b)=>b.id-a.id);
+}
 function catVar(cat){return(CAT_META[cat]||{}).v||'--green';}
 function catIcon(cat){return(CAT_META[cat]||{}).icon||'restaurant';}
 function catStyle(cat){return`--cat:var(${catVar(cat)})`;}
@@ -217,6 +237,7 @@ const SCALING_RULES={
   'head':{type:'stepped',steps:[0.5,1,2,3]},'small head':{type:'stepped',steps:[0.5,1,2,3]},
   'whole head':{type:'stepped',steps:[0.5,1,2,3]},'whole heads':{type:'stepped',steps:[0.5,1,2,3]},
   'splash':{type:'fixed'},'thumb':{type:'fixed'},
+  'part':{type:'linear'},'parts':{type:'linear'},'slug':{type:'fixed'},'small slug':{type:'fixed'},
 };
 function scaleAmount(amount,unit,scale){
   const rule=SCALING_RULES[(unit||'').toLowerCase()]||{type:'linear'};
@@ -260,8 +281,9 @@ function saveCookingState(){
 }
 function getCookingState(){
   const s=store.get(K.cooking,null);
-  if(!s)return null;
+  if(!s||typeof s.id!=='number'||typeof s.step!=='number'){store.remove(K.cooking);return null;}
   if(Date.now()-s.ts>24*3600*1000){store.remove(K.cooking);return null;}
+  s.id=mapId(s.id); // saved mid-cook state may reference a deduped recipe
   return s;
 }
 function clearCookingState(){store.remove(K.cooking);cookingRecipe=null;cookingStep=0;}
@@ -366,7 +388,12 @@ function renderHome(){renderHomeMode();}
 // ── HOME GRID
 function renderHomeGrid(){
   const grid=document.getElementById('catGrid');
-  grid.innerHTML=CATEGORIES.map(cat=>{
+  const newCard=`<div class="cat-card" style="${catStyle(NEW_RECIPES_CAT)}" onclick="openCategory('${jsArg(NEW_RECIPES_CAT)}')" role="button" tabindex="0">
+      <span class="ms">${catIcon(NEW_RECIPES_CAT)}</span>
+      <div class="cat-card-name">${esc(NEW_RECIPES_CAT)}</div>
+      <div class="cat-card-count">Latest additions first</div>
+    </div>`;
+  grid.innerHTML=newCard+CATEGORIES.map(cat=>{
     const n=ALL_RECIPES.filter(r=>r.category===cat).length;
     return`<div class="cat-card" style="${catStyle(cat)}" onclick="openCategory('${jsArg(cat)}')" role="button" tabindex="0">
       <span class="ms">${catIcon(cat)}</span>
@@ -389,7 +416,7 @@ function openCategory(cat){
 function closeCategory(){haptic(6);activeCategory=null;renderHomeMode();}
 function renderCategoryView(){
   const cat=activeCategory;if(!cat)return;
-  const recipes=ALL_RECIPES.filter(r=>r.category===cat).sort((a,b)=>b.id-a.id);
+  const recipes=recipesForCategory(cat);
   const hero=document.getElementById('catHero');
   hero.style.cssText=catStyle(cat);
   hero.innerHTML=`
@@ -1223,7 +1250,13 @@ function confirmRestore(){
   let data=null;
   try{data=JSON.parse(document.getElementById('restoreBox').value.trim());}catch(e){}
   if(!data||data.app!=='cooking-with-will'){toast('That does not look like a backup');return;}
-  if(Array.isArray(data.saved))saved=data.saved.filter(e=>e&&typeof e.id==='number');
+  if(Array.isArray(data.saved)){
+    // old backups may reference deduped recipe ids — remap and de-dupe
+    const seen=new Set();
+    saved=data.saved.filter(e=>e&&typeof e.id==='number')
+      .map(e=>({...e,id:mapId(e.id)}))
+      .filter(e=>!seen.has(e.id)&&seen.add(e.id));
+  }
   if(data.notes&&typeof data.notes==='object')notes=data.notes;
   if(data.prefs&&typeof data.prefs==='object')prefs=data.prefs;
   if(Array.isArray(data.recent))recentIds=data.recent.filter(x=>typeof x==='number').slice(0,5);
