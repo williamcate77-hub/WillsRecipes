@@ -1003,23 +1003,55 @@ function shareRecipe(){
 
 // ── RATIOS
 let savedRatios=store.get(K.ratios,[]);
-let ratioViewMode={},ratioScale={},ratioOpen={},activeCatFilter='All';
-const RATIO_CATS=['All',...[...new Set((typeof RATIOS!=='undefined'?RATIOS:[]).map(r=>r.category))]];
+let ratioViewMode={},ratioScale={},ratioOpen={},activeRatioFolder=null;
 const SCALE_STEPS=[0.5,1,1.5,2,3,4];
+
+// Folders group the data file's granular `type` field into home-screen-style
+// tiles. Reuses the existing --cat-* colour tokens so no new CSS vars are needed.
+const RATIO_FOLDERS=[
+  {key:'brines',label:'Brines',icon:'water_drop',cat:'--cat-seafood',types:['BRINE']},
+  {key:'stocks',label:'Stocks & Bases',icon:'soup_kitchen',cat:'--cat-soups',types:['STOCK','BASE','SAUCE BASE','CONVERSION']},
+  {key:'sauces',label:'Sauces',icon:'blender',cat:'--cat-sauces',types:['SAUCE','EMULSION']},
+  {key:'dressings',label:'Dressings',icon:'colorize',cat:'--cat-salads',types:['DRESSING']},
+  {key:'dough',label:'Dough & Pastry',icon:'bakery_dining',cat:'--cat-bread',types:['DOUGH','PASTRY','BATTER']},
+  {key:'sweet',label:'Sweet & Baking',icon:'cake',cat:'--cat-desserts',types:['SWEET','CUSTARD','CAKE','BISCUIT']},
+  {key:'grains',label:'Grains',icon:'rice_bowl',cat:'--cat-pasta',types:['GRAIN']},
+  {key:'technique',label:'Techniques',icon:'outdoor_grill',cat:'--cat-meat',types:['METHOD','BREW']},
+];
 function renderRatios(){
-  document.getElementById('ratioCategoryChips').innerHTML=RATIO_CATS.map(c=>`<button class="ratio-chip${activeCatFilter===c?' active':''}" onclick="setRatioFilter('${jsArg(c)}')">${esc(c)}</button>`).join('');
-  // group by category (data file is ordered by phase, so categories repeat)
-  const list=activeCatFilter==='All'
-    ?[...RATIOS].sort((a,b)=>RATIO_CATS.indexOf(a.category)-RATIO_CATS.indexOf(b.category))
-    :RATIOS.filter(r=>r.category===activeCatFilter);
-  let html='',lastCat=null;
-  for(const r of list){
-    if(activeCatFilter==='All'&&r.category!==lastCat){lastCat=r.category;html+=`<div class="ratios-sec-lbl">${esc(r.category)}</div>`;}
-    html+=ratioCardHtml(r);
-  }
-  document.getElementById('ratiosList').innerHTML=html;
+  const inFolder=!!activeRatioFolder;
+  document.getElementById('ratiosHomeHdr').style.display=inFolder?'none':'';
+  document.getElementById('ratioFolderGrid').style.display=inFolder?'none':'grid';
+  document.getElementById('ratioFolderHero').style.display=inFolder?'':'none';
+  if(inFolder)renderRatioFolderView();else renderRatioFolderGrid();
 }
-function setRatioFilter(cat){haptic(8);activeCatFilter=cat;renderRatios();}
+function renderRatioFolderGrid(){
+  document.getElementById('ratioFolderGrid').innerHTML=RATIO_FOLDERS.map(f=>{
+    const n=RATIOS.filter(r=>f.types.includes(r.type)).length;
+    if(!n)return'';
+    return`<div class="cat-card" style="--cat:var(${f.cat})" onclick="openRatioFolder('${jsArg(f.key)}')" role="button" tabindex="0">
+      <span class="ms">${f.icon}</span>
+      <div class="cat-card-name">${esc(f.label)}</div>
+      <div class="cat-card-count">${n} ratio${n===1?'':'s'}</div>
+    </div>`;
+  }).join('');
+}
+function openRatioFolder(key){haptic(6);activeRatioFolder=key;renderRatios();document.getElementById('main').scrollTop=0;}
+function closeRatioFolder(){haptic(6);activeRatioFolder=null;renderRatios();}
+function renderRatioFolderView(){
+  const folder=RATIO_FOLDERS.find(f=>f.key===activeRatioFolder);if(!folder)return;
+  const list=RATIOS.filter(r=>folder.types.includes(r.type));
+  const hero=document.getElementById('ratioFolderHero');
+  hero.style.cssText=`--cat:var(${folder.cat})`;
+  hero.innerHTML=`
+    <div class="cat-hero-top">
+      <button class="back-pill" onclick="closeRatioFolder()"><span class="ms">arrow_back</span>Ratios</button>
+    </div>
+    <span class="ms cat-hero-icon">${folder.icon}</span>
+    <h2>${esc(folder.label)}</h2>
+    <div class="cnt">${list.length} ratio${list.length===1?'':'s'}</div>`;
+  document.getElementById('ratiosList').innerHTML=list.map(r=>ratioCardHtml(r)).join('');
+}
 function toggleRatioOpen(id){haptic(6);ratioOpen[id]=!ratioOpen[id];reRenderRatioCard(id);}
 function ratioCardHtml(r){
   const id=r.id;
