@@ -115,7 +115,9 @@
       "Bash(md5 app.js /private/tmp/wills-recipes-preview/app.js index.html /private/tmp/wills-recipes-preview/index.html)",
       "Bash(sed -i '' \"s/const VERSION = 'cww-v6';/const VERSION = 'cww-v7-test';/\" sw.js)",
       "Bash(sed -i '' 's|<title>Cooking With Will</title>|<title>Cooking With Will UPDATED-V7</title>|' index.html)",
-      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes status --short)"
+      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes status --short)",
+      "Bash(python3 -c \"import json; json.load\\(open\\('/Users/willcate/Documents/GitHub/WillsRecipes/vercel.json'\\)\\); print\\('JSON OK'\\)\")",
+      "Bash(gh auth *)"
     ]
   }
 }
