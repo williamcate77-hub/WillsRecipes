@@ -4,7 +4,7 @@
     {
       "name": "WillsRecipes",
       "runtimeExecutable": "/bin/sh",
-      "runtimeArgs": ["-c", "cd /private/tmp/wills-recipes-preview && exec /usr/bin/python3 -m http.server 3456 --bind 127.0.0.1"],
+      "runtimeArgs": ["-c", "cd /private/tmp/wills-recipes-preview && exec /usr/bin/python3 serve.py"],
       "port": 3456
     }
   ]

@@ -110,7 +110,9 @@
       "Bash(python3 -c \"import json; json.load\\(open\\('vercel.json'\\)\\); json.load\\(open\\('.claude/launch.json'\\)\\); print\\('JSON OK'\\)\")",
       "Bash(mkdir -p /private/tmp/wills-recipes-preview)",
       "Bash(cp -R index.html app.js recipes.js ratios.js styles.css sw.js favicon.ico public /private/tmp/wills-recipes-preview/)",
-      "Read(//private/tmp/**)"
+      "Read(//private/tmp/**)",
+      "Bash(cp index.html app.js styles.css /private/tmp/wills-recipes-preview/)",
+      "Bash(md5 app.js /private/tmp/wills-recipes-preview/app.js index.html /private/tmp/wills-recipes-preview/index.html)"
     ]
   }
 }

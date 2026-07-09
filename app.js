@@ -1003,15 +1003,24 @@ function shareRecipe(){
 
 // ── RATIOS
 let savedRatios=store.get(K.ratios,[]);
-let ratioViewMode={},ratioScale={},activeCatFilter='All';
+let ratioViewMode={},ratioScale={},ratioOpen={},activeCatFilter='All';
 const RATIO_CATS=['All',...[...new Set((typeof RATIOS!=='undefined'?RATIOS:[]).map(r=>r.category))]];
 const SCALE_STEPS=[0.5,1,1.5,2,3,4];
 function renderRatios(){
   document.getElementById('ratioCategoryChips').innerHTML=RATIO_CATS.map(c=>`<button class="ratio-chip${activeCatFilter===c?' active':''}" onclick="setRatioFilter('${jsArg(c)}')">${esc(c)}</button>`).join('');
-  const list=activeCatFilter==='All'?RATIOS:RATIOS.filter(r=>r.category===activeCatFilter);
-  document.getElementById('ratiosList').innerHTML=list.map(r=>ratioCardHtml(r)).join('');
+  // group by category (data file is ordered by phase, so categories repeat)
+  const list=activeCatFilter==='All'
+    ?[...RATIOS].sort((a,b)=>RATIO_CATS.indexOf(a.category)-RATIO_CATS.indexOf(b.category))
+    :RATIOS.filter(r=>r.category===activeCatFilter);
+  let html='',lastCat=null;
+  for(const r of list){
+    if(activeCatFilter==='All'&&r.category!==lastCat){lastCat=r.category;html+=`<div class="ratios-sec-lbl">${esc(r.category)}</div>`;}
+    html+=ratioCardHtml(r);
+  }
+  document.getElementById('ratiosList').innerHTML=html;
 }
 function setRatioFilter(cat){haptic(8);activeCatFilter=cat;renderRatios();}
+function toggleRatioOpen(id){haptic(6);ratioOpen[id]=!ratioOpen[id];reRenderRatioCard(id);}
 function ratioCardHtml(r){
   const id=r.id;
   const isSaved=savedRatios.includes(id);
@@ -1045,12 +1054,8 @@ function ratioCardHtml(r){
       <button class="rc-sbtn" onclick="stepRatioScale('${jsArg(id)}',1)">+</button>
     </div>`:'';
   const swapsHtml=r.swaps?`<div class="rc-swaps"><span class="ms">swap_horiz</span>${esc(r.swaps)}</div>`:'';
-  return `<div class="ratio-card" id="rcard-${esc(id)}">
-    <div class="rc-hdr">
-      <span class="rc-type">${esc(r.type)}</span>
-      <button class="rc-save${isSaved?' saved':''}" onclick="toggleRatioSave('${jsArg(id)}')"><span class="ms">${isSaved?'bookmark':'bookmark_border'}</span></button>
-    </div>
-    <h3 class="rc-name">${esc(r.name)}</h3>
+  const open=!!ratioOpen[id];
+  const bodyHtml=open?`<div class="rc-body">
     <div class="rc-formula">${formulaHtml}</div>
     <div class="rc-controls">
       <div class="rc-toggle">
@@ -1061,6 +1066,17 @@ function ratioCardHtml(r){
     </div>
     ${r.technique?`<div class="rc-technique">${esc(r.technique)}</div>`:''}
     ${swapsHtml}
+  </div>`:'';
+  return `<div class="ratio-card${open?' open':''}" id="rcard-${esc(id)}">
+    <div class="rc-collapse" onclick="toggleRatioOpen('${jsArg(id)}')" role="button" tabindex="0" aria-expanded="${open}">
+      <div class="rc-collapse-main">
+        <h3 class="rc-name">${esc(r.name)}</h3>
+        <span class="rc-type">${esc(r.type)}</span>
+      </div>
+      <button class="rc-save${isSaved?' saved':''}" onclick="event.stopPropagation();toggleRatioSave('${jsArg(id)}')" aria-label="Save ratio"><span class="ms">${isSaved?'bookmark':'bookmark_border'}</span></button>
+      <span class="ms rc-chev">expand_more</span>
+    </div>
+    ${bodyHtml}
   </div>`;
 }
 function reRenderRatioCard(id){
@@ -1197,6 +1213,28 @@ if('serviceWorker'in navigator){
       location.reload();
     });
   });
+}
+
+// ── MANUAL REFRESH (home-screen card)
+// iPhone home-screen apps never refresh on their own; this checks the server
+// for a new deploy. If one exists the controllerchange handler above reloads;
+// otherwise we reload anyway so the user always lands on the freshest build.
+let _refreshing=false;
+async function refreshApp(){
+  if(_refreshing)return;
+  _refreshing=true;
+  haptic(8);
+  const icon=document.getElementById('refreshIcon');
+  if(icon)icon.classList.add('spin');
+  toast('Checking for new recipes…');
+  try{
+    const reg=await(navigator.serviceWorker&&navigator.serviceWorker.getRegistration());
+    if(reg){
+      await reg.update();
+      if(reg.installing||reg.waiting){toast('New recipes found — updating…');return;}
+    }
+  }catch(e){}
+  setTimeout(()=>location.reload(),700);
 }
 
 // ── PROFILE (one input, one key, skippable)

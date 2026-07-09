@@ -360,14 +360,21 @@ html.dark .ck-wake-bar{background:#2c260f;border-color:#584a12;color:#e8cf7a}
 .ratios-chips::-webkit-scrollbar{display:none}
 .ratio-chip{flex-shrink:0;padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);color:var(--text2);font-size:var(--fs-1);font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
 .ratio-chip.active{background:var(--text);color:var(--card);border-color:var(--text)}
-.ratios-list{padding:16px 16px 24px;display:flex;flex-direction:column;gap:16px}
-.ratio-card{background:var(--card);border-radius:16px;padding:20px;border:1.5px solid var(--border)}
-.rc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.rc-type{font-size:var(--fs-0);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);background:var(--surface);padding:4px 10px;border-radius:20px}
-.rc-save{background:none;border:none;cursor:pointer;color:var(--text3);padding:4px;display:flex;align-items:center;line-height:1}
+.ratios-list{padding:16px 16px 24px;display:flex;flex-direction:column;gap:10px}
+.ratios-sec-lbl{font-family:var(--serif);font-size:var(--fs-3);font-weight:640;color:var(--text);margin:14px 4px 2px}
+.ratios-sec-lbl:first-child{margin-top:0}
+.ratio-card{background:var(--card);border-radius:16px;padding:14px 16px;border:1.5px solid var(--border)}
+/* collapsed header row: title + type badge, save + chevron */
+.rc-collapse{display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.rc-collapse-main{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.rc-chev{color:var(--text3);font-size:22px;flex-shrink:0;transition:transform .2s}
+.ratio-card.open .rc-chev{transform:rotate(180deg)}
+.rc-body{margin-top:18px}
+.rc-type{font-size:var(--fs-0);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);background:var(--surface);padding:3px 9px;border-radius:20px}
+.rc-save{background:none;border:none;cursor:pointer;color:var(--text3);padding:4px;display:flex;align-items:center;line-height:1;flex-shrink:0}
 .rc-save.saved{color:var(--green)}
 .rc-save .ms{font-size:22px}
-.rc-name{font-family:var(--serif);font-size:var(--fs-4);font-weight:640;color:var(--text);margin:0 0 20px}
+.rc-name{font-family:var(--serif);font-size:var(--fs-3);font-weight:640;color:var(--text);margin:0;line-height:1.25}
 .rc-formula{display:flex;align-items:center;gap:2px;overflow-x:auto;padding-bottom:8px;margin-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .rc-formula::-webkit-scrollbar{display:none}
 .rc-fi{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding:0 6px;min-width:48px}
@@ -408,6 +415,18 @@ html.dark .rc-swaps{color:var(--green-bg)}
 .settings-row:active{background:var(--surface)}
 .settings-row .ms{font-size:20px;color:var(--text2);flex-shrink:0}
 .settings-row .sub{font-size:var(--fs-0);color:var(--text3);margin-top:1px}
+
+/* ── Hit refresh (manual update check) ── */
+.refresh-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;margin:6px 20px 12px;border-radius:16px;border:1px solid var(--border);background:var(--card);padding:14px 16px;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s}
+.refresh-card:active{transform:scale(.97)}
+.refresh-card::after{content:'';position:absolute;width:110px;height:110px;border-radius:44% 56% 58% 42%/48% 42% 58% 52%;top:-46px;right:-38px;background:var(--green-dim)}
+.refresh-card>.ms{position:relative;z-index:1;font-size:26px;color:var(--green);flex-shrink:0}
+.refresh-card-body{position:relative;z-index:1;flex:1;min-width:0}
+.refresh-card-title{font-family:var(--serif);font-size:16px;font-weight:640;color:var(--text)}
+.refresh-card-sub{font-size:var(--fs-1);color:var(--text2);margin-top:1px}
+.refresh-card-chev{color:var(--text3);font-size:20px}
+@keyframes refresh-spin{to{transform:rotate(360deg)}}
+.refresh-card .ms.spin{animation:refresh-spin .9s linear infinite}
 
 /* ── Request a recipe ── */
 .request-card{position:relative;overflow:hidden;margin:6px 20px 24px;border-radius:16px;border:1px solid var(--border);background:var(--card);padding:18px;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s}
