@@ -127,7 +127,8 @@
       "Bash(grep -o \"{id:[0-9]*,\")",
       "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes log --oneline -5 -- sw.js)",
       "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes add sw.js)",
-      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes commit -m ' *)"
+      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes commit -m ' *)",
+      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes add app.js index.html styles.css sw.js)"
     ]
   }
 }
