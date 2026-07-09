@@ -112,7 +112,9 @@
       "Bash(cp -R index.html app.js recipes.js ratios.js styles.css sw.js favicon.ico public /private/tmp/wills-recipes-preview/)",
       "Read(//private/tmp/**)",
       "Bash(cp index.html app.js styles.css /private/tmp/wills-recipes-preview/)",
-      "Bash(md5 app.js /private/tmp/wills-recipes-preview/app.js index.html /private/tmp/wills-recipes-preview/index.html)"
+      "Bash(md5 app.js /private/tmp/wills-recipes-preview/app.js index.html /private/tmp/wills-recipes-preview/index.html)",
+      "Bash(sed -i '' \"s/const VERSION = 'cww-v6';/const VERSION = 'cww-v7-test';/\" sw.js)",
+      "Bash(sed -i '' 's|<title>Cooking With Will</title>|<title>Cooking With Will UPDATED-V7</title>|' index.html)"
     ]
   }
 }
