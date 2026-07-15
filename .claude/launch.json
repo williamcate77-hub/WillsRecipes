@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "ufc-form-tracker-dev",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd /Users/williamcate/Documents/GitHub/ufc-form-tracker && npm run dev"],
+      "port": 3000
+    },
+    {
       "name": "WillsRecipes",
       "runtimeExecutable": "/bin/sh",
       "runtimeArgs": ["-c", "cd /private/tmp/wills-recipes-preview && exec /usr/bin/python3 serve.py"],

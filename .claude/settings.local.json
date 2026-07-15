@@ -129,7 +129,13 @@
       "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes add sw.js)",
       "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes commit -m ' *)",
       "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes add app.js index.html styles.css sw.js)",
-      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes log --oneline -1)"
+      "Bash(git -C /Users/willcate/Documents/GitHub/WillsRecipes log --oneline -1)",
+      "Bash(ls -la /Users/williamcate/Documents/GitHub/WillsUFCBriefing/ 2>/dev/null | head -20)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias '@/*' --skip-git)",
+      "Bash(/opt/homebrew/bin/npx create-next-app@latest /Users/williamcate/Documents/GitHub/WillsUFCBriefing --typescript --tailwind --eslint --app --no-src-dir --import-alias '@/*' --skip-git)",
+      "Bash(ls -la /Users/williamcate/Documents/GitHub/ufc-form-tracker/)",
+      "Bash(npm run *)",
+      "Bash(npm install *)"
     ]
   }
 }
