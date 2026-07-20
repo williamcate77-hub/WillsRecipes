@@ -204,7 +204,13 @@ If the push fails, report the error and continue to the summary. The recipes are
 
 ## STAGE 4 - Summary
 
-Write a summary to the run log and append it to an Apple Notes note called "Recipe Pipeline - Run Log" in the default folder (create it if absent):
+Write a summary to the run log and append it to an Apple Notes note called "Recipe Pipeline - Run Log" in the default folder (create it if absent).
+
+**Apple Notes derives a note's displayed title from the first line of its body, not from any name field you set - this has already caused title drift once (a growing summary became the first line, so the title mutated, and an exact-name lookup on the next run failed and silently created a duplicate note instead of appending). To prevent that from ever recurring:**
+
+1. Look up the note. Try get_note_content("Recipe Pipeline - Run Log") first. If that exact match fails, call list_notes on the default folder and find any note whose name *starts with* "Recipe Pipeline - Run Log" (title drift may have appended text onto it) - use that note's exact current name for this run's read/update. Only create a brand new note if neither an exact nor a prefix match exists anywhere.
+2. When writing the new body (whether creating or updating), the literal first line must always be exactly `Recipe Pipeline - Run Log`, followed by a blank line, before any run content. Never let a run's summary text become the first line.
+3. Append this run's entry after all previous entries, separated by a divider line (e.g. `---`), preserving every prior entry - never replace or drop existing content.
 
 - Date and time of run
 - New files found in Drive, counted by type (images, PDFs, markdown, Google Docs)
