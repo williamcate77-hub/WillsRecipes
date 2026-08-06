@@ -5240,7 +5240,7 @@ steps:[
   'Serve with warm Lebanese flatbreads.',
 ]},
 
-{id:319,name:'Spicy Watermelon Salad',category:'Salads',difficulty:'easy',serves:3,time:'25 min',caloriesPerServe:180,mainIngredient:'Watermelon',
+{id:319,name:'Spicy Watermelon Salad with Fried Garlic and Shallots',category:'Salads',difficulty:'easy',serves:3,time:'25 min',caloriesPerServe:180,mainIngredient:'Watermelon',
 ingredients:[
   {name:'Watermelon, roughly chopped',amount:1,unit:'kg'},
   {name:'Green tomatoes, roughly chopped',amount:1,unit:'whole'},
