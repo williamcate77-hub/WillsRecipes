@@ -7229,5 +7229,21 @@ steps:[
   'Slice into portions and serve at room temperature.',
 ]},
 
+{id:385,name:'Rapanakia Salata (Radish Salad with Capers and Mint)',category:'Salads',difficulty:'easy',serves:4,time:'20 min',caloriesPerServe:165,mainIngredient:'Radish',
+ingredients:[
+  {name:'Radishes, trimmed',amount:1,unit:'bunch'},
+  {name:'Fresh mint leaves',amount:6,unit:'whole'},
+  {name:'Spanish onion, thinly sliced',amount:0.25,unit:'whole'},
+  {name:'Drained baby capers in brine',amount:1,unit:'tbsp'},
+  {name:'Extra virgin olive oil',amount:70,unit:'ml'},
+  {name:'Freshly squeezed lemon juice',amount:1.5,unit:'tbsp'},
+],
+steps:[
+  'Wash the radishes and soak in cold water to remove any dirt. Using a mandolin, thinly slice the whole radish bulbs.',
+  'Roll the mint leaves into one bundle and finely slice into ribbons.',
+  'Arrange the radish on a serving plate, overlapping the discs to create a pattern, and layer with onion, capers and mint. Season with salt and pepper.',
+  'Combine the olive oil and lemon juice, whisk and set aside to emulsify. Pour over the salad to serve.',
+]},
+
 ];
 if (typeof module !== 'undefined') module.exports = { CATEGORIES, RECIPES };

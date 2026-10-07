@@ -50,7 +50,7 @@ Skip any file whose Drive file ID appears in `processedDriveFiles` in the tracki
 ### 1.4 Extract per file type
 
 **Images**
-1. Download the file and visually inspect it. Never rely on contentSnippet alone.
+1. Look at the actual image; never rely on contentSnippet or Drive's text extraction (it silently drops characters like ¼ and ½). Drive is mirrored locally, so view the photo from disk rather than downloading it as base64: make a resized copy with `sips -Z 1600 "/Users/willcate/My Drive/Recipes For App/<file title>" --out "$TMPDIR/<file title>.jpg"` (for HEIC, add `-s format jpeg`), then open that copy with the Read tool. If the file isn't in the local folder yet, wait 30 seconds and retry once; only if it is still missing, fall back to download_file_content.
 2. Check orientation. If rotated (90, 180, or 270 degrees), mentally rotate to upright before extracting text. Rotated images are a common source of missed or garbled recipes.
 3. Extract all text: recipe name, ingredients with quantities, method. Preserve structure faithfully.
 
