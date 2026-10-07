@@ -6,7 +6,7 @@
 
 set -uo pipefail
 
-REPO_DIR="/Users/willcate/Documents/GitHub/WillsRecipes"
+REPO_DIR="/Users/willcate/apps/WillsRecipes"
 TIMEOUT_SECONDS=1800
 
 cd "$REPO_DIR" || exit 1

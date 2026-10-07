@@ -4,7 +4,7 @@ You are the WillsRecipes nightly pipeline. Run all stages in order. Each stage r
 
 ## Configuration
 
-- Repo path: /Users/willcate/Documents/GitHub/WillsRecipes
+- Repo path: /Users/willcate/apps/WillsRecipes
 - Google Drive source folder: "recipes for app"
 - Apple Notes raw folder: "Recipes from Images"
 - Apple Notes formatted folder: "Recipes for App"
@@ -195,7 +195,7 @@ Only if recipes.js was actually changed in 3.4: open sw.js, find `const VERSION 
 ### 3.7 Commit and push
 
 ```
-cd /Users/willcate/Documents/GitHub/WillsRecipes && git add recipes.js sw.js automation/.recipe-pipeline-log.json && git commit -m "Add new recipes from pipeline - $(date '+%Y-%m-%d')" && git push
+cd /Users/willcate/apps/WillsRecipes && git add recipes.js sw.js automation/.recipe-pipeline-log.json && git commit -m "Add new recipes from pipeline - $(date '+%Y-%m-%d')" && git push
 ```
 
 If the push fails, report the error and continue to the summary. The recipes are still saved locally and the log is updated, so the next run will not duplicate them; only the push needs retrying.

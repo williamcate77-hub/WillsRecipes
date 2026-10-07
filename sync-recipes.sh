@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-REPO_DIR="/Users/willcate/Documents/GitHub/WillsRecipes"
+REPO_DIR="/Users/willcate/apps/WillsRecipes"
 cd "$REPO_DIR"
 
 # Clean up any stale git locks
