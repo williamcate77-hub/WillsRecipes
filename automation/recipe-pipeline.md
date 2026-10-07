@@ -205,7 +205,9 @@ The app is a cache-first PWA: sw.js precaches recipes.js under a version string,
 
 Only if recipes.js was actually changed in 3.4: open sw.js, find `const VERSION = 'cww-vN';`, and bump N by one (e.g. cww-v10 to cww-v11).
 
-### 3.7 Commit and push
+### 3.7 Validate, then commit and push
+Before committing, run `node scripts/validate.js` from the repo root. It must exit 0. If it reports an ERROR for a recipe added this run, fix that recipe in recipes.js (for example a missing amount, a time that isn't in the "1 hr 30 min" format, or a duplicate name) and run it again. If it still fails, do not commit anything: run `git checkout -- recipes.js sw.js automation/.recipe-pipeline-log.json` so the tracking log forgets this run too and the next run retries these recipes (never revert recipes.js on its own, or they would be marked as synced and lost), then report the validation errors in the summary.
+
 
 ```
 cd /Users/willcate/apps/WillsRecipes && git add recipes.js sw.js automation/.recipe-pipeline-log.json && git commit -m "Add new recipes from pipeline - $(date '+%Y-%m-%d')" && git push

@@ -48,10 +48,14 @@ const store={
 const K={saved:'cww:saved',list:'cww:list',prefs:'cww:prefs',recent:'cww:recent',notes:'cww:notes',cooking:'cww:cooking',dark:'cww:dark',ratios:'cww:ratios',migrated:'cww:migrated'};
 
 // ── DUPLICATE-ID MIGRATION (data clean-ups removed duplicate recipes)
-// 289 + 297–307 were double-imports of 204 / 286–296 (July 2026 sync)
+// 297–307 were double-imports of 286–296 (July 2026 sync); those ids were later
+// reused for new recipes, so only remap an id that is no longer a live recipe —
+// otherwise saving e.g. #300 would silently turn into #204 on the next load.
+// 289 and 304 were duplicates of 204 and 205 (removed Oct 2026).
 const DUPLICATE_ID_MAP={251:192,253:194,237:198,236:199,221:257,222:269,223:271,224:272,225:268,226:267,227:270,
-  289:204,297:287,298:286,299:288,300:204,301:290,302:291,303:292,304:293,305:294,306:295,307:296};
-const mapId=id=>DUPLICATE_ID_MAP[id]||id;
+  289:204,297:287,298:286,299:288,300:204,301:290,302:291,303:292,304:205,305:294,306:295,307:296};
+const LIVE_IDS=new Set(ALL_RECIPES.map(r=>r.id));
+const mapId=id=>(!LIVE_IDS.has(id)&&DUPLICATE_ID_MAP[id])||id;
 
 // ── ONE-TIME MIGRATION from the un-namespaced keys used before v2.
 // Nobody loses their saved recipes, shopping list or theme on update.
@@ -240,6 +244,9 @@ const SCALING_RULES={
   'whole head':{type:'stepped',steps:[0.5,1,2,3]},'whole heads':{type:'stepped',steps:[0.5,1,2,3]},
   'splash':{type:'fixed'},'thumb':{type:'fixed'},
   'part':{type:'linear'},'parts':{type:'linear'},'slug':{type:'fixed'},'small slug':{type:'fixed'},
+  'as needed':{type:'fixed'},'drizzle':{type:'fixed'},'squeeze':{type:'fixed'},'batch':{type:'fixed'},
+  'can':{type:'stepped',steps:[1,2,3,4]},'cans':{type:'stepped',steps:[1,2,3,4]},
+  'shot':{type:'stepped',steps:[1,2,3,4]},'cm':{type:'linear'},
 };
 function scaleAmount(amount,unit,scale){
   const rule=SCALING_RULES[(unit||'').toLowerCase()]||{type:'linear'};
@@ -277,7 +284,7 @@ function saveSaved(){store.set(K.saved,saved);}
 })();
 
 // ── COOKING STATE
-let cookingRecipe=null,cookingStep=0,ckTimerSecs=0,ckTimerInterval=null,ckTimerRunning=false;
+let cookingRecipe=null,cookingStep=0,ckTimerSecs=0,ckTimerInterval=null,ckTimerRunning=false,ckTimerEnd=0;
 function saveCookingState(){
   if(!cookingRecipe)return;
   store.set(K.cooking,{id:cookingRecipe.id,step:cookingStep,ts:Date.now()});
@@ -862,7 +869,8 @@ function renderCookingStep(){
   const nextStepIdx=cookingStep+1;
   let previewText='';
   if(nextStepIdx<totalSteps){
-    previewText=nextStepIdx===0?'Next: Lay out ingredients':'Next: '+steps[nextStepIdx-1].substring(0,50)+'…';
+    const nx=steps[nextStepIdx-1];
+    previewText='Next: '+(nx.length>50?nx.substring(0,50)+'…':nx);
   } else {
     previewText='Recipe complete!';
   }
@@ -945,14 +953,17 @@ function toggleCookingTimer(){
   if(ckTimerRunning)stopCookingTimer();else startCookingTimerRun();
 }
 function startCookingTimerRun(){
+  if(ckTimerSecs<=0)return;
   ckTimerRunning=true;
+  ckTimerEnd=Date.now()+ckTimerSecs*1000;
   const btn=document.getElementById('ckTimerBtn');
   if(btn){btn.classList.add('running');document.getElementById('ckTimerBtnTxt').textContent='Stop timer';}
+  clearInterval(ckTimerInterval);
   ckTimerInterval=setInterval(()=>{
-    ckTimerSecs--;
-    document.getElementById('ckTimerDisplay').textContent=fmtSecs(Math.max(0,ckTimerSecs));
+    ckTimerSecs=Math.max(0,Math.ceil((ckTimerEnd-Date.now())/1000));
+    document.getElementById('ckTimerDisplay').textContent=fmtSecs(ckTimerSecs);
     if(ckTimerSecs<=0){stopCookingTimer();haptic(100);beep();toast('Time is up!');}
-  },1000);
+  },250);
 }
 function stopCookingTimer(){
   clearInterval(ckTimerInterval);ckTimerRunning=false;
@@ -1021,7 +1032,7 @@ function clearShoppingTab(){if(!confirm('Clear entire shopping list? This cannot
 function copyShoppingTab(){
   haptic(12);if(!globalShopList.length){toast('List is empty');return;}
   const lines=globalShopList.filter(i=>!i.checked).map(i=>`- ${i.name}: ${i.amount}`);
-  navigator.clipboard.writeText(lines.length?lines.join('\n'):'All items ticked!').then(()=>toast('Shopping list copied'));
+  copyText(lines.length?lines.join('\n'):'All items ticked!').then(()=>toast('Shopping list copied'),()=>toast('Could not copy the list'));
 }
 
 // ── SHARE
@@ -1029,7 +1040,7 @@ function shareRecipe(){
   haptic(8);const r=currentRecipe;
   const url=`${location.origin}${location.pathname}#recipe-${r.id}`;
   if(navigator.share)navigator.share({title:r.name,text:`${r.name} — ${r.time} | ${cap(r.difficulty)}`,url}).catch(()=>{});
-  else navigator.clipboard.writeText(url).then(()=>toast('Link copied!'));
+  else copyText(url).then(()=>toast('Link copied!'),()=>toast('Could not copy the link'));
 }
 
 // ── RATIOS
@@ -1231,7 +1242,7 @@ function fmtIng(amount,unit){
   if(!amount||isNaN(amount))return'';
   const u=(unit||'').toLowerCase().trim();
   let n=amount;
-  const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs'];
+  const desc=['to taste','to serve','handful','pinch','bunch','bunches','sprig','sprigs','as needed','drizzle','squeeze','batch'];
   if(desc.some(d=>u.includes(d)))return unit;
   if(u==='g'){n=roundShoppable(n,'g');return Math.round(n)+'g';}
   if(u==='kg')return parseFloat(n.toFixed(2))+'kg';
@@ -1249,6 +1260,17 @@ function fmtIng(amount,unit){
   const cnt=['whole','clove','cloves','yolk','yolks','rasher','rashers','fillet','fillets','stalk','stalks','piece','pieces','slice','slices','leaf','leaves','lemon','lime','orange','punnet','sheet','sheets','head','cup','cups','loaf','small','medium','large'];
   if(cnt.some(c=>u.includes(c))){const pu=pluralUnit(n,u);return(n%1===0?n.toString():fracStr(n))+' '+pu;}
   return(n>=10?Math.round(n).toString():parseFloat(n.toFixed(1)).toString())+(unit?' '+unit:'');
+}
+// clipboard with a fallback for browsers without the async Clipboard API
+function copyText(text){
+  if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(text);
+  return new Promise((resolve,reject)=>{
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;opacity:0;top:0';
+    document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand('copy');}catch(e){}
+    ta.remove();ok?resolve():reject(new Error('copy failed'));
+  });
 }
 function toast(msg){
   const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
@@ -1325,9 +1347,7 @@ function exportBackup(){
     saved,notes,prefs,recent:recentIds,list:globalShopList,ratios:savedRatios};
   const json=JSON.stringify(payload);
   const done=()=>toast('Backup copied — paste it somewhere safe');
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(json).then(done).catch(()=>showBackupText(json));
-  }else showBackupText(json);
+  copyText(json).then(done,()=>showBackupText(json));
 }
 function showBackupText(json){
   const sheet=document.getElementById('restoreSheet');
@@ -1358,11 +1378,15 @@ function confirmRestore(){
       .map(e=>({...e,id:mapId(e.id)}))
       .filter(e=>!seen.has(e.id)&&seen.add(e.id));
   }
-  if(data.notes&&typeof data.notes==='object')notes=data.notes;
-  if(data.prefs&&typeof data.prefs==='object')prefs=data.prefs;
-  if(Array.isArray(data.recent))recentIds=data.recent.filter(x=>typeof x==='number').slice(0,5);
-  if(Array.isArray(data.list))globalShopList=data.list;
-  if(Array.isArray(data.ratios))savedRatios=data.ratios;
+  const isObj=v=>v&&typeof v==='object'&&!Array.isArray(v);
+  if(isObj(data.notes))notes=Object.fromEntries(Object.entries(data.notes).filter(([,v])=>typeof v==='string').map(([k,v])=>[k,v.slice(0,5000)]));
+  if(isObj(data.prefs))prefs={name:typeof data.prefs.name==='string'?data.prefs.name.slice(0,30):undefined,askedName:true};
+  if(Array.isArray(data.recent))recentIds=data.recent.filter(x=>typeof x==='number').map(mapId).slice(0,5);
+  if(Array.isArray(data.list))globalShopList=data.list
+    .filter(i=>i&&typeof i.name==='string')
+    .map(i=>({name:i.name.slice(0,200),amount:typeof i.amount==='string'?i.amount:'',
+      recipe:typeof i.recipe==='string'?i.recipe:'',aisle:typeof i.aisle==='string'?i.aisle:getAisle(i.name),checked:!!i.checked}));
+  if(Array.isArray(data.ratios))savedRatios=data.ratios.filter(x=>typeof x==='string');
   saveSaved();store.set(K.notes,notes);store.set(K.prefs,prefs);store.set(K.recent,recentIds);
   saveGlobalShopList();store.set(K.ratios,savedRatios);
   updateSavedBadge();updateShopBadge();closeRestore();
@@ -1399,7 +1423,7 @@ function sendRequest(){
   },1200);
 }
 function copyAuthorEmail(){
-  navigator.clipboard.writeText(AUTHOR_EMAIL).then(()=>toast('Email address copied'));
+  copyText(AUTHOR_EMAIL).then(()=>toast('Email address copied'),()=>toast(AUTHOR_EMAIL));
 }
 
 // ── INIT
@@ -1409,4 +1433,6 @@ updateSavedBadge();
 renderHome();
 maybeAskName();
 // Deep link: auto-open recipe from URL hash e.g. #recipe-42
-(function(){const h=location.hash;if(!h.startsWith('#recipe-'))return;const raw=parseInt(h.slice(8));const id=DUPLICATE_ID_MAP[raw]||raw;if(!isNaN(id)&&ALL_RECIPES.find(x=>x.id===id))openRecipe(id);})();
+function openFromHash(){const h=location.hash;if(!h.startsWith('#recipe-'))return;const id=mapId(parseInt(h.slice(8),10));if(LIVE_IDS.has(id))openRecipe(id);}
+openFromHash();
+window.addEventListener('hashchange',openFromHash);

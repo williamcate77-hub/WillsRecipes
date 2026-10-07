@@ -1,3 +1,5 @@
 .DS_Store
 .recipe-sync-log.json
 *.log
+.claude/settings.local.json
+.claude/scheduled_tasks.lock

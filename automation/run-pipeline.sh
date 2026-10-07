@@ -13,6 +13,32 @@ cd "$REPO_DIR" || exit 1
 
 echo "=== Recipe pipeline run started: $(date) ==="
 
+# One run at a time: a manual kickstart overlapping the 23:00 run would have
+# two agents appending to recipes.js and the tracking log at once.
+LOCK_DIR="$REPO_DIR/.git/recipe-pipeline.lock"
+if ! mkdir "$LOCK_DIR" 2>/dev/null; then
+  if [ -n "$(find "$LOCK_DIR" -maxdepth 0 -mmin +60 2>/dev/null)" ]; then
+    echo "Removing stale lock from a run that died over an hour ago"
+    rm -rf "$LOCK_DIR" && mkdir "$LOCK_DIR" || exit 1
+  else
+    echo "=== Another pipeline run is in progress - skipping: $(date) ==="
+    exit 0
+  fi
+fi
+trap 'rm -rf "$LOCK_DIR"' EXIT
+
+# Start from what's on GitHub so the final push can't be rejected because
+# something was pushed from elsewhere (e.g. an app change made by hand).
+if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+  echo "=== Working tree has uncommitted changes - not running so they aren't swept into a pipeline commit: $(date) ==="
+  git status --short --untracked-files=no
+  exit 1
+fi
+if ! git pull --ff-only --quiet; then
+  echo "=== git pull --ff-only failed - local main has diverged from origin; fix by hand: $(date) ==="
+  exit 1
+fi
+
 /Users/willcate/.local/bin/claude -p \
   "Read automation/recipe-pipeline.md in this repo and execute it now as the scheduled nightly run. This is an unattended headless run with no one available to answer questions - the AskUserQuestion tool is disabled, so never rely on it. If a stage's outcome is ambiguous, make the safest reasonable judgment call rather than blocking - for example, if the tracking log and recipes.js appear inconsistent, cross-check recipe names against recipes.js before syncing anything so existing recipes are never duplicated, and note the discrepancy in the Stage 4 summary instead of guessing. Follow the brief exactly otherwise, including bumping the sw.js cache version in stage 3.6 whenever recipes.js changes, and committing/pushing at the end." \
   --permission-mode bypassPermissions \

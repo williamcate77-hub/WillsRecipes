@@ -3,7 +3,7 @@
 // from cache; the network is only touched to fill the cache. Bump VERSION on
 // every deploy that changes any precached file, so clients pick up the update.
 
-const VERSION = 'cww-v21';
+const VERSION = 'cww-v22';
 
 const PRECACHE = [
   '/',
@@ -23,7 +23,10 @@ const PRECACHE = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(VERSION).then((cache) => cache.addAll(PRECACHE)).then(() => self.skipWaiting())
+    caches.open(VERSION)
+      // bypass the HTTP cache so a new version never precaches a stale file
+      .then((cache) => cache.addAll(PRECACHE.map((u) => new Request(u, { cache: 'reload' }))))
+      .then(() => self.skipWaiting())
   );
 });
 
