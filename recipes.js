@@ -3,7 +3,7 @@
 // caloriesPerServe is kcal per serve (the UI renders kJ first for AU readers).
 
 // Optional per-recipe `cuisine`; recipes that don't clearly belong to one are left untagged.
-const CUISINES = ['Japanese','Modern Australian','Greek','Lebanese','Thai','Chinese','Mexican','Indian'];
+const CUISINES = ['Japanese','Modern Australian','Greek','Lebanese','Thai','Chinese','Mexican','Indian','Italian','French','Spanish','British','Malaysian'];
 const CATEGORIES = ['Dips & Starters','Salads','Soups','Seafood','Meat & Poultry','Vegetarian','Pasta & Rice','Sides','Bread & Bakes','Sauces & Condiments','Desserts'];
 
 const RECIPES = [
@@ -86,7 +86,7 @@ steps:[
   'Pile the green salad on top, finish with capers, feta and flatbread.',
 ]},
 
-{id:5,name:'Burrata with Grilled Grapes & Basil',category:'Dips & Starters',difficulty:'easy',serves:4,time:'20 min',caloriesPerServe:280,mainIngredient:'Burrata',
+{id:5,name:'Burrata with Grilled Grapes & Basil',category:'Dips & Starters',cuisine:'Italian',difficulty:'easy',serves:4,time:'20 min',caloriesPerServe:280,mainIngredient:'Burrata',
 ingredients:[
   {name:'Seedless grapes',amount:400,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
@@ -202,7 +202,7 @@ steps:[
   'Pour dressing over salad, season well and toss to combine.',
 ]},
 
-{id:11,name:'Caprese Salad',category:'Salads',difficulty:'easy',serves:4,time:'10 min',caloriesPerServe:260,mainIngredient:'Tomatoes',
+{id:11,name:'Caprese Salad',category:'Salads',cuisine:'Italian',difficulty:'easy',serves:4,time:'10 min',caloriesPerServe:260,mainIngredient:'Tomatoes',
 ingredients:[
   {name:'Ripe tomatoes',amount:500,unit:'g',prep:'sliced'},
   {name:'Fresh mozzarella, sliced',amount:250,unit:'g'},
@@ -297,7 +297,7 @@ steps:[
   'Spoon fresh ricotta over tomatoes, scatter herbs and drizzle with more oil. Serve with bread.',
 ]},
 
-{id:16,name:'Panzanella (Tuscan Bread Salad)',category:'Salads',difficulty:'easy',serves:4,time:'20 min',caloriesPerServe:290,mainIngredient:'Tomatoes',
+{id:16,name:'Panzanella (Tuscan Bread Salad)',category:'Salads',cuisine:'Italian',difficulty:'easy',serves:4,time:'20 min',caloriesPerServe:290,mainIngredient:'Tomatoes',
 ingredients:[
   {name:'Ripe tomatoes',amount:500,unit:'g',prep:'chopped'},
   {name:'Cucumber',amount:1,unit:'whole',prep:'chopped'},
@@ -432,7 +432,7 @@ steps:[
   'Scatter fried shallots, fried garlic and fresh herbs on top. Serve immediately.',
 ]},
 
-{id:23,name:'Warm Lentil Salad with Goat\'s Cheese & Walnuts',category:'Salads',difficulty:'easy',serves:4,time:'30 min',caloriesPerServe:380,mainIngredient:'Lentils',
+{id:23,name:'Warm Lentil Salad with Goat\'s Cheese & Walnuts',category:'Salads',cuisine:'French',difficulty:'easy',serves:4,time:'30 min',caloriesPerServe:380,mainIngredient:'Lentils',
 ingredients:[
   {name:'Puy lentils',amount:250,unit:'g'},
   {name:'Bay leaf',amount:1,unit:'whole'},
@@ -474,7 +474,7 @@ steps:[
   'Spread whipped feta on a plate, pile salad over and scatter extra za\'atar.',
 ]},
 
-{id:25,name:'Tuscan Kale Salad with Fennel, Radish & Ricotta Salata',category:'Salads',difficulty:'medium',serves:2,time:'20 min',caloriesPerServe:280,mainIngredient:'Kale',
+{id:25,name:'Tuscan Kale Salad with Fennel, Radish & Ricotta Salata',category:'Salads',cuisine:'Italian',difficulty:'medium',serves:2,time:'20 min',caloriesPerServe:280,mainIngredient:'Kale',
 ingredients:[
   {name:'Tuscan kale',amount:2,unit:'bunches',prep:'shredded'},
   {name:'Red wine vinegar',amount:30,unit:'ml'},
@@ -667,7 +667,7 @@ steps:[
   'Dress with lemon juice and olive oil. Season generously.',
 ]},
 
-{id:35,name:'Gazpacho (Chilled Tomato Soup)',category:'Soups',difficulty:'easy',serves:4,time:'15 min + 2 hr chill',caloriesPerServe:120,mainIngredient:'Tomatoes',
+{id:35,name:'Gazpacho (Chilled Tomato Soup)',category:'Soups',cuisine:'Spanish',difficulty:'easy',serves:4,time:'15 min + 2 hr chill',caloriesPerServe:120,mainIngredient:'Tomatoes',
 ingredients:[
   {name:'Ripe tomatoes',amount:1000,unit:'g',prep:'chopped'},
   {name:'Cucumber',amount:1,unit:'whole',prep:'chopped'},
@@ -685,7 +685,7 @@ steps:[
   'Serve cold with a drizzle of olive oil.',
 ]},
 
-{id:36,name:'Minestrone Soup',category:'Soups',difficulty:'easy',serves:4,time:'35 min',caloriesPerServe:280,mainIngredient:'Vegetables',
+{id:36,name:'Minestrone Soup',category:'Soups',cuisine:'Italian',difficulty:'easy',serves:4,time:'35 min',caloriesPerServe:280,mainIngredient:'Vegetables',
 ingredients:[
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Onion',amount:1,unit:'whole',prep:'chopped'},
@@ -706,7 +706,7 @@ steps:[
   'Season well and scatter parsley before serving.',
 ]},
 
-{id:37,name:'Minestrone Verde with Poached Fish',category:'Soups',difficulty:'medium',serves:2,time:'40 min',caloriesPerServe:380,mainIngredient:'Fish',
+{id:37,name:'Minestrone Verde with Poached Fish',category:'Soups',cuisine:'Italian',difficulty:'medium',serves:2,time:'40 min',caloriesPerServe:380,mainIngredient:'Fish',
 ingredients:[
   {name:'Olive oil',amount:60,unit:'ml'},
   {name:'Leek',amount:0.5,unit:'whole',prep:'sliced'},
@@ -730,7 +730,7 @@ steps:[
   'Ladle soup into bowls and spoon pea pesto over. Top with fennel fronds and chilli flakes.',
 ]},
 
-{id:38,name:'Minestrone Verde (Vegetarian)',category:'Soups',difficulty:'medium',serves:2,time:'35 min',caloriesPerServe:290,mainIngredient:'Vegetables',
+{id:38,name:'Minestrone Verde (Vegetarian)',category:'Soups',cuisine:'Italian',difficulty:'medium',serves:2,time:'35 min',caloriesPerServe:290,mainIngredient:'Vegetables',
 ingredients:[
   {name:'Olive oil',amount:60,unit:'ml'},
   {name:'Leek',amount:0.5,unit:'whole',prep:'sliced'},
@@ -752,7 +752,7 @@ steps:[
   'Season with lemon zest, lemon juice, chilli flakes and olive oil or salmoriglio.',
 ]},
 
-{id:39,name:'Prawn Laksa',category:'Soups',difficulty:'medium',serves:4,time:'30 min',caloriesPerServe:420,mainIngredient:'Prawns',
+{id:39,name:'Prawn Laksa',category:'Soups',cuisine:'Malaysian',difficulty:'medium',serves:4,time:'30 min',caloriesPerServe:420,mainIngredient:'Prawns',
 ingredients:[
   {name:'Vegetable oil',amount:30,unit:'ml'},
   {name:'Onion',amount:1,unit:'whole',prep:'chopped'},
@@ -814,7 +814,7 @@ steps:[
   'Season and scatter parsley before serving.',
 ]},
 
-{id:42,name:'Sicilian Fish Soup',category:'Soups',difficulty:'medium',serves:4,time:'50 min',caloriesPerServe:310,mainIngredient:'Fish',
+{id:42,name:'Sicilian Fish Soup',category:'Soups',cuisine:'Italian',difficulty:'medium',serves:4,time:'50 min',caloriesPerServe:310,mainIngredient:'Fish',
 ingredients:[
   {name:'Red onion',amount:1,unit:'whole'},
   {name:'Celery sticks',amount:2,unit:'stalks'},
@@ -840,7 +840,7 @@ steps:[
   'Serve drizzled with olive oil and scattered with parsley.',
 ]},
 
-{id:43,name:'Fish Pot Pie',category:'Seafood',difficulty:'medium',serves:2,time:'45 min',caloriesPerServe:580,mainIngredient:'Fish',
+{id:43,name:'Fish Pot Pie',category:'Seafood',cuisine:'British',difficulty:'medium',serves:2,time:'45 min',caloriesPerServe:580,mainIngredient:'Fish',
 ingredients:[
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Red onion',amount:30,unit:'g',prep:'chopped'},
@@ -1048,7 +1048,7 @@ steps:[
   'Serve hot with lemon wedges and bread.',
 ]},
 
-{id:53,name:'Scallop, Chorizo & Beans',category:'Seafood',difficulty:'medium',serves:2,time:'20 min',caloriesPerServe:420,mainIngredient:'Scallops',
+{id:53,name:'Scallop, Chorizo & Beans',category:'Seafood',cuisine:'Spanish',difficulty:'medium',serves:2,time:'20 min',caloriesPerServe:420,mainIngredient:'Scallops',
 ingredients:[
   {name:'Scallops',amount:320,unit:'g',prep:'patted dry'},
   {name:'Spanish chorizo',amount:1,unit:'small',prep:'finely diced'},
@@ -1067,7 +1067,7 @@ steps:[
   'Serve scallops on bean purée, scattered with chorizo, pan juices and lemon zest.',
 ]},
 
-{id:54,name:'Seafood Paella',category:'Seafood',difficulty:'medium',serves:4,time:'40 min',caloriesPerServe:520,mainIngredient:'Seafood',
+{id:54,name:'Seafood Paella',category:'Seafood',cuisine:'Spanish',difficulty:'medium',serves:4,time:'40 min',caloriesPerServe:520,mainIngredient:'Seafood',
 ingredients:[
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Onion',amount:1,unit:'whole',prep:'chopped'},
@@ -1343,7 +1343,7 @@ steps:[
   'Serve lamb with charred cabbage, drizzle miso butter over everything and sprinkle with furikake.',
 ]},
 
-{id:68,name:'Butternut Pumpkin Ravioli with Sage Butter',category:'Vegetarian',difficulty:'hard',serves:4,time:'1 hr 30 min',caloriesPerServe:480,mainIngredient:'Pumpkin',
+{id:68,name:'Butternut Pumpkin Ravioli with Sage Butter',category:'Vegetarian',cuisine:'Italian',difficulty:'hard',serves:4,time:'1 hr 30 min',caloriesPerServe:480,mainIngredient:'Pumpkin',
 ingredients:[
   {name:'Plain flour',amount:300,unit:'g'},
   {name:'Eggs',amount:3,unit:'whole'},
@@ -1382,7 +1382,7 @@ steps:[
   'Drizzle sauce over roasted cauliflower. Scatter pomegranate seeds and parsley.',
 ]},
 
-{id:70,name:'Ratatouille',category:'Vegetarian',difficulty:'medium',serves:4,time:'40 min',caloriesPerServe:220,mainIngredient:'Eggplant',
+{id:70,name:'Ratatouille',category:'Vegetarian',cuisine:'French',difficulty:'medium',serves:4,time:'40 min',caloriesPerServe:220,mainIngredient:'Eggplant',
 ingredients:[
   {name:'Eggplant',amount:1,unit:'whole',prep:'diced'},
   {name:'Zucchinis',amount:2,unit:'whole',prep:'diced'},
@@ -1462,7 +1462,7 @@ steps:[
   'Bake 20 minutes until golden and bubbling.',
 ]},
 
-{id:74,name:'Clam Pasta with Garum, Bottarga & Verjuice',category:'Pasta & Rice',difficulty:'medium',serves:4,time:'25 min',caloriesPerServe:520,mainIngredient:'Clams',
+{id:74,name:'Clam Pasta with Garum, Bottarga & Verjuice',category:'Pasta & Rice',cuisine:'Italian',difficulty:'medium',serves:4,time:'25 min',caloriesPerServe:520,mainIngredient:'Clams',
 ingredients:[
   {name:'Small clams',amount:500,unit:'g',prep:'rinsed'},
   {name:'Spaghetti',amount:400,unit:'g'},
@@ -1482,7 +1482,7 @@ steps:[
   'Stir through bottarga and parsley. Serve with lemon wedges and extra bottarga.',
 ]},
 
-{id:75,name:'Spaghetti alle Vongole',category:'Pasta & Rice',difficulty:'medium',serves:4,time:'25 min',caloriesPerServe:480,mainIngredient:'Clams',
+{id:75,name:'Spaghetti alle Vongole',category:'Pasta & Rice',cuisine:'Italian',difficulty:'medium',serves:4,time:'25 min',caloriesPerServe:480,mainIngredient:'Clams',
 ingredients:[
   {name:'Spaghetti',amount:400,unit:'g'},
   {name:'Vongole (clams)',amount:1000,unit:'g',prep:'rinsed'},
@@ -1499,7 +1499,7 @@ steps:[
   'Toss pasta with clams, parsley and a splash of cooking water. Season well.',
 ]},
 
-{id:76,name:'Tuna Pasta with Chilli, Capers & Lemon',category:'Pasta & Rice',difficulty:'easy',serves:4,time:'25 min',caloriesPerServe:480,mainIngredient:'Tuna',
+{id:76,name:'Tuna Pasta with Chilli, Capers & Lemon',category:'Pasta & Rice',cuisine:'Italian',difficulty:'easy',serves:4,time:'25 min',caloriesPerServe:480,mainIngredient:'Tuna',
 ingredients:[
   {name:'Spaghetti',amount:400,unit:'g'},
   {name:'Olive oil',amount:30,unit:'ml'},
@@ -1520,7 +1520,7 @@ steps:[
   'Stir in parsley, season and top with golden breadcrumbs.',
 ]},
 
-{id:77,name:'Pasta alla Norma',category:'Pasta & Rice',difficulty:'medium',serves:4,time:'40 min',caloriesPerServe:460,mainIngredient:'Eggplant',
+{id:77,name:'Pasta alla Norma',category:'Pasta & Rice',cuisine:'Italian',difficulty:'medium',serves:4,time:'40 min',caloriesPerServe:460,mainIngredient:'Eggplant',
 ingredients:[
   {name:'Rigatoni or spaghetti',amount:400,unit:'g'},
   {name:'Large eggplants, diced',amount:2,unit:'whole'},
@@ -1540,7 +1540,7 @@ steps:[
   'Serve topped with fresh basil and grated ricotta salata.',
 ]},
 
-{id:78,name:'Mushroom Risotto',category:'Pasta & Rice',difficulty:'medium',serves:4,time:'35 min',caloriesPerServe:520,mainIngredient:'Mushrooms',
+{id:78,name:'Mushroom Risotto',category:'Pasta & Rice',cuisine:'Italian',difficulty:'medium',serves:4,time:'35 min',caloriesPerServe:520,mainIngredient:'Mushrooms',
 ingredients:[
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Onion',amount:1,unit:'whole',prep:'finely chopped'},
@@ -1617,7 +1617,7 @@ steps:[
   'Roast 25–30 minutes until tender and caramelised.',
 ]},
 
-{id:83,name:'Potato Gratin',category:'Sides',difficulty:'medium',serves:4,time:'1 hr 5 min',caloriesPerServe:420,mainIngredient:'Potatoes',
+{id:83,name:'Potato Gratin',category:'Sides',cuisine:'French',difficulty:'medium',serves:4,time:'1 hr 5 min',caloriesPerServe:420,mainIngredient:'Potatoes',
 ingredients:[
   {name:'Potatoes',amount:1000,unit:'g',prep:'thinly sliced'},
   {name:'Cream',amount:300,unit:'ml'},
@@ -1892,7 +1892,7 @@ steps:[
   'Drain on paper towel, season lightly. Serve hot.',
 ]},
 
-{id:100,name:'Homemade Baked Beans',category:'Sides',difficulty:'easy',serves:4,time:'40 min',caloriesPerServe:280,mainIngredient:'Beans',
+{id:100,name:'Homemade Baked Beans',category:'Sides',cuisine:'British',difficulty:'easy',serves:4,time:'40 min',caloriesPerServe:280,mainIngredient:'Beans',
 ingredients:[
   {name:'Olive oil',amount:30,unit:'ml'},
   {name:'Onion',amount:1,unit:'whole',prep:'finely chopped'},
@@ -2052,7 +2052,7 @@ steps:[
   'Cool 5 minutes before slicing.',
 ]},
 
-{id:109,name:'Quiche Lorraine',category:'Bread & Bakes',difficulty:'medium',serves:6,time:'1 hr 15 min',caloriesPerServe:420,mainIngredient:'Eggs',
+{id:109,name:'Quiche Lorraine',category:'Bread & Bakes',cuisine:'French',difficulty:'medium',serves:6,time:'1 hr 15 min',caloriesPerServe:420,mainIngredient:'Eggs',
 ingredients:[
   {name:'Plain flour',amount:200,unit:'g'},
   {name:'Cold butter',amount:100,unit:'g',prep:'cubed'},
@@ -2073,7 +2073,7 @@ steps:[
   'Bake 30 minutes until golden and just set.',
 ]},
 
-{id:110,name:'3-Minute Romesco Sauce',category:'Sauces & Condiments',difficulty:'easy',serves:8,time:'5 min',caloriesPerServe:120,mainIngredient:'Capsicum',
+{id:110,name:'3-Minute Romesco Sauce',category:'Sauces & Condiments',cuisine:'Spanish',difficulty:'easy',serves:8,time:'5 min',caloriesPerServe:120,mainIngredient:'Capsicum',
 ingredients:[
   {name:'Roasted capsicum',amount:200,unit:'g'},
   {name:'Garlic cloves',amount:2,unit:'cloves'},
@@ -2168,7 +2168,7 @@ steps:[
   'Spread yoghurt on a plate, top with dressed beans and drizzle with oil.',
 ]},
 
-{id:116,name:'Salmoriglio',category:'Sauces & Condiments',difficulty:'easy',serves:6,time:'5 min',caloriesPerServe:130,mainIngredient:'Herbs',
+{id:116,name:'Salmoriglio',category:'Sauces & Condiments',cuisine:'Italian',difficulty:'easy',serves:6,time:'5 min',caloriesPerServe:130,mainIngredient:'Herbs',
 ingredients:[
   {name:'Garlic cloves',amount:2,unit:'cloves',prep:'crushed'},
   {name:'Fresh oregano, leaves picked',amount:1,unit:'bunch'},
@@ -2217,7 +2217,7 @@ steps:[
   'Let the brine cool completely, then pour over onions and store in the fridge.',
 ]},
 
-{id:119,name:'Lemon Tart',category:'Desserts',difficulty:'medium',serves:6,time:'1 hr 15 min',caloriesPerServe:380,mainIngredient:'Lemon',
+{id:119,name:'Lemon Tart',category:'Desserts',cuisine:'French',difficulty:'medium',serves:6,time:'1 hr 15 min',caloriesPerServe:380,mainIngredient:'Lemon',
 ingredients:[
   {name:'Plain flour',amount:200,unit:'g'},
   {name:'Cold butter',amount:100,unit:'g',prep:'cubed'},
@@ -2238,7 +2238,7 @@ steps:[
   'Cool completely before serving.',
 ]},
 
-{id:120,name:'Crème Caramel',category:'Desserts',difficulty:'hard',serves:6,time:'5 hr + chill',caloriesPerServe:280,mainIngredient:'Eggs',
+{id:120,name:'Crème Caramel',category:'Desserts',cuisine:'French',difficulty:'hard',serves:6,time:'5 hr + chill',caloriesPerServe:280,mainIngredient:'Eggs',
 ingredients:[
   {name:'Caster sugar',amount:150,unit:'g'},
   {name:'Water',amount:45,unit:'ml'},
@@ -2256,7 +2256,7 @@ steps:[
   'Chill at least 4 hours. Unmould onto plates just before serving.',
 ]},
 
-{id:121,name:'Tiramisu',category:'Desserts',difficulty:'medium',serves:6,time:'30 min + 4 hr chill',caloriesPerServe:420,mainIngredient:'Mascarpone',
+{id:121,name:'Tiramisu',category:'Desserts',cuisine:'Italian',difficulty:'medium',serves:6,time:'30 min + 4 hr chill',caloriesPerServe:420,mainIngredient:'Mascarpone',
 ingredients:[
   {name:'Mascarpone',amount:250,unit:'g'},
   {name:'Eggs, separated',amount:3,unit:'whole'},
@@ -2335,7 +2335,7 @@ steps:[
   'Serve.',
 ]},
 
-{id:125,name:'Burrata, Anchovy, Mint and Extra Virgin Olive Oil',category:'Dips & Starters',difficulty:'easy',serves:2,time:'5 min',caloriesPerServe:320,mainIngredient:'Burrata',
+{id:125,name:'Burrata, Anchovy, Mint and Extra Virgin Olive Oil',category:'Dips & Starters',cuisine:'Italian',difficulty:'easy',serves:2,time:'5 min',caloriesPerServe:320,mainIngredient:'Burrata',
 ingredients:[
   {name:'Burrata',amount:1,unit:'whole'},
   {name:'Anchovies',amount:6,unit:'whole'},
@@ -2599,7 +2599,7 @@ steps:[
   'Garnish with finely diced chives, toasted sesame seeds, and a spoon of chilli crisp before serving.',
 ]},
 
-{id:137,name:'Mussel and \'Nduja Pasta',category:'Pasta & Rice',difficulty:'medium',serves:4,time:'35 min',caloriesPerServe:520,mainIngredient:'Mussels',
+{id:137,name:'Mussel and \'Nduja Pasta',category:'Pasta & Rice',cuisine:'Italian',difficulty:'medium',serves:4,time:'35 min',caloriesPerServe:520,mainIngredient:'Mussels',
 ingredients:[
   {section:'PASTA'},
   {name:'Pasta of choice',amount:400,unit:'g'},
@@ -2949,7 +2949,7 @@ steps:[
   'Serve hot, topped with crushed roasted peanuts, lime wedges, and sliced bird chilli.',
 ]},
 
-{id:153,name:'Ossobucco & Risotto alla Milanese',category:'Pasta & Rice',difficulty:'hard',serves:4,time:'2 hr 30 min',caloriesPerServe:680,mainIngredient:'Veal',
+{id:153,name:'Ossobucco & Risotto alla Milanese',category:'Pasta & Rice',cuisine:'Italian',difficulty:'hard',serves:4,time:'2 hr 30 min',caloriesPerServe:680,mainIngredient:'Veal',
 ingredients:[
   {section:'OSSOBUCCO'},
   {name:'Veal shanks',amount:4,unit:'whole'},
@@ -3035,7 +3035,7 @@ steps:[
   'Serve hot as a flavourful side dish.',
 ]},
 
-{id:157,name:'Chilli Sauce with Roasted Shrimp Paste',category:'Sauces & Condiments',difficulty:'medium',serves:8,time:'30 min',caloriesPerServe:60,mainIngredient:'Chilli',
+{id:157,name:'Chilli Sauce with Roasted Shrimp Paste',category:'Sauces & Condiments',cuisine:'Malaysian',difficulty:'medium',serves:8,time:'30 min',caloriesPerServe:60,mainIngredient:'Chilli',
 ingredients:[
   {section:'CHILLI BASE'},
   {name:'Fresh long red chillis, seeds removed, coarsely chopped',amount:300,unit:'g'},
@@ -3073,7 +3073,7 @@ steps:[
   'If it is too thick, simply add a small amount of room temperature water and mix again until you reach the desired consistency.',
 ]},
 
-{id:159,name:'Sambal',category:'Sauces & Condiments',difficulty:'medium',serves:8,time:'45 min',caloriesPerServe:90,mainIngredient:'Ginger',
+{id:159,name:'Sambal',category:'Sauces & Condiments',cuisine:'Malaysian',difficulty:'medium',serves:8,time:'45 min',caloriesPerServe:90,mainIngredient:'Ginger',
 ingredients:[
   {section:'GINGER BASE'},
   {name:'Ginger',amount:1,unit:'kg',prep:'chopped into thin pieces'},
@@ -3977,7 +3977,7 @@ steps:[
   'Serve cold with a drizzle of olive oil.',
 ]},
 
-{id:214,name:'Potato Galette',category:'Sides',difficulty:'easy',serves:4,time:'50 min',caloriesPerServe:320,mainIngredient:'Potato',
+{id:214,name:'Potato Galette',category:'Sides',cuisine:'French',difficulty:'easy',serves:4,time:'50 min',caloriesPerServe:320,mainIngredient:'Potato',
 ingredients:[
   {name:'Sebago potatoes, peeled and thinly sliced',amount:2,unit:'whole'},
   {name:'Clarified butter, melted',amount:500,unit:'g'},
@@ -4011,7 +4011,7 @@ steps:[
   'Refrigerate for at least 2 hours until set.',
 ]},
 
-{id:217,name:'Fettuccine with Sardines, Cabbage, Garlic, Chilli and Lemon',category:'Pasta & Rice',difficulty:'easy',serves:2,time:'20 min',caloriesPerServe:520,mainIngredient:'Sardines',
+{id:217,name:'Fettuccine with Sardines, Cabbage, Garlic, Chilli and Lemon',category:'Pasta & Rice',cuisine:'Italian',difficulty:'easy',serves:2,time:'20 min',caloriesPerServe:520,mainIngredient:'Sardines',
 ingredients:[
   {section:'PASTA'},
   {name:'Fettuccine',amount:200,unit:'g'},
@@ -4056,7 +4056,7 @@ steps:[
   'Remove from the air fryer, baste with the cooking juices, and sprinkle over the Parmesan.',
 ]},
 
-{id:219,name:'Carrot Tarte Tatin',category:'Vegetarian',difficulty:'medium',serves:6,time:'2 hr',caloriesPerServe:290,mainIngredient:'Carrot',
+{id:219,name:'Carrot Tarte Tatin',category:'Vegetarian',cuisine:'French',difficulty:'medium',serves:6,time:'2 hr',caloriesPerServe:290,mainIngredient:'Carrot',
 ingredients:[
   {section:'CARAMEL'},
   {name:'Honey',amount:2,unit:'tbsp'},
@@ -4186,7 +4186,7 @@ steps:[
   'Serve hot with steamed rice.',
 ]},
 
-{id:267,name:'Chicken Scarpariello',category:'Meat & Poultry',difficulty:'medium',serves:4,time:'45 min',caloriesPerServe:420,mainIngredient:'Chicken',
+{id:267,name:'Chicken Scarpariello',category:'Meat & Poultry',cuisine:'Italian',difficulty:'medium',serves:4,time:'45 min',caloriesPerServe:420,mainIngredient:'Chicken',
 ingredients:[
   {section:'CHICKEN'},
   {name:'Chicken thigh cutlets, skin on',amount:5,unit:'whole'},
@@ -4410,7 +4410,7 @@ steps:[
   'Slice chicken and serve over steamed rice with cucumber salad alongside.',
 ]},
 
-{id:274,name:'Dark Chocolate Basque Cheesecake',category:'Desserts',difficulty:'medium',serves:8,time:'1 hr',caloriesPerServe:460,mainIngredient:'Chocolate',
+{id:274,name:'Dark Chocolate Basque Cheesecake',category:'Desserts',cuisine:'Spanish',difficulty:'medium',serves:8,time:'1 hr',caloriesPerServe:460,mainIngredient:'Chocolate',
 ingredients:[
   {section:'CHEESECAKE'},
   {name:'Cream cheese, room temperature',amount:500,unit:'g'},
@@ -5307,7 +5307,7 @@ steps:[
   'Serve on top of the whipped feta with plenty of lightly toasted khobez flatbread.',
 ]},
 
-{id:321,name:'Anchovy Crema Panzanella',category:'Salads',difficulty:'easy',serves:4,time:'20 min',caloriesPerServe:350,mainIngredient:'Sourdough bread',
+{id:321,name:'Anchovy Crema Panzanella',category:'Salads',cuisine:'Italian',difficulty:'easy',serves:4,time:'20 min',caloriesPerServe:350,mainIngredient:'Sourdough bread',
 ingredients:[
   {name:'Sourdough bread',amount:200,unit:'g'},
   {name:'Tomatoes, good tasting',amount:300,unit:'g'},
@@ -5420,7 +5420,7 @@ steps:[
   'Remove from the pan and finish with fresh lemon before slicing and adding to the beans along with the chorizo, its rendered fat, and some chives.',
 ]},
 
-{id:325,name:'Sole Meuniere with Fennel, Beans, and Yuzu',category:'Seafood',difficulty:'medium',serves:2,time:'30 min',caloriesPerServe:380,mainIngredient:'Sole',
+{id:325,name:'Sole Meuniere with Fennel, Beans, and Yuzu',category:'Seafood',cuisine:'French',difficulty:'medium',serves:2,time:'30 min',caloriesPerServe:380,mainIngredient:'Sole',
 ingredients:[
   {name:'Sole, skin removed',amount:1,unit:'whole'},
   {name:'AP flour, for dusting',amount:1,unit:'to taste'},
@@ -5520,7 +5520,7 @@ steps:[
   'Warm the boiled lemon sauce through and mix in a handful of finely chopped parsley before spooning over the fish.',
 ]},
 
-{id:328,name:'Cod, Fennel, and Chorizo',category:'Seafood',difficulty:'easy',serves:2,time:'30 min',caloriesPerServe:400,mainIngredient:'Cod',
+{id:328,name:'Cod, Fennel, and Chorizo',category:'Seafood',cuisine:'Spanish',difficulty:'easy',serves:2,time:'30 min',caloriesPerServe:400,mainIngredient:'Cod',
 ingredients:[
   {name:'Cod fillets, skin on',amount:2,unit:'whole'},
   {name:'Spanish chorizo, diced',amount:50,unit:'g'},
@@ -5708,7 +5708,7 @@ steps:[
   'Build the tacos: sauce, cabbage, fish, then more sauce.',
 ]},
 
-{id:334,name:'Steak Frites Sandwich with Whipped Cafe de Paris Butter',category:'Meat & Poultry',difficulty:'hard',serves:4,time:'3 hr',caloriesPerServe:750,mainIngredient:'Steak',
+{id:334,name:'Steak Frites Sandwich with Whipped Cafe de Paris Butter',category:'Meat & Poultry',cuisine:'French',difficulty:'hard',serves:4,time:'3 hr',caloriesPerServe:750,mainIngredient:'Steak',
 ingredients:[
   {name:'Parsley',amount:1,unit:'bunch'},
   {name:'Tarragon',amount:0.5,unit:'bunch'},
@@ -6033,7 +6033,7 @@ steps:[
   'Add the mustard, vinegar, salt and pepper and cook for another 3-5 minutes.',
 ]},
 
-{id:344,name:'Steak, Fries and Salad',category:'Meat & Poultry',difficulty:'hard',serves:2,time:'60 min',caloriesPerServe:700,mainIngredient:'Steak',
+{id:344,name:'Steak, Fries and Salad',category:'Meat & Poultry',cuisine:'French',difficulty:'hard',serves:2,time:'60 min',caloriesPerServe:700,mainIngredient:'Steak',
 ingredients:[
   {name:'Fillet or bavette steak',amount:1,unit:'to taste'},
   {name:'Garlic',amount:1,unit:'to taste'},
@@ -6397,7 +6397,7 @@ steps:[
   'Spoon the warm crema over a large dish and serve the chicken on top, finished with the chive oil.',
 ]},
 
-{id:354,name:'Granny\'s Handkerchiefs (Spinach and Ricotta Pancakes)',category:'Vegetarian',difficulty:'hard',serves:4,time:'60 min',caloriesPerServe:380,mainIngredient:'Spinach',
+{id:354,name:'Granny\'s Handkerchiefs (Spinach and Ricotta Pancakes)',category:'Vegetarian',cuisine:'Italian',difficulty:'hard',serves:4,time:'60 min',caloriesPerServe:380,mainIngredient:'Spinach',
 ingredients:[
   {name:'Spinach leaves, washed and drained',amount:500,unit:'g'},
   {name:'Ricotta',amount:250,unit:'g'},
@@ -6451,7 +6451,7 @@ steps:[
   'Gently warm the leeks and top the lentils with them, finishing with a generous scoop of creme fraiche.',
 ]},
 
-{id:356,name:'Pasta with Peas, Lardons, and Chilli',category:'Pasta & Rice',difficulty:'easy',serves:1,time:'20 min',caloriesPerServe:550,mainIngredient:'Pasta',
+{id:356,name:'Pasta with Peas, Lardons, and Chilli',category:'Pasta & Rice',cuisine:'Italian',difficulty:'easy',serves:1,time:'20 min',caloriesPerServe:550,mainIngredient:'Pasta',
 ingredients:[
   {name:'Pasta',amount:100,unit:'g'},
   {name:'Smoked lardons',amount:75,unit:'g'},
@@ -6484,7 +6484,7 @@ steps:[
   'Add the chilli flakes, garlic, thyme and oregano, cook for about a minute, then season with salt, sugar and MSG.',
 ]},
 
-{id:357,name:'Pesto Pantesco',category:'Pasta & Rice',difficulty:'easy',serves:2,time:'20 min',caloriesPerServe:450,mainIngredient:'Pasta',
+{id:357,name:'Pesto Pantesco',category:'Pasta & Rice',cuisine:'Italian',difficulty:'easy',serves:2,time:'20 min',caloriesPerServe:450,mainIngredient:'Pasta',
 ingredients:[
   {name:'Dried pasta, bucatini, busiati or casarecce',amount:150,unit:'g'},
   {name:'Ripe tomatoes, San Marzano, cored and diced',amount:2,unit:'whole'},
@@ -6507,7 +6507,7 @@ steps:[
   'Serve at room temperature or cold, mixing in a little reserved pasta water as you would with a hot pasta.',
 ]},
 
-{id:358,name:'My Family\'s Favourite Bolognese',category:'Pasta & Rice',difficulty:'hard',serves:6,time:'2 hr',caloriesPerServe:500,mainIngredient:'Beef',
+{id:358,name:'My Family\'s Favourite Bolognese',category:'Pasta & Rice',cuisine:'Italian',difficulty:'hard',serves:6,time:'2 hr',caloriesPerServe:500,mainIngredient:'Beef',
 ingredients:[
   {name:'Ground beef',amount:200,unit:'g'},
   {name:'Ground lamb',amount:100,unit:'g'},
@@ -6610,7 +6610,7 @@ steps:[
   'Serve with raw radishes on the side.',
 ]},
 
-{id:361,name:'Shallot Tarte Tatin',category:'Sides',difficulty:'medium',serves:4,time:'45 min',caloriesPerServe:320,mainIngredient:'Shallots',
+{id:361,name:'Shallot Tarte Tatin',category:'Sides',cuisine:'French',difficulty:'medium',serves:4,time:'45 min',caloriesPerServe:320,mainIngredient:'Shallots',
 ingredients:[
   {name:'Puff pastry',amount:1,unit:'sheet'},
   {name:'Shallots',amount:600,unit:'g'},
@@ -6636,7 +6636,7 @@ steps:[
   'Pour over the tarte and finish with creme fraiche and chives.',
 ]},
 
-{id:362,name:'Roasted Cabbage Pot Pie',category:'Sides',difficulty:'medium',serves:2,time:'50 min',caloriesPerServe:350,mainIngredient:'Cabbage',
+{id:362,name:'Roasted Cabbage Pot Pie',category:'Sides',cuisine:'British',difficulty:'medium',serves:2,time:'50 min',caloriesPerServe:350,mainIngredient:'Cabbage',
 ingredients:[
   {name:'Sweetheart cabbage, or any white cabbage, halved or quartered lengthways',amount:1,unit:'whole'},
   {name:'Carrot, diced',amount:1,unit:'whole'},

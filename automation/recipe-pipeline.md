@@ -174,7 +174,7 @@ grep -o 'id:[0-9]*' recipes.js | grep -o '[0-9]*' | sort -n | tail -1
 Start new recipes from that number plus one.
 
 ### 3.3 Convert to JavaScript
-Fields per recipe: id, name, category, difficulty, serves, time, caloriesPerServe (never calories), mainIngredient, ingredients, steps. Add `cuisine` after category only when the dish clearly belongs to one of: 'Japanese', 'Modern Australian', 'Greek', 'Lebanese', 'Thai', 'Chinese', 'Mexican', 'Indian' (the CUISINES list in recipes.js). If it is unclear, or the dish is from a cuisine not on that list (Italian, French, Spanish and so on), leave the field out. All strings in single quotes with escaped apostrophes.
+Fields per recipe: id, name, category, difficulty, serves, time, caloriesPerServe (never calories), mainIngredient, ingredients, steps. Add `cuisine` after category only when the dish clearly belongs to one of the cuisines in the CUISINES list at the top of recipes.js (read it; it grows over time). If it is unclear, or the dish is from a cuisine not on that list, leave the field out. All strings in single quotes with escaped apostrophes.
 
 Map banner sections to app categories:
 
