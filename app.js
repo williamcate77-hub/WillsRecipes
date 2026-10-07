@@ -51,9 +51,10 @@ const K={saved:'cww:saved',list:'cww:list',prefs:'cww:prefs',recent:'cww:recent'
 // 297–307 were double-imports of 286–296 (July 2026 sync); those ids were later
 // reused for new recipes, so only remap an id that is no longer a live recipe —
 // otherwise saving e.g. #300 would silently turn into #204 on the next load.
-// 289 and 304 were duplicates of 204 and 205 (removed Oct 2026).
+// 289 and 304 were duplicates of 204 and 205; 307 and 382 were Kewpie mayos
+// superseded by 383 (all removed Oct 2026).
 const DUPLICATE_ID_MAP={251:192,253:194,237:198,236:199,221:257,222:269,223:271,224:272,225:268,226:267,227:270,
-  289:204,297:287,298:286,299:288,300:204,301:290,302:291,303:292,304:205,305:294,306:295,307:296};
+  289:204,297:287,298:286,299:288,300:204,301:290,302:291,303:292,304:205,305:294,306:295,307:383,382:383};
 const LIVE_IDS=new Set(ALL_RECIPES.map(r=>r.id));
 const mapId=id=>(!LIVE_IDS.has(id)&&DUPLICATE_ID_MAP[id])||id;
 

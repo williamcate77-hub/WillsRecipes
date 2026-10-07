@@ -4949,8 +4949,6 @@ steps:[
 
 {id:306,name:'Whipped Feta Dip',category:'Dips & Starters',cuisine:'Greek',difficulty:'easy',serves:6,time:'10 min',caloriesPerServe:200,mainIngredient:'Feta',ingredients:[  {name:'Greek feta PDO',amount:400,unit:'g'},  {name:'Greek yoghurt',amount:150,unit:'g'},  {name:'Garlic clove, grated',amount:1,unit:'clove'},  {name:'Lemon zest',amount:1,unit:'lemon'},  {name:'Lemon juice',amount:0.5,unit:'lemon'},  {name:'Olive oil',amount:2,unit:'tbsp'},  {name:'Olive oil, for topping',amount:1,unit:'to taste'},  {name:'Chilli oil, for topping',amount:1,unit:'to taste'},  {name:'Cucumber, for topping',amount:1,unit:'to taste'},  {name:'Fresh herbs, for topping',amount:1,unit:'to taste'},],steps:[  'Pat the feta dry and blitz in a food processor until fine and sandy.',  'Add the yoghurt, garlic, lemon zest and half the lemon juice. Blitz until smooth.',  'With the motor running, slowly stream in the olive oil until glossy and aerated.',  'Serve topped with olive oil, chilli oil, cucumber and fresh herbs.',  'Add any meat, fish or salad of your choice.',]},
 
-{id:307,name:'Avocado Oil Kewpie Mayo',category:'Sauces & Condiments',cuisine:'Japanese',difficulty:'easy',serves:8,time:'5 min',caloriesPerServe:190,mainIngredient:'Avocado oil',ingredients:[  {name:'Egg yolk, room temperature',amount:1,unit:'whole'},  {name:'Rice vinegar',amount:15,unit:'ml'},  {name:'Lemon juice',amount:10,unit:'ml'},  {name:'Dijon mustard',amount:5,unit:'ml'},  {name:'Sugar',amount:5,unit:'g'},  {name:'Salt',amount:2.5,unit:'g'},  {name:'Avocado oil',amount:180,unit:'ml'},],steps:[  'Add all ingredients into a jar and place your immersion blender directly over the egg yolk.',  'Blend without moving for about 10 seconds, or until the mixture begins to emulsify and become creamy.',  'Slowly work your way up until the oil is completely incorporated.',  'Store in the fridge for up to a week.',]},
-
 {id:308,name:'High-Protein Chicken Bowl',category:'Meat & Poultry',difficulty:'easy',serves:1,time:'20 min',caloriesPerServe:580,mainIngredient:'Chicken',ingredients:[  {name:'Cucumber, sliced',amount:125,unit:'g'},  {name:'Peanut butter',amount:18,unit:'g'},  {name:'Honey',amount:10,unit:'g'},  {name:'Garlic',amount:1,unit:'tsp'},  {name:'Chilli oil',amount:12,unit:'g'},  {name:'Soy sauce',amount:1,unit:'tbsp'},  {name:'Lime, squeezed',amount:0.5,unit:'whole'},  {name:'Red cabbage, shredded',amount:50,unit:'g'},  {name:'Chicken',amount:150,unit:'g'},  {name:'Sesame seeds',amount:0.5,unit:'tsp'},],steps:[  'Prepare a 720 ml bowl for serving.',  'Cook the chicken as desired: pan fry, air fry, poach, oven bake, or use rotisserie.',  'Slice the cucumber and shred the red cabbage.',  'In a bowl, combine the peanut butter, honey, garlic, chilli oil, soy sauce and a squeeze of lime to make a dressing.',  'Arrange the cucumber, red cabbage and cooked chicken in the bowl.',  'Drizzle the dressing over the ingredients.',  'Sprinkle with sesame seeds and serve.',]},
 
 {id:309,name:'Steamed Chicken with Sambal Matah-Inspired Topping',category:'Meat & Poultry',difficulty:'easy',serves:2,time:'30 min',caloriesPerServe:350,mainIngredient:'Chicken',
@@ -7120,27 +7118,6 @@ steps:[
   'Dress the scallop meat with the vinaigrette and season with salt.',
   'Spoon the smoked avocado into the shell centre.',
   'Top with the scallop meat, neatly arranged, then place on the napkin and serve.',
-]},
-
-{id:382,name:'Japanese Kewpie Mayonnaise',category:'Sauces & Condiments',cuisine:'Japanese',difficulty:'easy',serves:8,time:'5 min',caloriesPerServe:140,mainIngredient:'Egg yolks',
-ingredients:[
-  {name:'Large egg yolks, at room temperature',amount:2,unit:'whole'},
-  {name:'Dijon mustard',amount:5,unit:'g'},
-  {name:'Unseasoned rice vinegar',amount:15,unit:'ml'},
-  {name:'Apple cider vinegar',amount:7.5,unit:'ml'},
-  {name:'Granulated sugar',amount:8,unit:'g'},
-  {name:'Salt',amount:3,unit:'g'},
-  {name:'MSG',amount:1.5,unit:'g'},
-  {name:'Neutral oil (canola, vegetable, rapeseed, soybean, or avocado oil)',amount:180,unit:'ml'},
-],
-steps:[
-  'Add the egg yolks, Dijon mustard, rice vinegar, apple cider vinegar, sugar, salt, and MSG to a tall jar slightly wider than the blender head.',
-  'Pour the oil on top.',
-  'Position the immersion blender at the jar bottom.',
-  'Blend stationary for 10-15 seconds until thick white mayo forms around the blade.',
-  'Slowly lift the blender to incorporate the remaining oil.',
-  'Continue blending until smooth, thick, and creamy.',
-  'Taste and adjust seasoning as desired.',
 ]},
 
 {id:383,name:'Homemade Kewpie Mayo',category:'Sauces & Condiments',cuisine:'Japanese',difficulty:'easy',serves:8,time:'5 min',caloriesPerServe:320,mainIngredient:'Egg yolks',
