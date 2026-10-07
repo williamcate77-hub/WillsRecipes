@@ -8,22 +8,24 @@ You are the WillsRecipes nightly pipeline. Run all stages in order. Each stage r
 - Google Drive source folder: "recipes for app"
 - Apple Notes raw folder: "Recipes from Images"
 - Apple Notes formatted folder: "Recipes for App"
+- Apple Notes web links: note "Recipes" in folder "Web Recipes for App" (Instagram link-in-bio and other recipe URLs)
 - Recipes file: recipes.js (never recipes4.js)
 - Tracking log: automation/.recipe-pipeline-log.json (single log for the whole pipeline)
 
 ## Tracking log structure
 
-One JSON file with three keys:
+One JSON file with four keys:
 
 ```json
 {
   "processedDriveFiles": { "<driveFileId>": "<recipe name>" },
   "processedNoteIds": { "<appleNoteId>": "<recipe name>" },
-  "syncedNotes": { "<appleNoteId>": true }
+  "syncedNotes": { "<appleNoteId>": true },
+  "processedLinks": { "<normalised url>": "<recipe name, or why it was skipped>" }
 }
 ```
 
-If the file does not exist, treat all three as empty objects and create it at the end of the run.
+If the file does not exist, treat all four as empty objects and create it at the end of the run.
 
 ---
 
@@ -95,13 +97,24 @@ List all notes in "Recipes from Images" (limit 500). For any note whose ID is no
 
 If a note's content is not clearly a recipe at all (a shopping list, a stray thought, an unrelated note that happens to be filed here), record its ID in `processedNoteIds` and skip it silently - do not treat it as a warning-worthy recipe.
 
-If Stage 1 finds no new Drive files and no unprocessed hand-added notes, log "No new recipes found", skip Stages 2 and 3, and go straight to the summary.
+### 1.7 Scan web and Instagram recipe links
+Recipe links are pasted into the note "Recipes" in the Apple Notes folder "Web Recipes for App", usually from Instagram "link in bio" pages. Each entry is a date line followed by a URL. Run this step every time. Never edit or delete anything in the links note.
+
+1. Read the note and collect every http(s) URL in it.
+2. Normalise each URL for tracking: drop the query string and fragment (Instagram adds `utm_*`, `fbclid`, `mcp_token` and similar), lowercase the host, and drop a trailing slash.
+3. Skip any normalised URL already in `processedLinks`.
+4. For each new URL, fetch the page with WebFetch and extract the recipe name, ingredients with quantities, and method. Use the page's own recipe card when it has one, and ignore comments, adverts and the author's life story.
+5. Duplicate check: if the extracted name matches an existing note title in "Recipes from Images" or a `name:` already in recipes.js (case-insensitive, ignoring punctuation), record it in `processedLinks` as a duplicate and skip it.
+6. Create a note in "Recipes from Images" named after the recipe, in the same layout as 1.5, ending with a line `Source: <original url>`. Apply the same validity check as 1.5. If the page could not be fetched, needs a login (instagram.com posts and reels usually do), or has no clear recipe, still create the note with the WARNING banner, the URL, and whatever text was available.
+7. Record the URL in `processedLinks` and the new note's ID and name in `processedNoteIds` right away. Notes without the WARNING banner are Stage 2 candidates, exactly like notes created in 1.5.
+
+If Stage 1 finds no new Drive files, no unprocessed hand-added notes and no new links, log "No new recipes found", skip Stages 2 and 3, and go straight to the summary.
 
 ---
 
 ## STAGE 2 - Format the new recipes
 
-Format the recipes created in Stage 1 of this run - both new Drive extractions (1.5) and hand-added notes picked up in 1.6. Skip any note carrying the warning banner; leave those for manual review and count them in the summary.
+Format the recipes created in Stage 1 of this run - new Drive extractions (1.5), hand-added notes picked up in 1.6, and web/Instagram link recipes from 1.7. Skip any note carrying the warning banner; leave those for manual review and count them in the summary.
 
 **Output format (per recipe):**
 - Recipe name on its own line
@@ -213,6 +226,7 @@ Write a summary to the run log as a **new** Apple Note in the default folder:
 - Date and time of run
 - New files found in Drive, counted by type (images, PDFs, markdown, Google Docs)
 - Hand-added notes found directly in "Recipes from Images" (listed by name)
+- New web/Instagram links found, and what each became (recipe name, duplicate, or warning)
 - Recipes added to Apple Notes
 - Recipes skipped as duplicates
 - Recipes flagged with warnings (listed by name, for manual review)
@@ -223,7 +237,7 @@ Write a summary to the run log as a **new** Apple Note in the default folder:
 
 ## Rules that apply to every run
 
-- Never re-process a Drive file or Apple Note (whether Drive-sourced or hand-added) already in the tracking log.
+- Never re-process a link, Drive file or Apple Note (whether Drive-sourced or hand-added) already in the tracking log.
 - Process all files across all pages. Never stop after the first page.
 - Always visually inspect downloaded images and scanned PDF pages.
 - Never skip rotated images.
