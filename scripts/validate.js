@@ -3,7 +3,7 @@
 
 const path = require('path');
 const { estimateCaloriesPerServe } = require('./nutrition');
-const { CATEGORIES, RECIPES } = require(path.join(__dirname, '..', 'recipes.js'));
+const { CATEGORIES, CUISINES = [], RECIPES } = require(path.join(__dirname, '..', 'recipes.js'));
 
 const BANDS = {
   'Dips & Starters': [60, 250], 'Salads': [150, 550], 'Soups': [100, 450],
@@ -56,6 +56,7 @@ for (let i = 0; i < RECIPES.length; i++) {
 for (const r of RECIPES) {
   if (!r.name || typeof r.name !== 'string') err(r, 'missing name');
   if (!CATEGORIES.includes(r.category)) err(r, `invalid category "${r.category}"`);
+  if (r.cuisine !== undefined && !CUISINES.includes(r.cuisine)) err(r, `invalid cuisine "${r.cuisine}"`);
   if (!DIFFICULTIES.has(r.difficulty)) err(r, `invalid difficulty "${r.difficulty}"`);
   if (!(r.serves >= 1 && r.serves <= 12)) err(r, `serves out of range: ${r.serves}`);
   if (!TIME_RE.test(r.time || '')) err(r, `inconsistent time format: "${r.time}"`);

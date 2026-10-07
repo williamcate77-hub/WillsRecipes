@@ -6,7 +6,7 @@
 // boots with what it has instead of dying on a ReferenceError.
 if(typeof RECIPES==='undefined'||typeof CATEGORIES==='undefined'){
   console.error('recipes.js failed to load');
-  window.RECIPES=window.RECIPES||[];window.CATEGORIES=window.CATEGORIES||[];
+  window.RECIPES=window.RECIPES||[];window.CATEGORIES=window.CATEGORIES||[];window.CUISINES=window.CUISINES||[];
   document.addEventListener('DOMContentLoaded',()=>{
     const grid=document.getElementById('catGrid');
     if(grid)grid.innerHTML=`<div class="error-card" style="grid-column:1/-1"><span class="ms">skillet</span><h3>Recipes didn't load</h3><p>Check your connection and reload.</p><button class="empty-cta" onclick="location.reload()">Reload the app</button></div>`;
@@ -91,6 +91,8 @@ function fmtEnergy(cal){
   return`${kj.toLocaleString()} kJ / ${cal} cal`;
 }
 function fmtKj(cal){return`${(Math.round(cal*4.184/10)*10).toLocaleString()} kJ`;}
+
+if(typeof CUISINES==='undefined')window.CUISINES=[];
 
 // ── CATEGORY METADATA: colour token + Material Symbol per category,
 //    used consistently on cards, headers and metadata rows.
@@ -260,6 +262,7 @@ let activeChip='All',activeSearch='',shopChecked={},stepsDone={},portionScale=1;
 let wakeLock=null,shopSort='aisle';
 let globalShopList=store.get(K.list,[]);
 let activeCategory=null; // null = category grid, string = open category view
+let activeCuisine='All'; // cuisine filter inside the category view
 const APP_VERSION='2.0';
 function isSaved(id){return saved.some(e=>e.id===id);}
 function saveSaved(){store.set(K.saved,saved);}
@@ -335,7 +338,7 @@ function clearSearch(){
   renderHomeMode();
 }
 function clearFilters(){
-  activeSearch='';activeChip='All';activeCategory=null;
+  activeSearch='';activeChip='All';activeCategory=null;activeCuisine='All';
   document.getElementById('searchInput').value='';
   document.getElementById('searchClear').style.display='none';
   document.getElementById('searchIcon').textContent='search';
@@ -364,7 +367,7 @@ function getFiltered(){
   let list=[...ALL_RECIPES].sort((a,b)=>b.id-a.id);
   if(activeSearch){
     const q=activeSearch;
-    list=list.filter(r=>r.name.toLowerCase().includes(q)||r.category.toLowerCase().includes(q)||r.mainIngredient.toLowerCase().includes(q)||(r.ingredients&&r.ingredients.some(i=>i.name&&ingMatchesQuery(i.name,q))));
+    list=list.filter(r=>r.name.toLowerCase().includes(q)||r.category.toLowerCase().includes(q)||(r.cuisine&&r.cuisine.toLowerCase().includes(q))||r.mainIngredient.toLowerCase().includes(q)||(r.ingredients&&r.ingredients.some(i=>i.name&&ingMatchesQuery(i.name,q))));
   }
   if(activeChip&&activeChip!=='All')list=list.filter(r=>r.category===activeChip);
   return list;
@@ -403,29 +406,57 @@ function renderHomeGrid(){
   }).join('');
   const total=document.getElementById('catGridCount');
   if(total)total.textContent=`${ALL_RECIPES.length} recipes`;
+  renderCuisineRow();
 }
 
+// ── CUISINES: home row opens every recipe of that cuisine; the category
+//    view gets chips to narrow by cuisine. Untagged recipes only show under All.
+function cuisineCounts(list){
+  const n={};list.forEach(r=>{if(r.cuisine)n[r.cuisine]=(n[r.cuisine]||0)+1;});
+  return n;
+}
+function renderCuisineRow(){
+  const row=document.getElementById('cuisineRow'),lbl=document.getElementById('cuisineLbl');
+  if(!row)return;
+  const n=cuisineCounts(ALL_RECIPES);
+  const present=CUISINES.filter(c=>n[c]);
+  row.style.display=lbl.style.display=present.length?'':'none';
+  row.innerHTML=present.map(c=>`<button class="chip" onclick="openCuisine('${jsArg(c)}')"><span class="ms">public</span>${esc(c)}<span class="chip-n">${n[c]}</span></button>`).join('');
+}
+function openCuisine(c){activeCuisine=c;openCategory(NEW_RECIPES_CAT,true);}
+function setCuisine(c){haptic(6);activeCuisine=c;renderCategoryView();}
+
 // ── CATEGORY VIEW
-function openCategory(cat){
+function openCategory(cat,keepCuisine){
   haptic(6);activeCategory=cat;activeChip='All';
+  if(!keepCuisine)activeCuisine='All';
   renderHomeMode();
   const v=document.getElementById('homeCategory');
   v.classList.remove('slide-in');void v.offsetWidth;v.classList.add('slide-in');
   document.getElementById('main').scrollTop=0;
 }
-function closeCategory(){haptic(6);activeCategory=null;renderHomeMode();}
+function closeCategory(){haptic(6);activeCategory=null;activeCuisine='All';renderHomeMode();}
 function renderCategoryView(){
   const cat=activeCategory;if(!cat)return;
-  const recipes=recipesForCategory(cat);
+  const all=recipesForCategory(cat);
+  const byCuisine=cat===NEW_RECIPES_CAT&&activeCuisine!=='All'; // opened from the home cuisine row
+  const recipes=activeCuisine==='All'?all:all.filter(r=>r.cuisine===activeCuisine);
   const hero=document.getElementById('catHero');
   hero.style.cssText=catStyle(cat);
   hero.innerHTML=`
     <div class="cat-hero-top">
       <button class="back-pill" onclick="closeCategory()"><span class="ms">arrow_back</span>Home</button>
     </div>
-    <span class="ms cat-hero-icon">${catIcon(cat)}</span>
-    <h2>${esc(cat)}</h2>
+    <span class="ms cat-hero-icon">${byCuisine?'public':catIcon(cat)}</span>
+    <h2>${esc(byCuisine?activeCuisine:cat)}</h2>
     <div class="cnt">${recipes.length} recipe${recipes.length===1?'':'s'}</div>`;
+  const n=cuisineCounts(all);
+  const present=CUISINES.filter(c=>n[c]);
+  const chips=document.getElementById('catCuisineChips');
+  chips.style.display=present.length?'':'none';
+  chips.innerHTML=['All',...present].map(c=>`<button class="chip${activeCuisine===c?' active':''}" onclick="setCuisine('${jsArg(c)}')">${esc(c==='All'?'All cuisines':c)}</button>`).join('');
+  const on=chips.querySelector('.chip.active');
+  if(on)chips.scrollLeft=on.offsetLeft-(chips.clientWidth-on.offsetWidth)/2;
   document.getElementById('catList').innerHTML=recipes.map(r=>recipeCard(r)).join('');
 }
 
@@ -589,7 +620,7 @@ function renderDetailContent(){
         <button class="det-btn" onclick="shareRecipe()" aria-label="Share"><span class="ms">ios_share</span></button>
       </div>
     </div>
-    <div class="det-hero-cat"><span class="ms">${catIcon(r.category)}</span>${esc(r.category)}</div>
+    <div class="det-hero-cat"><span class="ms">${catIcon(r.category)}</span>${esc(r.category)}${r.cuisine?` · ${esc(r.cuisine)}`:''}</div>
     <h2 class="det-hero-title">${esc(r.name)}</h2>
     <div class="det-meta-strip">
       <span class="meta-bit"><span class="ms">schedule</span>${esc(r.time)}</span>

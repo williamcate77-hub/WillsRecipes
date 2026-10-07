@@ -104,6 +104,8 @@ main::-webkit-scrollbar{display:none}
 .chip{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:var(--fs-1);font-weight:600;cursor:pointer;transition:all .18s;white-space:nowrap}
 .chip .ms{font-size:15px}
 .chip.active{background:var(--text);border-color:var(--text);color:var(--bg)}
+.chip-n{font-weight:500;opacity:.6}
+#catCuisineChips{padding-top:14px}
 .chip:active{transform:scale(.96)}
 
 /* ── Filter chips / result count ── */
