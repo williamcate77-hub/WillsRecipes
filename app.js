@@ -780,26 +780,65 @@ function addToShoppingListFiltered(){
   toast(`Added ${added} item${added===1?'':'s'} to your list`);
 }
 function normaliseIngName(name){return name.split(',')[0].trim().toLowerCase();}
+// Each list item keeps every recipe's contribution as numbers ({qty,unit}),
+// so the same ingredient from several recipes shows one combined total.
+// Re-adding a recipe replaces its contribution instead of doubling it.
+const MASS_G={g:1,kg:1000};
+const VOL_ML={ml:1,l:1000,litre:1000,litres:1000,tsp:5,tbsp:20,cup:250,cups:250};
+const UNIT_SINGULAR={cloves:'clove',fillets:'fillet',rashers:'rasher',sheets:'sheet',leaves:'leaf',sprigs:'sprig',
+  yolks:'yolk',stalks:'stalk',pieces:'piece',slices:'slice',tins:'tin',cans:'can',lemons:'lemon',bunches:'bunch'};
+const FRAC_CH={'⅛':.125,'¼':.25,'⅓':1/3,'½':.5,'⅔':2/3,'¾':.75};
+function parseAmountText(t){
+  t=String(t||'').trim();
+  let m=t.match(/\((\d+(?:\.\d+)?)ml\)$/);if(m)return{qty:+m[1],unit:'ml'};
+  m=t.match(/^(\d+(?:\.\d+)?)(g|kg|ml|L)$/);if(m)return{qty:+m[1],unit:m[2].toLowerCase()==='l'?'l':m[2]};
+  m=t.match(/^(\d*)([⅛¼⅓½⅔¾]?)\s+([a-z][a-z ]*)$/i);
+  if(m&&(m[1]||m[2]))return{qty:(+m[1]||0)+(FRAC_CH[m[2]]||0),unit:m[3]};
+  return{text:t};
+}
+function totalAmount(contrib){
+  let g=0,ml=0;const counts=new Map(),other=[];
+  Object.values(contrib).flat().forEach(p=>{
+    if(p.text!=null){if(p.text&&!other.includes(p.text))other.push(p.text);return;}
+    const u=(p.unit||'').toLowerCase().trim();
+    if(MASS_G[u])g+=p.qty*MASS_G[u];
+    else if(VOL_ML[u])ml+=p.qty*VOL_ML[u];
+    else if(SCALING_RULES[u]&&SCALING_RULES[u].type==='fixed'){const t=fmtIng(1,p.unit);if(t&&!other.includes(t))other.push(t);}
+    else{const k=UNIT_SINGULAR[u]||u;counts.set(k,(counts.get(k)||0)+p.qty);}
+  });
+  const out=[];
+  if(g)out.push(g>=1000?fmtIng(g/1000,'kg'):fmtIng(g,'g'));
+  if(ml)out.push(ml>=1000?`${parseFloat((ml/1000).toFixed(2))}L`:fmtIng(ml,'ml'));
+  counts.forEach((n,u)=>{const t=fmtIng(n,u);if(t)out.push(t);});
+  return out.concat(other).join(' + ');
+}
 function mergeIntoShopList(ingredients,recipeName,scale){
-  let added=0;
+  const touched=new Set();
   ingredients.forEach(ing=>{
     if(ing.section)return;
     if(/^water\b|^water\s*\(/i.test(ing.name))return;
     if(/^ice\b/i.test(ing.name))return;
     const norm=normaliseIngName(ing.name);
-    const scaled=scaleAmount(ing.amount,ing.unit,scale);
-    const amt=fmtIng(scaled,ing.unit);
-    const existing=globalShopList.find(x=>normaliseIngName(x.name)===norm);
-    if(existing){
-      existing.recipes=existing.recipes||[existing.recipe];
-      if(!existing.recipes.includes(recipeName))existing.recipes.push(recipeName);
-      existing.recipe=existing.recipes.join(', ');
-    } else {
-      globalShopList.push({name:ing.name,amount:amt,recipe:recipeName,aisle:getAisle(ing.name),checked:false});
-      added++;
+    const part={qty:scaleAmount(ing.amount,ing.unit,scale),unit:ing.unit||''};
+    let item=globalShopList.find(x=>normaliseIngName(x.name)===norm);
+    if(!item){
+      item={name:ing.name,amount:'',recipe:recipeName,recipes:[recipeName],aisle:getAisle(ing.name),checked:false,contrib:{}};
+      globalShopList.push(item);
+    }else{
+      // items saved before totals existed only have display text: keep it as one part
+      if(!item.contrib)item.contrib={[(item.recipes||[item.recipe]).join(', ')||'Earlier']:[parseAmountText(item.amount)]};
+      item.recipes=item.recipes||[item.recipe];
+      if(!item.recipes.includes(recipeName))item.recipes.push(recipeName);
+      item.recipe=item.recipes.join(', ');
+      if(!touched.has(norm)&&!item.contrib[recipeName])item.checked=false; // needs more than was already bought
     }
+    // a recipe listing the same ingredient twice adds both lines; a repeat add replaces
+    if(!touched.has(norm))item.contrib[recipeName]=[];
+    item.contrib[recipeName].push(part);
+    touched.add(norm);
+    item.amount=totalAmount(item.contrib);
   });
-  return added;
+  return touched.size; // ingredients added or topped up
 }
 
 function closeDetail(dh=true){
@@ -1253,7 +1292,7 @@ function fmtIng(amount,unit){
       const tbsp=n/20,tbspR=Math.round(tbsp*2)/2;
       if(Math.abs(tbspR-tbsp)<.09&&tbspR>=1)return`${fracStr(tbspR)} tbsp (${Math.round(tbspR*20)}ml)`;
       const tsp=n/5,tspR=Math.round(tsp*4)/4;
-      if(Math.abs(tspR-tsp)<.09&&tspR>=.25)return`${fracStr(tspR)} tsp (${Math.round(tspR*5)}ml)`;
+      if(Math.abs(tspR-tsp)<.09&&tspR>=.25&&tspR<=3)return`${fracStr(tspR)} tsp (${Math.round(tspR*5)}ml)`;
     }
     return Math.round(n)+'ml';
   }
