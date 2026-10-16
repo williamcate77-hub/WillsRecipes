@@ -249,7 +249,8 @@
     "x-coredata://48004E7B-5E63-4DB6-AE4A-175362BBAE62/ICNote/p3214": "Rapanakia Salata (Radish Salad with Capers and Mint) - WARNING banner",
     "x-coredata://48004E7B-5E63-4DB6-AE4A-175362BBAE62/ICNote/p3222": "Beef Cheek au Poivre",
     "x-coredata://48004E7B-5E63-4DB6-AE4A-175362BBAE62/ICNote/p3223": "Roast Chicken with Braised Silverbeet, Butterbeans and Olives",
-    "x-coredata://48004E7B-5E63-4DB6-AE4A-175362BBAE62/ICNote/p3224": "French Onion Soup"
+    "x-coredata://48004E7B-5E63-4DB6-AE4A-175362BBAE62/ICNote/p3224": "French Onion Soup",
+    "x-coredata://48004E7B-5E63-4DB6-AE4A-175362BBAE62/ICNote/p3238": "Herb Rice - WARNING banner (source page returned 403)"
   },
   "syncedNotes": {
     "x-coredata://48004E7B-5E63-4DB6-AE4A-175362BBAE62/ICNote/p2913": true,
@@ -276,6 +277,7 @@
     "https://aussieavosfoodservice.com.au/recipes/scallop-tartare-with-smoked-australian-avocado": "Scallop Tartare with Smoked Australian Avocado",
     "https://www.okonomikitchen.com/japanese-kewpie-mayonnaise-recipe": "Japanese Kewpie Mayonnaise",
     "https://10.com.au/masterchef/recipes/grilled-smoky-oysters-with-smoky-soy-sauce-and-coconut-vinaigrette/r220608ohfil": "Duplicate of recipes.js id 298 (Grilled Smoky Oysters with Smoky Soy & Coconut Vinaigrette)",
-    "https://www.recipetineats.com/flourless-chocolate-cake": "Duplicate of recipes.js id 296 (Flourless Chocolate Cake)"
+    "https://www.recipetineats.com/flourless-chocolate-cake": "Duplicate of recipes.js id 296 (Flourless Chocolate Cake)",
+    "https://www.chelseasmessyapron.com/herb-rice": "Page returned 403 Forbidden, could not be fetched - WARNING note created"
   }
 }
